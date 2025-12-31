@@ -1,723 +1,495 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Week 10 Slides</title>
-
-<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script>
-    tailwind.config = {
-        darkMode: 'class',
-        theme: {
-            extend: {
-                fontFamily: {
-                    sans: ['Inter', 'sans-serif'],
-                },
-                colors: {
-                    primary: '#002F6E', // VUT Midnight Blue
-                    secondary: '#6c757d',
-                    codebg: 'var(--bg-code)', 
-                },
-                typography: {
-                    DEFAULT: {
-                        css: {
-                            maxWidth: '100%',
-                            fontFamily: 'Inter, sans-serif',
-                            color: 'var(--text-body)',
-                            '--tw-prose-body': 'var(--text-body)',
-                            '--tw-prose-headings': 'var(--text-headings)',
-                            '--tw-prose-links': 'var(--text-link)',
-                            '--tw-prose-bold': 'var(--text-headings)',
-                            '--tw-prose-counters': 'var(--text-body)',
-                            '--tw-prose-bullets': 'var(--text-body)',
-                            '--tw-prose-hr': 'var(--border-color)',
-                            '--tw-prose-quotes': 'var(--text-body)',
-                            '--tw-prose-code': 'var(--text-code)',
-                            '--tw-prose-pre-code': 'var(--text-pre)',
-                            '--tw-prose-pre-bg': 'var(--bg-pre)',
-                            
-                            // Image Sizing Control
-                            img: {
-                                display: 'block',
-                                marginLeft: 'auto',
-                                marginRight: 'auto',
-                                maxHeight: '500px',
-                                width: 'auto',
-                                height: 'auto',
-                                borderRadius: '0.5rem',
-                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                            },
-                            // Links
-                            a: {
-                                color: 'var(--text-link)',
-                                '&:hover': { opacity: '0.8' },
-                            },
-                            // Inline Code
-                            code: {
-                                color: 'var(--text-code)',
-                                backgroundColor: 'var(--bg-code)',
-                                padding: '0.2rem 0.4rem',
-                                borderRadius: '0.25rem',
-                                fontWeight: '600',
-                                border: '1px solid var(--border-code)',
-                            },
-                            'code::before': { content: '""' },
-                            'code::after': { content: '""' },
-                            // Code Blocks (Pre)
-                            pre: {
-                                backgroundColor: 'var(--bg-pre) !important',
-                                color: 'var(--text-pre)',
-                                padding: '1rem',
-                                borderRadius: '0.5rem',
-                                border: '1px solid var(--border-pre)',
-                            },
-                            // Notes/Alerts (Blockquotes)
-                            blockquote: {
-                                borderLeftColor: '#002F6E',
-                                borderLeftWidth: '4px',
-                                backgroundColor: 'var(--bg-note)',
-                                padding: '1rem',
-                                color: 'var(--text-body)',
-                                fontSize: '0.9rem', // Smaller text for notes
-                                fontStyle: 'italic',
-                                quotes: 'none',
-                                borderRadius: '0 0.5rem 0.5rem 0',
-                            },
-                            'blockquote p:first-of-type::before': { content: 'none' },
-                            'blockquote p:last-of-type::after': { content: 'none' },
-                            // Tables (Restored from First Attempt)
-                            table: {
-                                width: '100%',
-                                marginTop: '2em',
-                                marginBottom: '2em',
-                                borderCollapse: 'collapse',
-                                fontSize: '0.9rem',
-                            },
-                            'thead th': {
-                                backgroundColor: '#f3f4f6', 
-                                color: '#1f2937', 
-                                fontWeight: '600',
-                                padding: '0.75rem',
-                                borderBottom: '2px solid #e5e7eb',
-                                textAlign: 'left',
-                            },
-                            'tbody td': {
-                                padding: '0.75rem',
-                                borderBottom: '1px solid #e5e7eb',
-                                verticalAlign: 'top',
-                            },
-                            'tbody tr:hover': {
-                                backgroundColor: '#f9fafb',
-                            },
-                            
-                            // Task Lists (Checkboxes)
-                            '.task-list-item': {
-                                listStyleType: 'none',
-                            },
-                            '.task-list-item input[type="checkbox"]': {
-                                marginRight: '0.5rem',
-                            },
-
-                            thead: {
-                                borderBottomWidth: '2px',
-                                borderBottomColor: 'var(--border-color)',
-                            },
-                            'thead th': {
-                                color: 'var(--text-headings)',
-                                fontWeight: '600',
-                                verticalAlign: 'bottom',
-                                paddingRight: '0.75em',
-                                paddingBottom: '0.75em',
-                                paddingLeft: '0.75em',
-                                textAlign: 'left',
-                            },
-                            'tbody tr': {
-                                borderBottomWidth: '1px',
-                                borderBottomColor: 'var(--border-color)',
-                            },
-                            'tbody tr:last-child': {
-                                borderBottomWidth: '0',
-                            },
-                            'tbody td': {
-                                verticalAlign: 'top',
-                                padding: '0.75em',
-                            },
-                        },
-                    },
-                },
-            },
-        },
-    }
-</script>
-<script>
-    // Theme Toggle Logic
-    document.addEventListener('DOMContentLoaded', () => {
-        const themeToggle = document.getElementById('theme-toggle');
-        const html = document.documentElement;
-        const iconSun = document.getElementById('icon-sun');
-        const iconMoon = document.getElementById('icon-moon');
-
-        // Check local storage or preference
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            html.classList.add('dark');
-            iconSun.classList.remove('hidden');
-            iconMoon.classList.add('hidden');
-        } else {
-            html.classList.remove('dark');
-            iconSun.classList.add('hidden');
-            iconMoon.classList.remove('hidden');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage and Persistence (Cinder) - Presentation Slides</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        themeToggle.addEventListener('click', () => {
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.theme = 'light';
-                iconSun.classList.add('hidden');
-                iconMoon.classList.remove('hidden');
-            } else {
-                html.classList.add('dark');
-                localStorage.theme = 'dark';
-                iconSun.classList.remove('hidden');
-                iconMoon.classList.add('hidden');
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            padding: 60px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            page-break-after: always;
+            border-bottom: 3px solid #0f3460;
+        }
+        
+        .slide:nth-child(even) {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+        }
+        
+        .title-slide {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+        }
+        
+        .title-slide h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #e94560;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .title-slide .week-number {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+        
+        .title-slide .course-code {
+            font-size: 1.2em;
+            color: #a8dadc;
+            margin-top: 30px;
+        }
+        
+        h2 {
+            font-size: 2.5em;
+            color: #e94560;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #ffd700;
+            padding-bottom: 15px;
+        }
+        
+        h3 {
+            font-size: 2em;
+            color: #ffd700;
+            margin-bottom: 25px;
+        }
+        
+        ul {
+            font-size: 1.4em;
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+        
+        ul li {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        p {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .code-block {
+            background: #0f0f0f;
+            border-left: 4px solid #e94560;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        pre {
+            background: #0f0f0f;
+            border-left: 4px solid #e94560;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+            color: #a8dadc;
+        }
+        
+        .quote {
+            background: rgba(233, 69, 96, 0.1);
+            border-left: 5px solid #e94560;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.2em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        
+        th {
+            background: #0f3460;
+            color: #ffd700;
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #16213e;
+        }
+        
+        td {
+            padding: 12px;
+            border: 1px solid #16213e;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        tr:hover {
+            background: rgba(233, 69, 96, 0.1);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .key-points {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .slide-number {
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            font-size: 1em;
+            color: #a8dadc;
+            opacity: 0.7;
+        }
+        
+        @media print {
+            .slide {
+                page-break-after: always;
             }
-        });
-    });
-</script>
-<style>
-    /* CSS Variables for Theming */
-    :root {
-        --bg-body: #f8fafc;
-        --bg-card: #ffffff;
-        --text-body: #334155;
-        --text-headings: #0f172a;
-        --text-link: #002F6E; /* VUT Blue */
-        --border-color: #e2e8f0;
-        
-        /* Code - Light Mode */
-        --bg-code: #f1f5f9;
-        --text-code: #d63384;
-        --border-code: #e2e8f0;
-        
-        /* Pre - Light Mode (Github Light) */
-        --bg-pre: #f6f8fa;
-        --text-pre: #24292e;
-        --border-pre: #d0d7de;
-        
-        /* Note - Light Mode */
-        --bg-note: #f8f9fa;
-        
-        /* Scrollbar */
-        --scroll-track: #f1f1f1;
-        --scroll-thumb: #888;
-    }
-
-    html.dark {
-        --bg-body: #0f172a;
-        --bg-card: #1e293b;
-        --text-body: #cbd5e1;
-        --text-headings: #f8fafc;
-        --text-link: #60a5fa; /* Blue 400 - Brighter for better contrast */
-        --border-color: #334155;
-        
-        /* Code - Dark Mode */
-        --bg-code: #334155;
-        --text-code: #f472b6; 
-        --border-code: #475569;
-        
-        /* Pre - Dark Mode (Monokai) */
-        --bg-pre: #272822;
-        --text-pre: #f8f8f2;
-        --border-pre: #464539;
-        
-        /* Note - Dark Mode */
-        --bg-note: #1e293b;
-        --scroll-track: #1e293b;
-        --scroll-thumb: #475569;
-    }
-
-    /* Transition */
-    body, article, code, pre, blockquote {
-        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--scroll-track); }
-    ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #555; }
-    
-    /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
-    .codehilite .hll { background-color: #ffffcc }
-    .codehilite .c { color: #6a737d; font-style: italic } /* Comment */
-    .codehilite .err { color: #f05240; background-color: #ffeaea } /* Error */
-    .codehilite .k { color: #d73a49; font-weight: bold } /* Keyword */
-    .codehilite .o { color: #d73a49; font-weight: bold } /* Operator */
-    .codehilite .cm { color: #6a737d; font-style: italic } /* Comment.Multiline */
-    .codehilite .cp { color: #6a737d; font-weight: bold } /* Comment.Preproc */
-    .codehilite .c1 { color: #6a737d; font-style: italic } /* Comment.Single */
-    .codehilite .cs { color: #6a737d; font-style: italic } /* Comment.Special */
-    .codehilite .gd { color: #d73a49; background-color: #fdd } /* Generic.Deleted */
-    .codehilite .ge { font-style: italic } /* Generic.Emph */
-    .codehilite .gr { color: #aa0000 } /* Generic.Error */
-    .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
-    .codehilite .gi { color: #00a000; background-color: #dfd } /* Generic.Inserted */
-    .codehilite .go { color: #888888 } /* Generic.Output */
-    .codehilite .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
-    .codehilite .gs { font-weight: bold } /* Generic.Strong */
-    .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
-    .codehilite .gt { color: #aa0000 } /* Generic.Traceback */
-    .codehilite .kc { color: #005cc5; font-weight: bold } /* Keyword.Constant */
-    .codehilite .kd { color: #d73a49; font-weight: bold } /* Keyword.Declaration */
-    .codehilite .kn { color: #d73a49; font-weight: bold } /* Keyword.Namespace */
-    .codehilite .kp { color: #d73a49 } /* Keyword.Pseudo */
-    .codehilite .kr { color: #d73a49; font-weight: bold } /* Keyword.Reserved */
-    .codehilite .kt { color: #445588; font-weight: bold } /* Keyword.Type */
-    .codehilite .m { color: #005cc5 } /* Literal.Number */
-    .codehilite .s { color: #032f62 } /* Literal.String */
-    .codehilite .na { color: #22863a } /* Name.Attribute */
-    .codehilite .nb { color: #005cc5 } /* Name.Builtin */
-    .codehilite .nc { color: #6f42c1; font-weight: bold } /* Name.Class */
-    .codehilite .no { color: #005cc5 } /* Name.Constant */
-    .codehilite .nd { color: #6f42c1; font-weight: bold } /* Name.Decorator */
-    .codehilite .ni { color: #800080 } /* Name.Entity */
-    .codehilite .ne { color: #990000; font-weight: bold } /* Name.Exception */
-    .codehilite .nf { color: #6f42c1; font-weight: bold } /* Name.Function */
-    .codehilite .nl { color: #990000; font-weight: bold } /* Name.Label */
-    .codehilite .nn { color: #6f42c1; font-weight: bold } /* Name.Namespace */
-    .codehilite .nt { color: #22863a } /* Name.Tag */
-    .codehilite .nv { color: #e36209 } /* Name.Variable */
-    .codehilite .ow { color: #d73a49; font-weight: bold } /* Operator.Word */
-    .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
-    .codehilite .mf { color: #005cc5 } /* Literal.Number.Float */
-    .codehilite .mh { color: #005cc5 } /* Literal.Number.Hex */
-    .codehilite .mi { color: #005cc5 } /* Literal.Number.Integer */
-    .codehilite .mo { color: #005cc5 } /* Literal.Number.Oct */
-    .codehilite .sb { color: #032f62 } /* Literal.String.Backtick */
-    .codehilite .sc { color: #032f62 } /* Literal.String.Char */
-    .codehilite .sd { color: #032f62 } /* Literal.String.Doc */
-    .codehilite .s2 { color: #032f62 } /* Literal.String.Double */
-    .codehilite .se { color: #005cc5 } /* Literal.String.Escape */
-    .codehilite .sh { color: #032f62 } /* Literal.String.Heredoc */
-    .codehilite .si { color: #032f62 } /* Literal.String.Interpol */
-    .codehilite .sx { color: #032f62 } /* Literal.String.Other */
-    .codehilite .sr { color: #032f62 } /* Literal.String.Regex */
-    .codehilite .s1 { color: #032f62 } /* Literal.String.Single */
-    .codehilite .ss { color: #005cc5 } /* Literal.String.Symbol */
-    .codehilite .bp { color: #005cc5 } /* Name.Builtin.Pseudo */
-    .codehilite .vc { color: #e36209 } /* Name.Variable.Class */
-    .codehilite .vg { color: #e36209 } /* Name.Variable.Global */
-    .codehilite .vi { color: #e36209 } /* Name.Variable.Instance */
-    .codehilite .il { color: #005cc5 } /* Literal.Number.Integer.Long */
-    
-    /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
-    html.dark .codehilite .hll { background-color: #49483e }
-    html.dark .codehilite .c { color: #75715e } /* Comment */
-    html.dark .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
-    html.dark .codehilite .k { color: #66d9ef; font-weight: normal } /* Keyword */
-    html.dark .codehilite .l { color: #ae81ff } /* Literal */
-    html.dark .codehilite .n { color: #f8f8f2 } /* Name */
-    html.dark .codehilite .o { color: #f92672; font-weight: normal } /* Operator */
-    html.dark .codehilite .p { color: #f8f8f2 } /* Punctuation */
-    html.dark .codehilite .cm { color: #75715e } /* Comment.Multiline */
-    html.dark .codehilite .cp { color: #75715e } /* Comment.Preproc */
-    html.dark .codehilite .c1 { color: #75715e } /* Comment.Single */
-    html.dark .codehilite .cs { color: #75715e } /* Comment.Special */
-    html.dark .codehilite .ge { font-style: italic } /* Generic.Emph */
-    html.dark .codehilite .gs { font-weight: bold } /* Generic.Strong */
-    html.dark .codehilite .kc { color: #66d9ef; font-weight: normal } /* Keyword.Constant */
-    html.dark .codehilite .kd { color: #66d9ef; font-weight: normal  } /* Keyword.Declaration */
-    html.dark .codehilite .kn { color: #f92672; font-weight: normal  } /* Keyword.Namespace */
-    html.dark .codehilite .kp { color: #66d9ef; font-weight: normal  } /* Keyword.Pseudo */
-    html.dark .codehilite .kr { color: #66d9ef; font-weight: normal  } /* Keyword.Reserved */
-    html.dark .codehilite .kt { color: #66d9ef; font-weight: normal  } /* Keyword.Type */
-    html.dark .codehilite .ld { color: #e6db74 } /* Literal.Date */
-    html.dark .codehilite .m { color: #ae81ff } /* Literal.Number */
-    html.dark .codehilite .s { color: #e6db74 } /* Literal.String */
-    html.dark .codehilite .na { color: #a6e22e } /* Name.Attribute */
-    html.dark .codehilite .nb { color: #f8f8f2 } /* Name.Builtin */
-    html.dark .codehilite .nc { color: #a6e22e } /* Name.Class */
-    html.dark .codehilite .no { color: #66d9ef } /* Name.Constant */
-    html.dark .codehilite .nd { color: #a6e22e } /* Name.Decorator */
-    html.dark .codehilite .ni { color: #f8f8f2 } /* Name.Entity */
-    html.dark .codehilite .ne { color: #a6e22e } /* Name.Exception */
-    html.dark .codehilite .nf { color: #a6e22e } /* Name.Function */
-    html.dark .codehilite .nl { color: #f8f8f2 } /* Name.Label */
-    html.dark .codehilite .nn { color: #f8f8f2 } /* Name.Namespace */
-    html.dark .codehilite .nx { color: #a6e22e } /* Name.Other */
-    html.dark .codehilite .py { color: #f8f8f2 } /* Name.Property */
-    html.dark .codehilite .nt { color: #f92672 } /* Name.Tag */
-    html.dark .codehilite .nv { color: #f8f8f2 } /* Name.Variable */
-    html.dark .codehilite .ow { color: #f92672; font-weight: normal  } /* Operator.Word */
-    html.dark .codehilite .w { color: #f8f8f2 } /* Text.Whitespace */
-    html.dark .codehilite .mb { color: #ae81ff } /* Literal.Number.Bin */
-    html.dark .codehilite .mf { color: #ae81ff } /* Literal.Number.Float */
-    html.dark .codehilite .mh { color: #ae81ff } /* Literal.Number.Hex */
-    html.dark .codehilite .mi { color: #ae81ff } /* Literal.Number.Integer */
-    html.dark .codehilite .mo { color: #ae81ff } /* Literal.Number.Oct */
-    html.dark .codehilite .sb { color: #e6db74 } /* Literal.String.Backtick */
-    html.dark .codehilite .sc { color: #e6db74 } /* Literal.String.Char */
-    html.dark .codehilite .sd { color: #e6db74 } /* Literal.String.Doc */
-    html.dark .codehilite .s2 { color: #e6db74 } /* Literal.String.Double */
-    html.dark .codehilite .se { color: #ae81ff } /* Literal.String.Escape */
-    html.dark .codehilite .sh { color: #e6db74 } /* Literal.String.Heredoc */
-    html.dark .codehilite .si { color: #e6db74 } /* Literal.String.Interpol */
-    html.dark .codehilite .sx { color: #e6db74 } /* Literal.String.Other */
-    html.dark .codehilite .sr { color: #e6db74 } /* Literal.String.Regex */
-    html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
-    html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
-</style>
-
+        }
+    </style>
 </head>
-<body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
+<body>
 
-<!-- Navigation -->
-<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
-    <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
-        <a href="../index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
-            <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
-            <div class="flex flex-col">
-                <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
-                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation & Cloud Technologies</span>
-                <span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
-            </div>
-        </a>
-        <div class="flex items-center space-x-6">
-            <a href="../index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
-                Course Home
-            </a>
-            <!-- Theme Toggle Button -->
-            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                <!-- Sun Icon -->
-                <svg id="icon-sun" class="w-5 h-5 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <!-- Moon Icon -->
-                <svg id="icon-moon" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            </button>
-        </div>
+    <div class="slide title-slide">
+        <div class="week-number">Week 10</div>
+        <h1>Storage and Persistence (Cinder)</h1>
+        <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
+        <div class="slide-number">Slide 1</div>
     </div>
-</nav>
 
-<!-- Main Content -->
-<main class="container mx-auto px-4 max-w-5xl mb-12">
-    <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
-        <p><a href="../index.html">‚Üê Back to Course Index</a></p>
-<div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
-<div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
-    <img src="images/week_10_icon.png" class="h-full w-full object-cover" alt="Storage Icon">
-</div>
-<div class="flex-1 flex flex-col items-center justify-center p-6">
-    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Storage and Persistence (Cinder)</h1>
-    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
-</div>
-</div>
+    <div class="slide">
+        <h2>1. The Hierarchy of Cloud Storage</h2>
+        <div class="slide-number">Slide 2</div>
+    </div>
 
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Storage and Persistence (Cinder)
-<strong>Estimated Reading Time</strong>: 25 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-Understand the critical difference between ephemeral and persistent storageóVMs are temporary, but data should last forever. Cinder volumes are like USB drives for your cloud instances.</p>
-</blockquote>
-<hr />
-<h2 id="1-the-hierarchy-of-cloud-storage">1. The Hierarchy of Cloud Storage</h2>
-<p>In Week 9, we launched compute instances, but if we terminate them, the data on their root disk is deleted. This is known as <strong>Ephemeral Storage</strong>. For a business like <strong>Nebula Inc.</strong>, we need a place to store our critical customer database that survives even if the Virtual Machine is destroyed.</p>
-<p>This is the domain of <strong>Persistent Block Storage</strong> (Cinder).</p>
-<p><strong>Industry Context</strong>:</p>
-<ul>
-<li><strong>OpenStack Cinder</strong> performs the exact same role as <strong>AWS Elastic Block Store (EBS)</strong> or <strong>Azure Managed Disks</strong>.</li>
-<li>It provides a "raw hard drive" over the network that you can plug into your instance.</li>
-</ul>
-<h3 id="11-ephemeral-vs-persistent-storage">1.1 Ephemeral vs. Persistent Storage</h3>
-<p>It is crucial to distinguish between the two primary ephemeral and persistent storage models in cloud architectures. <strong>Ephemeral Storage</strong> (Nova) is strictly tied to the lifecycle of the Compute Instance. It functions effectively as a local scratch disk, optimized for operating system caches and temporary file processing. However, if the instance is terminated or the underlying hypervisor fails, this data is irrevocably lost. In contrast, <strong>Persistent Storage</strong> (Cinder) operates as an independent capability. A Cinder volume operates similarly to a physical USB drive or a SAN LUN; it exists independently of any single server. This durability ensures that critical datasets, such as customer databases or file servers, can survive compute failures and can be detached and re-attached to healthy instances during recovery operations.</p>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Ephemeral Storage</strong> (Nova): Temporary, fast, dies with the VM. Use for OS / Cache.</li>
-<li><strong>Persistent Storage</strong> (Cinder): Durable, independent, survives VM deletion. Use for Databases / Critical Data.</li>
-<li><strong>Analogy</strong>: Ephemeral is RAM/Swap; Persistent is the Hard Drive.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why shouldn't you store your customer MySQL database on the Nova Ephemeral disk?</li>
-<li>If you delete a Cinder Volume, is the data recoverable? (Hint: Only if you have a Backup).</li>
-</ul>
-<hr />
-<h2 id="2-block-storage-architecture-cinder">2. Block Storage Architecture (Cinder)</h2>
-<p>Cinder is the software that orchestrates storage devices; it does not usually <em>store</em> the data itself. Instead, it acts as a translation layer between the user and the physical storage hardware.</p>
-<h3 id="21-the-driver-model">2.1 The Driver Model</h3>
-<p>Just as Nova utilizes virtualization drivers to interact with various CPU architectures, Cinder employs a <strong>Volume Driver</strong> architecture to communicate with diverse storage backends.</p>
-<p><img alt="Cinder Component Architecture" src="images/cinder_architecture.png" />
-<em>Figure 1: Cinder Architecture - The Cinder Scheduler selects the backend, and the Volume Driver translates API calls into storage commands</em></p>
-<ul>
-<li><strong>Laboratory</strong>: The <strong>LVM Driver</strong> manages local logical volumes on a standard Linux server.</li>
-<li><strong>Enterprise</strong>: Customized drivers for <strong>Dell EMC</strong>, <strong>NetApp</strong>, or <strong>HPE</strong> arrays translate API calls into proprietary storage commands.</li>
-<li><strong>Scale-Out</strong>: The <strong>Ceph Driver</strong> allows Cinder to provision resources from a distributed, software-defined storage cluster. When a user executes a creation command, Cinder identifies the correct driver and signals the backend hardware to provision the requested Logical Unit Number (LUN).</li>
-</ul>
-<h3 id="22-the-attachment-process-iscsirbd">2.2 The Attachment Process (iSCSI/RBD)</h3>
-<p>The mechanism for attaching a volume to an instance involves a coordinated handshake between services.</p>
-<p><img alt="Volume Attachment Workflow" src="images/volume_attachment_flow.png" />
-<em>Figure 2: The Attachment Handshake - How Nova and Cinder coordinate to plug a remote disk into a running VM</em></p>
-<ol>
-<li><strong>Provision</strong>: Cinder provisions the logical volume on the specific storage array.</li>
-<li><strong>Request</strong>: Nova requests the connection parametersótypically the Target IQN (iSCSI) or Monitor IP (Ceph)ófrom Cinder.</li>
-<li><strong>Connect</strong>: Nova configures the Hypervisor (KVM) to initiate a storage login session using the appropriate protocol.</li>
-<li><strong>Device Map</strong>: The local operating system kernel on the hypervisor detects the new block device (e.g., <code>/dev/sdb</code>) and passes it through to the virtual machine, which perceives it as a locally attached hard drive.</li>
-</ol>
-<h3 id="23-deep-dive-storage-backends">2.3 Deep Dive: Storage Backends</h3>
-<p>Cinder operates as an abstraction layer, capable of interfacing with a diverse array of storage backends. In private cloud environments, the two most prevalent technologies serve as excellent examples of this flexibility: the Network File System (NFS) and the Ceph distributed storage cluster.</p>
-<h3 id="231-nfs-network-file-system">2.3.1 NFS (Network File System)</h3>
-<p>The Network File System (NFS) represents the simpler deployment model, often utilized in smaller environments or laboratories. In this architecture, Cinder acts as a client that mounts a remote directory from an existing NAS appliance or Linux server (e.g., <code>192.168.1.5:/toptier</code>). When a user requests a new volume, the Cinder Volume service generates a large file, typically in the QCOW2 format, within this mounted directory. While this approach is notably easy to implementórequiring only a standard Linux server or a commercial NAS like Synologyóit suffers from scalability limitations. The performance of the entire cloud storage pool is often constrained by the throughput of the single network link connecting the Controller to the NAS, creating a significant bottleneck and a single point of failure.</p>
-<h3 id="232-ceph-the-gold-standard">2.3.2 Ceph (The Gold Standard)</h3>
-<p>In contrast, Ceph represents the industry standard for production-grade OpenStack deployments. As a software-defined storage solution, Ceph eliminates the need for a central storage controller. Instead, it aggregates storage capacity from hundreds of individual hard drives distributed across many physical servers, unifying them into a massive, scalable "Pool." The integration between Cinder and Ceph is facilitated by the <code>librbd</code> library, which allows Cinder to manage reliable RADOS Block Devices (RBD).</p>
-<p>Ceph distinguishes itself through its self-healing capabilities and advanced snapshotting mechanism. When data is written to a Ceph-backed volume, it is split into 4MB objects and scattered deterministically across the cluster. If a physical drive fails, the cluster automatically detects the missing objects and replicates them from surviving redundant copies, effectively healing the system without human intervention. Furthermore, because Ceph manages data as discrete objects, it can create instantaneous snapshots using a Copy-on-Write mechanism. This allows administrators to generate thousands of recovery points without incurring the performance penalties associated with traditional storage arrays.</p>
-<p><strong>Implementation Note</strong>: In production, Ceph is the preferred backend because it decouples storage from compute hardware entirely, allowing indefinite scaling.</p>
-<h3 id="233-configuring-cinder-with-ceph">2.3.3 Configuring Cinder with Ceph</h3>
-<blockquote>
-<p><strong>Note</strong>: This assumes a Ceph cluster is already running. To learn how to build one from scratch, see the <a href="Week_10_Guide_Ceph_Cluster_Setup.html">Optional Ceph Setup Guide</a>.</p>
-</blockquote>
-<p>To configure OpenStack Cinder to use a Ceph cluster as its backend, the administrator must edit the <code>cinder.conf</code> file on the Controller node. The process involves three key steps: installing the client libraries, authenticating, and defining the driver.</p>
-<p><strong>1. Install Ceph Client:</strong>
+    <div class="slide">
+        <h3>1.1 Ephemeral vs. Persistent Storage</h3>
+        <ul>
+            <li>It is crucial to distinguish between the two primary ephemeral and persistent storage models in cloud architectures.</li>
+            <li>Ephemeral Storage (Nova) is strictly tied to the lifecycle of the Compute Instance.</li>
+            <li>It functions effectively as a local scratch disk, optimized for operating system caches and temporary file processing.</li>
+            <li>However, if the instance is terminated or the underlying hypervisor fails, this data is irrevocably lost.</li>
+            <li>In contrast, Persistent Storage (Cinder) operates as an independent capability.</li>
+        </ul>
+        <div class="slide-number">Slide 3</div>
+    </div>
+
+    <div class="slide">
+        <h3>Section 1 Checkpoint</h3>
+        <p>Summary:</p>
+        <ul>
+            <li>Ephemeral Storage (Nova): Temporary, fast, dies with the VM. Use for OS / Cache.</li>
+            <li>Persistent Storage (Cinder): Durable, independent, survives VM deletion. Use for Databases / Critical Data.</li>
+            <li>Analogy: Ephemeral is RAM/Swap; Persistent is the Hard Drive.</li>
+        </ul>
+        <p>Reflection:</p>
+        <ul>
+            <li>Why shouldn't you store your customer MySQL database on the Nova Ephemeral disk?</li>
+            <li>If you delete a Cinder Volume, is the data recoverable? (Hint: Only if you have a Backup).</li>
+        </ul>
+        <div class="slide-number">Slide 4</div>
+    </div>
+
+    <div class="slide">
+        <h2>2. Block Storage Architecture (Cinder)</h2>
+        <div class="slide-number">Slide 5</div>
+    </div>
+
+    <div class="slide">
+        <h3>2.1 The Driver Model</h3>
+        <p>Just as Nova utilizes virtualization drivers to interact with various CPU architectures, Cinder employs a Volume Driver architecture to communicate with diverse storage backends.</p>
+        <p>Figure 1: Cinder Architecture - The Cinder Scheduler selects the backend, and the Volume Driver translates API calls into storage commands</p>
+        <ul>
+            <li>Laboratory: The LVM Driver manages local logical volumes on a standard Linux server.</li>
+            <li>Enterprise: Customized drivers for Dell EMC, NetApp, or HPE arrays translate API calls into proprietary storage commands.</li>
+            <li>Scale-Out: The Ceph Driver allows Cinder to provision resources from a distributed, software-defined storage cluster. When a user executes a creation command, Cinder identifies the correct driver and signals the backend hardware to provision the requested Logical Unit Number (LUN).</li>
+        </ul>
+        <div class="slide-number">Slide 6</div>
+    </div>
+
+    <div class="slide">
+        <h3>2.2 The Attachment Process (iSCSI/RBD)</h3>
+        <p>The mechanism for attaching a volume to an instance involves a coordinated handshake between services.</p>
+        <p>Figure 2: The Attachment Handshake - How Nova and Cinder coordinate to plug a remote disk into a running VM</p>
+        <div class="slide-number">Slide 7</div>
+    </div>
+
+    <div class="slide">
+        <h3>2.3 Deep Dive: Storage Backends</h3>
+        <p>Cinder operates as an abstraction layer, capable of interfacing with a diverse array of storage backends. In private cloud environments, the two most prevalent technologies serve as excellent examples of this flexibility: the Network File System (NFS) and the Ceph distributed storage cluster.</p>
+        <div class="slide-number">Slide 8</div>
+    </div>
+
+    <div class="slide">
+        <h3>2.3.1 NFS (Network File System)</h3>
+        <ul>
+            <li>The Network File System (NFS) represents the simpler deployment model, often utilized in smaller environments or laboratories.</li>
+            <li>In this architecture, Cinder acts as a client that mounts a remote directory from an existing NAS appliance or Linux server (e.g., 192.168.1.5:/toptier).</li>
+            <li>When a user requests a new volume, the Cinder Volume service generates a large file, typically in the QCOW2 format, within this mounted directory.</li>
+            <li>While this approach is notably easy to implement‚Äîrequiring only a standard Linux server or a commercial NAS like Synology‚Äîit suffers from scalability limitations.</li>
+            <li>The performance of the entire cloud storage pool is often constrained by the throughput of the single network link connecting the Controller to the NAS, creating a significant bottleneck and a single point of failure.</li>
+        </ul>
+        <div class="slide-number">Slide 9</div>
+    </div>
+
+    <div class="slide">
+        <h3>2.3.2 Ceph (The Gold Standard)</h3>
+        <ul>
+            <li>In contrast, Ceph represents the industry standard for production-grade OpenStack deployments.</li>
+            <li>As a software-defined storage solution, Ceph eliminates the need for a central storage controller.</li>
+            <li>Instead, it aggregates storage capacity from hundreds of individual hard drives distributed across many physical servers, unifying them into a massive, scalable "Pool." The integration between Cinder and Ceph is facilitated by the librbd library, which allows Cinder to manage reliable RADOS Block Devices (RBD).</li>
+        </ul>
+        <ul>
+            <li>Ceph distinguishes itself through its self-healing capabilities and advanced snapshotting mechanism.</li>
+            <li>When data is written to a Ceph-backed volume, it is split into 4MB objects and scattered deterministically across the cluster.</li>
+            <li>If a physical drive fails, the cluster automatically detects the missing objects and replicates them from surviving redundant copies, effectively healing the system without human intervention.</li>
+            <li>Furthermore, because Ceph manages data as discrete objects, it can create instantaneous snapshots using a Copy-on-Write mechanism.</li>
+            <li>This allows administrators to generate thousands of recovery points without incurring the performance penalties associated with traditional storage arrays.</li>
+        </ul>
+        <p>Implementation Note: In production, Ceph is the preferred backend because it decouples storage from compute hardware entirely, allowing indefinite scaling.</p>
+        <div class="slide-number">Slide 10</div>
+    </div>
+
+    <div class="slide">
+        <h3>2.3.3 Configuring Cinder with Ceph</h3>
+        <div class="quote">Note: This assumes a Ceph cluster is already running. To learn how to build one from scratch, see the Optional Ceph Setup Guide.</div>
+        <p>To configure OpenStack Cinder to use a Ceph cluster as its backend, the administrator must edit the cinder.conf file on the Controller node. The process involves three key steps: installing the client libraries, authenticating, and defining the driver.</p>
+        <p>1. Install Ceph Client:
 The Cinder service requires the python libraries to communicate with the Ceph public network.</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3-rbd<span class="w"> </span>ceph-common
-</code></pre></div>
-
-<p><strong>2. Authentication (Keyring):</strong>
+        <p>2. Authentication (Keyring):
 OpenStack acts as a client "user" to the Ceph cluster. You must copy the authentication keyring from the Ceph Monitor node to the Cinder node.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># On Cinder Node</span>
-scp<span class="w"> </span>ceph-node:/etc/ceph/ceph.client.cinder.keyring<span class="w"> </span>/etc/ceph/
-chmod<span class="w"> </span><span class="m">0640</span><span class="w"> </span>/etc/ceph/ceph.client.cinder.keyring
-</code></pre></div>
+        <p>3. Driver Configuration (/etc/cinder/cinder.conf):
+Define a new backend section (e.g., [ceph]) and reference it in the enabled_backends list.</p>
+        <div class="slide-number">Slide 11</div>
+    </div>
 
-<p><strong>3. Driver Configuration (<code>/etc/cinder/cinder.conf</code>):</strong>
-Define a new backend section (e.g., <code>[ceph]</code>) and reference it in the <code>enabled_backends</code> list.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">[DEFAULT]</span>
-<span class="na">enabled_backends</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ceph</span>
-
-<span class="k">[ceph]</span>
-<span class="na">volume_driver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">cinder.volume.drivers.rbd.RBDDriver</span>
-<span class="na">volume_backend_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ceph</span>
-<span class="na">rbd_pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">volumes</span>
-<span class="na">rbd_ceph_conf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/etc/ceph/ceph.conf</span>
-<span class="na">rbd_flatten_volume_from_snapshot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
-<span class="na">rbd_max_clone_depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">5</span>
-<span class="na">rbd_store_chunk_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">4</span>
-<span class="na">rados_connect_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">-1</span>
-<span class="na">glance_api_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2</span>
-</code></pre></div>
-
-<h3 id="234-configuring-cinder-with-nfs">2.3.4 Configuring Cinder with NFS</h3>
-<p>For smaller deployments or lab environments, NFS is a common backend. It requires a dedicated text file to list the shares and a specific driver configuration.</p>
-<p><strong>1. Create Shares File:</strong>
-Create a text file (e.g., <code>/etc/cinder/nfs_shares</code>) and list your NFS exports, one per line.</p>
-<div class="codehilite"><pre><span></span><code><span class="m">192</span>.168.1.100:/var/nfs/cinder
-<span class="m">192</span>.168.1.100:/var/nfs/backup
-</code></pre></div>
-
-<p><strong>2. Set Permissions:</strong>
+    <div class="slide">
+        <h3>2.3.4 Configuring Cinder with NFS</h3>
+        <p>For smaller deployments or lab environments, NFS is a common backend. It requires a dedicated text file to list the shares and a specific driver configuration.</p>
+        <p>1. Create Shares File:
+Create a text file (e.g., /etc/cinder/nfs_shares) and list your NFS exports, one per line.</p>
+        <p>2. Set Permissions:
 Ensure the Cinder user can read this file.</p>
-<div class="codehilite"><pre><span></span><code>chown<span class="w"> </span>root:cinder<span class="w"> </span>/etc/cinder/nfs_shares
-chmod<span class="w"> </span><span class="m">0640</span><span class="w"> </span>/etc/cinder/nfs_shares
-</code></pre></div>
+        <p>3. Driver Configuration (/etc/cinder/cinder.conf):</p>
+        <div class="slide-number">Slide 12</div>
+    </div>
 
-<p><strong>3. Driver Configuration (<code>/etc/cinder/cinder.conf</code>):</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">[nfs]</span>
-<span class="na">volume_driver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">cinder.volume.drivers.nfs.NfsDriver</span>
-<span class="na">volume_backend_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">nfs</span>
-<span class="na">nfs_shares_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/etc/cinder/nfs_shares</span>
-<span class="na">nfs_mount_point_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/var/lib/cinder/nfs</span>
-</code></pre></div>
+    <div class="slide">
+        <h3>Section 2 Checkpoint</h3>
+        <p>Summary:</p>
+        <ul>
+            <li>Cinder: Manages block storage (Creating/Attaching volumes).</li>
+            <li>Backends: Connects to LVM (Local), NFS (File), or Ceph (Distributed).</li>
+            <li>Ceph: The Gold Standard for OpenStack. Self-healing, scalable, compliant.</li>
+        </ul>
+        <p>Reflection:</p>
+        <ul>
+            <li>Why is Ceph preferred over NFS for large clouds? (Hint: Single Point of Failure).</li>
+            <li>What happens to a generic "File" on an NFS share when Cinder creates a volume? (It becomes a .qcow2 or .raw disk image).</li>
+        </ul>
+        <div class="slide-number">Slide 13</div>
+    </div>
 
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Cinder</strong>: Manages block storage (Creating/Attaching volumes).</li>
-<li><strong>Backends</strong>: Connects to LVM (Local), NFS (File), or Ceph (Distributed).</li>
-<li><strong>Ceph</strong>: The Gold Standard for OpenStack. Self-healing, scalable, compliant.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why is Ceph preferred over NFS for large clouds? (Hint: Single Point of Failure).</li>
-<li>What happens to a generic "File" on an NFS share when Cinder creates a volume? (It becomes a <code>.qcow2</code> or <code>.raw</code> disk image).</li>
-</ul>
-<hr />
-<h2 id="3-data-safety-strategies">3. Data Safety Strategies</h2>
-<p>In enterprise cloud environments, ensuring data durability and availability against hardware failure is a critical architectural requirement. While Cinder provides robust block storage, the physical media underlying these volumes remains susceptible to corruption or catastrophic failure. To mitigate these risks and ensure business continuity, OpenStack implements two distinct data protection mechanisms: Snapshotting for point-in-time operational recovery, and Backups for comprehensive disaster recovery.</p>
-<h3 id="31-snapshots-the-time-machine">3.1 Snapshots (The Time Machine)</h3>
-<p>A <strong>Snapshot</strong> represents a point-in-time copy of a specific volume using a "Copy-on-Write" (Redirect on Write) mechanism. This technique ensures that the snapshot is created nearly instantly, as it relies on the existing data blocks rather than duplicating the entire drive volume. Snapshots are invaluable for functional recovery scenarios, such as capturing the state of a database before a major upgrade; if the upgrade fails, the administrator can rollback instantly. However, it is critical to note that snapshots typically reside on the same physical hardware as the source volume. Therefore, if the underlying storage array experiences a catastrophic failure, both the active volume and its snapshots will be lost.</p>
-<h3 id="32-backups-the-disaster-plan">3.2 Backups (The Disaster Plan)</h3>
-<p>To mitigate the risk of physical hardware failure, <strong>Backups</strong> provide a complete disaster recovery solution.</p>
-<p><img alt="Block vs Object Storage" src="images/block_vs_object_storage.png" />
-<em>Figure 3: Block vs Object Storage - Cinder Backups move data from expensive, fast Block Storage to cheap, durable Object Storage (Swift/S3)</em></p>
-<p>A backup involves reading the full content of a block volume and transferring it to a separate, physically isolated systemótypically an Object Storage service like <strong>Swift</strong> or Amazon S3. Although this process is slower due to network transfer requirements, it ensures data survivability. If the primary SAN or Ceph cluster were to be destroyed by fire or malfunction, the data could still be restored from the backup repository located in a different rack or data center.</p>
-<h3 id="33-architecting-redundancy-public-vs-private">3.3 Architecting Redundancy: Public vs. Private</h3>
-<p>In a Public Cloud (AWS/Azure), achieving higher redundancy is often as simple as selecting a premium tier in a dropdown menu. However, in a Private Cloud environment using OpenStack, you are the architect responsible for building these layers yourself. Understanding how standard cloud redundancy levels map to OpenStack implementation is crucial for designing robust infrastructure.</p>
-<p><strong>Level 1: Local Redundancy (LRS)</strong>
-The foundational level of data safety is Local Redundancy, known as LRS in Azure or EBS in AWS. This concept ensures that data survives disk failures within a single rack or datacenter. In an OpenStack private cloud, this is achieved natively through <strong>Ceph</strong>. By default, Ceph creates a "Replica=3" pool, which automatically stores three copies of every object on different physical Object Storage Daemons (OSDs). If a physical drive fails, the system self-heals by replicating the data from the surviving copies to a new drive, mirroring the durability guarantees of public cloud LRS.</p>
-<p><strong>Level 2: Zonal Redundancy (ZRS)</strong>
-The next tier is Zonal Redundancy (ZRS), designed to ensure data survives the total destruction of a building due to fire or power loss. Public clouds implement this by replicating data across distinct Availability Zonesóseparate facilities with independent power and cooling. In OpenStack, you replicate this architecture using <strong>Cinder Availability Zones</strong>. By modifying <code>cinder.conf</code>, an administrator can define logical zones (e.g., <code>zone-A</code>, <code>zone-B</code>) and map them to specific storage racks or entirely separate Ceph clusters. This requires users to consciously select a zone when provisioning a volume, ensuring their application architecture can withstand a facility-level failure.</p>
-<p><strong>Level 3: Geo Redundancy (GRS)</strong>
-The highest level of protection is Geo Redundancy (GRS), which ensures survival against regional catastrophes, such as major natural disasters. While public clouds handle this via asynchronous replication between regions (e.g., North Europe to West Europe), a private cloud architect typically implements this using <strong>Cinder Backup</strong>. By configuring Cinder to send volume backups to a remote Swift Object Storage cluster located in a different city, you guarantee that critical data can be restored even if the primary datacenter is lost. More advanced (and expensive) setups can also utilize driver-level volume replication for real-time Active/Passive disaster recovery.</p>
-<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Snapshot</strong>: Quick, local, dependent on source. Use for "Undo" before changes.</li>
-<li><strong>Backup</strong>: Slow, remote, independent. Use for Disaster Recovery (Fire/Flood).</li>
-<li><strong>Redundancy</strong>: LRS (Disk Fail), ZRS (Rack/Building Fail), GRS (City Fail).</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why isn't a Snapshot considered a true Backup?</li>
-<li>Which Cinder feature would you use to protect against a data center power outage? (Cinder Backup / Replication).</li>
-</ul>
-<hr />
-<h2 id="4-operations-cookbook-nebula-inc">4. Operations Cookbook (Nebula Inc.)</h2>
-<p>We continue our role as the Cloud Engineer for Nebula Inc. We have a Web Server (<code>nebula_web_01</code>). Now we need a Database Server, but we need to ensure its data is safe.</p>
-<h3 id="41-creating-a-volume">4.1 Creating a Volume</h3>
-<p>We begin by provisioning a specific persistent volume for our database. This is analogous to purchasing a physical hard drive; initially, it exists as an unattached operational resource within the storage inventory.</p>
-<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>volume<span class="w"> </span>create<span class="w"> </span>--size<span class="w"> </span><span class="m">1</span><span class="w"> </span>nebula_db_vol
-</code></pre></div>
+    <div class="slide">
+        <h2>3. Data Safety Strategies</h2>
+        <div class="slide-number">Slide 14</div>
+    </div>
 
-<h3 id="42-attaching-the-volume">4.2 Attaching the Volume</h3>
-<p>Once created, the volume must be physically connected to the compute instance. This command mimics the act of plugging a USB drive or SAS cable into a running server.</p>
-<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>server<span class="w"> </span>add<span class="w"> </span>volume<span class="w"> </span>nebula_web_01<span class="w"> </span>nebula_db_vol
-</code></pre></div>
+    <div class="slide">
+        <h3>3.1 Snapshots (The Time Machine)</h3>
+        <ul>
+            <li>A Snapshot represents a point-in-time copy of a specific volume using a "Copy-on-Write" (Redirect on Write) mechanism.</li>
+            <li>This technique ensures that the snapshot is created nearly instantly, as it relies on the existing data blocks rather than duplicating the entire drive volume.</li>
+            <li>Snapshots are invaluable for functional recovery scenarios, such as capturing the state of a database before a major upgrade; if the upgrade fails, the administrator can rollback instantly.</li>
+            <li>However, it is critical to note that snapshots typically reside on the same physical hardware as the source volume.</li>
+            <li>Therefore, if the underlying storage array experiences a catastrophic failure, both the active volume and its snapshots will be lost.</li>
+        </ul>
+        <div class="slide-number">Slide 15</div>
+    </div>
 
-<ul>
-<li><strong>Verification</strong>:
-    <code>bash
+    <div class="slide">
+        <h3>3.2 Backups (The Disaster Plan)</h3>
+        <p>To mitigate the risk of physical hardware failure, Backups provide a complete disaster recovery solution.</p>
+        <p>Figure 3: Block vs Object Storage - Cinder Backups move data from expensive, fast Block Storage to cheap, durable Object Storage (Swift/S3)</p>
+        <ul>
+            <li>A backup involves reading the full content of a block volume and transferring it to a separate, physically isolated system‚Äîtypically an Object Storage service like Swift or Amazon S3.</li>
+            <li>Although this process is slower due to network transfer requirements, it ensures data survivability.</li>
+            <li>If the primary SAN or Ceph cluster were to be destroyed by fire or malfunction, the data could still be restored from the backup repository located in a different rack or data center.</li>
+        </ul>
+        <div class="slide-number">Slide 16</div>
+    </div>
+
+    <div class="slide">
+        <h3>3.3 Architecting Redundancy: Public vs. Private</h3>
+        <ul>
+            <li>In a Public Cloud (AWS/Azure), achieving higher redundancy is often as simple as selecting a premium tier in a dropdown menu.</li>
+            <li>However, in a Private Cloud environment using OpenStack, you are the architect responsible for building these layers yourself.</li>
+            <li>Understanding how standard cloud redundancy levels map to OpenStack implementation is crucial for designing robust infrastructure.</li>
+        </ul>
+        <ul>
+            <li>Level 1: Local Redundancy (LRS)
+The foundational level of data safety is Local Redundancy, known as LRS in Azure or EBS in AWS.</li>
+            <li>This concept ensures that data survives disk failures within a single rack or datacenter.</li>
+            <li>In an OpenStack private cloud, this is achieved natively through Ceph.</li>
+            <li>By default, Ceph creates a "Replica=3" pool, which automatically stores three copies of every object on different physical Object Storage Daemons (OSDs).</li>
+            <li>If a physical drive fails, the system self-heals by replicating the data from the surviving copies to a new drive, mirroring the durability guarantees of public cloud LRS.</li>
+        </ul>
+        <ul>
+            <li>Level 2: Zonal Redundancy (ZRS)
+The next tier is Zonal Redundancy (ZRS), designed to ensure data survives the total destruction of a building due to fire or power loss.</li>
+            <li>Public clouds implement this by replicating data across distinct Availability Zones‚Äîseparate facilities with independent power and cooling.</li>
+            <li>In OpenStack, you replicate this architecture using Cinder Availability Zones.</li>
+            <li>By modifying cinder.conf, an administrator can define logical zones (e.g., zone-A, zone-B) and map them to specific storage racks or entirely separate Ceph clusters.</li>
+            <li>This requires users to consciously select a zone when provisioning a volume, ensuring their application architecture can withstand a facility-level failure.</li>
+        </ul>
+        <ul>
+            <li>Level 3: Geo Redundancy (GRS)
+The highest level of protection is Geo Redundancy (GRS), which ensures survival against regional catastrophes, such as major natural disasters.</li>
+            <li>While public clouds handle this via asynchronous replication between regions (e.g., North Europe to West Europe), a private cloud architect typically implements this using Cinder Backup.</li>
+            <li>By configuring Cinder to send volume backups to a remote Swift Object Storage cluster located in a different city, you guarantee that critical data can be restored even if the primary datacenter is lost.</li>
+            <li>More advanced (and expensive) setups can also utilize driver-level volume replication for real-time Active/Passive disaster recovery.</li>
+        </ul>
+        <div class="slide-number">Slide 17</div>
+    </div>
+
+    <div class="slide">
+        <h3>Section 3 Checkpoint</h3>
+        <p>Summary:</p>
+        <ul>
+            <li>Snapshot: Quick, local, dependent on source. Use for "Undo" before changes.</li>
+            <li>Backup: Slow, remote, independent. Use for Disaster Recovery (Fire/Flood).</li>
+            <li>Redundancy: LRS (Disk Fail), ZRS (Rack/Building Fail), GRS (City Fail).</li>
+        </ul>
+        <p>Reflection:</p>
+        <ul>
+            <li>Why isn't a Snapshot considered a true Backup?</li>
+            <li>Which Cinder feature would you use to protect against a data center power outage? (Cinder Backup / Replication).</li>
+        </ul>
+        <div class="slide-number">Slide 18</div>
+    </div>
+
+    <div class="slide">
+        <h2>4. Operations Cookbook (Nebula Inc.)</h2>
+        <div class="slide-number">Slide 19</div>
+    </div>
+
+    <div class="slide">
+        <h3>4.1 Creating a Volume</h3>
+        <p>We begin by provisioning a specific persistent volume for our database. This is analogous to purchasing a physical hard drive; initially, it exists as an unattached operational resource within the storage inventory.</p>
+        <div class="slide-number">Slide 20</div>
+    </div>
+
+    <div class="slide">
+        <h3>4.2 Attaching the Volume</h3>
+        <p>Once created, the volume must be physically connected to the compute instance. This command mimics the act of plugging a USB drive or SAS cable into a running server.</p>
+        <ul>
+            <li>Verification:
+    bash
     openstack volume list
-    # Status should be "in-use"</code></li>
-</ul>
-<h3 id="43-formatting-and-mounting-guest-os">4.3 Formatting and Mounting (Guest OS)</h3>
-<p>It is important to remember that Cinder delivers a raw block device (e.g., <code>/dev/vdb</code>) without any file system. The administrator must log into the Guest OS to format the disk and mount it for use effectively transferring responsibility from the "Cloud Provider" to the "OS Administrator".</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># SSH into the VM</span>
-ssh<span class="w"> </span>cirros@&lt;FLOATING_IP&gt;
+    # Status should be "in-use"</li>
+        </ul>
+        <div class="slide-number">Slide 21</div>
+    </div>
 
-<span class="c1"># Check for new disk (usually /dev/vdb)</span>
-lsblk
+    <div class="slide">
+        <h3>4.3 Formatting and Mounting (Guest OS)</h3>
+        <p>It is important to remember that Cinder delivers a raw block device (e.g., /dev/vdb) without any file system. The administrator must log into the Guest OS to format the disk and mount it for use effectively transferring responsibility from the "Cloud Provider" to the "OS Administrator".</p>
+        <div class="slide-number">Slide 22</div>
+    </div>
 
-<span class="c1"># Create Config Files (Simulating a DB)</span>
-<span class="c1"># CirrOS is too small for mkfs, so we will write directly</span>
-sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo &quot;Customer Data 123&quot; &gt; /dev/vdb&#39;</span>
-</code></pre></div>
+    <div class="slide">
+        <h3>4.4 Snapshotting</h3>
+        <p>Before executing any destructive changes or updates to the database, standard procedure dictates creating a snapshot to preserve the current state.</p>
+        <div class="slide-number">Slide 23</div>
+    </div>
 
-<h3 id="44-snapshotting">4.4 Snapshotting</h3>
-<p>Before executing any destructive changes or updates to the database, standard procedure dictates creating a snapshot to preserve the current state.</p>
-<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>volume<span class="w"> </span>snapshot<span class="w"> </span>create<span class="w"> </span>--volume<span class="w"> </span>nebula_db_vol<span class="w"> </span>nebula_db_snap_v1
-</code></pre></div>
+    <div class="slide">
+        <h3>Section 4 Checkpoint</h3>
+        <p>Summary:</p>
+        <ul>
+            <li>Process: Create Volume -> Attach to VM -> Format (mkfs) -> Mount.</li>
+            <li>Guest Responsibility: The Cloud Provider connects the wire; YOU must format the disk.</li>
+            <li>Persistence: Data survives detach/reattach and VM deletion.</li>
+        </ul>
+        <p>Reflection:</p>
+        <ul>
+            <li>Why doesn't the volume show up automatically in /mnt when you attach it?</li>
+            <li>What Linux command lists all block devices? (lsblk).</li>
+        </ul>
+        <div class="slide-number">Slide 24</div>
+    </div>
 
-<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Process</strong>: Create Volume -&gt; Attach to VM -&gt; Format (mkfs) -&gt; Mount.</li>
-<li><strong>Guest Responsibility</strong>: The Cloud Provider connects the wire; YOU must format the disk.</li>
-<li><strong>Persistence</strong>: Data survives detach/reattach and VM deletion.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why doesn't the volume show up automatically in <code>/mnt</code> when you attach it?</li>
-<li>What Linux command lists all block devices? (<code>lsblk</code>).</li>
-</ul>
-<hr />
-<h2 id="5-industry-comparison-storage">5. Industry Comparison: Storage</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;">OpenStack Cinder</th>
-<th style="text-align: left;">AWS</th>
-<th style="text-align: left;">Azure</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Service Name</strong></td>
-<td style="text-align: left;">Cinder</td>
-<td style="text-align: left;">EBS (Elastic Block Store)</td>
-<td style="text-align: left;">Azure Managed Disks</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Resource</strong></td>
-<td style="text-align: left;">Volume</td>
-<td style="text-align: left;">EBS Volume</td>
-<td style="text-align: left;">Managed Disk</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Backup Target</strong></td>
-<td style="text-align: left;">Swift (Object Storage)</td>
-<td style="text-align: left;">S3</td>
-<td style="text-align: left;">Azure Blob Storage</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Connection</strong></td>
-<td style="text-align: left;">iSCSI / Ceph (RBD)</td>
-<td style="text-align: left;">NVMe / EBS Direct</td>
-<td style="text-align: left;">VHD / Blob</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Snapshot Type</strong></td>
-<td style="text-align: left;">Copy-on-Write</td>
-<td style="text-align: left;">Incremental</td>
-<td style="text-align: left;">Incremental</td>
-</tr>
-<tr>
-<td style="text-align: left;">---</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-</tbody>
-</table>
-<h2 id="7-summary-and-next-steps">7. Summary and Next Steps</h2>
-<p>This week we ensured that <strong>Nebula Inc.</strong> doesn't lose data. By implementing <strong>Cinder</strong> backed by <strong>Ceph</strong>, we provided a robust, persistent storage layer for our instances. We learned the difference between the "Scratchpad" (Ephemeral) and the "Vault" (Persistent). We also explored the critical difference between a convenience Snapshot and a disaster-proof Backup.</p>
-<h3 id="preparing-for-week-11">Preparing for Week 11</h3>
-<p>Next week, we stop clicking buttons manually. We will introduce <strong>Automation and APIs</strong>. We will learn how to deploy this entire infrastructure using code (Bash/Python) and configuration scripts (Cloud-Init), moving from "Pets" to "Cattle" effectively.</p>
-<p><strong>Checklist:</strong></p>
-<ul>
-<li>Can you differentiate between <code>nova-compute</code> storage and <code>cinder-volume</code> storage?</li>
-<li>Do you understand why we need to format a volume after attaching it?</li>
-<li>Review your Linux command line skills (loops and variables) for next week.</li>
-</ul>
-<hr />
-<h2 id="8-additional-resources">8. Additional Resources</h2>
-<ul>
-<li><strong>OpenStack Cinder Docs</strong>: <a href="https://docs.openstack.org/cinder/latest/">docs.openstack.org/cinder/latest/</a></li>
-<li><strong>AWS EBS Documentation</strong>: <a href="https://aws.amazon.com/ebs/">aws.amazon.com/ebs/</a></li>
-<li><strong>Azure Managed Disks</strong>: <a href="https://azure.microsoft.com/en-us/products/managed-disks/">azure.microsoft.com/en-us/products/managed-disks/</a></li>
-</ul>
-<hr />
-<h2 id="9-lab-exercises">9. Lab Exercises</h2>
-<p>Now that you understand the theory of Persistent Storage, Cinder Backends, and Data Redundancy, it is time to build it.</p>
-<ul>
-<li><strong><a href="Week_10_Lab_1_Storage.html">Week 10 Lab 1: Persistent Cloud Storage</a></strong><ul>
-<li><strong>Goal</strong>: Create a volume, attach it to an instance, format it, write data, and simulate a migration to a second instance to prove persistence.</li>
-</ul>
-</li>
-</ul>
-<p><a href="../index.html">‚Üê Back to Course Index</a></p>
-                <div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-                    <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-                    <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-                    <a href="Week_10_Quiz.html" id="start-quiz-btn" class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline">
-                        Start Quiz
-                    </a>
-                </div>
-                
-    </article>
-</main>
+    <div class="slide">
+        <h2>5. Industry Comparison: Storage</h2>
+        <div class="slide-number">Slide 25</div>
+    </div>
 
-<!-- Footer -->
-<footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
-</footer>
+    <div class="slide">
+        <h2>7. Summary and Next Steps</h2>
+        <div class="slide-number">Slide 26</div>
+    </div>
 
-<!-- Progress Tracking -->
-<script src="../js/course_logic.js"></script>
+    <div class="slide">
+        <h3>Preparing for Week 11</h3>
+        <p>Next week, we stop clicking buttons manually. We will introduce Automation and APIs. We will learn how to deploy this entire infrastructure using code (Bash/Python) and configuration scripts (Cloud-Init), moving from "Pets" to "Cattle" effectively.</p>
+        <p>Checklist:</p>
+        <ul>
+            <li>Can you differentiate between nova-compute storage and cinder-volume storage?</li>
+            <li>Do you understand why we need to format a volume after attaching it?</li>
+            <li>Review your Linux command line skills (loops and variables) for next week.</li>
+        </ul>
+        <div class="slide-number">Slide 27</div>
+    </div>
+
+    <div class="slide">
+        <h2>8. Additional Resources</h2>
+        <div class="slide-number">Slide 28</div>
+    </div>
+
+    <div class="slide">
+        <h2>9. Lab Exercises</h2>
+        <div class="slide-number">Slide 29</div>
+    </div>
+
+    <div class="slide title-slide">
+        <h2>Summary</h2>
+        <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
+        <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
+        <div class="slide-number">Slide 30</div>
+    </div>
 
 </body>
 </html>
-
-
