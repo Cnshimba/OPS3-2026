@@ -1,0 +1,693 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 3 Slides</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                colors: {
+                    primary: '#002F6E', // VUT Midnight Blue
+                    secondary: '#6c757d',
+                    codebg: 'var(--bg-code)', 
+                },
+                typography: {
+                    DEFAULT: {
+                        css: {
+                            maxWidth: '100%',
+                            fontFamily: 'Inter, sans-serif',
+                            color: 'var(--text-body)',
+                            '--tw-prose-body': 'var(--text-body)',
+                            '--tw-prose-headings': 'var(--text-headings)',
+                            '--tw-prose-links': 'var(--text-link)',
+                            '--tw-prose-bold': 'var(--text-headings)',
+                            '--tw-prose-counters': 'var(--text-body)',
+                            '--tw-prose-bullets': 'var(--text-body)',
+                            '--tw-prose-hr': 'var(--border-color)',
+                            '--tw-prose-quotes': 'var(--text-body)',
+                            '--tw-prose-code': 'var(--text-code)',
+                            '--tw-prose-pre-code': 'var(--text-pre)',
+                            '--tw-prose-pre-bg': 'var(--bg-pre)',
+                            
+                            // Image Sizing Control
+                            img: {
+                                display: 'block',
+                                marginLeft: 'auto',
+                                marginRight: 'auto',
+                                maxHeight: '500px',
+                                width: 'auto',
+                                height: 'auto',
+                                borderRadius: '0.5rem',
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                            },
+                            // Links
+                            a: {
+                                color: 'var(--text-link)',
+                                '&:hover': { opacity: '0.8' },
+                            },
+                            // Inline Code
+                            code: {
+                                color: 'var(--text-code)',
+                                backgroundColor: 'var(--bg-code)',
+                                padding: '0.2rem 0.4rem',
+                                borderRadius: '0.25rem',
+                                fontWeight: '600',
+                                border: '1px solid var(--border-code)',
+                            },
+                            'code::before': { content: '""' },
+                            'code::after': { content: '""' },
+                            // Code Blocks (Pre)
+                            pre: {
+                                backgroundColor: 'var(--bg-pre) !important',
+                                color: 'var(--text-pre)',
+                                padding: '1rem',
+                                borderRadius: '0.5rem',
+                                border: '1px solid var(--border-pre)',
+                            },
+                            // Notes/Alerts (Blockquotes)
+                            blockquote: {
+                                borderLeftColor: '#002F6E',
+                                borderLeftWidth: '4px',
+                                backgroundColor: 'var(--bg-note)',
+                                padding: '1rem',
+                                color: 'var(--text-body)',
+                                fontSize: '0.9rem', // Smaller text for notes
+                                fontStyle: 'italic',
+                                quotes: 'none',
+                                borderRadius: '0 0.5rem 0.5rem 0',
+                            },
+                            'blockquote p:first-of-type::before': { content: 'none' },
+                            'blockquote p:last-of-type::after': { content: 'none' },
+                            // Tables (Restored from First Attempt)
+                            table: {
+                                width: '100%',
+                                marginTop: '2em',
+                                marginBottom: '2em',
+                                borderCollapse: 'collapse',
+                                fontSize: '0.9rem',
+                            },
+                            'thead th': {
+                                backgroundColor: '#f3f4f6', 
+                                color: '#1f2937', 
+                                fontWeight: '600',
+                                padding: '0.75rem',
+                                borderBottom: '2px solid #e5e7eb',
+                                textAlign: 'left',
+                            },
+                            'tbody td': {
+                                padding: '0.75rem',
+                                borderBottom: '1px solid #e5e7eb',
+                                verticalAlign: 'top',
+                            },
+                            'tbody tr:hover': {
+                                backgroundColor: '#f9fafb',
+                            },
+                            
+                            // Task Lists (Checkboxes)
+                            '.task-list-item': {
+                                listStyleType: 'none',
+                            },
+                            '.task-list-item input[type="checkbox"]': {
+                                marginRight: '0.5rem',
+                            },
+
+                            thead: {
+                                borderBottomWidth: '2px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'thead th': {
+                                color: 'var(--text-headings)',
+                                fontWeight: '600',
+                                verticalAlign: 'bottom',
+                                paddingRight: '0.75em',
+                                paddingBottom: '0.75em',
+                                paddingLeft: '0.75em',
+                                textAlign: 'left',
+                            },
+                            'tbody tr': {
+                                borderBottomWidth: '1px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'tbody tr:last-child': {
+                                borderBottomWidth: '0',
+                            },
+                            'tbody td': {
+                                verticalAlign: 'top',
+                                padding: '0.75em',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
+</script>
+<script>
+    // Theme Toggle Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+
+        // Check local storage or preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            iconSun.classList.remove('hidden');
+            iconMoon.classList.add('hidden');
+        } else {
+            html.classList.remove('dark');
+            iconSun.classList.add('hidden');
+            iconMoon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+            }
+        });
+    });
+</script>
+<style>
+    /* CSS Variables for Theming */
+    :root {
+        --bg-body: #f8fafc;
+        --bg-card: #ffffff;
+        --text-body: #334155;
+        --text-headings: #0f172a;
+        --text-link: #002F6E; /* VUT Blue */
+        --border-color: #e2e8f0;
+        
+        /* Code - Light Mode */
+        --bg-code: #f1f5f9;
+        --text-code: #d63384;
+        --border-code: #e2e8f0;
+        
+        /* Pre - Light Mode (Github Light) */
+        --bg-pre: #f6f8fa;
+        --text-pre: #24292e;
+        --border-pre: #d0d7de;
+        
+        /* Note - Light Mode */
+        --bg-note: #f8f9fa;
+        
+        /* Scrollbar */
+        --scroll-track: #f1f1f1;
+        --scroll-thumb: #888;
+    }
+
+    html.dark {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --text-body: #cbd5e1;
+        --text-headings: #f8fafc;
+        --text-link: #60a5fa; /* Blue 400 - Brighter for better contrast */
+        --border-color: #334155;
+        
+        /* Code - Dark Mode */
+        --bg-code: #334155;
+        --text-code: #f472b6; 
+        --border-code: #475569;
+        
+        /* Pre - Dark Mode (Monokai) */
+        --bg-pre: #272822;
+        --text-pre: #f8f8f2;
+        --border-pre: #464539;
+        
+        /* Note - Dark Mode */
+        --bg-note: #1e293b;
+        --scroll-track: #1e293b;
+        --scroll-thumb: #475569;
+    }
+
+    /* Transition */
+    body, article, code, pre, blockquote {
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--scroll-track); }
+    ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    
+    /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
+    .codehilite .hll { background-color: #ffffcc }
+    .codehilite .c { color: #6a737d; font-style: italic } /* Comment */
+    .codehilite .err { color: #f05240; background-color: #ffeaea } /* Error */
+    .codehilite .k { color: #d73a49; font-weight: bold } /* Keyword */
+    .codehilite .o { color: #d73a49; font-weight: bold } /* Operator */
+    .codehilite .cm { color: #6a737d; font-style: italic } /* Comment.Multiline */
+    .codehilite .cp { color: #6a737d; font-weight: bold } /* Comment.Preproc */
+    .codehilite .c1 { color: #6a737d; font-style: italic } /* Comment.Single */
+    .codehilite .cs { color: #6a737d; font-style: italic } /* Comment.Special */
+    .codehilite .gd { color: #d73a49; background-color: #fdd } /* Generic.Deleted */
+    .codehilite .ge { font-style: italic } /* Generic.Emph */
+    .codehilite .gr { color: #aa0000 } /* Generic.Error */
+    .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+    .codehilite .gi { color: #00a000; background-color: #dfd } /* Generic.Inserted */
+    .codehilite .go { color: #888888 } /* Generic.Output */
+    .codehilite .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+    .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+    .codehilite .gt { color: #aa0000 } /* Generic.Traceback */
+    .codehilite .kc { color: #005cc5; font-weight: bold } /* Keyword.Constant */
+    .codehilite .kd { color: #d73a49; font-weight: bold } /* Keyword.Declaration */
+    .codehilite .kn { color: #d73a49; font-weight: bold } /* Keyword.Namespace */
+    .codehilite .kp { color: #d73a49 } /* Keyword.Pseudo */
+    .codehilite .kr { color: #d73a49; font-weight: bold } /* Keyword.Reserved */
+    .codehilite .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+    .codehilite .m { color: #005cc5 } /* Literal.Number */
+    .codehilite .s { color: #032f62 } /* Literal.String */
+    .codehilite .na { color: #22863a } /* Name.Attribute */
+    .codehilite .nb { color: #005cc5 } /* Name.Builtin */
+    .codehilite .nc { color: #6f42c1; font-weight: bold } /* Name.Class */
+    .codehilite .no { color: #005cc5 } /* Name.Constant */
+    .codehilite .nd { color: #6f42c1; font-weight: bold } /* Name.Decorator */
+    .codehilite .ni { color: #800080 } /* Name.Entity */
+    .codehilite .ne { color: #990000; font-weight: bold } /* Name.Exception */
+    .codehilite .nf { color: #6f42c1; font-weight: bold } /* Name.Function */
+    .codehilite .nl { color: #990000; font-weight: bold } /* Name.Label */
+    .codehilite .nn { color: #6f42c1; font-weight: bold } /* Name.Namespace */
+    .codehilite .nt { color: #22863a } /* Name.Tag */
+    .codehilite .nv { color: #e36209 } /* Name.Variable */
+    .codehilite .ow { color: #d73a49; font-weight: bold } /* Operator.Word */
+    .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+    .codehilite .mf { color: #005cc5 } /* Literal.Number.Float */
+    .codehilite .mh { color: #005cc5 } /* Literal.Number.Hex */
+    .codehilite .mi { color: #005cc5 } /* Literal.Number.Integer */
+    .codehilite .mo { color: #005cc5 } /* Literal.Number.Oct */
+    .codehilite .sb { color: #032f62 } /* Literal.String.Backtick */
+    .codehilite .sc { color: #032f62 } /* Literal.String.Char */
+    .codehilite .sd { color: #032f62 } /* Literal.String.Doc */
+    .codehilite .s2 { color: #032f62 } /* Literal.String.Double */
+    .codehilite .se { color: #005cc5 } /* Literal.String.Escape */
+    .codehilite .sh { color: #032f62 } /* Literal.String.Heredoc */
+    .codehilite .si { color: #032f62 } /* Literal.String.Interpol */
+    .codehilite .sx { color: #032f62 } /* Literal.String.Other */
+    .codehilite .sr { color: #032f62 } /* Literal.String.Regex */
+    .codehilite .s1 { color: #032f62 } /* Literal.String.Single */
+    .codehilite .ss { color: #005cc5 } /* Literal.String.Symbol */
+    .codehilite .bp { color: #005cc5 } /* Name.Builtin.Pseudo */
+    .codehilite .vc { color: #e36209 } /* Name.Variable.Class */
+    .codehilite .vg { color: #e36209 } /* Name.Variable.Global */
+    .codehilite .vi { color: #e36209 } /* Name.Variable.Instance */
+    .codehilite .il { color: #005cc5 } /* Literal.Number.Integer.Long */
+    
+    /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
+    html.dark .codehilite .hll { background-color: #49483e }
+    html.dark .codehilite .c { color: #75715e } /* Comment */
+    html.dark .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
+    html.dark .codehilite .k { color: #66d9ef; font-weight: normal } /* Keyword */
+    html.dark .codehilite .l { color: #ae81ff } /* Literal */
+    html.dark .codehilite .n { color: #f8f8f2 } /* Name */
+    html.dark .codehilite .o { color: #f92672; font-weight: normal } /* Operator */
+    html.dark .codehilite .p { color: #f8f8f2 } /* Punctuation */
+    html.dark .codehilite .cm { color: #75715e } /* Comment.Multiline */
+    html.dark .codehilite .cp { color: #75715e } /* Comment.Preproc */
+    html.dark .codehilite .c1 { color: #75715e } /* Comment.Single */
+    html.dark .codehilite .cs { color: #75715e } /* Comment.Special */
+    html.dark .codehilite .ge { font-style: italic } /* Generic.Emph */
+    html.dark .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    html.dark .codehilite .kc { color: #66d9ef; font-weight: normal } /* Keyword.Constant */
+    html.dark .codehilite .kd { color: #66d9ef; font-weight: normal  } /* Keyword.Declaration */
+    html.dark .codehilite .kn { color: #f92672; font-weight: normal  } /* Keyword.Namespace */
+    html.dark .codehilite .kp { color: #66d9ef; font-weight: normal  } /* Keyword.Pseudo */
+    html.dark .codehilite .kr { color: #66d9ef; font-weight: normal  } /* Keyword.Reserved */
+    html.dark .codehilite .kt { color: #66d9ef; font-weight: normal  } /* Keyword.Type */
+    html.dark .codehilite .ld { color: #e6db74 } /* Literal.Date */
+    html.dark .codehilite .m { color: #ae81ff } /* Literal.Number */
+    html.dark .codehilite .s { color: #e6db74 } /* Literal.String */
+    html.dark .codehilite .na { color: #a6e22e } /* Name.Attribute */
+    html.dark .codehilite .nb { color: #f8f8f2 } /* Name.Builtin */
+    html.dark .codehilite .nc { color: #a6e22e } /* Name.Class */
+    html.dark .codehilite .no { color: #66d9ef } /* Name.Constant */
+    html.dark .codehilite .nd { color: #a6e22e } /* Name.Decorator */
+    html.dark .codehilite .ni { color: #f8f8f2 } /* Name.Entity */
+    html.dark .codehilite .ne { color: #a6e22e } /* Name.Exception */
+    html.dark .codehilite .nf { color: #a6e22e } /* Name.Function */
+    html.dark .codehilite .nl { color: #f8f8f2 } /* Name.Label */
+    html.dark .codehilite .nn { color: #f8f8f2 } /* Name.Namespace */
+    html.dark .codehilite .nx { color: #a6e22e } /* Name.Other */
+    html.dark .codehilite .py { color: #f8f8f2 } /* Name.Property */
+    html.dark .codehilite .nt { color: #f92672 } /* Name.Tag */
+    html.dark .codehilite .nv { color: #f8f8f2 } /* Name.Variable */
+    html.dark .codehilite .ow { color: #f92672; font-weight: normal  } /* Operator.Word */
+    html.dark .codehilite .w { color: #f8f8f2 } /* Text.Whitespace */
+    html.dark .codehilite .mb { color: #ae81ff } /* Literal.Number.Bin */
+    html.dark .codehilite .mf { color: #ae81ff } /* Literal.Number.Float */
+    html.dark .codehilite .mh { color: #ae81ff } /* Literal.Number.Hex */
+    html.dark .codehilite .mi { color: #ae81ff } /* Literal.Number.Integer */
+    html.dark .codehilite .mo { color: #ae81ff } /* Literal.Number.Oct */
+    html.dark .codehilite .sb { color: #e6db74 } /* Literal.String.Backtick */
+    html.dark .codehilite .sc { color: #e6db74 } /* Literal.String.Char */
+    html.dark .codehilite .sd { color: #e6db74 } /* Literal.String.Doc */
+    html.dark .codehilite .s2 { color: #e6db74 } /* Literal.String.Double */
+    html.dark .codehilite .se { color: #ae81ff } /* Literal.String.Escape */
+    html.dark .codehilite .sh { color: #e6db74 } /* Literal.String.Heredoc */
+    html.dark .codehilite .si { color: #e6db74 } /* Literal.String.Interpol */
+    html.dark .codehilite .sx { color: #e6db74 } /* Literal.String.Other */
+    html.dark .codehilite .sr { color: #e6db74 } /* Literal.String.Regex */
+    html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
+    html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
+</style>
+
+</head>
+<body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
+    <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+        <a href="../Course_Index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+            <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
+            <div class="flex flex-col">
+                <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation & Cloud Technologies</span>
+                <span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
+            </div>
+        </a>
+        <div class="flex items-center space-x-6">
+            <a href="../Course_Index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+                Course Home
+            </a>
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <!-- Sun Icon -->
+                <svg id="icon-sun" class="w-5 h-5 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <!-- Moon Icon -->
+                <svg id="icon-moon" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 max-w-5xl mb-12">
+    <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
+        <hr />
+<p>marp: true
+theme: default
+class: lead
+paginate: true
+backgroundColor: #f0f0f0
+backgroundImage: url('https://marp.app/assets/hero-background.svg')</p>
+<hr />
+<p><a href="../Course_Index.html">← Back to Course Index</a></p>
+<h1 id="virtual-networking-and-linux-networking-fundamentals">Virtual Networking and Linux Networking Fundamentals</h1>
+<h2 id="week-3">Week 3</h2>
+<p><strong>Operating Systems 3 (Virtualisation &amp; Cloud Technologies)</strong>
+Instructor: KT Nshimba</p>
+<hr />
+<h1 id="welcome-to-week-3">Welcome to Week 3!</h1>
+<p>Networking is the nervous system of specific virtualized infrastructure.</p>
+<ul>
+<li><strong>Traditional:</strong> Physical cables, hardware switches.</li>
+<li><strong>Virtual/Cloud:</strong> Software-defined wires, bridges, and routers.</li>
+</ul>
+<p><strong>The Goal</strong>
+Bridge the gap between "clicking a button in Proxmox" and understanding the kernel-level mechanics (<code>ip</code>, <code>bridge</code>, <code>iptables</code>) that make that click possible.</p>
+<hr />
+<h1 id="part-1-linux-networking-fundamentals">Part 1: Linux Networking Fundamentals</h1>
+<p>Proxmox is Debian Linux. To manage it, you must master Linux networking.</p>
+<h2 id="1-runtime-vs-persistent-networking">1. Runtime vs. Persistent Networking</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><strong>Runtime (<code>ip</code>)</strong></th>
+<th style="text-align: left;"><strong>Persistent (<code>nmcli</code> / Config)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Layer</strong></td>
+<td style="text-align: left;">Kernel Layer (Netlink)</td>
+<td style="text-align: left;">Configuration Daemon</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Speed</strong></td>
+<td style="text-align: left;">Instant (Microseconds)</td>
+<td style="text-align: left;">Applies on reload/reboot</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Scope</strong></td>
+<td style="text-align: left;">In-Memory (RAM)</td>
+<td style="text-align: left;">Written to Disk (<code>/etc/...</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Risk</strong></td>
+<td style="text-align: left;"><strong>LOST ON REBOOT</strong></td>
+<td style="text-align: left;"><strong>SAVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Best Practice:</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Use <code>ip</code> for instantaneous troubleshooting. Use <code>nmcli</code> or <code>/etc/network/interfaces</code> for permanent changes.</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11-the-kernel-layer-ip-runtime">1.1 The Kernel Layer: <code>ip</code> (Runtime)</h2>
+<p>The <code>ip</code> command is part of the modern <code>iproute2</code> suite.</p>
+<ul>
+<li><strong>Link Status:</strong> <code>ip link show</code><ul>
+<li>Shows Up/Down state, MTU, and MAC addresses.</li>
+</ul>
+</li>
+<li><strong>IP Addresses:</strong> <code>ip addr show</code><ul>
+<li>Shows IPv4 (inet) and IPv6 (inet6) addresses attached to interfaces.</li>
+</ul>
+</li>
+<li><strong>Routing Table:</strong> <code>ip route get 8.8.8.8</code><ul>
+<li>Simulates a packet path to tell you which interface and gateway would be used.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="12-the-configuration-layer-nmcli-persistent">1.2 The Configuration Layer: <code>nmcli</code> (Persistent)</h2>
+<ul>
+<li><strong>Profiles:</strong> Settings generally saved in <code>/etc/NetworkManager/system-connections/</code>.</li>
+<li><strong>Logic:</strong> Handles complex logic like "Connect to WiFi if Ethernet fails."</li>
+<li><strong>Example Command:</strong>
+    <code>bash
+    # Set IP and Gateway persistently
+    nmcli con mod eno1 ipv4.addresses 192.168.1.50/24
+    nmcli con mod eno1 ipv4.gateway 192.168.1.1
+    # Apply changes
+    nmcli con up eno1</code></li>
+</ul>
+<hr />
+<h1 id="part-2-network-namespaces">Part 2: Network Namespaces</h1>
+<h2 id="21-the-tenant-problem">2.1 The "Tenant Problem"</h2>
+<p><strong>Scenario:</strong>
+Imagine you are hosting Amazon Web Services.</p>
+<ul>
+<li>Customer A wants a private network using <code>192.168.1.0/24</code>.</li>
+<li>Customer B <em>also</em> wants to use <code>192.168.1.0/24</code>.</li>
+</ul>
+<p><strong>The Conflict:</strong>
+On a normal OS, you cannot have the same IP address twice. It would cause an IP conflict.</p>
+<hr />
+<h2 id="22-the-solution-namespaces">2.2 The Solution: Namespaces</h2>
+<p>A Network Namespace is a fundamental Linux kernel feature.
+It provides a completely encapsulated network stack:</p>
+<ul>
+<li><strong>Interfaces:</strong> Its own <code>eth0</code>, <code>lo</code>.</li>
+<li><strong>Routes:</strong> Its own Routing Table.</li>
+<li><strong>Firewall:</strong> Its own <code>iptables</code> chains.</li>
+</ul>
+<p><strong>Result:</strong>
+Customer A lives in Namespace A. Customer B lives in Namespace B. They use identical IPs without ever conflicting. This is the technology behind <strong>Docker</strong> and <strong>Kubernetes</strong>.</p>
+<hr />
+<h1 id="part-3-connecting-the-dots">Part 3: Connecting the Dots</h1>
+<h2 id="31-the-virtual-cable-veth">3.1 The Virtual Cable (<code>veth</code>)</h2>
+<p>Isolation is safe, but useless if we cannot communicate.</p>
+<ul>
+<li><strong>Definition:</strong> Virtual Ethernet pair. A "pipe" with two ends.</li>
+<li><strong>Behavior:</strong> Packets sent into Interface A instantly arrive at Interface B.</li>
+<li><strong>Usage:</strong><ul>
+<li>Plug one end into the Namespace ("inside").</li>
+<li>Plug the other end into the Host ("outside").</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="32-the-virtual-switch-bridge">3.2 The Virtual Switch (<code>bridge</code>)</h2>
+<ul>
+<li><strong>Definition:</strong> A software implementation of a Layer 2 Ethernet Switch.</li>
+<li><strong>Function:</strong> It maintains a MAC Address Table and forwards frames.</li>
+<li><strong>Proxmox Context:</strong><ul>
+<li><code>vmbr0</code> acts as the physical switch.</li>
+<li>Physical NIC (<code>eno1</code>) is the uplink.</li>
+<li>VM Interfaces (<code>tap100i0</code>) are the downlinks.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Note on VMs:</strong>
+VMs use <code>tap</code> interfaces (Simulated L2 Ethernet) to plug into bridges.</p>
+<hr />
+<h1 id="part-4-container-networking">Part 4: Container Networking</h1>
+<h2 id="41-docker-the-standard-bridge">4.1 Docker (The Standard Bridge)</h2>
+<ul>
+<li><strong>Architecture:</strong> Docker creates a bridge named <code>docker0</code> by default.</li>
+<li><strong>IPAM:</strong> It manages its own internal IP pool (<code>172.17.0.x</code>).</li>
+<li><strong>Connectivity:</strong><ul>
+<li>Every container gets a <code>veth</code> pair.</li>
+<li>Traffic to the outside world is <strong>NAT'd</strong> (Masqueraded) via the host IP.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="42-podman-and-rootless-networking">4.2 Podman and Rootless Networking</h2>
+<ul>
+<li><strong>Security Focus:</strong> Podman can run containers as a standard user (non-root).</li>
+<li><strong>Challenge:</strong> Standard users cannot create Global Network Interfaces.</li>
+<li><strong>Solution: <code>slirp4netns</code></strong><ul>
+<li>Uses a user-space network stack to translate packets.</li>
+<li>Slower than Kernel bridging, but much more secure.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="43-lxc-system-containers">4.3 LXC (System Containers)</h2>
+<ul>
+<li><strong>Approach:</strong> LXC containers behave like lightweight Virtual Machines.</li>
+<li><strong>Network:</strong><ul>
+<li>Often bridged directly to the physical LAN (<code>vmbr0</code>).</li>
+<li>Requests an IP from your physical Router via DHCP.</li>
+<li>Visible to the rest of the network as a distinct device.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1 id="part-5-advanced-linux-operations">Part 5: Advanced Linux Operations</h1>
+<h2 id="51-link-aggregation-bonding">5.1 Link Aggregation (Bonding)</h2>
+<ul>
+<li><strong>Problem:</strong> Single Point of Failure. If <code>eno1</code> breaks, the server goes offline.</li>
+<li><strong>Solution:</strong> Bond <code>eno1</code> + <code>eno2</code> -&gt; <code>bond0</code>.</li>
+<li><strong>Modes:</strong><ul>
+<li><strong>Active-Backup:</strong> One cable works. If it fails, the other takes over instantly (Default).</li>
+<li><strong>LACP (Mode 4):</strong> Uses both cables for Speed + Redundancy. Requires Switch Support (802.3ad).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="52-ip-forwarding-routing">5.2 IP Forwarding (Routing)</h2>
+<ul>
+<li><strong>Host Behavior:</strong> By default, Linux acts as a specific destination. It drops packets not meant for its own IP.</li>
+<li><strong>Router Behavior:</strong> To act as a Gateway (passing packets from VM -&gt; Internet), we must enable forwarding.</li>
+</ul>
+<p><strong>Command:</strong></p>
+<div class="codehilite"><pre><span></span><code>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span>
+</code></pre></div>
+
+<hr />
+<h2 id="53-the-linux-firewall-iptables">5.3 The Linux Firewall (<code>iptables</code>)</h2>
+<p>The "Security Group" of the kernel.</p>
+<p><strong>Chains:</strong>
+1.  <strong>INPUT:</strong> Traffic TO the host (e.g., SSH).
+2.  <strong>OUTPUT:</strong> Traffic FROM the host.
+3.  <strong>FORWARD:</strong> Traffic THROUGH the host (VMs).</p>
+<p><strong>Frontends:</strong></p>
+<ul>
+<li><strong>Firewalld (RHEL):</strong> Zone-based management.</li>
+<li><strong>UFW (Ubuntu):</strong> Profile-based management ("Allow SSH").</li>
+</ul>
+<hr />
+<h2 id="54-network-reconnaissance">5.4 Network Reconnaissance</h2>
+<p><strong>Tools for Discovery:</strong></p>
+<ol>
+<li>
+<p><strong>Socket Statistics (<code>ss</code>)</strong></p>
+<ul>
+<li>Inspect <em>local</em> listening ports.</li>
+<li><code>ss -tulpn</code> -&gt; "Is port 80 actually open?"</li>
+</ul>
+</li>
+<li>
+<p><strong>Network Mapper (<code>nmap</code>)</strong></p>
+<ul>
+<li>Scan <em>remote</em> targets.</li>
+<li><code>nmap 192.168.1.50</code> -&gt; "What ports is that server hiding?"</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h1 id="part-6-open-vswitch-ovs">Part 6: Open vSwitch (OVS)</h1>
+<h2 id="61-architecture">6.1 Architecture</h2>
+<p>The Cloud-Grade Switch.</p>
+<ul>
+<li><strong>Control Plane:</strong> <code>ovs-vswitchd</code>. Handles complex logic, High Availability, and API calls.</li>
+<li><strong>Data Plane:</strong> <code>openvswitch.ko</code>. Kernel module that switches packets at wire speed.</li>
+</ul>
+<hr />
+<h2 id="62-key-features">6.2 Key Features</h2>
+<p>Why use OVS over Linux Bridge?</p>
+<ol>
+<li><strong>SDN:</strong> Fully programmable via centralized controllers (OpenStack Neutron).</li>
+<li><strong>Overlay Networks:</strong> VXLAN and GRE tunneling support for multi-tenant clouds.</li>
+<li><strong>Telemetry:</strong> sFlow/NetFlow support to analyze every single packet flow.</li>
+</ol>
+<hr />
+<h1 id="part-7-proxmox-networking">Part 7: Proxmox Networking</h1>
+<h2 id="71-networking-modes">7.1 Networking Modes</h2>
+<p><strong>1. Bridged Mode (Default)</strong></p>
+<ul>
+<li>VM is a full citizen on the LAN.</li>
+<li>Traffic flows: <code>VM -&gt; Bridge -&gt; Physical Router</code>.</li>
+</ul>
+<p><strong>2. NAT Mode</strong></p>
+<ul>
+<li>VM sits behind the Host's IP.</li>
+<li>Secure, but requires Port Forwarding for inbound access.</li>
+</ul>
+<p><strong>3. VLAN Tagging</strong></p>
+<ul>
+<li>Proxmox tags packets leaving the VM interface (e.g., Tag 10).</li>
+<li>Enables segmentation (Student VLAN vs Admin VLAN).</li>
+</ul>
+<hr />
+<h1 id="summary">Summary</h1>
+<ul>
+<li><strong>Tools:</strong> Move from <code>ifconfig</code> to <code>ip</code>.</li>
+<li><strong>Isolation:</strong> Namespaces are the foundation of Containers.</li>
+<li><strong>Connectivity:</strong> Bridges + Veth/Tap cables.</li>
+<li><strong>Advanced:</strong> Bonding for redundancy, OVS for SDN.</li>
+</ul>
+<p><strong>Next Week</strong>: Storage and Backup (ZFS, LVM, NFS).</p>
+<p><a href="../Course_Index.html">← Back to Course Index</a></p>
+    </article>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
+</footer>
+
+<!-- Progress Tracking -->
+<script src="../js/course_logic.js"></script>
+
+</body>
+</html>

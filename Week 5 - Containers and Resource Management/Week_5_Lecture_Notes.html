@@ -1,0 +1,922 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 5 Lecture Notes</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                colors: {
+                    primary: '#002F6E', // VUT Midnight Blue
+                    secondary: '#6c757d',
+                    codebg: 'var(--bg-code)', 
+                },
+                typography: {
+                    DEFAULT: {
+                        css: {
+                            maxWidth: '100%',
+                            fontFamily: 'Inter, sans-serif',
+                            color: 'var(--text-body)',
+                            '--tw-prose-body': 'var(--text-body)',
+                            '--tw-prose-headings': 'var(--text-headings)',
+                            '--tw-prose-links': 'var(--text-link)',
+                            '--tw-prose-bold': 'var(--text-headings)',
+                            '--tw-prose-counters': 'var(--text-body)',
+                            '--tw-prose-bullets': 'var(--text-body)',
+                            '--tw-prose-hr': 'var(--border-color)',
+                            '--tw-prose-quotes': 'var(--text-body)',
+                            '--tw-prose-code': 'var(--text-code)',
+                            '--tw-prose-pre-code': 'var(--text-pre)',
+                            '--tw-prose-pre-bg': 'var(--bg-pre)',
+                            
+                            // Image Sizing Control
+                            img: {
+                                display: 'block',
+                                marginLeft: 'auto',
+                                marginRight: 'auto',
+                                maxHeight: '500px',
+                                width: 'auto',
+                                height: 'auto',
+                                borderRadius: '0.5rem',
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                            },
+                            // Links
+                            a: {
+                                color: 'var(--text-link)',
+                                '&:hover': { opacity: '0.8' },
+                            },
+                            // Inline Code
+                            code: {
+                                color: 'var(--text-code)',
+                                backgroundColor: 'var(--bg-code)',
+                                padding: '0.2rem 0.4rem',
+                                borderRadius: '0.25rem',
+                                fontWeight: '600',
+                                border: '1px solid var(--border-code)',
+                            },
+                            'code::before': { content: '""' },
+                            'code::after': { content: '""' },
+                            // Code Blocks (Pre)
+                            pre: {
+                                backgroundColor: 'var(--bg-pre) !important',
+                                color: 'var(--text-pre)',
+                                padding: '1rem',
+                                borderRadius: '0.5rem',
+                                border: '1px solid var(--border-pre)',
+                            },
+                            // Notes/Alerts (Blockquotes)
+                            blockquote: {
+                                borderLeftColor: '#002F6E',
+                                borderLeftWidth: '4px',
+                                backgroundColor: 'var(--bg-note)',
+                                padding: '1rem',
+                                color: 'var(--text-body)',
+                                fontSize: '0.9rem', // Smaller text for notes
+                                fontStyle: 'italic',
+                                quotes: 'none',
+                                borderRadius: '0 0.5rem 0.5rem 0',
+                            },
+                            'blockquote p:first-of-type::before': { content: 'none' },
+                            'blockquote p:last-of-type::after': { content: 'none' },
+                            // Tables (Restored from First Attempt)
+                            table: {
+                                width: '100%',
+                                marginTop: '2em',
+                                marginBottom: '2em',
+                                borderCollapse: 'collapse',
+                                fontSize: '0.9rem',
+                            },
+                            'thead th': {
+                                backgroundColor: '#f3f4f6', 
+                                color: '#1f2937', 
+                                fontWeight: '600',
+                                padding: '0.75rem',
+                                borderBottom: '2px solid #e5e7eb',
+                                textAlign: 'left',
+                            },
+                            'tbody td': {
+                                padding: '0.75rem',
+                                borderBottom: '1px solid #e5e7eb',
+                                verticalAlign: 'top',
+                            },
+                            'tbody tr:hover': {
+                                backgroundColor: '#f9fafb',
+                            },
+                            
+                            // Task Lists (Checkboxes)
+                            '.task-list-item': {
+                                listStyleType: 'none',
+                            },
+                            '.task-list-item input[type="checkbox"]': {
+                                marginRight: '0.5rem',
+                            },
+
+                            thead: {
+                                borderBottomWidth: '2px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'thead th': {
+                                color: 'var(--text-headings)',
+                                fontWeight: '600',
+                                verticalAlign: 'bottom',
+                                paddingRight: '0.75em',
+                                paddingBottom: '0.75em',
+                                paddingLeft: '0.75em',
+                                textAlign: 'left',
+                            },
+                            'tbody tr': {
+                                borderBottomWidth: '1px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'tbody tr:last-child': {
+                                borderBottomWidth: '0',
+                            },
+                            'tbody td': {
+                                verticalAlign: 'top',
+                                padding: '0.75em',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
+</script>
+<script>
+    // Theme Toggle Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+
+        // Check local storage or preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            iconSun.classList.remove('hidden');
+            iconMoon.classList.add('hidden');
+        } else {
+            html.classList.remove('dark');
+            iconSun.classList.add('hidden');
+            iconMoon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+            }
+        });
+    });
+</script>
+<style>
+    /* CSS Variables for Theming */
+    :root {
+        --bg-body: #f8fafc;
+        --bg-card: #ffffff;
+        --text-body: #334155;
+        --text-headings: #0f172a;
+        --text-link: #002F6E; /* VUT Blue */
+        --border-color: #e2e8f0;
+        
+        /* Code - Light Mode */
+        --bg-code: #f1f5f9;
+        --text-code: #d63384;
+        --border-code: #e2e8f0;
+        
+        /* Pre - Light Mode (Github Light) */
+        --bg-pre: #f6f8fa;
+        --text-pre: #24292e;
+        --border-pre: #d0d7de;
+        
+        /* Note - Light Mode */
+        --bg-note: #f8f9fa;
+        
+        /* Scrollbar */
+        --scroll-track: #f1f1f1;
+        --scroll-thumb: #888;
+    }
+
+    html.dark {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --text-body: #cbd5e1;
+        --text-headings: #f8fafc;
+        --text-link: #60a5fa; /* Blue 400 - Brighter for better contrast */
+        --border-color: #334155;
+        
+        /* Code - Dark Mode */
+        --bg-code: #334155;
+        --text-code: #f472b6; 
+        --border-code: #475569;
+        
+        /* Pre - Dark Mode (Monokai) */
+        --bg-pre: #272822;
+        --text-pre: #f8f8f2;
+        --border-pre: #464539;
+        
+        /* Note - Dark Mode */
+        --bg-note: #1e293b;
+        --scroll-track: #1e293b;
+        --scroll-thumb: #475569;
+    }
+
+    /* Transition */
+    body, article, code, pre, blockquote {
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--scroll-track); }
+    ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    
+    /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
+    .codehilite .hll { background-color: #ffffcc }
+    .codehilite .c { color: #6a737d; font-style: italic } /* Comment */
+    .codehilite .err { color: #f05240; background-color: #ffeaea } /* Error */
+    .codehilite .k { color: #d73a49; font-weight: bold } /* Keyword */
+    .codehilite .o { color: #d73a49; font-weight: bold } /* Operator */
+    .codehilite .cm { color: #6a737d; font-style: italic } /* Comment.Multiline */
+    .codehilite .cp { color: #6a737d; font-weight: bold } /* Comment.Preproc */
+    .codehilite .c1 { color: #6a737d; font-style: italic } /* Comment.Single */
+    .codehilite .cs { color: #6a737d; font-style: italic } /* Comment.Special */
+    .codehilite .gd { color: #d73a49; background-color: #fdd } /* Generic.Deleted */
+    .codehilite .ge { font-style: italic } /* Generic.Emph */
+    .codehilite .gr { color: #aa0000 } /* Generic.Error */
+    .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+    .codehilite .gi { color: #00a000; background-color: #dfd } /* Generic.Inserted */
+    .codehilite .go { color: #888888 } /* Generic.Output */
+    .codehilite .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+    .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+    .codehilite .gt { color: #aa0000 } /* Generic.Traceback */
+    .codehilite .kc { color: #005cc5; font-weight: bold } /* Keyword.Constant */
+    .codehilite .kd { color: #d73a49; font-weight: bold } /* Keyword.Declaration */
+    .codehilite .kn { color: #d73a49; font-weight: bold } /* Keyword.Namespace */
+    .codehilite .kp { color: #d73a49 } /* Keyword.Pseudo */
+    .codehilite .kr { color: #d73a49; font-weight: bold } /* Keyword.Reserved */
+    .codehilite .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+    .codehilite .m { color: #005cc5 } /* Literal.Number */
+    .codehilite .s { color: #032f62 } /* Literal.String */
+    .codehilite .na { color: #22863a } /* Name.Attribute */
+    .codehilite .nb { color: #005cc5 } /* Name.Builtin */
+    .codehilite .nc { color: #6f42c1; font-weight: bold } /* Name.Class */
+    .codehilite .no { color: #005cc5 } /* Name.Constant */
+    .codehilite .nd { color: #6f42c1; font-weight: bold } /* Name.Decorator */
+    .codehilite .ni { color: #800080 } /* Name.Entity */
+    .codehilite .ne { color: #990000; font-weight: bold } /* Name.Exception */
+    .codehilite .nf { color: #6f42c1; font-weight: bold } /* Name.Function */
+    .codehilite .nl { color: #990000; font-weight: bold } /* Name.Label */
+    .codehilite .nn { color: #6f42c1; font-weight: bold } /* Name.Namespace */
+    .codehilite .nt { color: #22863a } /* Name.Tag */
+    .codehilite .nv { color: #e36209 } /* Name.Variable */
+    .codehilite .ow { color: #d73a49; font-weight: bold } /* Operator.Word */
+    .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+    .codehilite .mf { color: #005cc5 } /* Literal.Number.Float */
+    .codehilite .mh { color: #005cc5 } /* Literal.Number.Hex */
+    .codehilite .mi { color: #005cc5 } /* Literal.Number.Integer */
+    .codehilite .mo { color: #005cc5 } /* Literal.Number.Oct */
+    .codehilite .sb { color: #032f62 } /* Literal.String.Backtick */
+    .codehilite .sc { color: #032f62 } /* Literal.String.Char */
+    .codehilite .sd { color: #032f62 } /* Literal.String.Doc */
+    .codehilite .s2 { color: #032f62 } /* Literal.String.Double */
+    .codehilite .se { color: #005cc5 } /* Literal.String.Escape */
+    .codehilite .sh { color: #032f62 } /* Literal.String.Heredoc */
+    .codehilite .si { color: #032f62 } /* Literal.String.Interpol */
+    .codehilite .sx { color: #032f62 } /* Literal.String.Other */
+    .codehilite .sr { color: #032f62 } /* Literal.String.Regex */
+    .codehilite .s1 { color: #032f62 } /* Literal.String.Single */
+    .codehilite .ss { color: #005cc5 } /* Literal.String.Symbol */
+    .codehilite .bp { color: #005cc5 } /* Name.Builtin.Pseudo */
+    .codehilite .vc { color: #e36209 } /* Name.Variable.Class */
+    .codehilite .vg { color: #e36209 } /* Name.Variable.Global */
+    .codehilite .vi { color: #e36209 } /* Name.Variable.Instance */
+    .codehilite .il { color: #005cc5 } /* Literal.Number.Integer.Long */
+    
+    /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
+    html.dark .codehilite .hll { background-color: #49483e }
+    html.dark .codehilite .c { color: #75715e } /* Comment */
+    html.dark .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
+    html.dark .codehilite .k { color: #66d9ef; font-weight: normal } /* Keyword */
+    html.dark .codehilite .l { color: #ae81ff } /* Literal */
+    html.dark .codehilite .n { color: #f8f8f2 } /* Name */
+    html.dark .codehilite .o { color: #f92672; font-weight: normal } /* Operator */
+    html.dark .codehilite .p { color: #f8f8f2 } /* Punctuation */
+    html.dark .codehilite .cm { color: #75715e } /* Comment.Multiline */
+    html.dark .codehilite .cp { color: #75715e } /* Comment.Preproc */
+    html.dark .codehilite .c1 { color: #75715e } /* Comment.Single */
+    html.dark .codehilite .cs { color: #75715e } /* Comment.Special */
+    html.dark .codehilite .ge { font-style: italic } /* Generic.Emph */
+    html.dark .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    html.dark .codehilite .kc { color: #66d9ef; font-weight: normal } /* Keyword.Constant */
+    html.dark .codehilite .kd { color: #66d9ef; font-weight: normal  } /* Keyword.Declaration */
+    html.dark .codehilite .kn { color: #f92672; font-weight: normal  } /* Keyword.Namespace */
+    html.dark .codehilite .kp { color: #66d9ef; font-weight: normal  } /* Keyword.Pseudo */
+    html.dark .codehilite .kr { color: #66d9ef; font-weight: normal  } /* Keyword.Reserved */
+    html.dark .codehilite .kt { color: #66d9ef; font-weight: normal  } /* Keyword.Type */
+    html.dark .codehilite .ld { color: #e6db74 } /* Literal.Date */
+    html.dark .codehilite .m { color: #ae81ff } /* Literal.Number */
+    html.dark .codehilite .s { color: #e6db74 } /* Literal.String */
+    html.dark .codehilite .na { color: #a6e22e } /* Name.Attribute */
+    html.dark .codehilite .nb { color: #f8f8f2 } /* Name.Builtin */
+    html.dark .codehilite .nc { color: #a6e22e } /* Name.Class */
+    html.dark .codehilite .no { color: #66d9ef } /* Name.Constant */
+    html.dark .codehilite .nd { color: #a6e22e } /* Name.Decorator */
+    html.dark .codehilite .ni { color: #f8f8f2 } /* Name.Entity */
+    html.dark .codehilite .ne { color: #a6e22e } /* Name.Exception */
+    html.dark .codehilite .nf { color: #a6e22e } /* Name.Function */
+    html.dark .codehilite .nl { color: #f8f8f2 } /* Name.Label */
+    html.dark .codehilite .nn { color: #f8f8f2 } /* Name.Namespace */
+    html.dark .codehilite .nx { color: #a6e22e } /* Name.Other */
+    html.dark .codehilite .py { color: #f8f8f2 } /* Name.Property */
+    html.dark .codehilite .nt { color: #f92672 } /* Name.Tag */
+    html.dark .codehilite .nv { color: #f8f8f2 } /* Name.Variable */
+    html.dark .codehilite .ow { color: #f92672; font-weight: normal  } /* Operator.Word */
+    html.dark .codehilite .w { color: #f8f8f2 } /* Text.Whitespace */
+    html.dark .codehilite .mb { color: #ae81ff } /* Literal.Number.Bin */
+    html.dark .codehilite .mf { color: #ae81ff } /* Literal.Number.Float */
+    html.dark .codehilite .mh { color: #ae81ff } /* Literal.Number.Hex */
+    html.dark .codehilite .mi { color: #ae81ff } /* Literal.Number.Integer */
+    html.dark .codehilite .mo { color: #ae81ff } /* Literal.Number.Oct */
+    html.dark .codehilite .sb { color: #e6db74 } /* Literal.String.Backtick */
+    html.dark .codehilite .sc { color: #e6db74 } /* Literal.String.Char */
+    html.dark .codehilite .sd { color: #e6db74 } /* Literal.String.Doc */
+    html.dark .codehilite .s2 { color: #e6db74 } /* Literal.String.Double */
+    html.dark .codehilite .se { color: #ae81ff } /* Literal.String.Escape */
+    html.dark .codehilite .sh { color: #e6db74 } /* Literal.String.Heredoc */
+    html.dark .codehilite .si { color: #e6db74 } /* Literal.String.Interpol */
+    html.dark .codehilite .sx { color: #e6db74 } /* Literal.String.Other */
+    html.dark .codehilite .sr { color: #e6db74 } /* Literal.String.Regex */
+    html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
+    html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
+</style>
+
+</head>
+<body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
+    <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+        <a href="../Course_Index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+            <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
+            <div class="flex flex-col">
+                <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation & Cloud Technologies</span>
+                <span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
+            </div>
+        </a>
+        <div class="flex items-center space-x-6">
+            <a href="../Course_Index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+                Course Home
+            </a>
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <!-- Sun Icon -->
+                <svg id="icon-sun" class="w-5 h-5 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <!-- Moon Icon -->
+                <svg id="icon-moon" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 max-w-5xl mb-12">
+    <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
+        <h1 id="week-5-containers-and-resource-management-lecture-notes">Week 5: Containers and Resource Management - Lecture Notes</h1>
+<h2 id="course-virtualization-and-cloud-infrastructure">Course: Virtualization and Cloud Infrastructure</h2>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>This week introduces container technology and resource management principles. Students will explore the differences between containers and virtual machines, gain hands-on experience with LXC containers in Proxmox VE, and understand how Docker and Podman fit into modern cloud infrastructure. By the end of this week, students will comprehend when to use containers versus VMs and how to effectively manage resources in both scenarios.</p>
+<hr />
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this week, students will be able to:</p>
+<ol>
+<li><strong>Explain</strong> the fundamental differences between containers and virtual machines at the architectural level</li>
+<li><strong>Create and manage</strong> LXC containers in Proxmox VE</li>
+<li><strong>Understand</strong> the role of Docker and Podman in cloud environments</li>
+<li><strong>Apply</strong> resource limits and quotas to containers and VMs</li>
+<li><strong>Evaluate</strong> appropriate use cases for containers versus VMs</li>
+<li><strong>Comprehend</strong> how OpenStack uses container technologies</li>
+</ol>
+<hr />
+<h2 id="1-containers-vs-virtual-machines-architectural-comparison">1. Containers vs. Virtual Machines: Architectural Comparison</h2>
+<h3 id="the-fundamental-difference">The Fundamental Difference</h3>
+<p>The most critical distinction between containers and virtual machines lies in what they virtualize and how they achieve isolation. Virtual machines virtualize the entire hardware stack, providing each guest operating system with virtual hardware including CPU, memory, storage, and network interfaces. Each VM runs a complete operating system with its own kernel instance. In contrast, containers virtualize at the operating system level, sharing the host kernel while providing isolated user spaces for applications.</p>
+<p>This architectural difference has profound implications. A virtual machine running Ubuntu on Proxmox VE has its own Linux kernel that boots independently of the host's kernel. When you start a VM, you're essentially booting a complete computer system, albeit virtualized. Containers take a different approach: they use kernel features to create isolated environments that share the host kernel but have separated process trees, network stacks, and filesystem mounts.</p>
+<h3 id="kernel-sharing-vs-kernel-isolation">Kernel Sharing vs. Kernel Isolation</h3>
+<p>Consider what happens when you run multiple VMs on Proxmox. Each VM has its own kernel loaded into memory. If you run five Ubuntu VMs, you have five separate kernel instances consuming memory and executing code. Each kernel manages its own memory space, device drivers, and system resources. This provides strong isolation - a kernel panic in one VM doesn't affect others because they're completely separate kernel instances.</p>
+<p>Containers share a single kernel instance. When you create ten LXC containers on Proxmox, they all use the Proxmox host's kernel. This dramatically reduces memory overhead and enables much faster startup times. However, it also means containers can only run operating systems compatible with the host kernel. You can run various Linux distributions as containers on a Linux host because they all use the Linux kernel, but you cannot run Windows containers on a Linux host or vice versa without additional virtualization layers.</p>
+<h3 id="resource-overhead-comparison">Resource Overhead Comparison</h3>
+<p>The resource implications are substantial. A minimal Ubuntu VM might consume 512 MB to 1 GB of RAM just for the operating system before running any applications. The kernel, system services, and background processes all consume resources. An Ubuntu container might use only 50-100 MB for the same basic system because it shares the host kernel and doesn't duplicate unnecessary system services.</p>
+<p>Boot time differences are equally dramatic. Starting a VM requires a full boot sequence: BIOS/UEFI initialization, bootloader execution, kernel loading, init system startup, and service initialization. This process takes 30-60 seconds or more. Starting a container involves creating the isolated namespaces and cgroups, then executing the container's init process. This typically completes in 1-2 seconds.</p>
+<h3 id="isolation-mechanisms">Isolation Mechanisms</h3>
+<p>Virtual machines achieve isolation through hardware virtualization and hypervisor mediation. The hypervisor controls which physical resources each VM can access. Hardware features like VT-x/AMD-V and EPT/NPT provide strong isolation at the CPU and memory level. This isolation is robust enough for multi-tenant scenarios where different organizations run workloads on shared infrastructure with strong security requirements.</p>
+<p>Containers use Linux kernel features for isolation, primarily namespaces and control groups (cgroups). Namespaces provide separate views of system resources. A process namespace ensures that processes in one container cannot see or interact with processes in another container. A network namespace gives each container its own network stack with unique IP addresses and ports. A mount namespace allows each container to have its own filesystem view.</p>
+<p>Control groups (cgroups) enable resource limiting and accounting. Through cgroups, you can restrict a container to use no more than 2 CPU cores, 512 MB of RAM, and 100 MB/s of disk I/O. These limits prevent individual containers from monopolizing host resources. However, because containers share the kernel, vulnerabilities in the kernel or misconfigured namespaces could potentially allow container escape, where a process breaks out of its container isolation.</p>
+<hr />
+<h2 id="2-lxc-linux-containers-in-proxmox-ve">2. LXC (Linux Containers) in Proxmox VE</h2>
+<h3 id="what-is-lxc">What is LXC?</h3>
+<p>LXC (Linux Containers) represents one of the oldest container technologies, providing operating system-level virtualization on Linux. LXC creates userspace environments that look and feel like independent Linux systems while sharing the host kernel. Proxmox VE integrates LXC natively, providing management capabilities comparable to its VM management interface.</p>
+<p>LXC containers use the same isolation mechanisms as other container technologies: namespaces for resource isolation and cgroups for resource limiting. What distinguishes LXC from application containers like Docker is its system container approach. LXC containers typically run a full init system (systemd or sysvinit) and provide a complete Linux environment similar to a VM, just without the separate kernel.</p>
+<h3 id="creating-lxc-containers-in-proxmox">Creating LXC Containers in Proxmox</h3>
+<p>Proxmox VE simplifies LXC container creation through its web interface. The process resembles VM creation but with container-specific options. When creating a container, you select a container template, which is essentially a minimal root filesystem for a specific Linux distribution. Proxmox provides download access to templates for Ubuntu, Debian, CentOS, Alpine, and other distributions.</p>
+<p>The container creation wizard requests several configuration parameters. The CT ID (container identifier) uniquely identifies the container, similar to VM IDs. The hostname sets the container's network identity. Storage configuration specifies where the container's root filesystem will reside and its size allocation. Unlike VMs with virtual disk images, container storage is typically a directory on the host filesystem, though Proxmox supports various storage backends.</p>
+<p>Resource allocation for containers follows similar principles to VMs but with some differences. CPU allocation can specify the number of cores available to the container and CPU limits as fractions of a core. Memory allocation sets the maximum RAM the container can use. Unlike VMs where RAM is fully allocated on startup, containers use only the memory they actually need up to their limit, making them more efficient.</p>
+<p>Network configuration for containers offers several modes. The most common is a veth (virtual ethernet) pair connecting the container to a bridge on the host. This allows containers to appear as separate network devices with their own IP addresses on the network. You can also use routed networking where the host routes traffic to the container.</p>
+<h3 id="managing-lxc-containers-via-command-line">Managing LXC Containers via Command Line</h3>
+<p>While the web interface handles most operations, understanding the command-line tools provides deeper insight and enables automation. The <code>pct</code> (Proxmox Container Toolkit) command manages containers from the shell.</p>
+<p>Creating a container via CLI:</p>
+<div class="codehilite"><pre><span></span><code>pct<span class="w"> </span>create<span class="w"> </span><span class="m">100</span><span class="w"> </span>local:vztmpl/ubuntu-22.04-standard_22.04-1_amd64.tar.zst<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--hostname<span class="w"> </span>ubuntu-ct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--memory<span class="w"> </span><span class="m">512</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cores<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--rootfs<span class="w"> </span>local-lvm:8<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--net0<span class="w"> </span><span class="nv">name</span><span class="o">=</span>eth0,bridge<span class="o">=</span>vmbr0,ip<span class="o">=</span>dhcp<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--password
+</code></pre></div>
+
+<p>This command creates container ID 100 using the Ubuntu 22.04 template, allocates 512 MB RAM and 1 CPU core, creates an 8 GB root filesystem, and configures networking with DHCP.</p>
+<p>Starting and managing containers:</p>
+<div class="codehilite"><pre><span></span><code>pct<span class="w"> </span>start<span class="w"> </span><span class="m">100</span><span class="w">          </span><span class="c1"># Start container</span>
+pct<span class="w"> </span>enter<span class="w"> </span><span class="m">100</span><span class="w">          </span><span class="c1"># Enter container console</span>
+pct<span class="w"> </span>stop<span class="w"> </span><span class="m">100</span><span class="w">           </span><span class="c1"># Stop container</span>
+pct<span class="w"> </span>status<span class="w"> </span><span class="m">100</span><span class="w">         </span><span class="c1"># Check container status</span>
+pct<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--<span class="w"> </span>ls<span class="w"> </span>-la<span class="w"> </span><span class="c1"># Execute command in container</span>
+</code></pre></div>
+
+<p>The <code>pct enter</code> command is particularly useful, providing direct shell access to the container, similar to SSH but without requiring network configuration.</p>
+<p>Resource limits can be modified on running containers:</p>
+<div class="codehilite"><pre><span></span><code>pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--memory<span class="w"> </span><span class="m">1024</span><span class="w">     </span><span class="c1"># Increase memory to 1 GB</span>
+pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--cores<span class="w"> </span><span class="m">2</span><span class="w">         </span><span class="c1"># Increase to 2 CPU cores</span>
+pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--cpulimit<span class="w"> </span><span class="m">1</span>.5<span class="w">    </span><span class="c1"># Limit to 1.5 CPU cores max usage</span>
+</code></pre></div>
+
+<h3 id="lxc-templates-and-customization">LXC Templates and Customization</h3>
+<p>Container templates serve as the foundation for new containers. These templates contain a minimal base system with the core utilities and package manager for a Linux distribution. Proxmox caches downloaded templates in <code>/var/lib/vz/template/cache/</code>.</p>
+<p>After creating a container from a template, you typically need to perform initial configuration. For system containers, this includes:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Enter the container</span>
+pct<span class="w"> </span>enter<span class="w"> </span><span class="m">100</span>
+
+<span class="c1"># Update package lists</span>
+apt<span class="w"> </span>update
+
+<span class="c1"># Install desired software</span>
+apt<span class="w"> </span>install<span class="w"> </span>nginx<span class="w"> </span>mysql-server
+
+<span class="c1"># Configure services as needed</span>
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nginx
+systemctl<span class="w"> </span>start<span class="w"> </span>nginx
+</code></pre></div>
+
+<p>Unlike VMs where you install a full operating system from ISO, containers start from templates that already contain a functional, minimal system. This dramatically speeds up deployment. Creating and configuring a new container can take minutes compared to the 15-30 minutes required for a full OS installation in a VM.</p>
+<h3 id="privileged-vs-unprivileged-containers">Privileged vs. Unprivileged Containers</h3>
+<p>Proxmox allows creating containers in two security modes: privileged and unprivileged. This distinction is crucial for understanding container security.</p>
+<p>Privileged containers run with root in the container mapping directly to root on the host. The container's UID 0 is the same as the host's UID 0. This provides maximum compatibility with applications that require root access features, but it represents a security risk. If a process escapes the container, it has full root access to the host system.</p>
+<p>Unprivileged containers use UID/GID mapping to run as non-root from the host's perspective. The container's root user (UID 0) might map to UID 100000 on the host. Even if an attacker escapes the container, they have the privileges of a non-root user on the host, significantly limiting potential damage.</p>
+<p>The trade-off is compatibility. Some applications and configurations that work in privileged containers may fail in unprivileged containers due to permission restrictions. For production systems, unprivileged containers are recommended whenever possible for enhanced security.</p>
+<hr />
+<h2 id="3-docker-the-application-container-platform">3. Docker: The Application Container Platform</h2>
+<h3 id="docker-architecture-and-ecosystem">Docker Architecture and Ecosystem</h3>
+<p>Docker has become synonymous with containers in many contexts, though it's important to understand that Docker is one implementation of container technology, not containers themselves. Docker introduced several innovations that made containers accessible to developers and popularized their use in application deployment.</p>
+<p>The Docker architecture consists of several components. The Docker daemon (<code>dockerd</code>) runs as a background service on the host, managing images, containers, networks, and volumes. The Docker CLI (<code>docker</code>) provides the user interface for interacting with the daemon. Docker uses containerd as its container runtime, which in turn uses runc to actually create and run containers using Linux kernel features.</p>
+<p>Docker images are the templates from which containers are instantiated. An image is a layered filesystem containing everything needed to run an application: base OS files, application code, dependencies, and configuration. Images are built from Dockerfiles, which are text files describing the steps to create the image layer by layer.</p>
+<h3 id="docker-vs-lxc-philosophical-differences">Docker vs. LXC: Philosophical Differences</h3>
+<p>While both Docker and LXC use similar underlying technologies (namespaces and cgroups), they embody different philosophies. LXC containers are system containers: they run init systems, multiple processes, and feel like mini virtual machines. Docker containers are application containers: they typically run a single application process and are designed to be ephemeral and stateless.</p>
+<p>This difference manifests in how you use each technology. An LXC container might run Apache, MySQL, and a PHP application all within one container, managed by systemd. A Docker deployment of the same application would use three containers: one for Apache, one for MySQL, and one for the PHP application logic, orchestrated together.</p>
+<p>The single-process model of Docker containers aligns with microservices architecture and cloud-native applications. Each service runs in its own container, scales independently, and can be updated without affecting other services. This approach requires orchestration tools like Docker Compose for multi-container applications or Kubernetes for production deployments at scale.</p>
+<h3 id="docker-basics-and-common-commands">Docker Basics and Common Commands</h3>
+<p>Installing Docker on Ubuntu:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Update package index</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+
+<span class="c1"># Install dependencies</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>apt-transport-https<span class="w"> </span>ca-certificates<span class="w"> </span>curl<span class="w"> </span>software-properties-common
+
+<span class="c1"># Add Docker&#39;s GPG key</span>
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://download.docker.com/linux/ubuntu/gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/docker-archive-keyring.gpg
+
+<span class="c1"># Add Docker repository</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=</span><span class="k">$(</span>dpkg<span class="w"> </span>--print-architecture<span class="k">)</span><span class="s2"> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu </span><span class="k">$(</span>lsb_release<span class="w"> </span>-cs<span class="k">)</span><span class="s2"> stable&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/docker.list
+
+<span class="c1"># Install Docker</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>docker-ce<span class="w"> </span>docker-ce-cli<span class="w"> </span>containerd.io
+
+<span class="c1"># Verify installation</span>
+sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>hello-world
+</code></pre></div>
+
+<p>Running containers:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Pull an image from Docker Hub</span>
+docker<span class="w"> </span>pull<span class="w"> </span>nginx
+
+<span class="c1"># Run a container</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>webserver<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>:80<span class="w"> </span>nginx
+
+<span class="c1"># List running containers</span>
+docker<span class="w"> </span>ps
+
+<span class="c1"># View all containers (including stopped)</span>
+docker<span class="w"> </span>ps<span class="w"> </span>-a
+
+<span class="c1"># View container logs</span>
+docker<span class="w"> </span>logs<span class="w"> </span>webserver
+
+<span class="c1"># Execute command in running container</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>webserver<span class="w"> </span>bash
+
+<span class="c1"># Stop container</span>
+docker<span class="w"> </span>stop<span class="w"> </span>webserver
+
+<span class="c1"># Remove container</span>
+docker<span class="w"> </span>rm<span class="w"> </span>webserver
+</code></pre></div>
+
+<p>The <code>-d</code> flag runs the container in detached mode (background). The <code>-p 80:80</code> maps port 80 on the host to port 80 in the container. The <code>--name</code> flag assigns a human-readable name instead of a random generated name.</p>
+<h3 id="docker-images-and-dockerfiles">Docker Images and Dockerfiles</h3>
+<p>Docker images are built in layers. Each instruction in a Dockerfile creates a layer. Layers are cached and reused, making subsequent builds faster.</p>
+<p>Example Dockerfile for a Python web application:</p>
+<div class="codehilite"><pre><span></span><code><span class="c"># Base image</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
+
+<span class="c"># Set working directory</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+
+<span class="c"># Copy requirements file</span>
+<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
+
+<span class="c"># Install dependencies</span>
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="c"># Copy application code</span>
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+
+<span class="c"># Expose port</span>
+<span class="k">EXPOSE</span><span class="w"> </span><span class="s">5000</span>
+
+<span class="c"># Run application</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+<p>Building and running this image:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Build image</span>
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>myapp:1.0<span class="w"> </span>.
+
+<span class="c1"># Run container from image</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">5000</span>:5000<span class="w"> </span>myapp:1.0
+</code></pre></div>
+
+<p>Each layer is cached. If you modify <code>app.py</code> but not <code>requirements.txt</code>, rebuilding the image only recreates the layers after the <code>COPY . .</code> instruction, reusing cached layers for the base image and dependencies.</p>
+<h3 id="docker-in-cloud-environments">Docker in Cloud Environments</h3>
+<p>Docker's popularity in cloud computing stems from several factors. Public cloud providers (AWS, Azure, Google Cloud) offer managed container services that run Docker containers without requiring users to manage the underlying infrastructure. AWS ECS (Elastic Container Service), Azure Container Instances, and Google Cloud Run all use Docker container images.</p>
+<p>In OpenStack environments, which we'll study in Weeks 7-12, Docker containers are managed through services like Zun (container management) and Magnum (Kubernetes cluster management). Organizations deploy containerized applications on OpenStack using these services, benefiting from the efficiency of containers while maintaining private cloud control.</p>
+<hr />
+<h2 id="4-podman-the-daemonless-alternative">4. Podman: The Daemonless Alternative</h2>
+<h3 id="why-podman-exists">Why Podman Exists</h3>
+<p>Podman (Pod Manager) was created to address some of Docker's architectural and security concerns. The most significant difference is that Podman is daemonless. Docker requires the Docker daemon running with root privileges to manage containers. This creates a security concern: anyone with access to the Docker daemon socket has effective root access to the host system.</p>
+<p>Podman eliminates the daemon entirely. Each Podman command directly manages containers using the same underlying technologies (runc, namespaces, cgroups) without a privileged background service. This architecture enables rootless containers where regular users can create and run containers without any special privileges, improving security significantly.</p>
+<h3 id="podman-compatibility-with-docker">Podman Compatibility with Docker</h3>
+<p>Podman was designed to be compatible with Docker at the command-line interface level. Most Docker commands work with Podman by simply replacing <code>docker</code> with <code>podman</code>. For users transitioning from Docker, this compatibility reduces the learning curve.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Docker commands</span>
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ubuntu<span class="w"> </span>bash
+docker<span class="w"> </span>ps
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>myimage<span class="w"> </span>.
+
+<span class="c1"># Equivalent Podman commands</span>
+podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ubuntu<span class="w"> </span>bash
+podman<span class="w"> </span>ps
+podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>myimage<span class="w"> </span>.
+</code></pre></div>
+
+<p>Podman can use Docker images from Docker Hub and other registries without modification. Dockerfiles work identically with Podman. For many use cases, <code>alias docker=podman</code> allows existing Docker workflows to function with Podman.</p>
+<h3 id="rootless-containers-with-podman">Rootless Containers with Podman</h3>
+<p>Rootless containers represent a significant security advancement. A normal user can create containers without requiring sudo or root access. The containers run with the user's UID/GID, and even if compromised, an attacker gains no more access than the user already had.</p>
+<p>Setting up rootless containers:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Install Podman (Ubuntu)</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>podman
+
+<span class="c1"># Run container as regular user (no sudo needed)</span>
+podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ubuntu<span class="w"> </span>bash
+
+<span class="c1"># Check running containers</span>
+podman<span class="w"> </span>ps
+</code></pre></div>
+
+<p>The user's containers are completely isolated from other users' containers and from the system. This isolation makes Podman attractive for shared development environments and multi-tenant scenarios.</p>
+<h3 id="pods-podmans-unique-feature">Pods: Podman's Unique Feature</h3>
+<p>Podman's name reflects another unique feature: pod support. In Kubernetes terminology, a pod is a group of containers that share network and storage resources. Podman can create pods locally without requiring a full Kubernetes installation.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a pod</span>
+podman<span class="w"> </span>pod<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>mypod<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80
+
+<span class="c1"># Run containers in the pod</span>
+podman<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--pod<span class="w"> </span>mypod<span class="w"> </span>nginx
+podman<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--pod<span class="w"> </span>mypod<span class="w"> </span>redis
+
+<span class="c1"># List pods</span>
+podman<span class="w"> </span>pod<span class="w"> </span>list
+
+<span class="c1"># All containers in the pod share the network namespace</span>
+<span class="c1"># They can communicate via localhost</span>
+</code></pre></div>
+
+<p>This feature simplifies local development and testing of multi-container applications designed for Kubernetes deployment.</p>
+<h3 id="podman-in-enterprise-and-cloud">Podman in Enterprise and Cloud</h3>
+<p>Red Hat Enterprise Linux (RHEL) and its derivatives have adopted Podman as the default container tool, removing Docker entirely from official repositories. Red Hat OpenShift, a Kubernetes distribution, and Red Hat's OpenStack distributions use Podman for container management in security-focused deployments.</p>
+<p>The daemonless architecture and rootless capabilities make Podman attractive for environments with strict security requirements. Government, healthcare, and financial sectors have shown particular interest in Podman for these reasons.</p>
+<hr />
+<h2 id="5-resource-management-and-limits">5. Resource Management and Limits</h2>
+<h3 id="understanding-cgroups">Understanding Cgroups</h3>
+<p>Control groups (cgroups) provide the mechanism for resource limiting and accounting in containers. The Linux kernel's cgroup subsystem allows grouping processes and applying resource limits to these groups. Containers leverage cgroups to enforce CPU, memory, I/O, and other resource constraints.</p>
+<p>Cgroups organize processes into hierarchical groups and apply controllers to each hierarchy. The main controllers relevant to containers include:</p>
+<ul>
+<li><strong>cpu</strong>: Controls CPU allocation using shares and quotas</li>
+<li><strong>memory</strong>: Limits memory usage including cache and swap</li>
+<li><strong>blkio</strong>: Controls block I/O operations and bandwidth</li>
+<li><strong>net_cls</strong>: Tags network packets for traffic control</li>
+</ul>
+<h3 id="setting-resource-limits-in-lxc">Setting Resource Limits in LXC</h3>
+<p>For LXC containers in Proxmox, resource limits can be set through the web interface or CLI.</p>
+<p>CPU limits:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Limit container to 2 CPU cores</span>
+pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--cores<span class="w"> </span><span class="m">2</span>
+
+<span class="c1"># Limit actual CPU usage to 1.5 cores maximum (150%)</span>
+pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--cpulimit<span class="w"> </span><span class="m">1</span>.5
+
+<span class="c1"># Set CPU shares (relative weight compared to other containers)</span>
+pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--cpuunits<span class="w"> </span><span class="m">1024</span>
+</code></pre></div>
+
+<p>The <code>cpulimit</code> parameter is particularly important. Setting cores to 2 makes 2 cores visible to the container, but <code>cpulimit 1.5</code> restricts the container to using no more than 1.5 cores worth of CPU time even if the cores are idle. This prevents a single container from monopolizing CPU resources.</p>
+<p>Memory limits:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Set memory limit to 2 GB</span>
+pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--memory<span class="w"> </span><span class="m">2048</span>
+
+<span class="c1"># Set swap limit to 512 MB</span>
+pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--swap<span class="w"> </span><span class="m">512</span>
+</code></pre></div>
+
+<p>When a container reaches its memory limit, the kernel's Out-of-Memory (OOM) killer may terminate processes in the container to free memory. This prevents one container from causing system-wide memory exhaustion.</p>
+<h3 id="setting-resource-limits-in-docker">Setting Resource Limits in Docker</h3>
+<p>Docker provides resource limit flags when running containers.</p>
+<p>CPU limits:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Limit to 2 CPU cores</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--cpus<span class="o">=</span><span class="m">2</span><span class="w"> </span>nginx
+
+<span class="c1"># Limit to 50% of one core</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--cpus<span class="o">=</span><span class="m">0</span>.5<span class="w"> </span>nginx
+
+<span class="c1"># Set CPU shares (relative weight)</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--cpu-shares<span class="o">=</span><span class="m">512</span><span class="w"> </span>nginx
+</code></pre></div>
+
+<p>Memory limits:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Limit to 512 MB RAM</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--memory<span class="o">=</span>512m<span class="w"> </span>nginx
+
+<span class="c1"># Limit memory and swap combined</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--memory<span class="o">=</span>512m<span class="w"> </span>--memory-swap<span class="o">=</span>1g<span class="w"> </span>nginx
+
+<span class="c1"># Set memory reservation (soft limit)</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--memory<span class="o">=</span>1g<span class="w"> </span>--memory-reservation<span class="o">=</span>512m<span class="w"> </span>nginx
+</code></pre></div>
+
+<p>Block I/O limits:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Limit write throughput to 10 MB/s</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--device-write-bps<span class="w"> </span>/dev/sda:10mb<span class="w"> </span>nginx
+
+<span class="c1"># Set relative I/O weight</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--blkio-weight<span class="w"> </span><span class="m">500</span><span class="w"> </span>nginx
+</code></pre></div>
+
+<h3 id="resource-monitoring">Resource Monitoring</h3>
+<p>Monitoring resource usage helps identify when limits need adjustment.</p>
+<p>For LXC containers:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># View container resource usage</span>
+pct<span class="w"> </span>status<span class="w"> </span><span class="m">100</span>
+
+<span class="c1"># Real-time monitoring</span>
+cat<span class="w"> </span>/sys/fs/cgroup/cpu/lxc/100/cpu.stat
+cat<span class="w"> </span>/sys/fs/cgroup/memory/lxc/100/memory.usage_in_bytes
+</code></pre></div>
+
+<p>For Docker containers:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># View resource usage for all containers</span>
+docker<span class="w"> </span>stats
+
+<span class="c1"># View usage for specific container</span>
+docker<span class="w"> </span>stats<span class="w"> </span>webserver
+
+<span class="c1"># Get detailed information</span>
+docker<span class="w"> </span>inspect<span class="w"> </span>webserver<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s2">&quot;HostConfig&quot;</span>
+</code></pre></div>
+
+<p>The <code>docker stats</code> command provides real-time CPU, memory, network, and disk I/O statistics for running containers, making it easy to identify resource-intensive containers.</p>
+<hr />
+<h2 id="6-use-cases-when-to-use-containers-vs-vms">6. Use Cases: When to Use Containers vs. VMs</h2>
+<h3 id="containers-are-ideal-for">Containers Are Ideal For:</h3>
+<p><strong>Microservices Architectures</strong>: Applications designed as multiple small services benefit from containers. Each service runs in its own container, scales independently, and can be updated without affecting other services. The lightweight nature of containers makes running dozens or hundreds of microservices economically feasible.</p>
+<p><strong>Development and Testing</strong>: Containers provide consistent environments across development, testing, and production. Developers can package applications with all dependencies, ensuring "it works on my machine" translates to "it works in production." Rapid startup times make containers excellent for automated testing pipelines.</p>
+<p><strong>Continuous Integration/Continuous Deployment (CI/CD)</strong>: Build pipelines use containers to provide clean, reproducible build environments. Each build runs in a fresh container, preventing pollution from previous builds.</p>
+<p><strong>Stateless Applications</strong>: Web servers, API gateways, and application frontends that don't maintain local state work well in containers. They can be destroyed and recreated freely, scaled horizontally easily, and updated through rolling deployments.</p>
+<p><strong>Cloud-Native Applications</strong>: Applications designed for cloud platforms often use containers for portability across cloud providers and on-premises infrastructure.</p>
+<h3 id="virtual-machines-are-better-for">Virtual Machines Are Better For:</h3>
+<p><strong>Running Different Operating Systems</strong>: When you need Windows alongside Linux, or BSD systems, VMs are the only option. Each VM runs its own kernel and isn't limited to the host OS type.</p>
+<p><strong>Kernel-Level Operations</strong>: Applications requiring kernel modules, custom kernel configurations, or kernel-level security features need VMs. Containers share the host kernel and cannot modify it.</p>
+<p><strong>Strong Security Isolation</strong>: Multi-tenant scenarios where different organizations share infrastructure require the strong isolation boundaries that VMs provide. The hypervisor provides better isolation than container namespaces.</p>
+<p><strong>Legacy Applications</strong>: Older applications designed for traditional server deployments often require full system access and may not work correctly in containers. VMs provide the traditional environment these applications expect.</p>
+<p><strong>Resource-Intensive Applications</strong>: Databases, data analytics systems, and applications with specific performance requirements often run better in VMs with dedicated resources rather than sharing the host kernel and resources with numerous containers.</p>
+<p><strong>Persistent State Management</strong>: While containers can use volumes for persistent data, VMs provide more straightforward persistent storage management for stateful applications.</p>
+<h3 id="hybrid-approaches">Hybrid Approaches</h3>
+<p>Real-world infrastructure often uses both containers and VMs. A common pattern is running container orchestration platforms (like Kubernetes) on VMs. The VMs provide strong isolation between different clusters or tenants, while containers provide application packaging and deployment flexibility.</p>
+<p>Another pattern is running containers inside VMs for enhanced security. This nested approach gives you the packaging benefits of containers while maintaining VM-level isolation. Performance overhead from this nesting is usually acceptable for the added security.</p>
+<hr />
+<h2 id="7-hands-on-lab-exercises">7. Hands-On Lab Exercises</h2>
+<h3 id="lab-1-creating-and-managing-lxc-containers">Lab 1: Creating and Managing LXC Containers</h3>
+<p><strong>Objective</strong>: Create LXC containers, configure resource limits, and compare performance with VMs.</p>
+<p><strong>Tasks</strong>:</p>
+<ol>
+<li>Create an Ubuntu 22.04 LXC container with 512 MB RAM and 1 CPU core</li>
+<li>Start the container and access its console</li>
+<li>Install and configure Nginx web server</li>
+<li>Set CPU limit to 0.5 cores and memory limit to 256 MB</li>
+<li>Create a second container using the same template</li>
+<li>Compare container start time with VM start time</li>
+</ol>
+<p><strong>Verification</strong>:
+- Both containers running and accessible
+- Nginx serving web pages in both containers
+- Resource limits correctly applied
+- Documented start time comparison</p>
+<h3 id="lab-2-docker-basics">Lab 2: Docker Basics</h3>
+<p><strong>Objective</strong>: Install Docker, run containers, and create a custom image.</p>
+<p><strong>Tasks</strong>:</p>
+<ol>
+<li>Install Docker on a VM or container</li>
+<li>Pull and run nginx, mysql, and redis containers  </li>
+<li>Configure port mappings and connect to services</li>
+<li>Create a Dockerfile for a simple Python web application</li>
+<li>Build the image and run the container</li>
+<li>Set memory and CPU limits on containers</li>
+</ol>
+<p><strong>Verification</strong>:
+- All services running and accessible
+- Custom application container functioning correctly
+- Resource limits enforced</p>
+<h3 id="lab-3-resource-management-comparison">Lab 3: Resource Management Comparison</h3>
+<p><strong>Objective</strong>: Compare resource usage and performance between containers and VMs.</p>
+<p><strong>Tasks</strong>:</p>
+<ol>
+<li>Create a VM with 1 GB RAM running Ubuntu</li>
+<li>Create an LXC container with 1 GB RAM limit running Ubuntu</li>
+<li>Measure boot time for both</li>
+<li>Install identical workload (web server + application) on both</li>
+<li>Measure memory usage at idle and under load</li>
+<li>Document CPU usage differences</li>
+</ol>
+<p><strong>Verification</strong>:
+- Complete performance comparison data
+- Analysis of when to choose containers vs VMs</p>
+<h3 id="lab-4-podman-rootless-containers-optional-advanced">Lab 4: Podman Rootless Containers (Optional Advanced)</h3>
+<p><strong>Objective</strong>: Explore rootless containers with Podman.</p>
+<p><strong>Tasks</strong>:</p>
+<ol>
+<li>Install Podman as a regular user</li>
+<li>Run containers without sudo</li>
+<li>Create a pod with multiple containers</li>
+<li>Compare with Docker workflow</li>
+</ol>
+<p><strong>Verification</strong>:
+- Containers running without root privileges
+- Pod functioning with inter-container communication</p>
+<hr />
+<h2 id="8-common-issues-and-troubleshooting">8. Common Issues and Troubleshooting</h2>
+<h3 id="container-wont-start">Container Won't Start</h3>
+<p><strong>Symptoms</strong>: Container creation succeeds but fails to start.</p>
+<p><strong>Common Causes</strong>:
+- Insufficient resources on host
+- Corrupted template
+- Networking misconfiguration
+- AppArmor or SELinux restrictions</p>
+<p><strong>Solutions</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check system logs</span>
+journalctl<span class="w"> </span>-xe
+
+<span class="c1"># Check container-specific logs</span>
+pct<span class="w"> </span>status<span class="w"> </span><span class="m">100</span>
+less<span class="w"> </span>/var/log/pve/tasks/*
+
+<span class="c1"># Verify template integrity</span>
+ls<span class="w"> </span>-lh<span class="w"> </span>/var/lib/vz/template/cache/
+
+<span class="c1"># Check resource availability</span>
+pvesh<span class="w"> </span>get<span class="w"> </span>/nodes/pve/status
+</code></pre></div>
+
+<h3 id="container-cannot-access-network">Container Cannot Access Network</h3>
+<p><strong>Symptoms</strong>: Container starts but has no network connectivity.</p>
+<p><strong>Common Causes</strong>:
+- Bridge configuration error
+- DHCP unavailable
+- Firewall rules blocking traffic</p>
+<p><strong>Solutions</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check bridge status</span>
+ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>vmbr0
+brctl<span class="w"> </span>show<span class="w"> </span>vmbr0
+
+<span class="c1"># Enter container and check network</span>
+pct<span class="w"> </span>enter<span class="w"> </span><span class="m">100</span>
+ip<span class="w"> </span>addr<span class="w"> </span>show
+ip<span class="w"> </span>route<span class="w"> </span>show
+ping<span class="w"> </span><span class="m">8</span>.8.8.8
+
+<span class="c1"># Reconfigure network</span>
+pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--net0<span class="w"> </span><span class="nv">name</span><span class="o">=</span>eth0,bridge<span class="o">=</span>vmbr0,ip<span class="o">=</span>dhcp
+pct<span class="w"> </span>reboot<span class="w"> </span><span class="m">100</span>
+</code></pre></div>
+
+<h3 id="resource-limit-not-working">Resource Limit Not Working</h3>
+<p><strong>Symptoms</strong>: Container exceeds configured resource limits.</p>
+<p><strong>Common Causes</strong>:
+- Cgroup version incompatibility
+- Limits not properly applied
+- Monitoring showing incorrect values</p>
+<p><strong>Solutions</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Verify limits are set</span>
+pct<span class="w"> </span>config<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;cores|memory|cpulimit&quot;</span>
+
+<span class="c1"># Check actual cgroup values</span>
+cat<span class="w"> </span>/sys/fs/cgroup/memory/lxc/100/memory.limit_in_bytes
+cat<span class="w"> </span>/sys/fs/cgroup/cpu/lxc/100/cpu.shares
+
+<span class="c1"># Reapply limits</span>
+pct<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>--memory<span class="w"> </span><span class="m">512</span><span class="w"> </span>--cpulimit<span class="w"> </span><span class="m">1</span>
+pct<span class="w"> </span>restart<span class="w"> </span><span class="m">100</span>
+</code></pre></div>
+
+<hr />
+<h2 id="9-connection-to-openstack-preview">9. Connection to OpenStack (Preview)</h2>
+<p>In Weeks 7-12, we'll explore OpenStack cloud infrastructure. Understanding containers is crucial for OpenStack because modern cloud platforms heavily utilize container technology.</p>
+<p><strong>OpenStack Zun</strong> provides container management as a service. Users can deploy Docker containers on OpenStack infrastructure without managing the underlying compute nodes. Zun integrates with other OpenStack services like Neutron (networking) and Cinder (storage).</p>
+<p><strong>OpenStack Magnum</strong> provisions container orchestration engines like Kubernetes, Docker Swarm, or Apache Mesos as first-class resources. Organizations can deploy managed Kubernetes clusters on OpenStack, then run containerized applications on these clusters.</p>
+<p>The skills you develop this week in container management, resource limiting, and understanding container architectures directly apply to operating and consuming OpenStack cloud services. OpenStack essentially provides the automation and API layer that makes container deployment and management scalable across large infrastructure.</p>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>This week introduced container technology as a complement to virtual machines. Containers provide lightweight, fast, and efficient virtualization at the operating system level by sharing the host kernel while maintaining isolation through namespaces and cgroups. LXC containers in Proxmox VE offer system-container capabilities similar to VMs but with better resource efficiency. Docker revolutionized application deployment with its image-based approach and extensive ecosystem. Podman offers a more secure, daemon less alternative compatible with Docker workflows.</p>
+<p>Understanding when to use containers versus VMs requires evaluating isolation requirements, OS compatibility needs, performance characteristics, and deployment patterns. Modern infrastructure often combines both technologies, using VMs for strong isolation and kernel-level operations while using containers for application deployment and microservices.</p>
+<p>Effective resource management through cgroups ensures fair resource allocation and prevents individual containers from monopolizing host resources. Setting appropriate CPU, memory, and I/O limits is crucial for maintaining stable multi-tenant container environments.</p>
+<p><strong>Next Week</strong>: We will explore virtual networking in depth, covering Linux networking fundamentals including the <code>ip</code> command, network namespaces, bridges, veth  interfaces, VLANs, and Open vSwitch. These networking concepts are essential for connecting VMs and containers and building complex network topologies in virtualized environments.</p>
+<hr />
+<h2 id="additional-resources">Additional Resources</h2>
+<h3 id="official-documentation">Official Documentation</h3>
+<ul>
+<li><a href="https://pve.proxmox.com/pve-docs/chapter-pct.html">Proxmox LXC Documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker Documentation</a></li>
+<li><a href="https://podman.io/">Podman Documentation</a></li>
+<li><a href="https://linuxcontainers.org/">Linux Containers (LXC)</a></li>
+</ul>
+<h3 id="video-tutorials">Video Tutorials</h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=xKhWRMj5Nrc">LXC Containers in Proxmox</a></li>
+<li><a href="https://www.youtube.com/watch?v=lc7p4ANkQ3U">Docker vs Podman</a></li>
+<li><a href="https://www.youtube.com/watch?v=rOt3f0G4Sr4">Docker Basics</a></li>
+</ul>
+<h3 id="further-reading">Further Reading</h3>
+<ul>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v2.txt">Cgroups Documentation</a></li>
+<li><a href="https://man7.org/linux/man-pages/man7/namespaces.7.html">Linux Namespaces</a></li>
+<li><a href="https://docs.openstack.org/zun/latest/">OpenStack Zun</a></li>
+</ul>
+    </article>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
+</footer>
+
+<!-- Progress Tracking -->
+<script src="../js/course_logic.js"></script>
+
+</body>
+</html>

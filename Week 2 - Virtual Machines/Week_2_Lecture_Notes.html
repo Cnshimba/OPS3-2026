@@ -1,0 +1,1079 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 2 Lecture Notes</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                colors: {
+                    primary: '#002F6E', // VUT Midnight Blue
+                    secondary: '#6c757d',
+                    codebg: 'var(--bg-code)', 
+                },
+                typography: {
+                    DEFAULT: {
+                        css: {
+                            maxWidth: '100%',
+                            fontFamily: 'Inter, sans-serif',
+                            color: 'var(--text-body)',
+                            '--tw-prose-body': 'var(--text-body)',
+                            '--tw-prose-headings': 'var(--text-headings)',
+                            '--tw-prose-links': 'var(--text-link)',
+                            '--tw-prose-bold': 'var(--text-headings)',
+                            '--tw-prose-counters': 'var(--text-body)',
+                            '--tw-prose-bullets': 'var(--text-body)',
+                            '--tw-prose-hr': 'var(--border-color)',
+                            '--tw-prose-quotes': 'var(--text-body)',
+                            '--tw-prose-code': 'var(--text-code)',
+                            '--tw-prose-pre-code': 'var(--text-pre)',
+                            '--tw-prose-pre-bg': 'var(--bg-pre)',
+                            
+                            // Image Sizing Control
+                            img: {
+                                display: 'block',
+                                marginLeft: 'auto',
+                                marginRight: 'auto',
+                                maxHeight: '500px',
+                                width: 'auto',
+                                height: 'auto',
+                                borderRadius: '0.5rem',
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                            },
+                            // Links
+                            a: {
+                                color: 'var(--text-link)',
+                                '&:hover': { opacity: '0.8' },
+                            },
+                            // Inline Code
+                            code: {
+                                color: 'var(--text-code)',
+                                backgroundColor: 'var(--bg-code)',
+                                padding: '0.2rem 0.4rem',
+                                borderRadius: '0.25rem',
+                                fontWeight: '600',
+                                border: '1px solid var(--border-code)',
+                            },
+                            'code::before': { content: '""' },
+                            'code::after': { content: '""' },
+                            // Code Blocks (Pre)
+                            pre: {
+                                backgroundColor: 'var(--bg-pre) !important',
+                                color: 'var(--text-pre)',
+                                padding: '1rem',
+                                borderRadius: '0.5rem',
+                                border: '1px solid var(--border-pre)',
+                            },
+                            // Notes/Alerts (Blockquotes)
+                            blockquote: {
+                                borderLeftColor: '#002F6E',
+                                borderLeftWidth: '4px',
+                                backgroundColor: 'var(--bg-note)',
+                                padding: '1rem',
+                                color: 'var(--text-body)',
+                                fontSize: '0.9rem', // Smaller text for notes
+                                fontStyle: 'italic',
+                                quotes: 'none',
+                                borderRadius: '0 0.5rem 0.5rem 0',
+                            },
+                            'blockquote p:first-of-type::before': { content: 'none' },
+                            'blockquote p:last-of-type::after': { content: 'none' },
+                            // Tables (Restored from First Attempt)
+                            table: {
+                                width: '100%',
+                                marginTop: '2em',
+                                marginBottom: '2em',
+                                borderCollapse: 'collapse',
+                                fontSize: '0.9rem',
+                            },
+                            'thead th': {
+                                backgroundColor: '#f3f4f6', 
+                                color: '#1f2937', 
+                                fontWeight: '600',
+                                padding: '0.75rem',
+                                borderBottom: '2px solid #e5e7eb',
+                                textAlign: 'left',
+                            },
+                            'tbody td': {
+                                padding: '0.75rem',
+                                borderBottom: '1px solid #e5e7eb',
+                                verticalAlign: 'top',
+                            },
+                            'tbody tr:hover': {
+                                backgroundColor: '#f9fafb',
+                            },
+                            
+                            // Task Lists (Checkboxes)
+                            '.task-list-item': {
+                                listStyleType: 'none',
+                            },
+                            '.task-list-item input[type="checkbox"]': {
+                                marginRight: '0.5rem',
+                            },
+
+                            thead: {
+                                borderBottomWidth: '2px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'thead th': {
+                                color: 'var(--text-headings)',
+                                fontWeight: '600',
+                                verticalAlign: 'bottom',
+                                paddingRight: '0.75em',
+                                paddingBottom: '0.75em',
+                                paddingLeft: '0.75em',
+                                textAlign: 'left',
+                            },
+                            'tbody tr': {
+                                borderBottomWidth: '1px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'tbody tr:last-child': {
+                                borderBottomWidth: '0',
+                            },
+                            'tbody td': {
+                                verticalAlign: 'top',
+                                padding: '0.75em',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
+</script>
+<script>
+    // Theme Toggle Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+
+        // Check local storage or preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            iconSun.classList.remove('hidden');
+            iconMoon.classList.add('hidden');
+        } else {
+            html.classList.remove('dark');
+            iconSun.classList.add('hidden');
+            iconMoon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+            }
+        });
+    });
+</script>
+<style>
+    /* CSS Variables for Theming */
+    :root {
+        --bg-body: #f8fafc;
+        --bg-card: #ffffff;
+        --text-body: #334155;
+        --text-headings: #0f172a;
+        --text-link: #002F6E; /* VUT Blue */
+        --border-color: #e2e8f0;
+        
+        /* Code - Light Mode */
+        --bg-code: #f1f5f9;
+        --text-code: #d63384;
+        --border-code: #e2e8f0;
+        
+        /* Pre - Light Mode (Github Light) */
+        --bg-pre: #f6f8fa;
+        --text-pre: #24292e;
+        --border-pre: #d0d7de;
+        
+        /* Note - Light Mode */
+        --bg-note: #f8f9fa;
+        
+        /* Scrollbar */
+        --scroll-track: #f1f1f1;
+        --scroll-thumb: #888;
+    }
+
+    html.dark {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --text-body: #cbd5e1;
+        --text-headings: #f8fafc;
+        --text-link: #60a5fa; /* Blue 400 - Brighter for better contrast */
+        --border-color: #334155;
+        
+        /* Code - Dark Mode */
+        --bg-code: #334155;
+        --text-code: #f472b6; 
+        --border-code: #475569;
+        
+        /* Pre - Dark Mode (Monokai) */
+        --bg-pre: #272822;
+        --text-pre: #f8f8f2;
+        --border-pre: #464539;
+        
+        /* Note - Dark Mode */
+        --bg-note: #1e293b;
+        --scroll-track: #1e293b;
+        --scroll-thumb: #475569;
+    }
+
+    /* Transition */
+    body, article, code, pre, blockquote {
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--scroll-track); }
+    ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    
+    /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
+    .codehilite .hll { background-color: #ffffcc }
+    .codehilite .c { color: #6a737d; font-style: italic } /* Comment */
+    .codehilite .err { color: #f05240; background-color: #ffeaea } /* Error */
+    .codehilite .k { color: #d73a49; font-weight: bold } /* Keyword */
+    .codehilite .o { color: #d73a49; font-weight: bold } /* Operator */
+    .codehilite .cm { color: #6a737d; font-style: italic } /* Comment.Multiline */
+    .codehilite .cp { color: #6a737d; font-weight: bold } /* Comment.Preproc */
+    .codehilite .c1 { color: #6a737d; font-style: italic } /* Comment.Single */
+    .codehilite .cs { color: #6a737d; font-style: italic } /* Comment.Special */
+    .codehilite .gd { color: #d73a49; background-color: #fdd } /* Generic.Deleted */
+    .codehilite .ge { font-style: italic } /* Generic.Emph */
+    .codehilite .gr { color: #aa0000 } /* Generic.Error */
+    .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+    .codehilite .gi { color: #00a000; background-color: #dfd } /* Generic.Inserted */
+    .codehilite .go { color: #888888 } /* Generic.Output */
+    .codehilite .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+    .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+    .codehilite .gt { color: #aa0000 } /* Generic.Traceback */
+    .codehilite .kc { color: #005cc5; font-weight: bold } /* Keyword.Constant */
+    .codehilite .kd { color: #d73a49; font-weight: bold } /* Keyword.Declaration */
+    .codehilite .kn { color: #d73a49; font-weight: bold } /* Keyword.Namespace */
+    .codehilite .kp { color: #d73a49 } /* Keyword.Pseudo */
+    .codehilite .kr { color: #d73a49; font-weight: bold } /* Keyword.Reserved */
+    .codehilite .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+    .codehilite .m { color: #005cc5 } /* Literal.Number */
+    .codehilite .s { color: #032f62 } /* Literal.String */
+    .codehilite .na { color: #22863a } /* Name.Attribute */
+    .codehilite .nb { color: #005cc5 } /* Name.Builtin */
+    .codehilite .nc { color: #6f42c1; font-weight: bold } /* Name.Class */
+    .codehilite .no { color: #005cc5 } /* Name.Constant */
+    .codehilite .nd { color: #6f42c1; font-weight: bold } /* Name.Decorator */
+    .codehilite .ni { color: #800080 } /* Name.Entity */
+    .codehilite .ne { color: #990000; font-weight: bold } /* Name.Exception */
+    .codehilite .nf { color: #6f42c1; font-weight: bold } /* Name.Function */
+    .codehilite .nl { color: #990000; font-weight: bold } /* Name.Label */
+    .codehilite .nn { color: #6f42c1; font-weight: bold } /* Name.Namespace */
+    .codehilite .nt { color: #22863a } /* Name.Tag */
+    .codehilite .nv { color: #e36209 } /* Name.Variable */
+    .codehilite .ow { color: #d73a49; font-weight: bold } /* Operator.Word */
+    .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+    .codehilite .mf { color: #005cc5 } /* Literal.Number.Float */
+    .codehilite .mh { color: #005cc5 } /* Literal.Number.Hex */
+    .codehilite .mi { color: #005cc5 } /* Literal.Number.Integer */
+    .codehilite .mo { color: #005cc5 } /* Literal.Number.Oct */
+    .codehilite .sb { color: #032f62 } /* Literal.String.Backtick */
+    .codehilite .sc { color: #032f62 } /* Literal.String.Char */
+    .codehilite .sd { color: #032f62 } /* Literal.String.Doc */
+    .codehilite .s2 { color: #032f62 } /* Literal.String.Double */
+    .codehilite .se { color: #005cc5 } /* Literal.String.Escape */
+    .codehilite .sh { color: #032f62 } /* Literal.String.Heredoc */
+    .codehilite .si { color: #032f62 } /* Literal.String.Interpol */
+    .codehilite .sx { color: #032f62 } /* Literal.String.Other */
+    .codehilite .sr { color: #032f62 } /* Literal.String.Regex */
+    .codehilite .s1 { color: #032f62 } /* Literal.String.Single */
+    .codehilite .ss { color: #005cc5 } /* Literal.String.Symbol */
+    .codehilite .bp { color: #005cc5 } /* Name.Builtin.Pseudo */
+    .codehilite .vc { color: #e36209 } /* Name.Variable.Class */
+    .codehilite .vg { color: #e36209 } /* Name.Variable.Global */
+    .codehilite .vi { color: #e36209 } /* Name.Variable.Instance */
+    .codehilite .il { color: #005cc5 } /* Literal.Number.Integer.Long */
+    
+    /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
+    html.dark .codehilite .hll { background-color: #49483e }
+    html.dark .codehilite .c { color: #75715e } /* Comment */
+    html.dark .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
+    html.dark .codehilite .k { color: #66d9ef; font-weight: normal } /* Keyword */
+    html.dark .codehilite .l { color: #ae81ff } /* Literal */
+    html.dark .codehilite .n { color: #f8f8f2 } /* Name */
+    html.dark .codehilite .o { color: #f92672; font-weight: normal } /* Operator */
+    html.dark .codehilite .p { color: #f8f8f2 } /* Punctuation */
+    html.dark .codehilite .cm { color: #75715e } /* Comment.Multiline */
+    html.dark .codehilite .cp { color: #75715e } /* Comment.Preproc */
+    html.dark .codehilite .c1 { color: #75715e } /* Comment.Single */
+    html.dark .codehilite .cs { color: #75715e } /* Comment.Special */
+    html.dark .codehilite .ge { font-style: italic } /* Generic.Emph */
+    html.dark .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    html.dark .codehilite .kc { color: #66d9ef; font-weight: normal } /* Keyword.Constant */
+    html.dark .codehilite .kd { color: #66d9ef; font-weight: normal  } /* Keyword.Declaration */
+    html.dark .codehilite .kn { color: #f92672; font-weight: normal  } /* Keyword.Namespace */
+    html.dark .codehilite .kp { color: #66d9ef; font-weight: normal  } /* Keyword.Pseudo */
+    html.dark .codehilite .kr { color: #66d9ef; font-weight: normal  } /* Keyword.Reserved */
+    html.dark .codehilite .kt { color: #66d9ef; font-weight: normal  } /* Keyword.Type */
+    html.dark .codehilite .ld { color: #e6db74 } /* Literal.Date */
+    html.dark .codehilite .m { color: #ae81ff } /* Literal.Number */
+    html.dark .codehilite .s { color: #e6db74 } /* Literal.String */
+    html.dark .codehilite .na { color: #a6e22e } /* Name.Attribute */
+    html.dark .codehilite .nb { color: #f8f8f2 } /* Name.Builtin */
+    html.dark .codehilite .nc { color: #a6e22e } /* Name.Class */
+    html.dark .codehilite .no { color: #66d9ef } /* Name.Constant */
+    html.dark .codehilite .nd { color: #a6e22e } /* Name.Decorator */
+    html.dark .codehilite .ni { color: #f8f8f2 } /* Name.Entity */
+    html.dark .codehilite .ne { color: #a6e22e } /* Name.Exception */
+    html.dark .codehilite .nf { color: #a6e22e } /* Name.Function */
+    html.dark .codehilite .nl { color: #f8f8f2 } /* Name.Label */
+    html.dark .codehilite .nn { color: #f8f8f2 } /* Name.Namespace */
+    html.dark .codehilite .nx { color: #a6e22e } /* Name.Other */
+    html.dark .codehilite .py { color: #f8f8f2 } /* Name.Property */
+    html.dark .codehilite .nt { color: #f92672 } /* Name.Tag */
+    html.dark .codehilite .nv { color: #f8f8f2 } /* Name.Variable */
+    html.dark .codehilite .ow { color: #f92672; font-weight: normal  } /* Operator.Word */
+    html.dark .codehilite .w { color: #f8f8f2 } /* Text.Whitespace */
+    html.dark .codehilite .mb { color: #ae81ff } /* Literal.Number.Bin */
+    html.dark .codehilite .mf { color: #ae81ff } /* Literal.Number.Float */
+    html.dark .codehilite .mh { color: #ae81ff } /* Literal.Number.Hex */
+    html.dark .codehilite .mi { color: #ae81ff } /* Literal.Number.Integer */
+    html.dark .codehilite .mo { color: #ae81ff } /* Literal.Number.Oct */
+    html.dark .codehilite .sb { color: #e6db74 } /* Literal.String.Backtick */
+    html.dark .codehilite .sc { color: #e6db74 } /* Literal.String.Char */
+    html.dark .codehilite .sd { color: #e6db74 } /* Literal.String.Doc */
+    html.dark .codehilite .s2 { color: #e6db74 } /* Literal.String.Double */
+    html.dark .codehilite .se { color: #ae81ff } /* Literal.String.Escape */
+    html.dark .codehilite .sh { color: #e6db74 } /* Literal.String.Heredoc */
+    html.dark .codehilite .si { color: #e6db74 } /* Literal.String.Interpol */
+    html.dark .codehilite .sx { color: #e6db74 } /* Literal.String.Other */
+    html.dark .codehilite .sr { color: #e6db74 } /* Literal.String.Regex */
+    html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
+    html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
+</style>
+
+</head>
+<body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
+    <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+        <a href="../Course_Index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+            <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
+            <div class="flex flex-col">
+                <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation & Cloud Technologies</span>
+                <span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
+            </div>
+        </a>
+        <div class="flex items-center space-x-6">
+            <a href="../Course_Index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+                Course Home
+            </a>
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <!-- Sun Icon -->
+                <svg id="icon-sun" class="w-5 h-5 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <!-- Moon Icon -->
+                <svg id="icon-moon" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 max-w-5xl mb-12">
+    <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
+        <h1 id="week-2-virtual-machines-vms-lecture-notes">Week 2: Virtual Machines (VMs) - Lecture Notes</h1>
+<h2 id="course-virtualization-and-cloud-infrastructure">Course: Virtualization and Cloud Infrastructure</h2>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>This week focuses on creating and managing virtual machines in Proxmox VE. Students will learn how to properly allocate resources, install guest operating systems, and utilize essential VM management features. By the end of this week, students should be comfortable creating, configuring, and managing VMs in a production-like environment.</p>
+<hr />
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this week, students will be able to:</p>
+<ol>
+<li><strong>Create and configure virtual machines</strong> in Proxmox VE</li>
+<li><strong>Understand resource allocation</strong> principles (CPU, RAM, disk)</li>
+<li><strong>Install guest operating systems</strong> using ISO images</li>
+<li><strong>Utilize VM management features</strong> such as cloning, snapshots, and console access</li>
+<li><strong>Troubleshoot common VM issues</strong> and optimize performance</li>
+</ol>
+<hr />
+<h2 id="1-deep-dive-linux-virtualization-kvm-qemu">1. Deep Dive: Linux Virtualization (KVM &amp; QEMU)</h2>
+<h3 id="11-the-engine-kvm-kernel-based-virtual-machine">1.1 The Engine: KVM (Kernel-based Virtual Machine)</h3>
+<ul>
+<li><strong>What is it?</strong>: A kernel module that turns Linux into a Type-1 Hypervisor.</li>
+<li><strong>Function</strong>: Handles CPU and Memory virtualization using hardware extensions (VT-x/AMD-V).</li>
+<li><strong>Performance</strong>: Near-native speed because the vCPU runs directly on the physical core.</li>
+</ul>
+<h3 id="12-the-hardware-emulator-qemu-quick-emulator">1.2 The Hardware Emulator: QEMU (Quick Emulator)</h3>
+<ul>
+<li><strong>What is it?</strong>: A user-space process that emulates hardware devices.</li>
+<li><strong>Function</strong>: Provides the virtual disk controller, network card, USB ports, and monitor to the VM.</li>
+<li><strong>Relationship</strong>: KVM provides the <em>power</em> (CPU/RAM), QEMU provides the <em>machinery</em> (I/O Devices).</li>
+</ul>
+<h3 id="13-the-platform-proxmox-ve">1.3 The Platform: Proxmox VE</h3>
+<ul>
+<li><strong>Role</strong>: The management platform that orchestrates KVM and QEMU.</li>
+<li>It provides the Web UI, API, Clustering, and Backup tools.</li>
+<li><strong>Analogy</strong>:<ul>
+<li><strong>KVM</strong> = Engine</li>
+<li><strong>QEMU</strong> = Chassis/Wheels</li>
+<li><strong>Proxmox</strong> = Dashboard/Steering Wheel</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="2-strategic-resource-allocation">2. Strategic Resource Allocation</h2>
+<h3 id="sizing-strategies">Sizing Strategies</h3>
+<p>Instead of generic rules, apply these sizing strategies based on workload type:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Workload Type</th>
+<th style="text-align: left;">vCPU Strategy</th>
+<th style="text-align: left;">RAM Strategy</th>
+<th style="text-align: left;">Disk Strategy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Domain Controller</strong></td>
+<td style="text-align: left;">2 vCPUs (Low usage)</td>
+<td style="text-align: left;">4GB (Cached queries)</td>
+<td style="text-align: left;">60GB (Logs grow)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Database (SQL)</strong></td>
+<td style="text-align: left;">4-8 vCPUs (Parallel queries)</td>
+<td style="text-align: left;">16GB+ (Buffer pool)</td>
+<td style="text-align: left;">RAW Block Device (IOPS)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Web Server (Nginx)</strong></td>
+<td style="text-align: left;">2 vCPUs (Event-driven)</td>
+<td style="text-align: left;">2GB (Stateless)</td>
+<td style="text-align: left;">QCOW2 (Snapshots)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>File Server</strong></td>
+<td style="text-align: left;">2 vCPUs</td>
+<td style="text-align: left;">4GB (ZFS ARC cache)</td>
+<td style="text-align: left;">Large, Slow HDD</td>
+</tr>
+<tr>
+<td style="text-align: left;">### The Golden Rules</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">1.  <strong>CPU</strong>: Never allocate more vCPUs than physical cores. (Avoid Ready Time/Contention).</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">2.  <strong>RAM</strong>: Never over-commit physical RAM. (Avoid Swap Death).</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">3.  <strong>Host</strong>: Always reserve 2GB+ RAM for Proxmox itself.</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="cpu-allocation">CPU Allocation</h3>
+<h4 id="guidelines">Guidelines:</h4>
+<ol>
+<li><strong>Start Conservative</strong>: Begin with 1-2 vCPUs per VM</li>
+<li><strong>Monitor Usage</strong>: Use <code>top</code> or <code>htop</code> in the guest to check actual CPU usage</li>
+<li><strong>Avoid Overcommitment</strong>: Total vCPUs across all VMs should not exceed 2-3x physical cores</li>
+<li><strong>Consider Workload</strong>: </li>
+<li>Web servers: 2-4 vCPUs</li>
+<li>Databases: 4-8 vCPUs</li>
+<li>File servers: 1-2 vCPUs</li>
+</ol>
+<h4 id="cpu-types-in-proxmox">CPU Types in Proxmox:</h4>
+<ul>
+<li><strong>host</strong>: Passes through all host CPU features (best performance, less portable)</li>
+<li><strong>kvm64</strong>: Generic 64-bit CPU (most compatible)</li>
+<li><strong>Specific models</strong>: For compatibility with specific applications</li>
+</ul>
+<h3 id="memory-ram-allocation">Memory (RAM) Allocation</h3>
+<h4 id="guidelines_1">Guidelines:</h4>
+<ol>
+<li><strong>Minimum Requirements</strong>:</li>
+<li>Ubuntu Server: 1 GB (2 GB recommended)</li>
+<li>Windows Server: 2 GB minimum (4 GB recommended)</li>
+<li>
+<p>CentOS/Rocky: 1 GB (2 GB recommended)</p>
+</li>
+<li>
+<p><strong>Working Allocations</strong>:</p>
+</li>
+<li>Development VM: 2-4 GB</li>
+<li>Web server: 2-4 GB</li>
+<li>Database server: 4-8 GB</li>
+<li>
+<p>Desktop VM: 4-8 GB</p>
+</li>
+<li>
+<p><strong>Ballooning</strong>: </p>
+</li>
+<li>Proxmox supports memory ballooning (requires guest agent)</li>
+<li>Allows dynamic memory adjustment</li>
+<li>Not always reliable; prefer fixed allocations</li>
+</ol>
+<h4 id="memory-overcommitment">Memory Overcommitment:</h4>
+<ul>
+<li><strong>Safe</strong>: Total VM RAM = 80% of physical RAM</li>
+<li><strong>Moderate</strong>: Total VM RAM = 100-120% of physical RAM</li>
+<li><strong>Risky</strong>: Total VM RAM &gt; 150% of physical RAM</li>
+</ul>
+<h3 id="disk-space-allocation">Disk Space Allocation</h3>
+<h4 id="considerations">Considerations:</h4>
+<ol>
+<li><strong>Thin Provisioning vs. Thick Provisioning</strong>:</li>
+<li><strong>Thin</strong>: Allocates space as needed (saves initial space)</li>
+<li>
+<p><strong>Thick</strong>: Pre-allocates full disk space (better performance)</p>
+</li>
+<li>
+<p><strong>Disk Size Guidelines</strong>:</p>
+</li>
+<li>Minimal Linux server: 10-20 GB</li>
+<li>Full Linux desktop: 30-50 GB</li>
+<li>Windows Server: 40-60 GB</li>
+<li>
+<p>Windows Desktop: 60-100 GB</p>
+</li>
+<li>
+<p><strong>Storage Backend</strong>:</p>
+</li>
+<li><strong>LVM</strong>: Direct block access, good performance</li>
+<li><strong>LVM-thin</strong>: Thin provisioning, snapshots supported</li>
+<li><strong>Directory</strong>: File-based, flexible but slower</li>
+<li><strong>ZFS</strong>: Advanced features, high RAM usage</li>
+</ol>
+<hr />
+<h2 id="3-vm-creation-process-in-proxmox-ve">3. VM Creation Process in Proxmox VE</h2>
+<h3 id="step-by-step-guide">Step-by-Step Guide</h3>
+<h4 id="step-1-prepare-iso-images">Step 1: Prepare ISO Images</h4>
+<ol>
+<li>Download desired OS ISO (Ubuntu Server, Windows Server, etc.)</li>
+<li>Upload to Proxmox via web interface or command line:
+   <code>bash
+   cd /var/lib/vz/template/iso/
+   wget https://releases.ubuntu.com/22.04/ubuntu-22.04-live-server-amd64.iso</code></li>
+</ol>
+<h4 id="step-2-create-new-vm">Step 2: Create New VM</h4>
+<ol>
+<li>Click <strong>"Create VM"</strong> in Proxmox web interface</li>
+<li><strong>General Tab</strong>:</li>
+<li>Node: Select Proxmox node</li>
+<li>VM ID: Unique identifier (100-999999)</li>
+<li>Name: Descriptive name (e.g., "ubuntu-web-server")</li>
+</ol>
+<h4 id="step-3-os-configuration">Step 3: OS Configuration</h4>
+<ol>
+<li><strong>ISO Image</strong>: Select uploaded ISO</li>
+<li><strong>Guest OS Type</strong>: Linux (2.6/3.x/4.x Kernel) or Windows</li>
+<li><strong>SCSI Controller</strong>: VirtIO SCSI (best performance)</li>
+</ol>
+<h4 id="step-4-system-settings">Step 4: System Settings</h4>
+<ol>
+<li><strong>BIOS</strong>: SeaBIOS (default) or OVMF (UEFI)</li>
+<li><strong>Machine</strong>: Default (i440fx) or q35 (newer chipset)</li>
+<li><strong>SCSI Controller</strong>: VirtIO SCSI single</li>
+</ol>
+<h4 id="step-5-disk-configuration">Step 5: Disk Configuration</h4>
+<ol>
+<li><strong>Bus/Device</strong>: SCSI or VirtIO Block</li>
+<li><strong>Storage</strong>: Select storage backend</li>
+<li><strong>Disk Size</strong>: Allocate appropriate size</li>
+<li><strong>Cache</strong>: Write back (default)</li>
+<li><strong>Discard</strong>: Enable for SSD trim support</li>
+</ol>
+<h4 id="step-6-cpu-configuration">Step 6: CPU Configuration</h4>
+<ol>
+<li><strong>Sockets</strong>: Number of CPU sockets (usually 1)</li>
+<li><strong>Cores</strong>: Number of cores per socket</li>
+<li><strong>Type</strong>: host or kvm64</li>
+</ol>
+<h4 id="step-7-memory">Step 7: Memory</h4>
+<ol>
+<li><strong>Memory (MiB)</strong>: Allocate RAM in MB</li>
+<li><strong>Minimum Memory</strong>: For ballooning (optional)</li>
+</ol>
+<h4 id="step-8-network">Step 8: Network</h4>
+<ol>
+<li><strong>Bridge</strong>: vmbr0 (default)</li>
+<li><strong>VLAN Tag</strong>: Optional for network segmentation</li>
+<li><strong>Model</strong>: VirtIO (paravirtualized)</li>
+<li><strong>Firewall</strong>: Enable if needed</li>
+</ol>
+<h4 id="step-9-confirm-and-create">Step 9: Confirm and Create</h4>
+<ol>
+<li>Review all settings</li>
+<li>Check <strong>"Start after created"</strong> if desired</li>
+<li>Click <strong>Finish</strong></li>
+</ol>
+<hr />
+<h2 id="4-guest-operating-systems">4. Guest Operating Systems</h2>
+<h3 id="installing-ubuntu-server-example">Installing Ubuntu Server (Example)</h3>
+<h4 id="installation-steps">Installation Steps:</h4>
+<ol>
+<li><strong>Start VM</strong> and open Console (VNC or SPICE)</li>
+<li><strong>Boot from ISO</strong> (automatic if configured correctly)</li>
+<li><strong>Language Selection</strong>: Choose preferred language</li>
+<li><strong>Network Configuration</strong>: </li>
+<li>DHCP (automatic)</li>
+<li>Static IP (manual configuration)</li>
+<li><strong>Disk Partitioning</strong>:</li>
+<li>Use entire disk (simple)</li>
+<li>Custom partitioning (advanced)</li>
+<li><strong>Profile Setup</strong>: Create user account</li>
+<li><strong>SSH Server</strong>: Enable for remote access</li>
+<li><strong>Complete Installation</strong>: Reboot</li>
+</ol>
+<h4 id="post-installation-tasks">Post-Installation Tasks:</h4>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Update system</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y
+
+<span class="c1"># Install essential tools</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>vim<span class="w"> </span>curl<span class="w"> </span>wget<span class="w"> </span>git<span class="w"> </span>htop
+
+<span class="c1"># Install QEMU Guest Agent</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>qemu-guest-agent
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>qemu-guest-agent
+</code></pre></div>
+
+<h3 id="installing-windows-server">Installing Windows Server</h3>
+<h4 id="key-considerations">Key Considerations:</h4>
+<ol>
+<li><strong>VirtIO Drivers</strong>: Download VirtIO driver ISO from Proxmox</li>
+<li><strong>Attach both ISOs</strong>: Windows ISO + VirtIO drivers ISO</li>
+<li><strong>During Installation</strong>:</li>
+<li>Load VirtIO SCSI driver when disk is not detected</li>
+<li>Load VirtIO network driver after installation</li>
+<li><strong>Post-Installation</strong>:</li>
+<li>Install Guest Agent from VirtIO ISO</li>
+<li>Activate Windows</li>
+<li>Install updates</li>
+</ol>
+<hr />
+<h2 id="5-qemu-guest-agent">5. QEMU Guest Agent</h2>
+<h3 id="what-is-qemu-guest-agent">What is QEMU Guest Agent?</h3>
+<p>The <strong>QEMU Guest Agent</strong> is a service that runs inside the guest operating system to provide better integration with the hypervisor.</p>
+<h3 id="key-features">Key Features:</h3>
+<h4 id="1-graceful-shutdownreboot">1. Graceful Shutdown/Reboot</h4>
+<ul>
+<li>Allows proper shutdown instead of power-off</li>
+<li>Preserves file system integrity</li>
+<li>Closes applications cleanly</li>
+</ul>
+<h4 id="2-resource-reporting">2. Resource Reporting</h4>
+<ul>
+<li>Reports actual IP addresses to Proxmox</li>
+<li>Shows logged-in users</li>
+<li>Provides more accurate resource metrics</li>
+</ul>
+<h4 id="3-time-synchronization">3. Time Synchronization</h4>
+<ul>
+<li>Keeps guest time in sync with host</li>
+<li>Critical for time-sensitive applications</li>
+</ul>
+<h4 id="4-file-system-freeze">4. File System Freeze</h4>
+<ul>
+<li>Freezes file system for consistent snapshots</li>
+<li>Ensures data integrity during backups</li>
+<li>Thaws automatically after snapshot</li>
+</ul>
+<h3 id="installation">Installation</h3>
+<h4 id="linux-debianubuntu">Linux (Debian/Ubuntu):</h4>
+<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>qemu-guest-agent
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>qemu-guest-agent
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>qemu-guest-agent
+</code></pre></div>
+
+<h4 id="linux-rhelcentosrocky">Linux (RHEL/CentOS/Rocky):</h4>
+<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>qemu-guest-agent
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>qemu-guest-agent
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>qemu-guest-agent
+</code></pre></div>
+
+<h4 id="windows">Windows:</h4>
+<ol>
+<li>Attach VirtIO driver ISO to VM</li>
+<li>Run <code>guest-agent/qemu-ga-x86_64.msi</code></li>
+<li>Follow installation wizard</li>
+<li>Service starts automatically</li>
+</ol>
+<h3 id="enabling-in-proxmox">Enabling in Proxmox:</h3>
+<ol>
+<li><strong>VM Options</strong> → <strong>QEMU Guest Agent</strong></li>
+<li>Enable the checkbox</li>
+<li>Restart VM for changes to take effect</li>
+</ol>
+<hr />
+<h2 id="6-proxmox-vm-management-features">6. Proxmox VM Management Features</h2>
+<h3 id="1-cloning">1. Cloning</h3>
+<p><strong>Purpose</strong>: Create identical copies of VMs quickly</p>
+<h4 id="full-clone">Full Clone:</h4>
+<ul>
+<li>Complete independent copy</li>
+<li>Takes more time and space</li>
+<li>Safe for production use</li>
+</ul>
+<h4 id="linked-clone">Linked Clone:</h4>
+<ul>
+<li>References base disk, only stores differences</li>
+<li>Fast and space-efficient</li>
+<li>Requires base VM to remain available</li>
+</ul>
+<p><strong>How to Clone</strong>:
+1. Right-click VM → <strong>Clone</strong>
+2. Select <strong>Full Clone</strong> or <strong>Linked Clone</strong>
+3. Choose new VM ID and name
+4. Click <strong>Clone</strong></p>
+<p><strong>Best Practices</strong>:
+- Create a template first, then clone from template
+- Use linked clones for testing/development
+- Use full clones for production deployments</p>
+<h3 id="2-snapshots">2. Snapshots</h3>
+<p><strong>Purpose</strong>: Save VM state at a point in time for easy rollback</p>
+<h4 id="features">Features:</h4>
+<ul>
+<li>Captures disk state and optionally RAM</li>
+<li>Multiple snapshots per VM supported</li>
+<li>Quick creation and restoration</li>
+</ul>
+<p><strong>How to Create Snapshot</strong>:
+1. VM → <strong>Snapshots</strong> tab
+2. Click <strong>Take Snapshot</strong>
+3. Enter name and description
+4. Choose whether to include RAM
+5. Click <strong>Take Snapshot</strong></p>
+<p><strong>How to Restore Snapshot</strong>:
+1. Select snapshot from list
+2. Click <strong>Rollback</strong>
+3. Confirm action</p>
+<p><strong>Important Notes</strong>:
+- Each snapshot creates a new disk layer
+- Too many snapshots can impact performance
+- Delete old snapshots after verification
+- RAM snapshots increase disk usage significantly</p>
+<h3 id="3-console-access">3. Console Access</h3>
+<p>Proxmox provides multiple console options:</p>
+<h4 id="novnc-web-based">noVNC (Web-based):</h4>
+<ul>
+<li>Browser-based access</li>
+<li>No client installation needed</li>
+<li>Moderate performance</li>
+<li>Clipboard sharing supported</li>
+</ul>
+<h4 id="spice">SPICE:</h4>
+<ul>
+<li>Better performance than VNC</li>
+<li>Requires SPICE client (virt-viewer)</li>
+<li>Clipboard and USB redirection</li>
+<li>Multi-monitor support</li>
+</ul>
+<h4 id="serial-console">Serial Console:</h4>
+<ul>
+<li>Text-based access</li>
+<li>Useful for troubleshooting</li>
+<li>No graphics required</li>
+</ul>
+<p><strong>Accessing Console</strong>:
+1. Select VM
+2. Click <strong>Console</strong> button
+3. Choose console type from dropdown</p>
+<h3 id="4-live-migration">4. Live Migration</h3>
+<p><strong>Purpose</strong>: Move running VM to another Proxmox node without downtime</p>
+<p><strong>Requirements</strong>:
+- Proxmox cluster configured
+- Shared storage (NFS, Ceph, iSCSI)
+- Same CPU family on both nodes
+- Network connectivity between nodes</p>
+<p><strong>Process</strong>:
+1. Right-click VM → <strong>Migrate</strong>
+2. Select target node
+3. Choose <strong>Online</strong> migration
+4. Click <strong>Migrate</strong></p>
+<p><strong>Note</strong>: Live migration is covered in detail in Week 6 (Clustering)</p>
+<hr />
+<h2 id="7-vm-vs-container-comparison">7. VM vs. Container Comparison</h2>
+<h3 id="virtual-machines">Virtual Machines</h3>
+<p><strong>Advantages</strong>:
+- <strong>Complete Isolation</strong>: Full OS with own kernel
+- <strong>Compatibility</strong>: Run any OS (Windows, Linux, BSD)
+- <strong>Security</strong>: Strong isolation boundary
+- <strong>Legacy Support</strong>: Run older applications</p>
+<p><strong>Disadvantages</strong>:
+- <strong>Resource Overhead</strong>: Requires full OS
+- <strong>Slower Boot</strong>: Minutes to start
+- <strong>Higher Memory Usage</strong>: OS overhead per VM
+- <strong>Larger Disk Space</strong>: Full OS installation</p>
+<h3 id="containers-lxc">Containers (LXC)</h3>
+<p><strong>Advantages</strong>:
+- <strong>Lightweight</strong>: Shares host kernel
+- <strong>Fast Boot</strong>: Seconds to start
+- <strong>Lower Overhead</strong>: Minimal resource usage
+- <strong>High Density</strong>: More containers per host</p>
+<p><strong>Disadvantages</strong>:
+- <strong>Linux Only</strong>: Cannot run Windows or BSD
+- <strong>Kernel Dependency</strong>: Shares host kernel
+- <strong>Less Isolation</strong>: Not as secure as VMs
+- <strong>Compatibility</strong>: Some applications may not work</p>
+<h3 id="use-case-guidelines">Use Case Guidelines</h3>
+<p><strong>Choose VMs when</strong>:
+- Running different OS types (Windows, BSD)
+- Need strong security isolation
+- Running kernel modules or custom kernels
+- Legacy application support required</p>
+<p><strong>Choose Containers when</strong>:
+- Running Linux-only workloads
+- Need high density and efficiency
+- Development and testing environments
+- Microservices architecture</p>
+<hr />
+<h2 id="8-resource-management-best-practices">8. Resource Management Best Practices</h2>
+<h3 id="1-start-conservative">1. Start Conservative</h3>
+<ul>
+<li>Begin with minimal resource allocation</li>
+<li>Monitor actual usage over time</li>
+<li>Scale up as needed based on metrics</li>
+</ul>
+<h3 id="2-monitor-regularly">2. Monitor Regularly</h3>
+<ul>
+<li>Use Proxmox built-in monitoring</li>
+<li>Install monitoring tools (Prometheus, Grafana)</li>
+<li>Check CPU, memory, disk I/O, and network usage</li>
+</ul>
+<h3 id="3-adjust-dynamically">3. Adjust Dynamically</h3>
+<ul>
+<li>Add resources when bottlenecks are identified</li>
+<li>Remove excess allocation to improve overall density</li>
+<li>Balance resources across all VMs</li>
+</ul>
+<h3 id="4-use-snapshots-before-changes">4. Use Snapshots Before Changes</h3>
+<ul>
+<li>Take snapshot before major configuration changes</li>
+<li>Test changes in cloned environment first</li>
+<li>Keep recent snapshots for quick rollback</li>
+</ul>
+<h3 id="5-regular-backups">5. Regular Backups</h3>
+<ul>
+<li>Schedule automated backups (weekly minimum)</li>
+<li>Test restore procedures regularly</li>
+<li>Store backups on separate storage</li>
+<li>Keep multiple backup generations</li>
+</ul>
+<h3 id="6-documentation">6. Documentation</h3>
+<ul>
+<li>Document VM purposes and configurations</li>
+<li>Keep inventory of all VMs</li>
+<li>Track resource allocation changes</li>
+<li>Document network configurations</li>
+</ul>
+<hr />
+<h2 id="9-common-issues-and-troubleshooting">9. Common Issues and Troubleshooting</h2>
+<h3 id="issue-1-vm-wont-start">Issue 1: VM Won't Start</h3>
+<p><strong>Symptoms</strong>: VM fails to start or immediately crashes</p>
+<p><strong>Possible Causes</strong>:
+- Insufficient host resources
+- Corrupted disk image
+- Misconfigured boot order
+- Hardware incompatibility</p>
+<p><strong>Solutions</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check host resources</span>
+free<span class="w"> </span>-h
+df<span class="w"> </span>-h
+
+<span class="c1"># Check VM configuration</span>
+qm<span class="w"> </span>config<span class="w"> </span>&lt;VMID&gt;
+
+<span class="c1"># Start VM in debug mode</span>
+qm<span class="w"> </span>start<span class="w"> </span>&lt;VMID&gt;<span class="w"> </span>--verbose
+
+<span class="c1"># Check system logs</span>
+journalctl<span class="w"> </span>-u<span class="w"> </span>pve-guests.service
+</code></pre></div>
+
+<h3 id="issue-2-poor-vm-performance">Issue 2: Poor VM Performance</h3>
+<p><strong>Symptoms</strong>: Slow response, high latency, low throughput</p>
+<p><strong>Possible Causes</strong>:
+- CPU overcommitment
+- Memory shortage
+- Disk I/O bottleneck
+- Network saturation</p>
+<p><strong>Solutions</strong>:
+1. Check resource usage in guest OS
+2. Monitor Proxmox host resources
+3. Adjust CPU/RAM allocation
+4. Change disk cache mode
+5. Switch to VirtIO drivers
+6. Enable CPU pinning for critical VMs</p>
+<h3 id="issue-3-network-connectivity-issues">Issue 3: Network Connectivity Issues</h3>
+<p><strong>Symptoms</strong>: No network connection, slow speeds</p>
+<p><strong>Possible Causes</strong>:
+- Incorrect bridge configuration
+- Missing VirtIO drivers
+- Firewall blocking traffic
+- VLAN misconfiguration</p>
+<p><strong>Solutions</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check bridge configuration</span>
+brctl<span class="w"> </span>show
+
+<span class="c1"># Verify VM network settings</span>
+qm<span class="w"> </span>config<span class="w"> </span>&lt;VMID&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>net
+
+<span class="c1"># Test from host</span>
+ping<span class="w"> </span>&lt;VM_IP&gt;
+
+<span class="c1"># Check firewall rules</span>
+iptables<span class="w"> </span>-L<span class="w"> </span>-n
+</code></pre></div>
+
+<h3 id="issue-4-disk-space-issues">Issue 4: Disk Space Issues</h3>
+<p><strong>Symptoms</strong>: Disk full errors, cannot write files</p>
+<p><strong>Possible Causes</strong>:
+- Thin-provisioned disk overgrowth
+- Too many snapshots
+- Large log files
+- Application data growth</p>
+<p><strong>Solutions</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check disk usage in guest</span>
+df<span class="w"> </span>-h
+
+<span class="c1"># Check disk images on host</span>
+lvs
+pvs
+
+<span class="c1"># Remove old snapshots</span>
+qm<span class="w"> </span>listsnapshot<span class="w"> </span>&lt;VMID&gt;
+qm<span class="w"> </span>delsnapshot<span class="w"> </span>&lt;VMID&gt;<span class="w"> </span>&lt;snapshot_name&gt;
+
+<span class="c1"># Resize disk if needed</span>
+qm<span class="w"> </span>resize<span class="w"> </span>&lt;VMID&gt;<span class="w"> </span>scsi0<span class="w"> </span>+10G
+</code></pre></div>
+
+<hr />
+<h2 id="10-hands-on-lab-exercises">10. Hands-On Lab Exercises</h2>
+<h3 id="lab-1-kvm-virtualization-fundamentals">Lab 1: KVM Virtualization Fundamentals</h3>
+<p><strong>Objective</strong>: Interact with the KVM Hypervisor directly via CLI (No Proxmox).
+<strong>Activities</strong>:
+1.  <strong>Verify Hardware</strong>: Check CPU flags (<code>lscpu</code>), kernel modules (<code>lsmod</code>), and permissions.
+2.  <strong>Storage</strong>: Manually create virtual disks using <code>qemu-img</code>.
+3.  <strong>Compute</strong>: Boot a minimal Linux VM using the raw <code>qemu-system-x86_64</code> command.</p>
+<h3 id="lab-2-proxmox-vm-management">Lab 2: Proxmox VM Management</h3>
+<p><strong>Objective</strong>: Perform the full lifecycle of a VM in Proxmox.
+<strong>Activities</strong>:
+1.  <strong>Deploy</strong>: Upload ISOs and create an Ubuntu VM using <code>VirtIO</code> drivers.
+2.  <strong>Install</strong>: Setup the OS and enable the QEMU Guest Agent.
+3.  <strong>Protect</strong>: Execute Snapshots and perform data rollbacks.
+4.  <strong>Scale</strong>: Create Linked Clones (fast) and Full Clones (isolated).
+<strong>Verification</strong>:
+-   Guest Agent IP visibility in Proxmox Summary.
+-   Successful rollback of deleted data.
+-   Functional clones running side-by-side.</p>
+<hr />
+<h2 id="11-additional-resources">11. Additional Resources</h2>
+<h3 id="official-documentation">Official Documentation:</h3>
+<ul>
+<li><a href="https://pve.proxmox.com/pve-docs/chapter-qm.html">Proxmox VE VM Management</a></li>
+<li><a href="https://www.qemu.org/documentation/">QEMU/KVM Documentation</a></li>
+</ul>
+<h3 id="video-tutorials">Video Tutorials:</h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=lFzWDJcRsqo">Proxmox Setup and First VM</a></li>
+<li><a href="https://www.youtube.com/watch?v=lhjqO32t9bE">VM Creation in Proxmox</a></li>
+</ul>
+<h3 id="community-resources">Community Resources:</h3>
+<ul>
+<li>Proxmox Forum: https://forum.proxmox.com/</li>
+<li>Reddit r/Proxmox: https://reddit.com/r/Proxmox</li>
+<li>YouTube Proxmox Channels</li>
+</ul>
+<hr />
+<h2 id="12-assessment-criteria">12. Assessment Criteria</h2>
+<h3 id="lab-submission-requirements">Lab Submission Requirements:</h3>
+<ol>
+<li><strong>Screenshots</strong> showing:</li>
+<li>VM running with resource summary</li>
+<li>Guest agent enabled and working</li>
+<li>Network configuration</li>
+<li>
+<p>Successful clone operation</p>
+</li>
+<li>
+<p><strong>Documentation</strong> including:</p>
+</li>
+<li>VM configuration details</li>
+<li>Resource allocation decisions</li>
+<li>Any issues encountered and solutions</li>
+<li>
+<p>Snapshot naming convention used</p>
+</li>
+<li>
+<p><strong>Reflection</strong> (500 words):</p>
+</li>
+<li>Challenges faced during VM creation</li>
+<li>Resource allocation strategy</li>
+<li>Comparison with previous virtualization experience</li>
+<li>Lessons learned</li>
+</ol>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>This week covered the fundamentals of virtual machine management in Proxmox VE. Students learned how to:
+- Create and configure VMs with appropriate resource allocation
+- Install guest operating systems
+- Use QEMU Guest Agent for better integration
+- Leverage VM management features (cloning, snapshots, console access)
+- Troubleshoot common VM issues
+- Apply best practices for resource management</p>
+<p><strong>Next Week</strong>: We will explore <strong>Virtual Networking</strong>, learning how to build software-defined networks using Linux Bridges, VLANs, and OVS.</p>
+<hr />
+<h2 id="preparation-for-next-week">Preparation for Next Week</h2>
+<ol>
+<li>Review basic networking concepts (IPs, Subnets, MAC addresses).</li>
+<li>Research the difference between a "Hub" and a "Switch".</li>
+<li>Prepare questions about how VMs communicate with the outside world.</li>
+</ol>
+    </article>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
+</footer>
+
+<!-- Progress Tracking -->
+<script src="../js/course_logic.js"></script>
+
+</body>
+</html>
