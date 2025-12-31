@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -376,7 +376,7 @@
 <!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
     <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
-        <a href="../Course_Index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+        <a href="../index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
             <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
             <div class="flex flex-col">
                 <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
@@ -385,7 +385,7 @@
             </div>
         </a>
         <div class="flex items-center space-x-6">
-            <a href="../Course_Index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+            <a href="../index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
                 Course Home
             </a>
             <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
@@ -414,7 +414,7 @@
 
 <!-- Inject Data & App -->
 <script>
-    window.QUIZ_DATA = {"questions": [{"text": "What is a \"Cluster\" in Proxmox?", "options": ["A single large server.", "A group of physical nodes managed as a single logical entity.", "A type of backup strategy.", "A network switch."], "correct": "B"}, {"text": "Which engine handles the communication and \"heartbeat\" between nodes?", "options": ["Corosync", "Open vSwitch", "QEMU", "Systemd"], "correct": "A"}, {"text": "What is the minimum recommended number of nodes for a reliable HA Cluster?", "options": ["1", "2", "3", "4"], "correct": "C"}, {"text": "Calculate Quorum: In a 5-node cluster, how many votes are needed to maintain operations?", "options": ["2", "3", "4", "5"], "correct": "B"}, {"text": "What happens in a \"Split Brain\" scenario without Quorum?", "options": ["Both nodes restart the VMs instantly.", "The cluster enters Read-Only mode and blocks actions to prevent data corruption.", "The cluster deletes all data.", "The nodes automatically reconnect via Wi-Fi."], "correct": "B"}, {"text": "\"Fencing\" (or STONITH) is used to:", "options": ["Build a physical wall around the servers.", "Physically cut power or access to a non-responsive node to ensure it is dead.", "Encrypt the network traffic.", "Prevent hackers from entering the firewall."], "correct": "B"}, {"text": "What is a prerequisite for \"Live Migration\"?", "options": ["Nodes must be from the same manufacturer.", "Shared Storage (or identical local storage repl) and compatible CPUs.", "The VM must be Windows based.", "The cluster must be offline."], "correct": "B"}, {"text": "To join a new node to an existing cluster, you use which command?", "options": ["`pvecm create`", "`pvecm add <IP>`", "`qm migrate`", "`apt install cluster`"], "correct": "B"}, {"text": "If a 2-node cluster loses one node, does it have Quorum?", "options": ["Yes.", "No (1 < 2).", "Only if it is Tuesday.", "Yes, but only for Linux VMs."], "correct": "B"}, {"text": "What is the function of the HA Resource Manager (pve-ha-crm)?", "options": ["It installs updates.", "It monitors the cluster and decides when to restart failed services on other nodes.", "It manages the Corosync network speed.", "It backs up data to the cloud."], "correct": "B"}], "courseIndexUrl": "../Course_Index.html"};
+    window.QUIZ_DATA = {"questions": [{"text": "What is a \"Cluster\" in Proxmox?", "options": ["A single large server.", "A group of physical nodes managed as a single logical entity.", "A type of backup strategy.", "A network switch."], "correct": "B"}, {"text": "Which engine handles the communication and \"heartbeat\" between nodes?", "options": ["Corosync", "Open vSwitch", "QEMU", "Systemd"], "correct": "A"}, {"text": "What is the minimum recommended number of nodes for a reliable HA Cluster?", "options": ["1", "2", "3", "4"], "correct": "C"}, {"text": "Calculate Quorum: In a 5-node cluster, how many votes are needed to maintain operations?", "options": ["2", "3", "4", "5"], "correct": "B"}, {"text": "What happens in a \"Split Brain\" scenario without Quorum?", "options": ["Both nodes restart the VMs instantly.", "The cluster enters Read-Only mode and blocks actions to prevent data corruption.", "The cluster deletes all data.", "The nodes automatically reconnect via Wi-Fi."], "correct": "B"}, {"text": "\"Fencing\" (or STONITH) is used to:", "options": ["Build a physical wall around the servers.", "Physically cut power or access to a non-responsive node to ensure it is dead.", "Encrypt the network traffic.", "Prevent hackers from entering the firewall."], "correct": "B"}, {"text": "What is a prerequisite for \"Live Migration\"?", "options": ["Nodes must be from the same manufacturer.", "Shared Storage (or identical local storage repl) and compatible CPUs.", "The VM must be Windows based.", "The cluster must be offline."], "correct": "B"}, {"text": "To join a new node to an existing cluster, you use which command?", "options": ["`pvecm create`", "`pvecm add <IP>`", "`qm migrate`", "`apt install cluster`"], "correct": "B"}, {"text": "If a 2-node cluster loses one node, does it have Quorum?", "options": ["Yes.", "No (1 < 2).", "Only if it is Tuesday.", "Yes, but only for Linux VMs."], "correct": "B"}, {"text": "What is the function of the HA Resource Manager (pve-ha-crm)?", "options": ["It installs updates.", "It monitors the cluster and decides when to restart failed services on other nodes.", "It manages the Corosync network speed.", "It backs up data to the cloud."], "correct": "B"}], "courseIndexUrl": "../index.html"};
 </script>
 <script src="../js/course_logic.js"></script>
 <script src="../js/quiz_app.js"></script>

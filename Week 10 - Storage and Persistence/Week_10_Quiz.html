@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -376,7 +376,7 @@
 <!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
     <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
-        <a href="../Course_Index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+        <a href="../index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
             <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
             <div class="flex flex-col">
                 <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
@@ -385,7 +385,7 @@
             </div>
         </a>
         <div class="flex items-center space-x-6">
-            <a href="../Course_Index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+            <a href="../index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
                 Course Home
             </a>
             <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
@@ -414,7 +414,7 @@
 
 <!-- Inject Data & App -->
 <script>
-    window.QUIZ_DATA = {"questions": [{"text": "Which OpenStack component manages \"Block Storage\" (Persistent Volumes)?", "options": ["Swift", "Cinder", "Nova", "Manila"], "correct": "B"}, {"text": "Ephemermal Storage (the default root disk of an instance) is:", "options": ["Automatically backed up to tape.", "Deleted when the Instance is terminated.", "Preserved forever.", "Shared between all instances."], "correct": "B"}, {"text": "To use a newly attached Cinder volume in Linux, you must first:", "options": ["Reboot the VM.", "Format it (e.g., `mkfs.ext4`) and Mount it.", "Pay a license fee.", "Do nothing; it works automatically."], "correct": "B"}, {"text": "Security Groups are \"Stateful\". This means:", "options": ["They use a lot of RAM.", "If you allow traffic OUT, the return traffic is automatically allowed IN.", "You must manually create a rule for every single packet direction.", "They only work in the USA."], "correct": "B"}, {"text": "Which of the following is a valid use case for Object Storage (Swift)?", "options": ["Running a database.", "Storing massive amounts of static files (Images, Backups).", "Booting an Operating System.", "Creating a Swap partition."], "correct": "B"}, {"text": "\"Boot from Volume\" allows you to:", "options": ["Boot a computer from a CD-ROM.", "Keep your Operating System and Data even if the Instance is terminated.", "Boot faster.", "Run Windows on a Linux kernel."], "correct": "B"}, {"text": "What is the default policy for Inbound Traffic in a Security Group?", "options": ["Allow All.", "Deny All (Drop).", "Allow SSH only.", "Allow HTTP only."], "correct": "B"}, {"text": "If you detach a Cinder volume from Instance A and attach it to Instance B:", "options": ["The data is wiped.", "The data remains intact and is accessible to Instance B.", "Instance B will crash.", "You need a password."], "correct": "B"}, {"text": "A \"Floating IP\" is attached to:", "options": ["The Cinder Volume.", "The Instance's Network Port.", "The Hypervisor.", "The Database."], "correct": "B"}, {"text": "The command to create a 10GB volume is:", "options": ["`nova volume create 10`", "`openstack volume create --size 10 my-vol`", "`cinder make 10`", "`mkfs.cinder`"], "correct": "B"}], "courseIndexUrl": "../Course_Index.html"};
+    window.QUIZ_DATA = {"questions": [{"text": "Which OpenStack component manages \"Block Storage\" (Persistent Volumes)?", "options": ["Swift", "Cinder", "Nova", "Manila"], "correct": "B"}, {"text": "Ephemermal Storage (the default root disk of an instance) is:", "options": ["Automatically backed up to tape.", "Deleted when the Instance is terminated.", "Preserved forever.", "Shared between all instances."], "correct": "B"}, {"text": "To use a newly attached Cinder volume in Linux, you must first:", "options": ["Reboot the VM.", "Format it (e.g., `mkfs.ext4`) and Mount it.", "Pay a license fee.", "Do nothing; it works automatically."], "correct": "B"}, {"text": "Security Groups are \"Stateful\". This means:", "options": ["They use a lot of RAM.", "If you allow traffic OUT, the return traffic is automatically allowed IN.", "You must manually create a rule for every single packet direction.", "They only work in the USA."], "correct": "B"}, {"text": "Which of the following is a valid use case for Object Storage (Swift)?", "options": ["Running a database.", "Storing massive amounts of static files (Images, Backups).", "Booting an Operating System.", "Creating a Swap partition."], "correct": "B"}, {"text": "\"Boot from Volume\" allows you to:", "options": ["Boot a computer from a CD-ROM.", "Keep your Operating System and Data even if the Instance is terminated.", "Boot faster.", "Run Windows on a Linux kernel."], "correct": "B"}, {"text": "What is the default policy for Inbound Traffic in a Security Group?", "options": ["Allow All.", "Deny All (Drop).", "Allow SSH only.", "Allow HTTP only."], "correct": "B"}, {"text": "If you detach a Cinder volume from Instance A and attach it to Instance B:", "options": ["The data is wiped.", "The data remains intact and is accessible to Instance B.", "Instance B will crash.", "You need a password."], "correct": "B"}, {"text": "A \"Floating IP\" is attached to:", "options": ["The Cinder Volume.", "The Instance's Network Port.", "The Hypervisor.", "The Database."], "correct": "B"}, {"text": "The command to create a 10GB volume is:", "options": ["`nova volume create 10`", "`openstack volume create --size 10 my-vol`", "`cinder make 10`", "`mkfs.cinder`"], "correct": "B"}], "courseIndexUrl": "../index.html"};
 </script>
 <script src="../js/course_logic.js"></script>
 <script src="../js/quiz_app.js"></script>

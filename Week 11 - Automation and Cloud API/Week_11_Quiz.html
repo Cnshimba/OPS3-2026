@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -376,7 +376,7 @@
 <!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
     <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
-        <a href="../Course_Index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+        <a href="../index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
             <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
             <div class="flex flex-col">
                 <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
@@ -385,7 +385,7 @@
             </div>
         </a>
         <div class="flex items-center space-x-6">
-            <a href="../Course_Index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+            <a href="../index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
                 Course Home
             </a>
             <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
@@ -414,7 +414,7 @@
 
 <!-- Inject Data & App -->
 <script>
-    window.QUIZ_DATA = {"questions": [{"text": "What is the primary benefit of \"Infrastructure as Code\"?", "options": ["It looks cooler on your screen.", "It allows you to build, destroy, and rebuild environments consistently and rapidly.", "It replaces the need for an Operating System.", "It generates random passwords."], "correct": "B"}, {"text": "Which command-line tool is used to parse JSON output?", "options": ["`grep`", "`sed`", "`jq`", "`awk`"], "correct": "C"}, {"text": "What is \"Cloud-Init\"?", "options": ["A virus that infects cloud servers.", "The industry standard tool for cross-platform cloud instance initialization (User Data).", "The name of the OpenStack installer.", "A web browser."], "correct": "B"}, {"text": "In an \"Imperative\" approach (like a Bash script), you define:", "options": ["The desired End State.", "The exact steps to achieve a goal.", "The database schema.", "The hardware requirements."], "correct": "B"}, {"text": "Which flag forces the OpenStack CLI to output structured data instead of a table?", "options": ["`--table`", "`--format json`", "`--xml`", "`--raw`"], "correct": "B"}, {"text": "A Cloud-Init configuration file must start with which line?", "options": ["`#!/bin/bash`", "`import os`", "`#cloud-config`", "`<xml>`"], "correct": "C"}, {"text": "Why is `openstack server create` inside a `for` loop generally considered \"Imperative\"?", "options": ["It tells the computer exactly *how* to loop and create servers one by one.", "It is written in Latin.", "It defines the end state without steps.", "It uses a GUI."], "correct": "A"}, {"text": "Where does a VM look to find its User Data during boot?", "options": ["The C:\\ drive.", "The Metadata Service (`http://169.254.169.254`).", "Google.com.", "The BIOS."], "correct": "B"}, {"text": "If you want to install Apache automatically when a VM launches, where do you put the install command?", "options": ["In the `runcmd` section of the User Data (Cloud-Init).", "You SSH in after it boots and type it manually.", "In the generic OpenStack login screen.", "In the Network settings."], "correct": "A"}, {"text": "\"Declarative\" tools (like Terraform) focus on:", "options": ["Describing *what* you want (The End State).", "Describing *how* to do it (The Steps).", "Writing documentation.", "Managing cables."], "correct": "A"}], "courseIndexUrl": "../Course_Index.html"};
+    window.QUIZ_DATA = {"questions": [{"text": "What is the primary benefit of \"Infrastructure as Code\"?", "options": ["It looks cooler on your screen.", "It allows you to build, destroy, and rebuild environments consistently and rapidly.", "It replaces the need for an Operating System.", "It generates random passwords."], "correct": "B"}, {"text": "Which command-line tool is used to parse JSON output?", "options": ["`grep`", "`sed`", "`jq`", "`awk`"], "correct": "C"}, {"text": "What is \"Cloud-Init\"?", "options": ["A virus that infects cloud servers.", "The industry standard tool for cross-platform cloud instance initialization (User Data).", "The name of the OpenStack installer.", "A web browser."], "correct": "B"}, {"text": "In an \"Imperative\" approach (like a Bash script), you define:", "options": ["The desired End State.", "The exact steps to achieve a goal.", "The database schema.", "The hardware requirements."], "correct": "B"}, {"text": "Which flag forces the OpenStack CLI to output structured data instead of a table?", "options": ["`--table`", "`--format json`", "`--xml`", "`--raw`"], "correct": "B"}, {"text": "A Cloud-Init configuration file must start with which line?", "options": ["`#!/bin/bash`", "`import os`", "`#cloud-config`", "`<xml>`"], "correct": "C"}, {"text": "Why is `openstack server create` inside a `for` loop generally considered \"Imperative\"?", "options": ["It tells the computer exactly *how* to loop and create servers one by one.", "It is written in Latin.", "It defines the end state without steps.", "It uses a GUI."], "correct": "A"}, {"text": "Where does a VM look to find its User Data during boot?", "options": ["The C:\\ drive.", "The Metadata Service (`http://169.254.169.254`).", "Google.com.", "The BIOS."], "correct": "B"}, {"text": "If you want to install Apache automatically when a VM launches, where do you put the install command?", "options": ["In the `runcmd` section of the User Data (Cloud-Init).", "You SSH in after it boots and type it manually.", "In the generic OpenStack login screen.", "In the Network settings."], "correct": "A"}, {"text": "\"Declarative\" tools (like Terraform) focus on:", "options": ["Describing *what* you want (The End State).", "Describing *how* to do it (The Steps).", "Writing documentation.", "Managing cables."], "correct": "A"}], "courseIndexUrl": "../index.html"};
 </script>
 <script src="../js/course_logic.js"></script>
 <script src="../js/quiz_app.js"></script>

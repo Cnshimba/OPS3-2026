@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -376,7 +376,7 @@
 <!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
     <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
-        <a href="../Course_Index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+        <a href="../index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
             <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
             <div class="flex flex-col">
                 <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
@@ -385,7 +385,7 @@
             </div>
         </a>
         <div class="flex items-center space-x-6">
-            <a href="../Course_Index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+            <a href="../index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
                 Course Home
             </a>
             <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
@@ -414,7 +414,7 @@
 
 <!-- Inject Data & App -->
 <script>
-    window.QUIZ_DATA = {"questions": [{"text": "What is the fundamental architectural difference between a Container and a Virtual Machine?", "options": ["Containers use virtual hardware; VMs use physical hardware.", "Containers share the host kernel; VMs run their own kernel.", "Containers are slower to boot than VMs.", "Containers cannot run Linux applications."], "correct": "B"}, {"text": "Which Linux kernel feature is responsible for isolating the \"view\" of the system (e.g., process trees, network interfaces)?", "options": ["Cgroups", "Hypervisor", "Namespaces", "ZFS"], "correct": "C"}, {"text": "Which Linux kernel feature is responsible for limiting resource usage (e.g., max RAM, CPU quota)?", "options": ["Cgroups", "Namespaces", "KVM", "Systemd"], "correct": "A"}, {"text": "You need to deploy a microservice application where the container is expected to be ephemeral (short-lived) and run a single process. Which technology is best suited?", "options": ["LXC (System Container)", "Proxmox VM", "Docker (Application Container)", "QEMU"], "correct": "C"}, {"text": "Which of the following is a key security advantage of Podman over traditional Docker?", "options": ["It runs faster.", "It has a daemonless architecture.", "It uses less disk space.", "It only runs on Red Hat Linux."], "correct": "B"}, {"text": "An \"Unprivileged Container\" in Proxmox maps the container's root user (UID 0) to the host's root user (UID 0) for maximum compatibility.", "options": ["True", "False"], "correct": "B"}, {"text": "Starting a container typically takes less than a second because it does not need to boot a kernel.", "options": ["True", "False"], "correct": "A"}, {"text": "You can increase the memory limit of a running LXC container in Proxmox without rebooting it.", "options": ["True", "False"], "correct": "A"}, {"text": "Docker containers persist all data by default, even if the container is deleted.", "options": ["True", "False"], "correct": "B"}, {"text": "LXC containers are typically managed using systemd and act like lightweight virtual machines.", "options": ["True", "False"], "correct": "A"}], "courseIndexUrl": "../Course_Index.html"};
+    window.QUIZ_DATA = {"questions": [{"text": "What is the fundamental architectural difference between a Container and a Virtual Machine?", "options": ["Containers use virtual hardware; VMs use physical hardware.", "Containers share the host kernel; VMs run their own kernel.", "Containers are slower to boot than VMs.", "Containers cannot run Linux applications."], "correct": "B"}, {"text": "Which Linux kernel feature is responsible for isolating the \"view\" of the system (e.g., process trees, network interfaces)?", "options": ["Cgroups", "Hypervisor", "Namespaces", "ZFS"], "correct": "C"}, {"text": "Which Linux kernel feature is responsible for limiting resource usage (e.g., max RAM, CPU quota)?", "options": ["Cgroups", "Namespaces", "KVM", "Systemd"], "correct": "A"}, {"text": "You need to deploy a microservice application where the container is expected to be ephemeral (short-lived) and run a single process. Which technology is best suited?", "options": ["LXC (System Container)", "Proxmox VM", "Docker (Application Container)", "QEMU"], "correct": "C"}, {"text": "Which of the following is a key security advantage of Podman over traditional Docker?", "options": ["It runs faster.", "It has a daemonless architecture.", "It uses less disk space.", "It only runs on Red Hat Linux."], "correct": "B"}, {"text": "An \"Unprivileged Container\" in Proxmox maps the container's root user (UID 0) to the host's root user (UID 0) for maximum compatibility.", "options": ["True", "False"], "correct": "B"}, {"text": "Starting a container typically takes less than a second because it does not need to boot a kernel.", "options": ["True", "False"], "correct": "A"}, {"text": "You can increase the memory limit of a running LXC container in Proxmox without rebooting it.", "options": ["True", "False"], "correct": "A"}, {"text": "Docker containers persist all data by default, even if the container is deleted.", "options": ["True", "False"], "correct": "B"}, {"text": "LXC containers are typically managed using systemd and act like lightweight virtual machines.", "options": ["True", "False"], "correct": "A"}], "courseIndexUrl": "../index.html"};
 </script>
 <script src="../js/course_logic.js"></script>
 <script src="../js/quiz_app.js"></script>
