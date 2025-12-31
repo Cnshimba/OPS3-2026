@@ -1,0 +1,799 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 9 Student Notes</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                colors: {
+                    primary: '#002F6E', // VUT Midnight Blue
+                    secondary: '#6c757d',
+                    codebg: 'var(--bg-code)', 
+                },
+                typography: {
+                    DEFAULT: {
+                        css: {
+                            maxWidth: '100%',
+                            fontFamily: 'Inter, sans-serif',
+                            color: 'var(--text-body)',
+                            '--tw-prose-body': 'var(--text-body)',
+                            '--tw-prose-headings': 'var(--text-headings)',
+                            '--tw-prose-links': 'var(--text-link)',
+                            '--tw-prose-bold': 'var(--text-headings)',
+                            '--tw-prose-counters': 'var(--text-body)',
+                            '--tw-prose-bullets': 'var(--text-body)',
+                            '--tw-prose-hr': 'var(--border-color)',
+                            '--tw-prose-quotes': 'var(--text-body)',
+                            '--tw-prose-code': 'var(--text-code)',
+                            '--tw-prose-pre-code': 'var(--text-pre)',
+                            '--tw-prose-pre-bg': 'var(--bg-pre)',
+                            
+                            // Image Sizing Control
+                            img: {
+                                display: 'block',
+                                marginLeft: 'auto',
+                                marginRight: 'auto',
+                                maxHeight: '500px',
+                                width: 'auto',
+                                height: 'auto',
+                                borderRadius: '0.5rem',
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                            },
+                            // Links
+                            a: {
+                                color: 'var(--text-link)',
+                                '&:hover': { opacity: '0.8' },
+                            },
+                            // Inline Code
+                            code: {
+                                color: 'var(--text-code)',
+                                backgroundColor: 'var(--bg-code)',
+                                padding: '0.2rem 0.4rem',
+                                borderRadius: '0.25rem',
+                                fontWeight: '600',
+                                border: '1px solid var(--border-code)',
+                            },
+                            'code::before': { content: '""' },
+                            'code::after': { content: '""' },
+                            // Code Blocks (Pre)
+                            pre: {
+                                backgroundColor: 'var(--bg-pre) !important',
+                                color: 'var(--text-pre)',
+                                padding: '1rem',
+                                borderRadius: '0.5rem',
+                                border: '1px solid var(--border-pre)',
+                            },
+                            // Notes/Alerts (Blockquotes)
+                            blockquote: {
+                                borderLeftColor: '#002F6E',
+                                borderLeftWidth: '4px',
+                                backgroundColor: 'var(--bg-note)',
+                                padding: '1rem',
+                                color: 'var(--text-body)',
+                                fontSize: '0.9rem', // Smaller text for notes
+                                fontStyle: 'italic',
+                                quotes: 'none',
+                                borderRadius: '0 0.5rem 0.5rem 0',
+                            },
+                            'blockquote p:first-of-type::before': { content: 'none' },
+                            'blockquote p:last-of-type::after': { content: 'none' },
+                            // Tables (Restored from First Attempt)
+                            table: {
+                                width: '100%',
+                                marginTop: '2em',
+                                marginBottom: '2em',
+                                borderCollapse: 'collapse',
+                                fontSize: '0.9rem',
+                            },
+                            'thead th': {
+                                backgroundColor: '#f3f4f6', 
+                                color: '#1f2937', 
+                                fontWeight: '600',
+                                padding: '0.75rem',
+                                borderBottom: '2px solid #e5e7eb',
+                                textAlign: 'left',
+                            },
+                            'tbody td': {
+                                padding: '0.75rem',
+                                borderBottom: '1px solid #e5e7eb',
+                                verticalAlign: 'top',
+                            },
+                            'tbody tr:hover': {
+                                backgroundColor: '#f9fafb',
+                            },
+                            
+                            // Task Lists (Checkboxes)
+                            '.task-list-item': {
+                                listStyleType: 'none',
+                            },
+                            '.task-list-item input[type="checkbox"]': {
+                                marginRight: '0.5rem',
+                            },
+
+                            thead: {
+                                borderBottomWidth: '2px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'thead th': {
+                                color: 'var(--text-headings)',
+                                fontWeight: '600',
+                                verticalAlign: 'bottom',
+                                paddingRight: '0.75em',
+                                paddingBottom: '0.75em',
+                                paddingLeft: '0.75em',
+                                textAlign: 'left',
+                            },
+                            'tbody tr': {
+                                borderBottomWidth: '1px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'tbody tr:last-child': {
+                                borderBottomWidth: '0',
+                            },
+                            'tbody td': {
+                                verticalAlign: 'top',
+                                padding: '0.75em',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
+</script>
+<script>
+    // Theme Toggle Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+
+        // Check local storage or preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            iconSun.classList.remove('hidden');
+            iconMoon.classList.add('hidden');
+        } else {
+            html.classList.remove('dark');
+            iconSun.classList.add('hidden');
+            iconMoon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+            }
+        });
+    });
+</script>
+<style>
+    /* CSS Variables for Theming */
+    :root {
+        --bg-body: #f8fafc;
+        --bg-card: #ffffff;
+        --text-body: #334155;
+        --text-headings: #0f172a;
+        --text-link: #002F6E; /* VUT Blue */
+        --border-color: #e2e8f0;
+        
+        /* Code - Light Mode */
+        --bg-code: #f1f5f9;
+        --text-code: #d63384;
+        --border-code: #e2e8f0;
+        
+        /* Pre - Light Mode (Github Light) */
+        --bg-pre: #f6f8fa;
+        --text-pre: #24292e;
+        --border-pre: #d0d7de;
+        
+        /* Note - Light Mode */
+        --bg-note: #f8f9fa;
+        
+        /* Scrollbar */
+        --scroll-track: #f1f1f1;
+        --scroll-thumb: #888;
+    }
+
+    html.dark {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --text-body: #cbd5e1;
+        --text-headings: #f8fafc;
+        --text-link: #60a5fa; /* Blue 400 - Brighter for better contrast */
+        --border-color: #334155;
+        
+        /* Code - Dark Mode */
+        --bg-code: #334155;
+        --text-code: #f472b6; 
+        --border-code: #475569;
+        
+        /* Pre - Dark Mode (Monokai) */
+        --bg-pre: #272822;
+        --text-pre: #f8f8f2;
+        --border-pre: #464539;
+        
+        /* Note - Dark Mode */
+        --bg-note: #1e293b;
+        --scroll-track: #1e293b;
+        --scroll-thumb: #475569;
+    }
+
+    /* Transition */
+    body, article, code, pre, blockquote {
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--scroll-track); }
+    ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    
+    /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
+    .codehilite .hll { background-color: #ffffcc }
+    .codehilite .c { color: #6a737d; font-style: italic } /* Comment */
+    .codehilite .err { color: #f05240; background-color: #ffeaea } /* Error */
+    .codehilite .k { color: #d73a49; font-weight: bold } /* Keyword */
+    .codehilite .o { color: #d73a49; font-weight: bold } /* Operator */
+    .codehilite .cm { color: #6a737d; font-style: italic } /* Comment.Multiline */
+    .codehilite .cp { color: #6a737d; font-weight: bold } /* Comment.Preproc */
+    .codehilite .c1 { color: #6a737d; font-style: italic } /* Comment.Single */
+    .codehilite .cs { color: #6a737d; font-style: italic } /* Comment.Special */
+    .codehilite .gd { color: #d73a49; background-color: #fdd } /* Generic.Deleted */
+    .codehilite .ge { font-style: italic } /* Generic.Emph */
+    .codehilite .gr { color: #aa0000 } /* Generic.Error */
+    .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+    .codehilite .gi { color: #00a000; background-color: #dfd } /* Generic.Inserted */
+    .codehilite .go { color: #888888 } /* Generic.Output */
+    .codehilite .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+    .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+    .codehilite .gt { color: #aa0000 } /* Generic.Traceback */
+    .codehilite .kc { color: #005cc5; font-weight: bold } /* Keyword.Constant */
+    .codehilite .kd { color: #d73a49; font-weight: bold } /* Keyword.Declaration */
+    .codehilite .kn { color: #d73a49; font-weight: bold } /* Keyword.Namespace */
+    .codehilite .kp { color: #d73a49 } /* Keyword.Pseudo */
+    .codehilite .kr { color: #d73a49; font-weight: bold } /* Keyword.Reserved */
+    .codehilite .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+    .codehilite .m { color: #005cc5 } /* Literal.Number */
+    .codehilite .s { color: #032f62 } /* Literal.String */
+    .codehilite .na { color: #22863a } /* Name.Attribute */
+    .codehilite .nb { color: #005cc5 } /* Name.Builtin */
+    .codehilite .nc { color: #6f42c1; font-weight: bold } /* Name.Class */
+    .codehilite .no { color: #005cc5 } /* Name.Constant */
+    .codehilite .nd { color: #6f42c1; font-weight: bold } /* Name.Decorator */
+    .codehilite .ni { color: #800080 } /* Name.Entity */
+    .codehilite .ne { color: #990000; font-weight: bold } /* Name.Exception */
+    .codehilite .nf { color: #6f42c1; font-weight: bold } /* Name.Function */
+    .codehilite .nl { color: #990000; font-weight: bold } /* Name.Label */
+    .codehilite .nn { color: #6f42c1; font-weight: bold } /* Name.Namespace */
+    .codehilite .nt { color: #22863a } /* Name.Tag */
+    .codehilite .nv { color: #e36209 } /* Name.Variable */
+    .codehilite .ow { color: #d73a49; font-weight: bold } /* Operator.Word */
+    .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+    .codehilite .mf { color: #005cc5 } /* Literal.Number.Float */
+    .codehilite .mh { color: #005cc5 } /* Literal.Number.Hex */
+    .codehilite .mi { color: #005cc5 } /* Literal.Number.Integer */
+    .codehilite .mo { color: #005cc5 } /* Literal.Number.Oct */
+    .codehilite .sb { color: #032f62 } /* Literal.String.Backtick */
+    .codehilite .sc { color: #032f62 } /* Literal.String.Char */
+    .codehilite .sd { color: #032f62 } /* Literal.String.Doc */
+    .codehilite .s2 { color: #032f62 } /* Literal.String.Double */
+    .codehilite .se { color: #005cc5 } /* Literal.String.Escape */
+    .codehilite .sh { color: #032f62 } /* Literal.String.Heredoc */
+    .codehilite .si { color: #032f62 } /* Literal.String.Interpol */
+    .codehilite .sx { color: #032f62 } /* Literal.String.Other */
+    .codehilite .sr { color: #032f62 } /* Literal.String.Regex */
+    .codehilite .s1 { color: #032f62 } /* Literal.String.Single */
+    .codehilite .ss { color: #005cc5 } /* Literal.String.Symbol */
+    .codehilite .bp { color: #005cc5 } /* Name.Builtin.Pseudo */
+    .codehilite .vc { color: #e36209 } /* Name.Variable.Class */
+    .codehilite .vg { color: #e36209 } /* Name.Variable.Global */
+    .codehilite .vi { color: #e36209 } /* Name.Variable.Instance */
+    .codehilite .il { color: #005cc5 } /* Literal.Number.Integer.Long */
+    
+    /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
+    html.dark .codehilite .hll { background-color: #49483e }
+    html.dark .codehilite .c { color: #75715e } /* Comment */
+    html.dark .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
+    html.dark .codehilite .k { color: #66d9ef; font-weight: normal } /* Keyword */
+    html.dark .codehilite .l { color: #ae81ff } /* Literal */
+    html.dark .codehilite .n { color: #f8f8f2 } /* Name */
+    html.dark .codehilite .o { color: #f92672; font-weight: normal } /* Operator */
+    html.dark .codehilite .p { color: #f8f8f2 } /* Punctuation */
+    html.dark .codehilite .cm { color: #75715e } /* Comment.Multiline */
+    html.dark .codehilite .cp { color: #75715e } /* Comment.Preproc */
+    html.dark .codehilite .c1 { color: #75715e } /* Comment.Single */
+    html.dark .codehilite .cs { color: #75715e } /* Comment.Special */
+    html.dark .codehilite .ge { font-style: italic } /* Generic.Emph */
+    html.dark .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    html.dark .codehilite .kc { color: #66d9ef; font-weight: normal } /* Keyword.Constant */
+    html.dark .codehilite .kd { color: #66d9ef; font-weight: normal  } /* Keyword.Declaration */
+    html.dark .codehilite .kn { color: #f92672; font-weight: normal  } /* Keyword.Namespace */
+    html.dark .codehilite .kp { color: #66d9ef; font-weight: normal  } /* Keyword.Pseudo */
+    html.dark .codehilite .kr { color: #66d9ef; font-weight: normal  } /* Keyword.Reserved */
+    html.dark .codehilite .kt { color: #66d9ef; font-weight: normal  } /* Keyword.Type */
+    html.dark .codehilite .ld { color: #e6db74 } /* Literal.Date */
+    html.dark .codehilite .m { color: #ae81ff } /* Literal.Number */
+    html.dark .codehilite .s { color: #e6db74 } /* Literal.String */
+    html.dark .codehilite .na { color: #a6e22e } /* Name.Attribute */
+    html.dark .codehilite .nb { color: #f8f8f2 } /* Name.Builtin */
+    html.dark .codehilite .nc { color: #a6e22e } /* Name.Class */
+    html.dark .codehilite .no { color: #66d9ef } /* Name.Constant */
+    html.dark .codehilite .nd { color: #a6e22e } /* Name.Decorator */
+    html.dark .codehilite .ni { color: #f8f8f2 } /* Name.Entity */
+    html.dark .codehilite .ne { color: #a6e22e } /* Name.Exception */
+    html.dark .codehilite .nf { color: #a6e22e } /* Name.Function */
+    html.dark .codehilite .nl { color: #f8f8f2 } /* Name.Label */
+    html.dark .codehilite .nn { color: #f8f8f2 } /* Name.Namespace */
+    html.dark .codehilite .nx { color: #a6e22e } /* Name.Other */
+    html.dark .codehilite .py { color: #f8f8f2 } /* Name.Property */
+    html.dark .codehilite .nt { color: #f92672 } /* Name.Tag */
+    html.dark .codehilite .nv { color: #f8f8f2 } /* Name.Variable */
+    html.dark .codehilite .ow { color: #f92672; font-weight: normal  } /* Operator.Word */
+    html.dark .codehilite .w { color: #f8f8f2 } /* Text.Whitespace */
+    html.dark .codehilite .mb { color: #ae81ff } /* Literal.Number.Bin */
+    html.dark .codehilite .mf { color: #ae81ff } /* Literal.Number.Float */
+    html.dark .codehilite .mh { color: #ae81ff } /* Literal.Number.Hex */
+    html.dark .codehilite .mi { color: #ae81ff } /* Literal.Number.Integer */
+    html.dark .codehilite .mo { color: #ae81ff } /* Literal.Number.Oct */
+    html.dark .codehilite .sb { color: #e6db74 } /* Literal.String.Backtick */
+    html.dark .codehilite .sc { color: #e6db74 } /* Literal.String.Char */
+    html.dark .codehilite .sd { color: #e6db74 } /* Literal.String.Doc */
+    html.dark .codehilite .s2 { color: #e6db74 } /* Literal.String.Double */
+    html.dark .codehilite .se { color: #ae81ff } /* Literal.String.Escape */
+    html.dark .codehilite .sh { color: #e6db74 } /* Literal.String.Heredoc */
+    html.dark .codehilite .si { color: #e6db74 } /* Literal.String.Interpol */
+    html.dark .codehilite .sx { color: #e6db74 } /* Literal.String.Other */
+    html.dark .codehilite .sr { color: #e6db74 } /* Literal.String.Regex */
+    html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
+    html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
+</style>
+
+</head>
+<body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
+    <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+        <a href="../Course_Index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+            <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
+            <div class="flex flex-col">
+                <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation & Cloud Technologies</span>
+                <span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
+            </div>
+        </a>
+        <div class="flex items-center space-x-6">
+            <a href="../Course_Index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+                Course Home
+            </a>
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <!-- Sun Icon -->
+                <svg id="icon-sun" class="w-5 h-5 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <!-- Moon Icon -->
+                <svg id="icon-moon" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 max-w-5xl mb-12">
+    <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
+        <p><a href="../Course_Index.html">← Back to Course Index</a></p>
+<div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+<div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+    <img src="images/week_9_icon.png" class="h-full w-full object-cover" alt="Compute Operations Icon">
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-6">
+    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Compute Operations (Nova)</h1>
+    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
+</div>
+</div>
+
+<p><strong>Course</strong>: Computer Systems Engineering
+<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
+<strong>Topic</strong>: Compute Operations (Nova)
+<strong>Estimated Reading Time</strong>: 30 Minutes</p>
+<blockquote>
+<p>[!TIP]
+<strong>How to succeed in this week</strong>:
+Nova is the compute engine—focus on understanding the scheduling process and instance lifecycle. The CLI commands build on Week 8's foundation, so review Keystone, Glance, and Neutron concepts if needed.</p>
+</blockquote>
+<hr />
+<h2 id="1-introduction-to-openstack-compute-nova">1. Introduction to OpenStack Compute (Nova)</h2>
+<p>In Week 7, we introduced the core services that make up an OpenStack cloud. This week, we tear apart the engine to understand the most critical component: <strong>Nova</strong>. As the primary computing controller, Nova is responsible for orchestrating, scheduling, and managing the lifecycle of virtual machines.</p>
+<p><strong>Industry Context</strong>: To be technically precise, <strong>Nova</strong> is the <em>Compute Resource Provider</em>.</p>
+<ul>
+<li>In <strong>Azure</strong>, you submit a template to the Azure Resource Manager (ARM), which routes the request to the <strong><code>Microsoft.Compute</code></strong> provider to execute the build.</li>
+<li>In <strong>OpenStack</strong>, <strong>Nova</strong> plays the role of <code>Microsoft.Compute</code>. It is the backend service that accepts the request and orchestrates the hypervisors.</li>
+<li>Therefore, do not confuse Nova (the Manager) with the VM (the Resource). Nova <em>creates</em> the VM.</li>
+</ul>
+<p>It is important to clarify that Nova does not provide the virtualization itself; that task remains the job of the Hypervisor, such as KVM or QEMU. Instead, Nova acts as the management layer that allows administrators to scale this virtualization across thousands of physical servers seamlessly.</p>
+<p>Modern Nova utilizes a <strong>Cellular Architecture</strong> to achieve this massive scale. In early versions of OpenStack, a single central database and message queue handled every request in the cloud. However, as clusters grew to tens of thousands of nodes, the database lock contention became a severe bottleneck. The solution was to partition the cloud into "Cells." In this model, the API and Scheduler remain at the global level, but the Compute nodes are grouped into independent cells, each with its own database and message queue. This implies that if "Cell 1" suffers a critical database failure, "Cell 2" continues to operate without interruption, effectively partitioning the cloud to isolate failures and improve resilience.</p>
+<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Nova</strong> is the compute controller, equivalent to <code>Microsoft.Compute</code>.</li>
+<li><strong>Cellular Architecture</strong>: Partitions the cloud for scalability and resilience.</li>
+<li><strong>Hypervisor Agnostic</strong>: Nova manages the hypervisor (KVM) but is not the hypervisor itself.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why does Nova need a "Cellular Architecture" for large-scale clouds?</li>
+<li>What is the difference between Nova and KVM?</li>
+</ul>
+<hr />
+<h2 id="2-nova-component-anatomy">2. Nova Component Anatomy</h2>
+<p>Nova is not a single monolithic program but a distributed system comprised of several communicating daemons, each with a specific role. These are generally divided into the Control Plane (Global Management) and the Data Plane (Node Execution).</p>
+<p><img alt="Nova Architecture Components" src="images/nova_components.png" />
+<em>Figure 1: Nova Architecture - The flow from API (Entrance) to Scheduler (Brain) to Compute (Worker)</em></p>
+<h3 id="21-the-global-components-control-plane">2.1 The Global Components (Control Plane)</h3>
+<p>The entry point for all requests is <strong>nova-api</strong>. This service accepts REST requests from users and other services. It first validates the user's authentication token via Keystone before passing the request into the system. Crucially, <code>nova-api</code> is stateless, meaning scaling it is as simple as running multiple copies behind a Load Balancer.</p>
+<p>The decision-making heart of the cloud is <strong>nova-scheduler</strong>. Its sole responsibility is to decide <em>where</em> a new virtual machine should be placed. It does not create the VM or touch the hypervisor; it simply selects the most appropriate host from the pool of available resources and passes the message along. It achieves this through a sophisticated Filter-and-Weight algorithm.</p>
+<p>Finally, the <strong>nova-conductor</strong> acts as a security guard for the database. In a cloud environment, compute nodes are considered "untrusted" because they run user workloads that could potentially be malicious. If a hacker were to escape a VM and gain control of the compute node, we must ensure they cannot corrupt the entire cloud database. Therefore, compute nodes are not allowed to write to the database directly. Instead, they send a message to the Conductor requesting an update, and the Conductor performs the write operation only after validating the request.</p>
+<h3 id="22-the-node-components-data-plane">2.2 The Node Components (Data Plane)</h3>
+<p>On every hypervisor server, the <strong>nova-compute</strong> service acts as the worker. It continually listens for instructions from the message queue (RabbitMQ). When it receives a command, such as "Run Instance," it does not execute it blindly; it follows a rigorous process to ensure the VM is built correctly on the physical hardware.</p>
+<p><strong>The Driver Layer (Libvirt)</strong>
+<code>nova-compute</code> is designed to be hypervisor-agnostic. It does not speak directly to the kernel; instead, it uses a driver. In our Linux environment, it uses the <strong>Libvirt</strong> driver. When you ask for a VM, <code>nova-compute</code> translates your request into a <strong>Libvirt XML</strong> file—a precise recipe describing the VM's CPU, RAM, and Devices—and passes it to the Libvirt daemon, which ultimately spawns the <strong>QEMU/KVM</strong> process.</p>
+<p><strong>The Resource Tracker</strong>
+Beyond creating VMs, <code>nova-compute</code> is responsible for auditing the physical server. It runs a periodic task (typically every 60 seconds) called the <strong>Resource Tracker</strong>. This task scans the available RAM, CPU cores, and Disk space on the host and compares it against the reserved resources. It then reports this "Inventory" back to the central database. This ensures that the Scheduler always possesses an accurate, up-to-date map of the cloud's capacity, preventing it from sending a VM to a host that is already full.</p>
+<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Control Plane</strong>: <code>nova-api</code> (Entry), <code>nova-scheduler</code> (Decision), <code>nova-conductor</code> (DB Guard).</li>
+<li><strong>Data Plane</strong>: <code>nova-compute</code> (Hypervisor Worker).</li>
+<li><strong>Security</strong>: Compute nodes cannot talk directly to the DB; they go through Conductor.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why is <code>nova-api</code> considered "stateless"?</li>
+<li>Why do we need a "Conductor" to protect the database?</li>
+</ul>
+<hr />
+<h2 id="3-the-scheduling-algorithm-the-decision-process">3. The Scheduling Algorithm (The Decision Process)</h2>
+<p>When a user requests a new VM, the scheduler is faced with the task of choosing one single server out of potentially thousands. It solves this problem using a two-pass process: Filtering and Weighting.</p>
+<p><img alt="The Scheduling Funnel" src="images/scheduler_filter_process.png" />
+<em>Figure 2: The Scheduling Funnel - Narrowing down 1000 hosts to the single best candidate</em></p>
+<h3 id="31-pass-1-filtering-qualifying">3.1 Pass 1: Filtering (Qualifying)</h3>
+<p>The first pass is designed to remove any hosts that are incapable of running the instance. It works like a sieve.</p>
+<ul>
+<li><strong>RamFilter</strong>: Checks if the host has enough free RAM to satisfy the requested flavor.</li>
+<li><strong>ComputeFilter</strong>: Ensures the host service is actually alive and reporting.</li>
+<li><strong>AvailabilityZoneFilter</strong>: Ensures the VM lands in the requested physical location.</li>
+<li><strong>ImagePropertiesFilter</strong>: Checks for specific hardware requirements like GPUs or Secure Boot support.</li>
+</ul>
+<h3 id="32-pass-2-weighting-ranking">3.2 Pass 2: Weighting (Ranking)</h3>
+<p>Once the invalid hosts are removed, the second pass ranks the remaining candidates to find the "best" fit. The default <strong>RamWeigher</strong> checks the free RAM on each host.</p>
+<ul>
+<li><strong>Stacking Strategy</strong>: Fills up one server completely before moving to the next. This saves power but creates hotspots.</li>
+<li><strong>Spreading Strategy</strong> (Default): Places the VM on the emptiest possible server to maximize performance and minimize the "noisy neighbor" effect.</li>
+</ul>
+<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Filtering</strong>: Removes invalid hosts (e.g., Not enough RAM).</li>
+<li><strong>Weighting</strong>: Ranks valid hosts (e.g., Emptiest first).</li>
+<li><strong>Goal</strong>: Select the single best host (Candidate) for the VM.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>What is the difference between "Stacking" and "Spreading" strategies?</li>
+<li>Which filter ensures a VM lands on a host with a GPU?</li>
+</ul>
+<hr />
+<h2 id="4-the-instance-lifecycle-state-machine">4. The Instance Lifecycle (State Machine)</h2>
+<p>A Virtual Machine goes through several status changes during its life. Understanding these transitions is critical for troubleshooting when things go wrong.</p>
+<p>The process begins in the <strong>BUILD</strong> state. Initially, the API has accepted the request, but the VM does not exist yet; the Scheduler is still finding a home for it. The state remains <strong>BUILD</strong> while the Conductor waits for Neutron to assign an IP address and Port (Networking phase). It then transitions to the Spawning phase, where <code>nova-compute</code> downloads the disk image from Glance.</p>
+<p>If all goes well, the status changes to <strong>ACTIVE</strong>, meaning the Hypervisor considers the VM process to be running successfully. If a failure occurs at any point, the status will change to <strong>ERROR</strong>, and the administrator must check the <code>nova-compute.log</code> to determine the cause. Other states include <strong>SHELVED</strong>, where the VM is written to disk and removed from RAM to save resources (a "Deep Freeze"), and <strong>RESCUE</strong>, where the VM is booted from a special recovery image to repair a corrupted disk.</p>
+<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>BUILD</strong>: Scheduling and Networking in progress.</li>
+<li><strong>ACTIVE</strong>: VM is running on the Hypervisor.</li>
+<li><strong>ERROR</strong>: Something went wrong (Check logs).</li>
+<li><strong>SHELVED</strong>: VM offloaded to disk.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>What happens during the "Spawning" phase?</li>
+<li>How does SHELVED differ from a simple Shutdown?</li>
+</ul>
+<hr />
+<h3 id="5-operations-cookbook-cli-launching-nebula-inc">5. Operations Cookbook (CLI): Launching Nebula Inc.</h3>
+<p>In Week 8, we established the digital foundation for <strong>Nebula Inc.</strong> We created the Project (<code>nebula_prod</code>), hired the User (<code>nebula_admin</code>), and wired the Office Network (<code>nebula_net</code>). However, the data center currently sits empty. To bring the company online, we must now define the virtual hardware standards (Flavors), issue security credentials (Keys &amp; Groups), and finally press the "Power On" button for their first Web Server.</p>
+<p>Below are the commands to execute this activation.</p>
+<h3 id="51-defining-flavors-capacity">5.1 Defining Flavors (Capacity)</h3>
+<p>In a physical data center, you buy specific server models. In OpenStack, we abstract this capacity into what the platform calls <strong>Flavors</strong> (Instance Types in AWS/Azure). A Flavor is a virtual hardware template that defines the resource limits (vCPU, RAM, Disk).</p>
+<p><strong>The Provider vs. Consumer Role</strong>:</p>
+<ul>
+<li><strong>Public Cloud (AWS/Azure)</strong>: You are a <em>Consumer</em>. You cannot create new sizes; you can only <strong>Select</strong> from the menu Amazon provides (<code>t2.micro</code>, <code>m5.large</code>).</li>
+<li><strong>Private Cloud (OpenStack)</strong>: You are the <em>Provider</em>. It is your job to <strong>Create</strong> the menu that your users will select from.</li>
+</ul>
+<p><strong>1. Listing Existing Flavors (The Menu)</strong>
+Before creating new ones, check what is available.</p>
+<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>flavor<span class="w"> </span>list
+</code></pre></div>
+
+<p><strong>2. Creating a Custom Flavor (The Chef)</strong>
+For "Nebula Inc.", we need a custom "Micro" size for cheap testing. We will name it <code>m1.nebula_micro</code>.</p>
+<p><strong>Naming Convention Decoding</strong>:</p>
+<ul>
+<li><code>m1</code>: <strong>Generation/Class</strong>. (e.g., "m" for General Purpose, "1" for 1st Generation). This mirrors AWS naming (e.g., <code>t2.micro</code> = Burstable, 2nd Gen).</li>
+<li><code>nebula</code>: <strong>Family</strong>. Identifies this as a custom flavor for our organization.</li>
+<li><code>micro</code>: <strong>Size</strong>. Indicates relative capacity (Micro &lt; Small &lt; Medium).</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>flavor<span class="w"> </span>create<span class="w"> </span>--id<span class="w"> </span>auto<span class="w"> </span>--ram<span class="w"> </span><span class="m">512</span><span class="w"> </span>--disk<span class="w"> </span><span class="m">1</span><span class="w"> </span>--vcpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>m1.nebula_micro
+</code></pre></div>
+
+<ul>
+<li><strong>Result</strong>: We have added a new item to the menu. Users can now select <code>m1.nebula_micro</code> when launching instances.</li>
+</ul>
+<h3 id="52-securing-access-keys-groups">5.2 Securing Access (Keys &amp; Groups)</h3>
+<p>Security in the cloud is a two-layered approach. First, we must secure <strong>Identity</strong> (proving who you are) using Keypairs. Second, we must secure the <strong>Network</strong> (controlling traffic flow) using Security Groups. You cannot access a VM unless both of these layers are correctly configured.</p>
+<h3 id="521-keypairs-login-access">5.2.1 Keypairs (Login Access)</h3>
+<p>Unlike traditional servers where you set a root password, Cloud images (AWS, Azure, OpenStack) verify identity using <strong>Asymmetric Cryptography</strong>. This mechanism leverages a "Lock and Key" relationship to secure access. The <strong>Public Key</strong> acts as the "Lock"; you upload this to the cloud, and Nova injects it into the VM's <code>.ssh/authorized_keys</code> file during boot. It is safe to share and visible to anyone. The <strong>Private Key</strong> acts as the unique "Key"; you keep this securely on your laptop and must <strong>never share it</strong>. When you attempt to SSH into the instance, the server sends a digital challenge encrypted with the Lock. Your laptop automatically uses your Private Key to decrypt this challenge. If the decryption is successful, the server grants access without ever requiring a password to be transmitted over the network.</p>
+<p><strong>Generating a Keypair</strong></p>
+<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>keypair<span class="w"> </span>create<span class="w"> </span>nebula_key<span class="w"> </span>&gt;<span class="w"> </span>nebula_key.pem
+chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>nebula_key.pem
+</code></pre></div>
+
+<ul>
+<li><strong>Explanation</strong>: This command generates the pair. It stores the Public Key in the Nova Database and writes the Private Key to <code>nebula_key.pem</code> on your disk. The <code>chmod</code> is critical; SSH will refuse to use a key if the file permissions are too open.</li>
+</ul>
+<h3 id="522-security-groups-the-virtual-firewall">5.2.2 Security Groups (The Virtual Firewall)</h3>
+<p>In traditional networking, firewalls are physical appliances sitting at the edge of the network. In Cloud Computing, we use <strong>Security Groups</strong>. A Security Group is a virtual firewall that is applied directly to the network interface (vNIC) of an instance, regardless of where it runs in the data center.</p>
+<p><img alt="Security Group Packet Flow" src="images/security_group_flow.png" />
+<em>Figure 3: Security Group Architecture - How the Open vSwitch Agent filters packets on the Hypervisor before they reach the VM</em></p>
+<p><strong>Concept (General Cloud)</strong>
+Security groups operate on specific principles:</p>
+<ul>
+<li><strong>Stateful</strong>: If you allow a request <em>out</em> (e.g., download update), the return traffic is automatically allowed <em>in</em>.</li>
+<li><strong>Allow-List</strong>: The default policy is "Implicit Deny". All traffic is blocked until you explicitly allow it.</li>
+<li><strong>Dynamic</strong>: Rules are applied immediately to all running instances without rebooting.</li>
+</ul>
+<p><strong>OpenStack Implementation</strong>
+When you create a rule, Neutron communicates with the <strong>Open vSwitch (OVS)</strong> agent on the Compute Node. It translates your high-level rule (e.g., "Allow Port 80") into low-level <strong>OVS Flow Tables</strong> or <strong>iptables</strong> chains on the physical hypervisor. This ensures malicious traffic is dropped on the physical wire <em>before</em> it ever reaches your VM, providing a robust first line of defense.</p>
+<p><strong>CLI: Configuring the Firewall</strong>
+We must explicitly open ports for SSH and Web access.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create the Container</span>
+openstack<span class="w"> </span>security<span class="w"> </span>group<span class="w"> </span>create<span class="w"> </span>nebula_web_sg
+
+<span class="c1"># Allow SSH (Port 22) - Administrative Access</span>
+openstack<span class="w"> </span>security<span class="w"> </span>group<span class="w"> </span>rule<span class="w"> </span>create<span class="w"> </span>--proto<span class="w"> </span>tcp<span class="w"> </span>--dst-port<span class="w"> </span><span class="m">22</span><span class="w"> </span>nebula_web_sg
+
+<span class="c1"># Allow HTTP (Port 80) - Public Web Access</span>
+openstack<span class="w"> </span>security<span class="w"> </span>group<span class="w"> </span>rule<span class="w"> </span>create<span class="w"> </span>--proto<span class="w"> </span>tcp<span class="w"> </span>--dst-port<span class="w"> </span><span class="m">80</span><span class="w"> </span>nebula_web_sg
+</code></pre></div>
+
+<ul>
+<li><strong>Result</strong>: The OVS Agent on the compute node intercepts traffic to <code>nebula_web_01</code> and filters it against these rules.</li>
+</ul>
+<h3 id="53-launching-instances">5.3 Launching Instances</h3>
+<p>The <code>server create</code> command brings together the Flavor, Image, Network, Key, and Security Group to instantiate a VM.</p>
+<p><strong>Boot Command</strong></p>
+<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>server<span class="w"> </span>create<span class="w"> </span>--flavor<span class="w"> </span>m1.nebula_micro<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image<span class="w"> </span>nebula_standard_os<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--network<span class="w"> </span>nebula_net<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--key-name<span class="w"> </span>nebula_key<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--security-group<span class="w"> </span>nebula_web_sg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>nebula_web_01
+</code></pre></div>
+
+<ul>
+<li><strong>Explanation</strong>:<ul>
+<li><code>--flavor</code>: Defines the size.</li>
+<li><code>--image</code>: Defines the software (OS).</li>
+<li><code>--network</code>: Defines the wiring.</li>
+<li><strong>Result</strong>: Triggers the entire scheduling and build process seen in Section 4.</li>
+</ul>
+</li>
+</ul>
+<h3 id="54-day-2-operations-debugging-access">5.4 Day 2 Operations (Debugging &amp; Access)</h3>
+<p><strong>Floating IPs</strong> (Public Access)
+To access the VM from the internet, map a public IP to it.</p>
+<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>floating<span class="w"> </span>ip<span class="w"> </span>create<span class="w"> </span>public
+openstack<span class="w"> </span>server<span class="w"> </span>add<span class="w"> </span>floating<span class="w"> </span>ip<span class="w"> </span>nebula_web_01<span class="w"> </span><span class="m">172</span>.24.4.10
+</code></pre></div>
+
+<p><strong>Console Logs</strong> (Troubleshooting)
+If a VM fails to become reachable (e.g., no network), check the boot logs.</p>
+<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>console<span class="w"> </span>log<span class="w"> </span>show<span class="w"> </span>nebula_web_01
+</code></pre></div>
+
+<ul>
+<li><strong>Explanation</strong>: Retrieves the kernel ring buffer (dmesg) and cloud-init output directly from the hypervisor. Use this to find kernel panics or DHCP failures.</li>
+</ul>
+<h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Flavor</strong>: Virtual hardware template (CPU/RAM). Provider defines, Consumer selects.</li>
+<li><strong>Security Group</strong>: Stateful virtual firewall. "Implicit Deny" by default.</li>
+<li><strong>Keypairs</strong>: SSH Keys for identity. Private Key never leaves your laptop.</li>
+<li><strong>Floating IP</strong>: Assigns a public address to reach the VM from outside.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why must we use <code>chmod 600</code> on the private key?</li>
+<li>How does an "Allow-List" firewall differ from a traditional "Block-List"?</li>
+</ul>
+<hr />
+<h2 id="6-industry-comparison-the-polyglot-cloud-engineer">6. Industry Comparison: The "Polyglot" Cloud Engineer</h2>
+<p>A key goal of this course is to make you a <strong>Cloud Engineer</strong>, not just an OpenStack Administrator. The concepts you learned this week—Flavors, Security Groups, and Booting Instances—are universal. If you know how to launch a server in OpenStack, you already know 90% of how to do it in Amazon Web Services (AWS) or Microsoft Azure.</p>
+<h3 id="61-concept-mapping">6.1 Concept Mapping</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Concept</th>
+<th style="text-align: left;">OpenStack Term</th>
+<th style="text-align: left;">AWS Term</th>
+<th style="text-align: left;">Azure Term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Compute Provider</strong></td>
+<td style="text-align: left;">Nova</td>
+<td style="text-align: left;">EC2 (Service)</td>
+<td style="text-align: left;">Azure Compute (<code>Microsoft.Compute</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Size Template</strong></td>
+<td style="text-align: left;">Flavor (e.g., <code>m1.small</code>)</td>
+<td style="text-align: left;">Instance Type (e.g., <code>t2.micro</code>)</td>
+<td style="text-align: left;">VM Size (e.g., <code>Standard_B1s</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Firewall</strong></td>
+<td style="text-align: left;">Security Group</td>
+<td style="text-align: left;">Security Group</td>
+<td style="text-align: left;">Network Security Group (NSG)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Login Key</strong></td>
+<td style="text-align: left;">Keypair</td>
+<td style="text-align: left;">Key Pair</td>
+<td style="text-align: left;">SSH Key</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Default User</strong></td>
+<td style="text-align: left;"><code>cirros</code>, <code>ubuntu</code></td>
+<td style="text-align: left;"><code>ec2-user</code>, <code>ubuntu</code></td>
+<td style="text-align: left;"><code>azureuser</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">### 6.2 CLI Rosetta Stone</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Below is the exact same "Launch Instance" workflow translated into the three major languages of the cloud.</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>1. Create a "Flavor" (Size)</strong></p>
+<ul>
+<li><strong>OpenStack</strong>: <code>openstack flavor list</code> (Selects <code>m1.small</code>)</li>
+<li><strong>AWS</strong>: <code>aws ec2 describe-instance-types</code> (Selects <code>t2.micro</code>)</li>
+<li><strong>Azure</strong>: <code>az vm list-sizes</code> (Selects <code>Standard_B1s</code>)</li>
+</ul>
+<p><strong>2. Create a Firewall</strong></p>
+<ul>
+<li><strong>OpenStack</strong>: <code>openstack security group create web-sg</code></li>
+<li><strong>AWS</strong>: <code>aws ec2 create-security-group --group-name web-sg</code></li>
+<li><strong>Azure</strong>: <code>az network nsg create --name web-nsg</code></li>
+</ul>
+<p><strong>3. Launch the Instance (The "Hello World" of Cloud)</strong>
+Notice how similar the flags are across all three platforms.</p>
+<p><strong>OpenStack (Nova)</strong></p>
+<div class="codehilite"><pre><span></span><code>openstack<span class="w"> </span>server<span class="w"> </span>create<span class="w"> </span>--image<span class="w"> </span>ubuntu<span class="w"> </span>--flavor<span class="w"> </span>m1.small<span class="w"> </span>--key-name<span class="w"> </span>mykey<span class="w"> </span>--security-group<span class="w"> </span>web-sg<span class="w"> </span>my-server
+</code></pre></div>
+
+<p><strong>AWS (EC2)</strong></p>
+<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>ec2<span class="w"> </span>run-instances<span class="w"> </span>--image-id<span class="w"> </span>ami-12345<span class="w"> </span>--instance-type<span class="w"> </span>t2.micro<span class="w"> </span>--key-name<span class="w"> </span>mykey<span class="w"> </span>--security-group-ids<span class="w"> </span>sg-12345
+</code></pre></div>
+
+<p><strong>Azure (Compute)</strong></p>
+<div class="codehilite"><pre><span></span><code>az<span class="w"> </span>vm<span class="w"> </span>create<span class="w"> </span>--image<span class="w"> </span>UbuntuLTS<span class="w"> </span>--size<span class="w"> </span>Standard_B1s<span class="w"> </span>--ssh-key-value<span class="w"> </span>@mykey.pub<span class="w"> </span>--nsg<span class="w"> </span>web-nsg<span class="w"> </span>--name<span class="w"> </span>my-server
+</code></pre></div>
+
+<h3 id="section-6-checkpoint">Section 6 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li>Concepts are universal; only terms change (Flavor -&gt; Instance Type).</li>
+<li><strong>Nova</strong> = AWS EC2 = Azure Compute.</li>
+<li><strong>Security Group</strong> is the standard term across OpenStack and AWS.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why is it valuable to learn the underlying concept rather than just the tool command?</li>
+<li>How does "Infrastructure as Code" rely on these standardized CLI commands?</li>
+</ul>
+<hr />
+<h2 id="7-summary-and-next-steps">7. Summary and Next Steps</h2>
+<p>This week we peeled back the layers of the OpenStack cloud to reveal <strong>Nova</strong>, the engine responsible for "Computing." We moved from the high-level architecture of Cells and Schedulers down to the practical reality of launching instances via the CLI. You learned that a "VM" is not just a random occurrence but the result of a coordinated effort between the API (Entry), Scheduler (Brain), Conductor (Guard), and Compute (Worker).</p>
+<p>We also took our first steps in "Nebula Inc." by defining the hardware standards (Flavors) and security policies (Groups) necessary to bring the company online. By mapping these OpenStack concepts to their AWS and Azure equivalents, you are effectively learning three clouds simultaneously.</p>
+<h3 id="preparing-for-week-10">Preparing for Week 10</h3>
+<p>Next week, we tackle <strong>Storage and Persistence</strong>. A web server is useless if it loses all its data when it reboots. We will explore <strong>Cinder</strong> (Block Storage) to give our instances persistent hard drives.</p>
+<p><strong>Checklist:</strong></p>
+<ul>
+<li>Ensure you can launch an instance from the CLI without looking at the manual.</li>
+<li>Verify you can SSH into your instance using your keypair.</li>
+<li>Review the "Instance Lifecycle" states (Build -&gt; Active).</li>
+</ul>
+<hr />
+<h2 id="8-additional-resources">8. Additional Resources</h2>
+<p><strong>OpenStack (The Platform)</strong></p>
+<ul>
+<li><a href="https://docs.openstack.org/nova/latest/user/architecture.html">Nova Architecture Guide</a></li>
+<li><a href="https://docs.openstack.org/nova/latest/user/filter-scheduler.html">Filter Scheduler Logic</a></li>
+</ul>
+<p><strong>AWS (The Comparison)</strong></p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/ec2/">Amazon EC2 Documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html">Launch an Instance (Tutorial)</a></li>
+</ul>
+<p><strong>Azure (The Comparison)</strong></p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/">Azure Virtual Machines</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal">Quickstart: Create a Linux VM</a></li>
+</ul>
+<hr />
+<h2 id="9-lab-exercises">9. Lab Exercises</h2>
+<ul>
+<li><strong><a href="Week_9_Lab_1_Launch.html">Lab 1: Launch</a></strong><ul>
+<li><strong>Goal</strong>: Launching your first Cloud Instances.</li>
+</ul>
+</li>
+<li><strong><a href="Week_9_Lab_2_Lifecycle.html">Lab 2: Lifecycle</a></strong><ul>
+<li><strong>Goal</strong>: Managing instance lifecycle (Suspend, Resume, Resize).</li>
+</ul>
+</li>
+</ul>
+<p><a href="../Course_Index.html">← Back to Course Index</a></p>
+                <div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
+                    <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
+                    <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+                    <a href="Week_9_Quiz.html" id="start-quiz-btn" class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+                        Start Quiz
+                    </a>
+                </div>
+                
+    </article>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
+</footer>
+
+<!-- Progress Tracking -->
+<script src="../js/course_logic.js"></script>
+
+</body>
+</html>

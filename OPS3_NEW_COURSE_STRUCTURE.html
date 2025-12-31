@@ -1,0 +1,1019 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OPS3 NEW COURSE STRUCTURE</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                colors: {
+                    primary: '#002F6E', // VUT Midnight Blue
+                    secondary: '#6c757d',
+                    codebg: 'var(--bg-code)', 
+                },
+                typography: {
+                    DEFAULT: {
+                        css: {
+                            maxWidth: '100%',
+                            fontFamily: 'Inter, sans-serif',
+                            color: 'var(--text-body)',
+                            '--tw-prose-body': 'var(--text-body)',
+                            '--tw-prose-headings': 'var(--text-headings)',
+                            '--tw-prose-links': 'var(--text-link)',
+                            '--tw-prose-bold': 'var(--text-headings)',
+                            '--tw-prose-counters': 'var(--text-body)',
+                            '--tw-prose-bullets': 'var(--text-body)',
+                            '--tw-prose-hr': 'var(--border-color)',
+                            '--tw-prose-quotes': 'var(--text-body)',
+                            '--tw-prose-code': 'var(--text-code)',
+                            '--tw-prose-pre-code': 'var(--text-pre)',
+                            '--tw-prose-pre-bg': 'var(--bg-pre)',
+                            
+                            // Image Sizing Control
+                            img: {
+                                display: 'block',
+                                marginLeft: 'auto',
+                                marginRight: 'auto',
+                                maxHeight: '500px',
+                                width: 'auto',
+                                height: 'auto',
+                                borderRadius: '0.5rem',
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                            },
+                            // Links
+                            a: {
+                                color: 'var(--text-link)',
+                                '&:hover': { opacity: '0.8' },
+                            },
+                            // Inline Code
+                            code: {
+                                color: 'var(--text-code)',
+                                backgroundColor: 'var(--bg-code)',
+                                padding: '0.2rem 0.4rem',
+                                borderRadius: '0.25rem',
+                                fontWeight: '600',
+                                border: '1px solid var(--border-code)',
+                            },
+                            'code::before': { content: '""' },
+                            'code::after': { content: '""' },
+                            // Code Blocks (Pre)
+                            pre: {
+                                backgroundColor: 'var(--bg-pre) !important',
+                                color: 'var(--text-pre)',
+                                padding: '1rem',
+                                borderRadius: '0.5rem',
+                                border: '1px solid var(--border-pre)',
+                            },
+                            // Notes/Alerts (Blockquotes)
+                            blockquote: {
+                                borderLeftColor: '#002F6E',
+                                borderLeftWidth: '4px',
+                                backgroundColor: 'var(--bg-note)',
+                                padding: '1rem',
+                                color: 'var(--text-body)',
+                                fontSize: '0.9rem', // Smaller text for notes
+                                fontStyle: 'italic',
+                                quotes: 'none',
+                                borderRadius: '0 0.5rem 0.5rem 0',
+                            },
+                            'blockquote p:first-of-type::before': { content: 'none' },
+                            'blockquote p:last-of-type::after': { content: 'none' },
+                            // Tables (Restored from First Attempt)
+                            table: {
+                                width: '100%',
+                                marginTop: '2em',
+                                marginBottom: '2em',
+                                borderCollapse: 'collapse',
+                                fontSize: '0.9rem',
+                            },
+                            'thead th': {
+                                backgroundColor: '#f3f4f6', 
+                                color: '#1f2937', 
+                                fontWeight: '600',
+                                padding: '0.75rem',
+                                borderBottom: '2px solid #e5e7eb',
+                                textAlign: 'left',
+                            },
+                            'tbody td': {
+                                padding: '0.75rem',
+                                borderBottom: '1px solid #e5e7eb',
+                                verticalAlign: 'top',
+                            },
+                            'tbody tr:hover': {
+                                backgroundColor: '#f9fafb',
+                            },
+                            
+                            // Task Lists (Checkboxes)
+                            '.task-list-item': {
+                                listStyleType: 'none',
+                            },
+                            '.task-list-item input[type="checkbox"]': {
+                                marginRight: '0.5rem',
+                            },
+
+                            thead: {
+                                borderBottomWidth: '2px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'thead th': {
+                                color: 'var(--text-headings)',
+                                fontWeight: '600',
+                                verticalAlign: 'bottom',
+                                paddingRight: '0.75em',
+                                paddingBottom: '0.75em',
+                                paddingLeft: '0.75em',
+                                textAlign: 'left',
+                            },
+                            'tbody tr': {
+                                borderBottomWidth: '1px',
+                                borderBottomColor: 'var(--border-color)',
+                            },
+                            'tbody tr:last-child': {
+                                borderBottomWidth: '0',
+                            },
+                            'tbody td': {
+                                verticalAlign: 'top',
+                                padding: '0.75em',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
+</script>
+<script>
+    // Theme Toggle Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+
+        // Check local storage or preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            iconSun.classList.remove('hidden');
+            iconMoon.classList.add('hidden');
+        } else {
+            html.classList.remove('dark');
+            iconSun.classList.add('hidden');
+            iconMoon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+            }
+        });
+    });
+</script>
+<style>
+    /* CSS Variables for Theming */
+    :root {
+        --bg-body: #f8fafc;
+        --bg-card: #ffffff;
+        --text-body: #334155;
+        --text-headings: #0f172a;
+        --text-link: #002F6E; /* VUT Blue */
+        --border-color: #e2e8f0;
+        
+        /* Code - Light Mode */
+        --bg-code: #f1f5f9;
+        --text-code: #d63384;
+        --border-code: #e2e8f0;
+        
+        /* Pre - Light Mode (Github Light) */
+        --bg-pre: #f6f8fa;
+        --text-pre: #24292e;
+        --border-pre: #d0d7de;
+        
+        /* Note - Light Mode */
+        --bg-note: #f8f9fa;
+        
+        /* Scrollbar */
+        --scroll-track: #f1f1f1;
+        --scroll-thumb: #888;
+    }
+
+    html.dark {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --text-body: #cbd5e1;
+        --text-headings: #f8fafc;
+        --text-link: #60a5fa; /* Blue 400 - Brighter for better contrast */
+        --border-color: #334155;
+        
+        /* Code - Dark Mode */
+        --bg-code: #334155;
+        --text-code: #f472b6; 
+        --border-code: #475569;
+        
+        /* Pre - Dark Mode (Monokai) */
+        --bg-pre: #272822;
+        --text-pre: #f8f8f2;
+        --border-pre: #464539;
+        
+        /* Note - Dark Mode */
+        --bg-note: #1e293b;
+        --scroll-track: #1e293b;
+        --scroll-thumb: #475569;
+    }
+
+    /* Transition */
+    body, article, code, pre, blockquote {
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--scroll-track); }
+    ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    
+    /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
+    .codehilite .hll { background-color: #ffffcc }
+    .codehilite .c { color: #6a737d; font-style: italic } /* Comment */
+    .codehilite .err { color: #f05240; background-color: #ffeaea } /* Error */
+    .codehilite .k { color: #d73a49; font-weight: bold } /* Keyword */
+    .codehilite .o { color: #d73a49; font-weight: bold } /* Operator */
+    .codehilite .cm { color: #6a737d; font-style: italic } /* Comment.Multiline */
+    .codehilite .cp { color: #6a737d; font-weight: bold } /* Comment.Preproc */
+    .codehilite .c1 { color: #6a737d; font-style: italic } /* Comment.Single */
+    .codehilite .cs { color: #6a737d; font-style: italic } /* Comment.Special */
+    .codehilite .gd { color: #d73a49; background-color: #fdd } /* Generic.Deleted */
+    .codehilite .ge { font-style: italic } /* Generic.Emph */
+    .codehilite .gr { color: #aa0000 } /* Generic.Error */
+    .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+    .codehilite .gi { color: #00a000; background-color: #dfd } /* Generic.Inserted */
+    .codehilite .go { color: #888888 } /* Generic.Output */
+    .codehilite .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+    .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+    .codehilite .gt { color: #aa0000 } /* Generic.Traceback */
+    .codehilite .kc { color: #005cc5; font-weight: bold } /* Keyword.Constant */
+    .codehilite .kd { color: #d73a49; font-weight: bold } /* Keyword.Declaration */
+    .codehilite .kn { color: #d73a49; font-weight: bold } /* Keyword.Namespace */
+    .codehilite .kp { color: #d73a49 } /* Keyword.Pseudo */
+    .codehilite .kr { color: #d73a49; font-weight: bold } /* Keyword.Reserved */
+    .codehilite .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+    .codehilite .m { color: #005cc5 } /* Literal.Number */
+    .codehilite .s { color: #032f62 } /* Literal.String */
+    .codehilite .na { color: #22863a } /* Name.Attribute */
+    .codehilite .nb { color: #005cc5 } /* Name.Builtin */
+    .codehilite .nc { color: #6f42c1; font-weight: bold } /* Name.Class */
+    .codehilite .no { color: #005cc5 } /* Name.Constant */
+    .codehilite .nd { color: #6f42c1; font-weight: bold } /* Name.Decorator */
+    .codehilite .ni { color: #800080 } /* Name.Entity */
+    .codehilite .ne { color: #990000; font-weight: bold } /* Name.Exception */
+    .codehilite .nf { color: #6f42c1; font-weight: bold } /* Name.Function */
+    .codehilite .nl { color: #990000; font-weight: bold } /* Name.Label */
+    .codehilite .nn { color: #6f42c1; font-weight: bold } /* Name.Namespace */
+    .codehilite .nt { color: #22863a } /* Name.Tag */
+    .codehilite .nv { color: #e36209 } /* Name.Variable */
+    .codehilite .ow { color: #d73a49; font-weight: bold } /* Operator.Word */
+    .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+    .codehilite .mf { color: #005cc5 } /* Literal.Number.Float */
+    .codehilite .mh { color: #005cc5 } /* Literal.Number.Hex */
+    .codehilite .mi { color: #005cc5 } /* Literal.Number.Integer */
+    .codehilite .mo { color: #005cc5 } /* Literal.Number.Oct */
+    .codehilite .sb { color: #032f62 } /* Literal.String.Backtick */
+    .codehilite .sc { color: #032f62 } /* Literal.String.Char */
+    .codehilite .sd { color: #032f62 } /* Literal.String.Doc */
+    .codehilite .s2 { color: #032f62 } /* Literal.String.Double */
+    .codehilite .se { color: #005cc5 } /* Literal.String.Escape */
+    .codehilite .sh { color: #032f62 } /* Literal.String.Heredoc */
+    .codehilite .si { color: #032f62 } /* Literal.String.Interpol */
+    .codehilite .sx { color: #032f62 } /* Literal.String.Other */
+    .codehilite .sr { color: #032f62 } /* Literal.String.Regex */
+    .codehilite .s1 { color: #032f62 } /* Literal.String.Single */
+    .codehilite .ss { color: #005cc5 } /* Literal.String.Symbol */
+    .codehilite .bp { color: #005cc5 } /* Name.Builtin.Pseudo */
+    .codehilite .vc { color: #e36209 } /* Name.Variable.Class */
+    .codehilite .vg { color: #e36209 } /* Name.Variable.Global */
+    .codehilite .vi { color: #e36209 } /* Name.Variable.Instance */
+    .codehilite .il { color: #005cc5 } /* Literal.Number.Integer.Long */
+    
+    /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
+    html.dark .codehilite .hll { background-color: #49483e }
+    html.dark .codehilite .c { color: #75715e } /* Comment */
+    html.dark .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
+    html.dark .codehilite .k { color: #66d9ef; font-weight: normal } /* Keyword */
+    html.dark .codehilite .l { color: #ae81ff } /* Literal */
+    html.dark .codehilite .n { color: #f8f8f2 } /* Name */
+    html.dark .codehilite .o { color: #f92672; font-weight: normal } /* Operator */
+    html.dark .codehilite .p { color: #f8f8f2 } /* Punctuation */
+    html.dark .codehilite .cm { color: #75715e } /* Comment.Multiline */
+    html.dark .codehilite .cp { color: #75715e } /* Comment.Preproc */
+    html.dark .codehilite .c1 { color: #75715e } /* Comment.Single */
+    html.dark .codehilite .cs { color: #75715e } /* Comment.Special */
+    html.dark .codehilite .ge { font-style: italic } /* Generic.Emph */
+    html.dark .codehilite .gs { font-weight: bold } /* Generic.Strong */
+    html.dark .codehilite .kc { color: #66d9ef; font-weight: normal } /* Keyword.Constant */
+    html.dark .codehilite .kd { color: #66d9ef; font-weight: normal  } /* Keyword.Declaration */
+    html.dark .codehilite .kn { color: #f92672; font-weight: normal  } /* Keyword.Namespace */
+    html.dark .codehilite .kp { color: #66d9ef; font-weight: normal  } /* Keyword.Pseudo */
+    html.dark .codehilite .kr { color: #66d9ef; font-weight: normal  } /* Keyword.Reserved */
+    html.dark .codehilite .kt { color: #66d9ef; font-weight: normal  } /* Keyword.Type */
+    html.dark .codehilite .ld { color: #e6db74 } /* Literal.Date */
+    html.dark .codehilite .m { color: #ae81ff } /* Literal.Number */
+    html.dark .codehilite .s { color: #e6db74 } /* Literal.String */
+    html.dark .codehilite .na { color: #a6e22e } /* Name.Attribute */
+    html.dark .codehilite .nb { color: #f8f8f2 } /* Name.Builtin */
+    html.dark .codehilite .nc { color: #a6e22e } /* Name.Class */
+    html.dark .codehilite .no { color: #66d9ef } /* Name.Constant */
+    html.dark .codehilite .nd { color: #a6e22e } /* Name.Decorator */
+    html.dark .codehilite .ni { color: #f8f8f2 } /* Name.Entity */
+    html.dark .codehilite .ne { color: #a6e22e } /* Name.Exception */
+    html.dark .codehilite .nf { color: #a6e22e } /* Name.Function */
+    html.dark .codehilite .nl { color: #f8f8f2 } /* Name.Label */
+    html.dark .codehilite .nn { color: #f8f8f2 } /* Name.Namespace */
+    html.dark .codehilite .nx { color: #a6e22e } /* Name.Other */
+    html.dark .codehilite .py { color: #f8f8f2 } /* Name.Property */
+    html.dark .codehilite .nt { color: #f92672 } /* Name.Tag */
+    html.dark .codehilite .nv { color: #f8f8f2 } /* Name.Variable */
+    html.dark .codehilite .ow { color: #f92672; font-weight: normal  } /* Operator.Word */
+    html.dark .codehilite .w { color: #f8f8f2 } /* Text.Whitespace */
+    html.dark .codehilite .mb { color: #ae81ff } /* Literal.Number.Bin */
+    html.dark .codehilite .mf { color: #ae81ff } /* Literal.Number.Float */
+    html.dark .codehilite .mh { color: #ae81ff } /* Literal.Number.Hex */
+    html.dark .codehilite .mi { color: #ae81ff } /* Literal.Number.Integer */
+    html.dark .codehilite .mo { color: #ae81ff } /* Literal.Number.Oct */
+    html.dark .codehilite .sb { color: #e6db74 } /* Literal.String.Backtick */
+    html.dark .codehilite .sc { color: #e6db74 } /* Literal.String.Char */
+    html.dark .codehilite .sd { color: #e6db74 } /* Literal.String.Doc */
+    html.dark .codehilite .s2 { color: #e6db74 } /* Literal.String.Double */
+    html.dark .codehilite .se { color: #ae81ff } /* Literal.String.Escape */
+    html.dark .codehilite .sh { color: #e6db74 } /* Literal.String.Heredoc */
+    html.dark .codehilite .si { color: #e6db74 } /* Literal.String.Interpol */
+    html.dark .codehilite .sx { color: #e6db74 } /* Literal.String.Other */
+    html.dark .codehilite .sr { color: #e6db74 } /* Literal.String.Regex */
+    html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
+    html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
+</style>
+
+</head>
+<body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
+    <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+        <a href="./Course_Index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+            <img src="./ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
+            <div class="flex flex-col">
+                <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation & Cloud Technologies</span>
+                <span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
+            </div>
+        </a>
+        <div class="flex items-center space-x-6">
+            <a href="./Course_Index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+                Course Home
+            </a>
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <!-- Sun Icon -->
+                <svg id="icon-sun" class="w-5 h-5 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <!-- Moon Icon -->
+                <svg id="icon-moon" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 max-w-5xl mb-12">
+    <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
+        <div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+<div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+    <img src="images/course_structure_icon.png" class="h-full w-full object-cover" alt="Course Structure Icon">
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-6">
+    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Course Syllabus & Structure</h1>
+    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Virtualization and Cloud Infrastructure</span>
+</div>
+</div>
+<p><strong><a href="Course_Index.html">Back to Course Index</a></strong></p>
+<hr />
+<h2 id="course-overview">Course Overview</h2>
+<p>This 12-week course introduces 3rd-year undergraduates to virtualization and cloud computing using Proxmox VE and OpenStack on lab PCs (i7, 24 GB RAM). Students progress from foundational virtualization concepts through to advanced cloud infrastructure management and automation. The course emphasizes hands-on labs, supplemented by theoretical notes, practical demonstrations, and real-world scenarios.</p>
+<h3 id="learning-outcomes">Learning Outcomes</h3>
+<p>By the end of the course, students will:
+1. Explain virtualization principles and hypervisor architectures (Type-1 vs Type-2)
+2. Install, configure, and manage Proxmox VE for enterprise virtualization
+3. Deploy and manage virtual machines (VMs) with proper resource allocation
+4. Configure virtual networking using Linux bridges, VLANs, and network namespaces
+5. Implement storage solutions including snapshots, backups, and templates
+6. Work with containerization technologies (LXC, Docker, Kubernetes)
+7. Build and manage Proxmox clusters with high availability (HA)
+8. Understand cloud computing service models (IaaS, PaaS, SaaS)
+9. Install and manage OpenStack cloud infrastructure
+10. Deploy and manage cloud instances with proper networking and security
+11. Implement persistent storage solutions using OpenStack Cinder
+12. Automate cloud operations using APIs, scripts, and Infrastructure as Code tools</p>
+<hr />
+<h2 id="week-1-introduction-to-virtualization">Week 1: Introduction to Virtualization</h2>
+<h3 id="objectives">Objectives</h3>
+<ul>
+<li>Understand the purpose and benefits of virtualization.</li>
+<li>Differentiate between Type-1 and Type-2 hypervisors.</li>
+<li>Explore hypervisor architecture, focusing on KVM and QEMU.</li>
+</ul>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>Virtualization Overview</strong>: Virtualization abstracts hardware (CPU, RAM, storage, network) to run multiple operating systems on one machine, improving resource utilization, scalability, and isolation.</li>
+<li><strong>Types of Hypervisors</strong>:</li>
+<li><strong>Type-1 (Bare-Metal)</strong>: Runs directly on hardware (e.g., Proxmox VE, VMware ESXi). Offers better performance for enterprise use.</li>
+<li><strong>Type-2 (Hosted)</strong>: Runs on a host OS (e.g., VirtualBox, VMware Workstation). Easier setup, less efficient.</li>
+<li><strong>KVM and QEMU</strong>: KVM turns Linux into a Type-1 hypervisor; QEMU emulates hardware for VMs, working with KVM.</li>
+<li><strong>Use Cases</strong>: Server consolidation, development/testing, disaster recovery.</li>
+</ul>
+<h3 id="lecture-content">Lecture Content</h3>
+<ol>
+<li><strong>Why Virtualize?</strong>: Reduces hardware costs, simplifies management, enables dynamic scaling.</li>
+<li><strong>Hypervisor Architecture</strong>: Type-1 hypervisors interact directly with hardware; Type-2 rely on a host OS. Use diagrams (hardware → hypervisor → VMs).</li>
+<li><strong>Proxmox VE Introduction</strong>: Open-source, Debian-based platform using KVM for VMs and LXC for containers. Features web-based management.</li>
+<li><strong>Comparison</strong>: Proxmox VE (enterprise, bare-metal) vs. VirtualBox (desktop, hosted) vs. VMware ESXi (proprietary, bare-metal).</li>
+</ol>
+<h3 id="supplementary-video-resources">Supplementary Video Resources</h3>
+<ul>
+<li>QEMU, KVM, and Virt-Manager basics: <a href="https://www.youtube.com/watch?v=oAbNY-QuPx4">YouTube</a> (Beginner-friendly KVM setup).</li>
+<li>Linux hypervisor with libvirt/QEMU/KVM: <a href="https://www.youtube.com/watch?v=HfNKpT2jo7U">YouTube</a> (Stack and setup guide).</li>
+</ul>
+<h3 id="lab-reference">Lab Reference</h3>
+<p>Students install Proxmox VE 8.x on lab PCs and explore its web interface, reinforcing hypervisor types.</p>
+<h3 id="interactive-session-suggestions">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Poll on video challenges (e.g., KVM vs. QEMU). Demo hardware compatibility fixes.</li>
+<li><strong>Class Discussions</strong>: Discuss real-world virtualization use cases (e.g., small business applications).</li>
+<li><strong>Student Presentations</strong>: Assign 1-2 students to present (5-10 min) on Type-1 vs. Type-2 hypervisors, using video/notes examples.</li>
+</ul>
+<h3 id="assessment">Assessment</h3>
+<p>Short quiz on virtualization concepts and hypervisor types.</p>
+<h3 id="resources">Resources</h3>
+<ul>
+<li><a href="https://pve.proxmox.com/pve-docs/">Proxmox VE Documentation</a></li>
+<li><a href="https://www.linux-kvm.org/page/Main_Page">KVM/QEMU Overview</a></li>
+</ul>
+<hr />
+<h2 id="week-2-virtual-machines-vms">Week 2: Virtual Machines (VMs)</h2>
+<h3 id="objectives_1">Objectives</h3>
+<ul>
+<li>Create and configure virtual machines.</li>
+<li>Understand resource allocation (CPU, RAM, disk).</li>
+<li>Install a guest OS in a VM.</li>
+</ul>
+<h3 id="key-concepts_1">Key Concepts</h3>
+<ul>
+<li><strong>Virtual Machine</strong>: Software emulation of a physical computer (virtual CPU, memory, storage, network).</li>
+<li><strong>Resource Allocation</strong>: Assigning vCPUs, RAM, disk space without overcommitting host resources.</li>
+<li><strong>Guest OS</strong>: Operating system (e.g., Linux, Windows) inside a VM.</li>
+<li><strong>QEMU Guest Agent</strong>: Service in guest OS for hypervisor integration (e.g., shutdown, resource reporting).</li>
+</ul>
+<h3 id="lecture-content_1">Lecture Content</h3>
+<ol>
+<li><strong>VM Creation Process</strong>: Define parameters (CPU cores, RAM, disk type), select ISO, configure boot order.</li>
+<li><strong>Resource Management</strong>: Balance allocation to avoid performance bottlenecks.</li>
+<li><strong>Guest OS Installation</strong>: Use ISO images, automated installs.</li>
+<li><strong>Proxmox VM Features</strong>: Cloning (identical VM copies), snapshots (state saves), console access (VNC/SPICE).</li>
+</ol>
+<h3 id="supplementary-video-resources_1">Supplementary Video Resources</h3>
+<ul>
+<li>Proxmox setup and first VM: <a href="https://www.youtube.com/watch?v=lFzWDJcRsqo">YouTube</a> (Installation to VM creation).</li>
+<li>VM creation in Proxmox: <a href="https://www.youtube.com/watch?v=lhjqO32t9bE">YouTube</a> (Ubuntu VM setup).</li>
+</ul>
+<h3 id="lab-reference_1">Lab Reference</h3>
+<p>Students create an Ubuntu Server VM, install qemu-guest-agent, and test VM operations (start, stop, pause, clone).</p>
+<h3 id="interactive-session-suggestions_1">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Review screenshots; debug resource allocation issues (e.g., overcommitment) in groups.</li>
+<li><strong>Class Discussions</strong>: Share VM installation challenges from videos.</li>
+<li><strong>Student Presentations</strong>: Assign 1-2 students to demo cloning or resource adjustment.</li>
+</ul>
+<h3 id="assessment_1">Assessment</h3>
+<p>Submit screenshots of running VM with resource summary.</p>
+<h3 id="resources_1">Resources</h3>
+<ul>
+<li><a href="https://pve.proxmox.com/pve-docs/chapter-qm.html">Proxmox VE VM Management</a></li>
+<li><a href="https://ubuntu.com/server/docs">Ubuntu Server Installation Guide</a></li>
+</ul>
+<hr />
+<h2 id="week-3-containers-and-resource-management">Week 3: Containers and Resource Management</h2>
+<h3 id="objectives_2">Objectives</h3>
+<ul>
+<li>Understand differences between LXC containers, Docker, Podman, and VMs.</li>
+<li>Practice lightweight virtualization with containers in Proxmox.</li>
+<li>Explore container use in cloud environments like OpenStack.</li>
+</ul>
+<h3 id="key-concepts_2">Key Concepts</h3>
+<ul>
+<li><strong>Containers vs. VMs</strong>: VMs emulate entire systems (including kernel); containers share the host kernel, making them lightweight and faster. Containers are ideal for microservices, development, and cloud workloads.</li>
+<li><strong>LXC (Linux Containers)</strong>: Proxmox-supported container technology for OS-level virtualization, using cgroups and namespaces for isolation.</li>
+<li><strong>Docker</strong>: Popular container platform with a daemon-based architecture (<code>dockerd</code>). Widely used in private and public clouds (e.g., AWS, OpenStack’s Zun/Magnum) for its ecosystem and Kubernetes integration. Example: <code>docker run -it ubuntu bash</code>.</li>
+<li><strong>Podman</strong>: Daemonless, rootless container engine, compatible with Docker images. Gaining traction in security-focused private clouds (e.g., Red Hat OpenStack, OpenShift). Example: <code>podman run -it ubuntu bash</code>.</li>
+<li><strong>Resource Isolation</strong>: Containers use cgroups and namespaces to isolate CPU, memory, and network resources.</li>
+<li><strong>Use Cases</strong>: Microservices, lightweight apps, development environments, and cloud-native applications (e.g., containerized web apps in OpenStack’s Magnum).</li>
+<li><strong>Cloud Relevance</strong>: Docker dominates in OpenStack (Zun for containers, Magnum for Kubernetes clusters); Podman is used in Red Hat-based clouds for security.</li>
+</ul>
+<h3 id="lecture-content_2">Lecture Content</h3>
+<ol>
+<li><strong>Container Architecture</strong>: Containers share the host kernel, reducing overhead compared to VMs. Compare LXC (Proxmox-native), Docker (daemon-based, cloud-standard), and Podman (daemonless, secure).</li>
+<li><strong>LXC in Proxmox</strong>: Managed via Proxmox’s web interface, similar to VMs. Example: Create an LXC container with <code>pct create</code>.</li>
+<li><strong>Docker and Podman</strong>: Introduce Docker’s role in clouds (e.g., OpenStack’s Zun/Magnum) and Podman’s security advantages. Highlight Docker’s dominance in public/private clouds and Podman’s rise in Red Hat environments.</li>
+<li><strong>Resource Limits</strong>: Set CPU/memory limits to prevent overuse (e.g., <code>pct set &lt;ID&gt; -cpulimit 1</code> for LXC, <code>docker run --memory 512m</code> for Docker).</li>
+<li><strong>Performance Comparison</strong>: Containers (LXC, Docker, Podman) have faster boot times and lower resource usage than VMs, critical for cloud scalability.</li>
+<li><strong>OpenStack Connection</strong>: Preview how OpenStack (Week 7–12) uses Docker for container workloads (Zun) and orchestration (Magnum), with Podman as an alternative in secure deployments.</li>
+</ol>
+<h3 id="supplementary-video-resources_2">Supplementary Video Resources</h3>
+<ul>
+<li>LXC in Proxmox: <a href="https://www.youtube.com/watch?v=xKhWRMj5Nrc">YouTube</a> (Compares to VMs, setup guide).</li>
+<li>Docker vs. Podman: <a href="https://www.youtube.com/watch?v=lc7p4ANkQ3U">YouTube</a> (Explains differences, cloud use cases).</li>
+<li>Docker basics: <a href="https://www.youtube.com/watch?v=rOt3f0G4Sr4">YouTube</a> (Beginner guide to Docker containers).</li>
+</ul>
+<h3 id="lab-reference_2">Lab Reference</h3>
+<p>Students create LXC containers in Proxmox, set resource limits, and compare performance (e.g., boot times) with VMs. Optional: Install Docker or Podman in a VM to run a simple container (e.g., <code>docker run nginx</code> or <code>podman run nginx</code>) and compare with LXC.</p>
+<h3 id="interactive-session-suggestions_2">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Use student write-ups to identify container setup issues (e.g., resource limits). Demo Docker/Podman vs. LXC boot times in groups.</li>
+<li><strong>Class Discussions</strong>: Prompt “From videos, when would you use Docker vs. Podman vs. LXC in a cloud like OpenStack?” to connect to Weeks 7–12.</li>
+<li><strong>Student Presentations</strong>: Assign 1-2 students to present (5-10 min) a comparison of LXC, Docker, and Podman, focusing on cloud use cases.</li>
+</ul>
+<h3 id="assessment_2">Assessment</h3>
+<p>Reflective write-up comparing VM and container (LXC, Docker, or Podman) performance, including boot time and resource usage.</p>
+<h3 id="resources_2">Resources</h3>
+<ul>
+<li><a href="https://pve.proxmox.com/pve-docs/chapter-pct.html">Proxmox LXC Documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker Documentation</a></li>
+<li><a href="https://podman.io/">Podman Documentation</a></li>
+<li><a href="https://docs.openstack.org/zun/latest/">OpenStack Zun</a></li>
+</ul>
+<hr />
+<h2 id="week-4-virtual-networking-and-linux-networking-fundamentals">Week 4: Virtual Networking and Linux Networking Fundamentals</h2>
+<h3 id="objectives_3">Objectives</h3>
+<ul>
+<li>Understand Linux networking concepts using the <code>ip</code> command.</li>
+<li>Explore network namespaces, Linux bridges, veth interfaces, VLANs, and Open vSwitch (OVS).</li>
+<li>Apply these to Proxmox network modes (bridge, NAT, VLAN).</li>
+</ul>
+<h3 id="key-concepts_3">Key Concepts</h3>
+<ul>
+<li><strong>Linux Networking with <code>ip</code> Command</strong>: The <code>ip</code> command (from iproute2) manages network interfaces, IP addresses, routes, and more, replacing older tools like <code>ifconfig</code>. Example commands:</li>
+<li><code>ip link show</code>: Display network interfaces.</li>
+<li><code>ip addr add 192.168.10.5/24 dev eth0</code>: Add IP address.</li>
+<li><code>ip route add default via 192.168.10.1</code>: Set default gateway.</li>
+<li><strong>Network Namespaces</strong>: Isolate network configurations (interfaces, routes, firewall rules) to simulate multiple hosts. Example: <code>sudo ip netns add ns1</code>.</li>
+<li><strong>Linux Bridges</strong>: Virtual Layer 2 switches connecting interfaces (e.g., VMs, containers) like a physical LAN. Example: <code>sudo ip link add name br0 type bridge</code>.</li>
+<li><strong>Virtual Ethernet (veth) Interfaces</strong>: Paired virtual interfaces acting like a cable, connecting namespaces or bridges. Example: <code>sudo ip link add vethA type veth peer name vethB</code>.</li>
+<li><strong>VLANs</strong>: Logical network segmentation using IEEE 802.1Q tags for isolation. Example: <code>sudo ip link add link eth0 name eth0.10 type vlan id 10</code>.</li>
+<li><strong>Open vSwitch (OVS)</strong>: Advanced virtual switch supporting VLANs, tunneling, and Software Defined Networking (SDN). Example: <code>sudo ovs-vsctl add-br br0</code>.</li>
+<li><strong>Proxmox Network Modes</strong>:</li>
+<li><strong>Bridge</strong>: Connects VMs to physical network with own IPs (e.g., vmbr0).</li>
+<li><strong>NAT</strong>: Hides VMs behind host IP for private networks.</li>
+<li><strong>VLAN</strong>: Segments networks for isolation, security.</li>
+<li><strong>Virtual LAN</strong>: VMs/containers communicate as if on a physical LAN.</li>
+</ul>
+<h3 id="lecture-content_3">Lecture Content</h3>
+<ol>
+<li><strong>Linux Networking Basics</strong>: Introduce the <code>ip</code> command for managing interfaces (<code>ip link</code>), IPs (<code>ip addr</code>), and routes (<code>ip route</code>). Emphasize its role in configuring virtual networks.</li>
+<li><strong>Network Namespaces</strong>: Explain how namespaces isolate network stacks, useful for simulating complex networks in Proxmox labs.</li>
+<li><strong>Linux Bridges and veth</strong>: Cover bridges as virtual switches and veth pairs as connectors for namespaces or VMs, foundational for Proxmox’s bridge mode (vmbr0).</li>
+<li><strong>VLANs</strong>: Discuss VLAN tagging for network segmentation, aligning with Proxmox VLAN mode.</li>
+<li><strong>Open vSwitch (OVS)</strong>: Introduce OVS as an advanced alternative to Linux bridges, supporting SDN and VLANs. Highlight its components (ovs-vswitchd, ovsdb-server) and basic setup.</li>
+<li><strong>Proxmox Networking</strong>: Connect Linux networking concepts to Proxmox’s bridge, NAT, and VLAN modes. Example: vmbr0 as a Linux bridge.</li>
+<li><strong>Use Case</strong>: Web server (public) + database (private) setup using bridges and VLANs.</li>
+<li><strong>Troubleshooting</strong>: Address misconfigurations (e.g., incorrect bridge settings, firewall rules).</li>
+</ol>
+<h3 id="supplementary-video-resources_3">Supplementary Video Resources</h3>
+<ul>
+<li>Linux networking with <code>ip</code> command: <a href="https://www.youtube.com/watch?v=0i6gN-2qFJI">YouTube</a> (Beginner guide to <code>ip</code> commands).</li>
+<li>Network namespaces and bridges: <a href="https://www.youtube.com/watch?v=PrW5e3pVqZw">YouTube</a> (Practical demo of namespaces, veth, bridges).</li>
+<li>Open vSwitch basics: <a href="https://www.youtube.com/watch?v=GIvA1h6J1I4">YouTube</a> (Introduction to OVS setup and VLANs).</li>
+</ul>
+<h3 id="lab-reference_3">Lab Reference</h3>
+<p>Students configure a Linux bridge, connect VMs, test connectivity with ping/SSH, simulate web+database setup using Proxmox. Pre-lab exercises:
+1. Use <code>ip link show</code> to list interfaces.
+2. Create two namespaces, connect with veth, test ping.
+3. Set up a Linux bridge, attach veth interfaces, verify connectivity.</p>
+<h3 id="interactive-session-suggestions_3">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Map student network diagrams on whiteboard; troubleshoot <code>ip</code> command or namespace issues live.</li>
+<li><strong>Class Discussions</strong>: Prompt “How do namespaces or VLANs enhance Proxmox networking, based on videos?” to connect Linux concepts to labs.</li>
+<li><strong>Student Presentations</strong>: Assign 1-2 students to present (5-10 min) on a Linux networking concept (e.g., <code>ip</code> command or OVS VLANs) and its relevance to Proxmox.</li>
+</ul>
+<h3 id="assessment_3">Assessment</h3>
+<p>Lab report with network diagram, proof of connectivity, and Linux networking exercise outputs (e.g., <code>ip link show</code>, ping results).</p>
+<h3 id="resources_3">Resources</h3>
+<ul>
+<li><a href="https://pve.proxmox.com/wiki/Network_Configuration">Proxmox Networking</a></li>
+<li><a href="https://wiki.libvirt.org/page/Networking">Linux Bridge Basics</a></li>
+<li><a href="https://www.man7.org/linux/man-pages/man8/ip.8.html">iproute2 Documentation</a></li>
+<li><a href="https://www.openvswitch.org/">Open vSwitch</a></li>
+</ul>
+<hr />
+<h2 id="week-5-storage-and-backup">Week 5: Storage and Backup</h2>
+<h3 id="objectives_4">Objectives</h3>
+<ul>
+<li>Understand local, shared, and distributed storage.</li>
+<li>Manage snapshots, backups, templates in Proxmox.</li>
+</ul>
+<h3 id="key-concepts_4">Key Concepts</h3>
+<ul>
+<li><strong>Storage Types</strong>:</li>
+<li><strong>Local</strong>: Host disk storage (e.g., LVM, ZFS).</li>
+<li><strong>Shared</strong>: Network-based (e.g., NFS, iSCSI).</li>
+<li><strong>Distributed</strong>: Scalable, fault-tolerant (e.g., Ceph).</li>
+<li><strong>Snapshots</strong>: Point-in-time VM state copies for rollback.</li>
+<li><strong>Backups</strong>: Full VM/container copies for disaster recovery.</li>
+<li><strong>Templates</strong>: Preconfigured VMs for quick instance creation.</li>
+</ul>
+<h3 id="lecture-content_4">Lecture Content</h3>
+<ol>
+<li><strong>Storage Models</strong>: Local (fast, limited) vs. shared (scalable, network-dependent).</li>
+<li><strong>Proxmox Storage</strong>: Supports LVM, ZFS, NFS backends.</li>
+<li><strong>Snapshots vs. Backups</strong>: Snapshots for quick recovery, backups for archival.</li>
+<li><strong>Templates</strong>: Standardize deployments.</li>
+</ol>
+<h3 id="supplementary-video-resources_4">Supplementary Video Resources</h3>
+<ul>
+<li>Snapshots and backups in Proxmox: <a href="https://www.youtube.com/watch?v=LDm7lrA6XzQ">YouTube</a> (Securing VMs guide).</li>
+<li>Templates and snapshots: <a href="https://www.youtube.com/watch?v=KymIW8Tzj_I">YouTube</a> (Ubuntu VM cloning demo).</li>
+</ul>
+<h3 id="lab-reference_4">Lab Reference</h3>
+<p>Students add storage volume, take/restore snapshots, create VM templates, optionally mount NFS storage.</p>
+<h3 id="interactive-session-suggestions_4">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Simulate recovery scenarios using student backups.</li>
+<li><strong>Class Discussions</strong>: Share home lab storage preferences from videos.</li>
+<li><strong>Student Presentations</strong>: Assign 1-2 students to demo snapshot restoration.</li>
+</ul>
+<h3 id="assessment_4">Assessment</h3>
+<p>Submit exported VM template and backup log.</p>
+<h3 id="resources_4">Resources</h3>
+<ul>
+<li><a href="https://pve.proxmox.com/wiki/Storage">Proxmox Storage</a></li>
+<li><a href="https://openzfs.github.io/openzfs-docs/">ZFS Overview</a></li>
+</ul>
+<hr />
+<h2 id="week-6-proxmox-cluster-and-high-availability-optional">Week 6: Proxmox Cluster and High Availability (Optional)</h2>
+<h3 id="objectives_5">Objectives</h3>
+<ul>
+<li>Understand clustering and high availability (HA) in Proxmox.</li>
+<li>Learn cluster configuration process.</li>
+</ul>
+<h3 id="key-concepts_5">Key Concepts</h3>
+<ul>
+<li><strong>Clustering</strong>: Multiple Proxmox nodes act as a single system for resource sharing, load balancing.</li>
+<li><strong>High Availability (HA)</strong>: VMs restart on another node if one fails.</li>
+<li><strong>Live Migration</strong>: Move running VMs between nodes without downtime.</li>
+<li><strong>Corosync</strong>: Clustering engine for node communication.</li>
+</ul>
+<h3 id="lecture-content_5">Lecture Content</h3>
+<ol>
+<li><strong>Cluster Benefits</strong>: Centralized management, resource pooling, fault tolerance.</li>
+<li><strong>Proxmox Cluster Setup</strong>: Requires synchronized time, static IPs, Corosync.</li>
+<li><strong>HA Mechanisms</strong>: Monitors nodes, triggers VM restarts.</li>
+<li><strong>Limitations</strong>: HA needs shared storage, three nodes for reliability.</li>
+</ol>
+<h3 id="supplementary-video-resources_5">Supplementary Video Resources</h3>
+<ul>
+<li>2-node cluster with HA: <a href="https://www.youtube.com/watch?v=VqyqsKUawRI">YouTube</a> (Raspberry Pi quorum).</li>
+<li>HA cluster on a budget: <a href="https://www.youtube.com/watch?v=F0SXOd46bOU">YouTube</a> (Affordable guide, Ceph prep).</li>
+</ul>
+<h3 id="lab-reference_5">Lab Reference</h3>
+<p>Students join Proxmox nodes into a cluster, enable live migration, test failover (if hardware allows).</p>
+<h3 id="interactive-session-suggestions_5">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Simulate failover using screenshots; address setup issues.</li>
+<li><strong>Class Discussions</strong>: Discuss HA reliability from videos.</li>
+<li><strong>Student Presentations</strong>: Assign 1-2 students to present cluster setup.</li>
+</ul>
+<h3 id="assessment_5">Assessment</h3>
+<p>Cluster configuration screenshots and short reflection.</p>
+<h3 id="resources_5">Resources</h3>
+<ul>
+<li><a href="https://pve.proxmox.com/wiki/Cluster_Manager">Proxmox Cluster Guide</a></li>
+<li><a href="https://pve.proxmox.com/wiki/High_Availability_Cluster">High Availability</a></li>
+</ul>
+<hr />
+<h2 id="week-7-transition-to-cloud-computing-concepts">Week 7: Transition to Cloud Computing Concepts</h2>
+<h3 id="objectives_6">Objectives</h3>
+<ul>
+<li>Explain IaaS, PaaS, SaaS, and cloud architecture layers.</li>
+<li>Understand virtualization’s role in cloud computing.</li>
+</ul>
+<h3 id="key-concepts_6">Key Concepts</h3>
+<ul>
+<li><strong>Cloud Service Models</strong>:</li>
+<li><strong>IaaS</strong>: Virtualized resources (e.g., OpenStack, AWS EC2).</li>
+<li><strong>PaaS</strong>: Development platforms (e.g., Heroku).</li>
+<li><strong>SaaS</strong>: Internet-delivered software (e.g., Google Workspace).</li>
+<li><strong>Cloud Architecture</strong>: Layers include hardware, virtualization, orchestration, services.</li>
+<li><strong>Virtualization in Cloud</strong>: Hypervisors enable IaaS clouds by abstracting hardware. Proxmox VE uses KVM. Other hypervisors in popular clouds:</li>
+<li><strong>VMware ESXi</strong>: VMware Cloud, enterprise private clouds (robust performance).</li>
+<li><strong>Microsoft Hyper-V</strong>: Microsoft Azure (Windows Server integration).</li>
+<li><strong>Xen</strong>: AWS EC2, Citrix clouds (lightweight, scalable).</li>
+<li><strong>KVM</strong>: Google Cloud Platform, Red Hat OpenShift, OpenStack (open-source, flexible).</li>
+<li><strong>OpenStack</strong>: IaaS platform using KVM (default), Xen, or ESXi. Used in private (e.g., CERN, Walmart) and public (e.g., Rackspace) clouds.</li>
+<li><strong>Containers in OpenStack</strong>: OpenStack supports containers as workloads (via Zun for Docker/Podman, Magnum for Kubernetes) and for deploying services (e.g., Kolla’s Docker-based deployments). Containers offer lightweight alternatives to VMs, complementing Proxmox’s LXC (Week 3) and enabling scalable, isolated applications in IaaS clouds.</li>
+</ul>
+<h3 id="lecture-content_6">Lecture Content</h3>
+<ol>
+<li><strong>Cloud Computing Overview</strong>: On-demand, scalable resource delivery.</li>
+<li><strong>Service Models</strong>: Compare IaaS, PaaS, SaaS with examples.</li>
+<li><strong>OpenStack Introduction</strong>: Open-source IaaS for compute, storage, networking.</li>
+<li><strong>Virtualization Role</strong>: Hypervisors enable scalability, multi-tenancy. Compare Proxmox VE (KVM) with ESXi, Hyper-V, Xen, and OpenStack’s hypervisor flexibility. Discuss Docker/Podman in OpenStack’s container services (Zun, Magnum).</li>
+</ol>
+<h3 id="supplementary-video-resources_6">Supplementary Video Resources</h3>
+<ul>
+<li>SaaS, PaaS, IaaS basics: <a href="https://www.youtube.com/watch?v=-r4efSMztyI">YouTube</a> (Clear explanation with examples).</li>
+<li>OpenStack with Containers (Zun and Magnum): <a href="https://www.youtube.com/watch?v=3X8hVq-7aR4">YouTube</a> (Overview of container services).</li>
+</ul>
+<h3 id="lab-reference_6">Lab Reference</h3>
+<p>Students deploy a nested Ubuntu VM in Proxmox for OpenStack installation.</p>
+<h3 id="interactive-session-suggestions_6">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Poll on video takeaways; highlight cloud model differences and container use in OpenStack.</li>
+<li><strong>Class Discussions</strong>: Prompt “How do containers (from Week 3 and videos) compare to VMs in OpenStack’s IaaS model?”</li>
+<li><strong>Student Presentations</strong>: Assign 1-2 students to present (5-10 min) on a cloud architecture layer or OpenStack’s container services (Zun vs. LXC).</li>
+</ul>
+<h3 id="assessment_6">Assessment</h3>
+<p>Short quiz on cloud types and OpenStack architecture.</p>
+<h3 id="resources_6">Resources</h3>
+<ul>
+<li><a href="https://www.openstack.org/software/">OpenStack Overview</a></li>
+<li><a href="https://www.nist.gov/publications/definition-cloud-computing">NIST Cloud Definition</a></li>
+<li><a href="https://www.vmware.com/products/esxi-and-esx.html">VMware ESXi</a></li>
+<li><a href="https://xenproject.org/">Xen Project</a></li>
+<li><a href="https://docs.microsoft.com/en-us/virtualization/hyper-v/">Microsoft Hyper-V</a></li>
+<li><a href="https://docs.openstack.org/zun/latest/">OpenStack Zun</a></li>
+</ul>
+<hr />
+<h2 id="week-8-the-cloud-foundation-identity-images-networking">Week 8: The Cloud Foundation (Identity, Images, Networking)</h2>
+<h3 id="objectives_7">Objectives</h3>
+<ul>
+<li>Understand the "Dependency Chain": Identity -&gt; Image -&gt; Network.</li>
+<li>Manage Projects and Users (Keystone).</li>
+<li>Manage Images (Glance).</li>
+<li>Configure Networks, Subnets, and Routers (Neutron).</li>
+</ul>
+<h3 id="key-concepts_7">Key Concepts</h3>
+<ul>
+<li><strong>Keystone</strong>: The Registrar. Nothing happens without a Token.</li>
+<li><strong>Glance</strong>: The Image Library. Storing disk images.</li>
+<li><strong>Neutron</strong>: The Virtual Wiring. Creating strict isolation between tenants.</li>
+</ul>
+<h3 id="lecture-content_7">Lecture Content</h3>
+<ol>
+<li><strong>Identity (Keystone)</strong>: Authentication vs Authorization.</li>
+<li><strong>Images (Glance)</strong>: Formats (QCOW2 vs ISO) and Metadata.</li>
+<li><strong>Networking (Neutron)</strong>: The "Provider Network" vs "Self-Service Network".</li>
+</ol>
+<h3 id="lab-reference_7">Lab Reference</h3>
+<p>Students create a "Tenant Environment": New Project, New User, Upload Ubuntu Image, Create Private Network + Router.</p>
+<h3 id="assessment_7">Assessment</h3>
+<p>Screenshot of the Network Topology view in Horizon.</p>
+<hr />
+<h2 id="week-9-compute-operations-nova-security">Week 9: Compute Operations (Nova &amp; Security)</h2>
+<h3 id="objectives_8">Objectives</h3>
+<ul>
+<li>Understand Nova Architecture (API, Scheduler, Compute).</li>
+<li>Deploy Instances using the Foundation (Week 8 resources).</li>
+<li>Secure instances with Security Groups and Keypairs.</li>
+</ul>
+<h3 id="key-concepts_8">Key Concepts</h3>
+<ul>
+<li><strong>Nova Scheduler</strong>: Filters and Weighers.</li>
+<li><strong>Security Groups</strong>: Stateful Firewalls (Ingress/Egress).</li>
+<li><strong>Keypairs</strong>: SSH Injection via Cloud-Init.</li>
+</ul>
+<h3 id="lecture-content_8">Lecture Content</h3>
+<ol>
+<li><strong>Nova Deep Dive</strong>: The "Cell" architecture and "Shared Nothing" model.</li>
+<li><strong>The Boot Process</strong>: Tracing the request from API to Hypervisor.</li>
+<li><strong>Security Layers</strong>: Project Isolation vs Network Isolation vs Firewall Rules.</li>
+</ol>
+<h3 id="lab-reference_8">Lab Reference</h3>
+<p>Students launch instances into their Week 8 network, configure Security Groups for SSH/Web, and debug boot failures via Console Logs.</p>
+<h3 id="assessment_8">Assessment</h3>
+<p>Successful SSH login to a VM and <code>cat /etc/hostname</code>.</p>
+<hr />
+<h2 id="week-9-compute-and-networking-in-openstack">Week 9: Compute and Networking in OpenStack</h2>
+<h3 id="objectives_9">Objectives</h3>
+<ul>
+<li>Launch and manage instances in OpenStack.</li>
+<li>Configure internal and external networks.</li>
+</ul>
+<h3 id="key-concepts_9">Key Concepts</h3>
+<ul>
+<li><strong>Instances</strong>: VMs managed by Nova.</li>
+<li><strong>Networking</strong>:</li>
+<li><strong>Internal Network</strong>: Private instance communication.</li>
+<li><strong>External Network</strong>: Connects instances externally.</li>
+<li><strong>Floating IP</strong>: Public IP for instance access.</li>
+<li><strong>Glance Images</strong>: Disk images for instances.</li>
+</ul>
+<h3 id="lecture-content_9">Lecture Content</h3>
+<ol>
+<li><strong>Instance Lifecycle</strong>: Image upload to termination.</li>
+<li><strong>Neutron Networking</strong>: Networks, subnets, routers, floating IPs.</li>
+<li><strong>Security Considerations</strong>: Isolate internal networks.</li>
+<li><strong>OpenStack Workflow</strong>: Image → network → instance → floating IP.</li>
+</ol>
+<h3 id="supplementary-video-resources_7">Supplementary Video Resources</h3>
+<ul>
+<li>OpenStack Compute (Nova): <a href="https://www.youtube.com/watch?v=4oYtaNc_35I">YouTube</a> (Nova intro).</li>
+<li>Neutron networking: <a href="https://www.youtube.com/watch?v=JyYZ1gOig64">YouTube</a> (Beginner guide).</li>
+</ul>
+<h3 id="lab-reference_9">Lab Reference</h3>
+<p>Students upload image to Glance, create network/subnet/router, launch instance, access via SSH.</p>
+<h3 id="interactive-session-suggestions_7">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Highlight networking pitfalls using documented steps.</li>
+<li><strong>Class Discussions</strong>: Discuss floating IP security risks.</li>
+<li><strong>Student Presentations</strong>: Assign 1-2 students to present instance launch workflow.</li>
+</ul>
+<h3 id="assessment_9">Assessment</h3>
+<p>Documented steps and screenshot of running instance.</p>
+<h3 id="resources_7">Resources</h3>
+<ul>
+<li><a href="https://docs.openstack.org/neutron/latest/">OpenStack Networking Guide</a></li>
+<li><a href="https://docs.openstack.org/nova/latest/">Nova Documentation</a></li>
+</ul>
+<hr />
+<h2 id="week-10-storage-persistence-cinder">Week 10: Storage &amp; Persistence (Cinder)</h2>
+<h3 id="objectives_10">Objectives</h3>
+<ul>
+<li>Distinguish between Ephemeral (Nova) and Persistent (Cinder) storage.</li>
+<li>Manage Volumes, Snapshots, and Backups.</li>
+</ul>
+<h3 id="key-concepts_10">Key Concepts</h3>
+<ul>
+<li><strong>Ephemeral Storage</strong>: Dies with the VM.</li>
+<li><strong>Block Storage (Cinder)</strong>: Persistent, mountable drives (like USB sticks).</li>
+<li><strong>Object Storage (Swift)</strong>: HTTP-based storage (like S3).</li>
+</ul>
+<h3 id="lecture-content_10">Lecture Content</h3>
+<ol>
+<li><strong>Storage Tiers</strong>: Performance vs Cost.</li>
+<li><strong>Cinder Architecture</strong>: Helping the Hypervisor talk to the SAN.</li>
+<li><strong>Data Safety</strong>: Snapshots (Instant) vs Backups (Off-site).</li>
+</ol>
+<h3 id="lab-reference_10">Lab Reference</h3>
+<p>Students attach a 10GB Volume to their Instance, format it (EXT4), write data, snapshot it, and restore it to a new volume.</p>
+<h3 id="assessment_10">Assessment</h3>
+<p>Screenshot of the <code>mount</code> command showing the attached volume.</p>
+<hr />
+<h2 id="week-11-automation-and-cloud-api">Week 11: Automation and Cloud API</h2>
+<h3 id="objectives_11">Objectives</h3>
+<ul>
+<li>Learn cloud automation using CLI or scripts.</li>
+<li>Understand OpenStack REST API basics.</li>
+</ul>
+<h3 id="key-concepts_11">Key Concepts</h3>
+<ul>
+<li><strong>Automation</strong>: Scripts/tools for efficient resource management.</li>
+<li><strong>OpenStack CLI</strong>: Commands for instance/network management.</li>
+<li><strong>REST API</strong>: Programmatic interface for automation.</li>
+<li><strong>Ansible/Terraform</strong>: Infrastructure-as-code tools (optional).</li>
+</ul>
+<h3 id="lecture-content_11">Lecture Content</h3>
+<ol>
+<li><strong>Why Automate?</strong>: Scalability, repeatability in clouds.</li>
+<li><strong>OpenStack CLI</strong>: Commands for launching instances, networks.</li>
+<li><strong>REST API Basics</strong>: HTTP requests for OpenStack services.</li>
+<li><strong>Scripting Example</strong>: Python/Bash script for instance launch.</li>
+</ol>
+<h3 id="supplementary-video-resources_8">Supplementary Video Resources</h3>
+<ul>
+<li>OpenStack CLI commands: <a href="https://www.youtube.com/watch?v=OS7ohs4yMmQ">YouTube</a> (Beginner guide).</li>
+<li>REST API via CLI: <a href="https://www.youtube.com/watch?v=Y2RRCYhpMyM">YouTube</a> (Command-line tutorial).</li>
+</ul>
+<h3 id="lab-reference_11">Lab Reference</h3>
+<p>Students complete four labs:
+1.  <strong>Automation</strong>: Scripting instance launches with Bash and Cloud-Init.
+2.  <strong>Configuration</strong>: Managing server fleets with Ansible.
+3.  <strong>Infrastructure as Code</strong>: Deploying declarative stacks with Heat.
+4.  <strong>Orchestration</strong>: Provisioning Kubernetes clusters with Magnum.</p>
+<h3 id="interactive-session-suggestions_8">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Run student scripts; debug API issues.</li>
+<li><strong>Class Discussions</strong>: Share automation tool insights from videos.</li>
+<li><strong>Student Presentations</strong>: Assign 1-2 students to demo script.</li>
+</ul>
+<h3 id="assessment_11">Assessment</h3>
+<p>Submit working automation script and output logs.</p>
+<h3 id="resources_8">Resources</h3>
+<ul>
+<li><a href="https://docs.openstack.org/python-openstackclient/latest/">OpenStack CLI Guide</a></li>
+<li><a href="https://docs.openstack.org/api-guide/compute/">OpenStack API</a></li>
+</ul>
+<hr />
+<h2 id="week-12-final-project-and-review">Week 12: Final Project and Review</h2>
+<h3 id="objectives_12">Objectives</h3>
+<ul>
+<li>Integrate all learned concepts into a project.</li>
+<li>Present a private cloud or service deployment.</li>
+</ul>
+<h3 id="key-concepts_12">Key Concepts</h3>
+<ul>
+<li><strong>Private Cloud</strong>: Self-contained OpenStack environment.</li>
+<li><strong>Multi-Tier Application</strong>: Web and database components.</li>
+<li><strong>Project Scope</strong>: Compute, networking, storage, automation. Optional: Include containerized apps via Zun/Magnum.</li>
+</ul>
+<h3 id="lecture-content_12">Lecture Content</h3>
+<ol>
+<li><strong>Project Overview</strong>: Requirements (networks, instances, volumes, security groups, optional containers).</li>
+<li><strong>Design Principles</strong>: Modularity, security, documentation.</li>
+<li><strong>Presentation Skills</strong>: Explain technical setups clearly.</li>
+<li><strong>Review</strong>: Recap virtualization (Proxmox) to cloud (OpenStack).</li>
+</ol>
+<h3 id="supplementary-video-resources_9">Supplementary Video Resources</h3>
+<ul>
+<li>OpenStack private cloud: <a href="https://www.youtube.com/watch?v=_gWfFEuert8">YouTube</a> (Comprehensive deployment).</li>
+<li>Multi-tier app deployment: <a href="https://www.youtube.com/watch?v=q4nFzVgU4Gc">YouTube</a> (Group-based policy for apps).</li>
+</ul>
+<h3 id="lab-reference_12">Lab Reference</h3>
+<p>Students design/deploy a mini private cloud in OpenStack, hosting a multi-tier application with automation (bonus). Optional: Deploy containerized app using Zun/Magnum.</p>
+<h3 id="interactive-session-suggestions_9">Interactive Session Suggestions</h3>
+<ul>
+<li><strong>Face-to-Face Focus</strong>: Provide feedback on project drafts; highlight integration challenges (e.g., containers).</li>
+<li><strong>Class Discussions</strong>: Group review of course concepts.</li>
+<li><strong>Student Presentations</strong>: All students present projects (15% weight), explaining designs/demos.</li>
+</ul>
+<h3 id="assessment_12">Assessment</h3>
+<ul>
+<li>System design/documentation (25%)</li>
+<li>Functioning deployment (50%)</li>
+<li>Presentation/explanation (15%)</li>
+<li>Innovation/automation (10%)</li>
+</ul>
+<h3 id="resources_9">Resources</h3>
+<ul>
+<li><a href="https://docs.openstack.org/">OpenStack Tutorials</a></li>
+<li><a href="https://pve.proxmox.com/wiki/Main_Page">Proxmox VE Guide</a></li>
+</ul>
+<hr />
+<h2 id="instructor-notes">Instructor Notes</h2>
+<ul>
+<li><strong>Lab Setup</strong>: Ensure lab PCs (i7, 24 GB RAM) support nested virtualization. Pre-install Proxmox ISOs, Ubuntu images, and Docker/Podman for Week 3 optional labs.</li>
+<li><strong>Pacing</strong>: Weeks 1–6 (virtualization), 7–12 (cloud). Adjust lab time per student progress.</li>
+<li><strong>Interactivity</strong>: Require pre-session prep (notes, videos, labs). Use polls (e.g., Mentimeter) for engagement. Track student presentations for participation.</li>
+<li><strong>Week 3 Note</strong>: Docker/Podman content prepares students for OpenStack’s container services (Zun, Magnum) in Weeks 7–12. Emphasize Docker’s prevalence in clouds and Podman’s security benefits.</li>
+<li><strong>Week 4 Note</strong>: Linux networking content is foundational for Proxmox labs. Encourage students to practice <code>ip</code> commands and namespace exercises before labs.</li>
+<li><strong>Optional Enhancements</strong>:</li>
+<li>Use Git for lab submissions.</li>
+<li>Demonstrate Ceph for distributed storage.</li>
+<li>Introduce Terraform/Ansible for automation.</li>
+<li>Discuss cloud security (multi-tenancy, encryption).</li>
+</ul>
+<hr />
+<h3 id="instructions-for-creating-a-markdown-file">Instructions for Creating a Markdown File</h3>
+<ol>
+<li><strong>Copy the Text</strong>: Select all the text above.</li>
+<li><strong>Paste into a Text Editor</strong>: Open a text editor (e.g., VS Code, Notepad++), create a new file, and paste the text.</li>
+<li><strong>Save as .md</strong>: Save the file with a <code>.md</code> extension (e.g., <code>Virtualization_Cloud_Notes.md</code>).</li>
+<li><strong>Optional Conversion to Word</strong>:</li>
+<li>Paste the text into Microsoft Word.</li>
+<li>Use <strong>Heading 1</strong> for week titles (e.g., <code>## Week 3: Containers and Resource Management</code>).</li>
+<li>Use <strong>Heading 2</strong> for subsections (e.g., <code>### Objectives</code>).</li>
+<li>Apply bullet points/lists for clarity.</li>
+<li>Adjust font (e.g., Arial, 12pt) and spacing (e.g., 1.15 line spacing).</li>
+<li>Save as <code>.docx</code> (e.g., <code>Virtualization_Cloud_Notes.docx</code>).</li>
+</ol>
+<h3 id="notes-on-updates">Notes on Updates</h3>
+<ul>
+<li><strong>Week 3 Revisions</strong>: Added Docker and Podman to complement LXC, focusing on Docker’s dominance in private/public clouds (e.g., OpenStack’s Zun/Magnum) and Podman’s security benefits in Red Hat environments. Optional lab tasks include running Docker/Podman containers to prepare for OpenStack labs.</li>
+<li><strong>Week 4</strong>: Retained comprehensive Linux networking content (<code>ip</code> command, namespaces, bridges, veth, VLANs, OVS) to ensure a strong foundation for Proxmox networking labs.</li>
+<li><strong>Week 7</strong>: Included containers (Docker/Podman) in OpenStack context to bridge Week 3 and cloud lessons.</li>
+<li><strong>12-Week Structure</strong>: Maintained by streamlining Docker/Podman content to focus on essentials, keeping LXC primary for Proxmox labs.</li>
+</ul>
+    </article>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
+</footer>
+
+<!-- Progress Tracking -->
+<script src="./js/course_logic.js"></script>
+
+</body>
+</html>
