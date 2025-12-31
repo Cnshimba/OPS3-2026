@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -402,69 +402,200 @@
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
     <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
-        <hr />
-<p>marp: true
-theme: default
-class: lead
-paginate: true
-backgroundColor: #f0f0f0
-backgroundImage: url('https://marp.app/assets/hero-background.svg')</p>
-<hr />
-<p><a href="../index.html">← Back to Course Index</a></p>
-<h1 id="course-review-and-capstone">Course Review and Capstone</h1>
-<h2 id="week-12">Week 12</h2>
-<p><strong>Operating Systems 3 (Virtualisation &amp; Cloud Technologies)</strong>
-Instructor: KT Nshimba</p>
-<hr />
-<h1 id="the-journey-so-far">The Journey So Far</h1>
-<ol>
-<li><strong>Virtualization</strong>: KVM, QEMU, Proxmox.</li>
-<li><strong>Networking</strong>: Bridges, Bonds, VLANs, Namespaces.</li>
-<li><strong>Storage</strong>: LVM, ZFS, NFS.</li>
-<li><strong>Clustering</strong>: Corosync, Quorum, High Availability.</li>
-<li><strong>Cloud</strong>: OpenStack, Nova, Neutron, Cinder.</li>
-<li><strong>Automation</strong>: CLI, Cloud-Init, Scripting.</li>
-</ol>
-<hr />
-<h1 id="the-capstone-project">The Capstone Project</h1>
-<p><strong>Scenario</strong>: You are the Architect.
-<strong>Goal</strong>: Build a secure, automated Private Cloud infrastructure.</p>
-<h2 id="three-pillars">Three Pillars</h2>
-<ol>
-<li><strong>Infrastructure</strong>: Network, Router, Gateway.</li>
-<li><strong>Deployment</strong>: Automated Web Server (Cloud-Init).</li>
-<li><strong>Security</strong>: Least Privilege (Security Groups).</li>
-</ol>
-<hr />
-<h1 id="the-requirements">The Requirements</h1>
-<h2 id="1-frontend-web">1. Frontend (Web)</h2>
-<ul>
-<li>Must be automated (No manual <code>apt install</code>).</li>
-<li>Must be accessible via Floating IP.</li>
-<li>Must allow HTTP/SSH.</li>
-</ul>
-<h2 id="2-backend-db">2. Backend (DB)</h2>
-<ul>
-<li>Must use Persistent Storage (Cinder).</li>
-<li>Must NOT be accessible from Internet.</li>
-<li>Must allow MySQL traffic from Frontend.</li>
-</ul>
-<hr />
-<h1 id="submission">Submission</h1>
-<ul>
-<li><strong>PDF Report</strong>: Topologies, Screenshots, Code.</li>
-<li><strong>Live Demo</strong>: Be ready to destroy and rebuild your web server in &lt; 5 minutes.</li>
-</ul>
-<hr />
-<h1 id="final-advice">Final Advice</h1>
-<ul>
-<li><strong>Check Quorum</strong>: Ensure your cloud is healthy.</li>
-<li><strong>Check Security</strong>: Can you hack your own DB?</li>
-<li><strong>Check Backups</strong>: If I delete your DB VM, is the data safe on the Volume?</li>
-</ul>
-<p>Good Luck!</p>
-<p><a href="../index.html">← Back to Course Index</a></p>
-    </article>
+            <p><a href="../index.html">? Back to Course Index</a></p>
+
+            <!-- Header with Icon -->
+            <div
+                class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+                <div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+                    <img src="images/week_12_icon.png" class="h-full w-full object-cover" alt="Capstone Project Icon">
+                </div>
+                <div class="flex-1 flex flex-col items-center justify-center p-6">
+                    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Week 12: Capstone
+                        Project Brief</h1>
+                    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Final Project &
+                        Review</span>
+                </div>
+            </div>
+
+            <p><strong>Course</strong>: Computer Systems Engineering<br>
+                <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br>
+                <strong>Instructor</strong>: KT Nshimba<br>
+                <strong>Total Marks</strong>: 100<br>
+                <strong>Duration</strong>: 4 Hours (Practical) + 1 Hour (Review)
+            </p>
+
+            <hr>
+
+            <h2 id="1-project-overview">1. Project Overview</h2>
+            <p>You have been hired as a Cloud Architect for "VaalTech Solutions". They require a fully functional
+                Private Cloud environment to host their new intranet application.
+                You must use <strong>OpenStack (MicroStack)</strong> to build the infrastructure, secure it, and deploy
+                a web application automatically.</p>
+
+            <p><img src="images/three_tier_architecture.png" alt="Three Tier Architecture"><br>
+                <em>Figure 1: Conceptual Architecture - The goal is to build a standard 3-Tier Web Application
+                    (Frontend, Logic, Database)</em>
+            </p>
+
+            <h2 id="2-requirements">2. Requirements</h2>
+
+            <h3 id="part-a-infrastructure-30-marks">Part A: Infrastructure (30 Marks)</h3>
+            <ol>
+                <li><strong>Network</strong>:
+                    <ul>
+                        <li>Create a private network <code>corporate-net</code> with subnet <code>10.10.10.0/24</code>.
+                        </li>
+                        <li>Create a Router <code>corp-router</code> connected to the External Provider Network.</li>
+                    </ul>
+                </li>
+                <li><strong>Storage</strong>:
+                    <ul>
+                        <li>Create a Cinder Volume <code>db-data</code> (2GB).</li>
+                    </ul>
+                </li>
+                <li><strong>Security</strong>:
+                    <ul>
+                        <li>Create two Security Groups:
+                            <ul>
+                                <li><code>frontend-sg</code>: Allow HTTP (TCP 80), HTTPS (TCP 443), and SSH (TCP 22).
+                                </li>
+                                <li><code>backend-sg</code>: Allow MySQL (TCP 3306) <strong>ONLY</strong> from the
+                                    Frontend IP. Allow SSH (TCP 22).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3 id="part-b-deployment-40-marks">Part B: Deployment (40 Marks)</h3>
+            <ol>
+                <li><strong>Frontend Server</strong>:
+                    <ul>
+                        <li>Name: <code>web-01</code>.</li>
+                        <li>Flavor: <code>m1.tiny</code>.</li>
+                        <li>Image: <code>ubuntu</code> (or <code>cirros</code>).</li>
+                        <li><strong>Automation</strong>: Must use <code>User-Data</code> (Cloud-Init) to install a web
+                            server (<code>apache2</code> or <code>nginx</code>) and create a customized
+                            <code>index.html</code> containing your Student Name and Number.</li>
+                        <li>Networking: Attached to <code>corporate-net</code>. Assigned a <strong>Floating IP</strong>.
+                        </li>
+                        <li>Security: <code>frontend-sg</code>.</li>
+                    </ul>
+                </li>
+                <li><strong>Backend Server</strong>:
+                    <ul>
+                        <li>Name: <code>db-01</code>.</li>
+                        <li>Network: Attached to <code>corporate-net</code>. No Floating IP.</li>
+                        <li>Storage: Attach the <code>db-data</code> Cinder Volume.</li>
+                        <li>Security: <code>backend-sg</code>.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3 id="part-c-verification-30-marks">Part C: Verification (30 Marks)</h3>
+            <ol>
+                <li><strong>Access</strong>:
+                    <ul>
+                        <li>The examiner must be able to load your website via the Floating IP.</li>
+                        <li>The website must display your Name.</li>
+                    </ul>
+                </li>
+                <li><strong>Persistence</strong>:
+                    <ul>
+                        <li>Create a file on the <code>db-01</code> attached volume.</li>
+                        <li>Detach the volume, attach it to <code>web-01</code>, and prove the file exists.</li>
+                    </ul>
+                </li>
+                <li><strong>Security Penetration Test</strong>:
+                    <ul>
+                        <li>Attempting to SSH into <code>db-01</code> from the public internet must FAIL.</li>
+                        <li>Attempting to SSH into <code>db-01</code> from <code>web-01</code> must SUCCEED.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <p><img src="images/final_project_topology.png" alt="Final Project Topology"><br>
+                <em>Figure 2: Reference Topology - The target network configuration, showing the Router, Internal
+                    Network, and Security Boundaries</em>
+            </p>
+
+            <h3 id="part-d-bonus-challenge-10-marks-extra-credit">Part D: Bonus Challenge (10 Marks - Extra Credit)</h3>
+            <ol>
+                <li><strong>Golden Image Strategy</strong>:
+                    <ul>
+                        <li>Create a <strong>Snapshot</strong> of your configured <code>web-01</code> server.</li>
+                        <li>Launch a new instance <code>web-02</code> from this Snapshot.</li>
+                        <li><strong>Requirement</strong>: <code>web-02</code> must serve the website
+                            <em>immediately</em> upon boot without needing <code>User-Data</code>.</li>
+                        <li><strong>Theory</strong>: In your report, explain why this "Golden Image" approach boots
+                            faster than the "Post-Boot Configuration" approach used in Part B.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <hr>
+
+            <h2 id="3-submission-guidelines">3. Submission Guidelines</h2>
+            <p>You must submit a <strong>PDF Report</strong> containing:</p>
+            <ol>
+                <li><strong>Topology Diagram</strong>: A screenshot of the Horizon Network Topology tab.</li>
+                <li><strong>Automation Script</strong>: The Cloud-Init (<code>user-data</code>) file you used.</li>
+                <li><strong>Proof of Life</strong>: A screenshot of the web browser showing your index page.</li>
+                <li><strong>CLI Verification</strong>: Output of <code>openstack server list</code> and
+                    <code>openstack volume list</code>.</li>
+            </ol>
+
+            <hr>
+
+            <h2 id="4-grading-rubric">4. Grading Rubric</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Component</th>
+                        <th style="text-align: left;">Criteria</th>
+                        <th style="text-align: left;">Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: left;"><strong>Networking</strong></td>
+                        <td style="text-align: left;">Internal Network, Router, Gateway configured correctly.</td>
+                        <td style="text-align: left;">20</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><strong>Security</strong></td>
+                        <td style="text-align: left;">Security Groups implement "Least Privilege" correctly.</td>
+                        <td style="text-align: left;">20</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><strong>Automation</strong></td>
+                        <td style="text-align: left;">Web server installs without human intervention.</td>
+                        <td style="text-align: left;">20</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><strong>Storage</strong></td>
+                        <td style="text-align: left;">Volume created, attached, formatted, and persistent.</td>
+                        <td style="text-align: left;">20</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><strong>Documentation</strong></td>
+                        <td style="text-align: left;">Clear screenshots, correct CLI outputs, professional formatting.
+                        </td>
+                        <td style="text-align: left;">20</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><strong>TOTAL</strong></td>
+                        <td style="text-align: left;"></td>
+                        <td style="text-align: left;"><strong>100</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><a href="../index.html">? Back to Course Index</a></p>
+
+        </article>
 </main>
 
 <!-- Footer -->
@@ -476,3 +607,4 @@ Instructor: KT Nshimba</p>
 
 </body>
 </html>
+

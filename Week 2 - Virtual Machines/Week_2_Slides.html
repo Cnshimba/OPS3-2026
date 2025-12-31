@@ -1,4 +1,4 @@
-Ôªø
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -402,170 +402,265 @@
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
     <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
-        <hr />
-<p>marp: true
-theme: default
-class: lead
-paginate: true
-backgroundColor: #f0f0f0
-backgroundImage: url('https://marp.app/assets/hero-background.svg')</p>
+        <p><a href="../index.html">? Back to Course Index</a></p>
+<div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+<div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+    <img src="images/week_2_icon.png" class="h-full w-full object-cover" alt="Virtual Machines Icon">
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-6">
+    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Virtual Machines (VMs)</h1>
+    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
+</div>
+</div>
+
+<p><strong>Course</strong>: Computer Systems Engineering
+<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
+<strong>Topic</strong>: Virtual Machines (VMs)
+<strong>Estimated Reading Time</strong>: 30 Minutes</p>
+<blockquote>
+<p>[!TIP]
+<strong>How to succeed in this week</strong>:
+VMs are the building blocks of infrastructure. Pay close attention to the lifecycle operations (create, configure, snapshot, clone). These patterns repeat in every cloud platform you'll encounter. Practice the CLI commandsóthey're faster than the GUI.</p>
+</blockquote>
 <hr />
-<p><a href="../index.html">‚Üê Back to Course Index</a></p>
-<h1 id="virtual-machines-vms">Virtual Machines (VMs)</h1>
-<h2 id="week-2">Week 2</h2>
-<p><strong>Operating Systems 3 (Virtualisation &amp; Cloud Technologies)</strong>
-Instructor: KT Nshimba</p>
+<h2 id="welcome-to-week-2">Welcome to Week 2!</h2>
+<p>Having established the theoretical foundations of virtualization, we now shift our focus to heavy technical implementation. This week is a deep dive into the specific technologies that power modern open-source virtualization: <strong>KVM</strong> (the engine), <strong>QEMU</strong> (the emulator), and <strong>Proxmox VE</strong> (the platform).</p>
+<p>We will deconstruct their compositions, explore their specific functions, and master their configurations. By the end of this week, you will move beyond theory to practice, demonstrating the ability to deploy virtual machines manually using QEMU commands and efficiently managing them via the Proxmox interface.</p>
 <hr />
-<h1 id="week-2-objectives">Week 2 Objectives</h1>
+<h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
 <ul>
 <li>Create and configure virtual machines</li>
-<li>Understand resource allocation (CPU, RAM, disk)</li>
-<li>Install a guest OS in a VM</li>
-<li>Explore VM management features</li>
+<li>Understand CPU, RAM, and disk allocation strategies</li>
+<li>Install operating systems inside VMs</li>
+<li>Utilize the QEMU Guest Agent</li>
+<li>Perform cloning, snapshots, and other VM management tasks</li>
 </ul>
 <hr />
-<h1 id="what-is-a-virtual-machine">What is a Virtual Machine?</h1>
-<!-- _class: invert -->
+<h2 id="1-deep-dive-linux-virtualization-kvm-qemu">1. Deep Dive: Linux Virtualization (KVM &amp; QEMU)</h2>
+<p>Modern open-source virtualization relies on two pillars: <strong>KVM</strong> (The Engine) and <strong>QEMU</strong> (The Hardware). Understanding how they interact is the key to mastering Linux virtualization, as these form the foundation upon which many enterprise platforms are built.</p>
+<h3 id="11-the-engine-kvm-kernel-based-virtual-machine">1.1 The Engine: KVM (Kernel-based Virtual Machine)</h3>
+<p>The Kernel-based Virtual Machine (KVM) is implemented as a loadable kernel module (<code>kvm.ko</code>) that transforms the Linux kernel into a Type-1 hypervisor. Unlike traditional hypervisors that run as a separate software layer, KVM leverages the kernel's existing process scheduling, memory management, and I/O stack. It exposes a character device, <code>/dev/kvm</code>, which user-space processes (like QEMU) interact with via <code>ioctl()</code> system calls to create and run virtual machines.</p>
+<p><strong>The VM Execution Loop (ioctl Interface)</strong>:
+The interaction between User Mode (the QEMU process) and Guest Mode (the VM code) is handled via a blocking system call known as <code>KVM_RUN</code>. The process begins with <strong>Setup</strong>, where QEMU opens the <code>/dev/kvm</code> device node, issues the <code>KVM_CREATE_VM</code> call to initialize the virtual environment, and maps the necessary memory for the guest. Once initialized, the <strong>Execution</strong> phase begins: QEMU invokes the <code>KVM_RUN</code> ioctl, signaling the kernel to context-switch the CPU into <strong>Guest Mode</strong> (Ring -1 or VMX Root Operation).</p>
+<p>In this mode, the vCPU executes instructions directly on the silicon at native speed ("Direct Execution"). This continues until the VM attempts a privileged operation, such as writing to a hardware register or accessing restricted memory, which triggers a <strong>VM Exit</strong>. The hardware forces the CPU back into Host Kernel Mode, where KVM analyzes the exit reason. If the exit is "Lightweight" (e.g., a simple timer interrupt or paging request), KVM handles it internally and immediately re-enters the VM. However, if the exit is "Heavyweight" (requiring complex I/O like disk writes), KVM returns control to the QEMU user-space process. QEMU then performs the necessary <strong>Emulation</strong> for the I/O operation and calls <code>KVM_RUN</code> again to resume execution, completing the loop.</p>
+<p><img alt="KVM Execution Loop" src="images/kvm_execution_loop.png" />
+<em>Figure 1.2: The Cycle of Direct Execution and Trapped Emulation.</em></p>
+<p><strong>Code Snippet: Creating a VM via KVM API (C)</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// simplified example of creating a VM in C using the KVM API</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">kvm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="s">&quot;/dev/kvm&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDWR</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">O_CLOEXEC</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">vmfd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ioctl</span><span class="p">(</span><span class="n">kvm</span><span class="p">,</span><span class="w"> </span><span class="n">KVM_CREATE_VM</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 
-<blockquote>
-<p>"A Virtual Machine is a software emulation of a physical computer, complete with virtual CPU, memory, storage, and network."</p>
-</blockquote>
-<p><strong>Key Components:</strong>
-- Virtual CPU (vCPU)
-- Virtual RAM
-- Virtual Disk
-- Virtual Network Interface</p>
-<hr />
-<h1 id="resource-allocation">Resource Allocation</h1>
-<p><strong>Balancing Act:</strong></p>
-<ol>
-<li><strong>CPU Cores</strong>: Number of vCPUs assigned</li>
-<li><strong>RAM</strong>: Memory allocation per VM</li>
-<li><strong>Disk Space</strong>: Storage capacity</li>
-<li><strong>Avoid Overcommitment</strong>: Don't exceed host resources</li>
-</ol>
-<p><strong>Best Practice:</strong> Monitor resource usage to prevent bottlenecks.</p>
-<hr />
-<h1 id="vm-creation-process">VM Creation Process</h1>
-<p><strong>Steps in Proxmox VE:</strong></p>
-<ol>
-<li>Define VM parameters (CPU, RAM, disk type)</li>
-<li>Select ISO image for installation</li>
-<li>Configure boot order</li>
-<li>Set up network interface</li>
-<li>Complete installation wizard</li>
-</ol>
-<hr />
-<h1 id="guest-operating-systems">Guest Operating Systems</h1>
-<p><strong>Supported OS Types:</strong></p>
-<ul>
-<li><strong>Linux</strong>: Ubuntu Server, Debian, CentOS, Rocky Linux</li>
-<li><strong>Windows</strong>: Windows Server, Windows 10/11</li>
-<li><strong>BSD</strong>: FreeBSD, OpenBSD</li>
-<li><strong>Others</strong>: Many more supported</li>
-</ul>
-<p><strong>QEMU Guest Agent</strong> enables better integration with the hypervisor.</p>
-<hr />
-<h1 id="qemu-guest-agent">QEMU Guest Agent</h1>
-<p><strong>Benefits:</strong></p>
-<ul>
-<li>Graceful shutdown/reboot</li>
-<li>Better resource reporting</li>
-<li>Time synchronization</li>
-<li>File system freeze for snapshots</li>
-</ul>
-<p><strong>Installation:</strong></p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>qemu-guest-agent
-sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>qemu-guest-agent
+<span class="c1">// Map 1GB of memory for the guest</span>
+<span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="n">PROT_READ</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PROT_WRITE</span><span class="p">,</span><span class="w"> </span><span class="n">MAP_PRIVATE</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">kvm_userspace_memory_region</span><span class="w"> </span><span class="n">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="n">slot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">guest_phys_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">memory_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">userspace_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">mem</span><span class="p">,</span>
+<span class="p">};</span>
+<span class="n">ioctl</span><span class="p">(</span><span class="n">vmfd</span><span class="p">,</span><span class="w"> </span><span class="n">KVM_SET_USER_MEMORY_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">region</span><span class="p">);</span>
 </code></pre></div>
 
-<hr />
-<h1 id="proxmox-vm-features">Proxmox VM Features</h1>
-<p><strong>Essential Operations:</strong></p>
-<ol>
-<li><strong>Cloning</strong>: Create identical VM copies</li>
-<li><strong>Snapshots</strong>: Save VM state for rollback</li>
-<li><strong>Console Access</strong>: VNC/SPICE for direct interaction</li>
-<li><strong>Live Migration</strong>: Move VMs between hosts (cluster)</li>
-</ol>
-<hr />
-<h1 id="vm-vs-container">VM vs. Container</h1>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;">Virtual Machine</th>
-<th style="text-align: left;">Container</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Isolation</strong></td>
-<td style="text-align: left;">Complete OS</td>
-<td style="text-align: left;">Shares host kernel</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Boot Time</strong></td>
-<td style="text-align: left;">Minutes</td>
-<td style="text-align: left;">Seconds</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Resource Usage</strong></td>
-<td style="text-align: left;">Higher</td>
-<td style="text-align: left;">Lower</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Use Case</strong></td>
-<td style="text-align: left;">Full OS needed</td>
-<td style="text-align: left;">Lightweight apps</td>
-</tr>
-<tr>
-<td style="text-align: left;">---</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-</tbody>
-</table>
-<h1 id="resource-management-tips">Resource Management Tips</h1>
-<p><strong>Best Practices:</strong></p>
+<p><em>Figure 1.1: Simplified C code showing how a user-space program instructs the kernel to create a VM.</em></p>
+<h3 id="12-advanced-kvm-technologies">1.2 Advanced KVM Technologies</h3>
+<p>Modern KVM deployments leverage several advanced kernel features to maximize efficiency:</p>
+<h4 id="121-ksm-kernel-samepage-merging">1.2.1 KSM (Kernel Samepage Merging)</h4>
+<p>Kernel Samepage Merging (KSM) is a memory deduplication feature within the Linux kernel (stored in <code>mm/ksm.c</code>) that allows for high-density virtualization. KSM utilizes a background kernel thread (<code>ksmd</code>) that periodically scans designated memory regions looking for pages with identical content. When matches are found, KSM merges these pages into a single physical page marked as Copy-on-Write (CoW). This allows multiple virtual machines running similar operating systems (e.g., ten instances of Windows Server) to share the same physical RAM for common libraries and kernel data. While this significantly increases density (memory overcommitment), it comes with a slight CPU overhead due to the scanning process.</p>
+<h4 id="122-live-migration">1.2.2 Live Migration</h4>
+<p>Live Migration is the capability to move a running virtual machine from one physical host to another with no perceptible downtime to the end-user. The process involves an iterative memory copy mechanism. First, the hypervisor copies the VM's memory to the destination host while the VM continues to execute. As memory changes (becomes "dirty") during this copy, those dirty pages are tracked and re-sent in subsequent rounds. Once the remaining dirty pages are small enough to be transferred instantly, the VM is momentarily paused, the final state (CPU registers and remaining memory) is synced, and execution resumes on the new host.</p>
+<h4 id="123-nested-virtualization">1.2.3 Nested Virtualization</h4>
+<p>Nested Virtualization refers to the practice of running a hypervisor inside another virtual machineóeffectively, a "VM inside a VM." This is achieved by forwarding hardware virtualization extensions (Intel VT-x or AMD-V) from the host CPU through Level 0 (Host Hypervisor) to Level 1 (Guest Hypervisor). This is particularly useful for training environments, development labs, or testing cloud orchestration platforms like OpenStack without requiring dedicated bare-metal hardware for every node.</p>
+<h4 id="124-pci-passthrough-vfio">1.2.4 PCI Passthrough (VFIO)</h4>
+<p>Standard virtualization relies on QEMU to emulate hardware devices, which introduces overhead due to the translation of instructions. For workloads requiring extreme performanceósuch as high-frequency trading, GPU-accelerated Machine Learning, or 100Gbps networkingóemulation is insufficient. The Virtual Function I/O (VFIO) framework allows the host kernel to unbind a physical PCI device from the host drivers and pass it directly to the virtual machine. This gives the guest OS direct, exclusive access to the hardware, resulting in near-native performance, albeit at the cost of losing that device on the host system.</p>
+<h4 id="125-memory-ballooning">1.2.5 Memory Ballooning</h4>
+<p>Memory Ballooning is a dynamic memory management technique that allows the hypervisor to reclaim RAM from running virtual machines. It utilizes the <code>virtio-balloon</code> driver installed within the guest OS. When the host is under memory pressure, it instructs the balloon driver to "inflate," causing the guest kernel to allocate RAM to the driver. The driver then informs the host which physical pages it has claimed, allowing the host to safely repurpose those physical pages for other tasks. Conversely, when the guest needs more memory, the balloon "deflates," returning the pages to the guest's free pool.</p>
+<h3 id="13-practical-verifying-kvm-support">1.3 Practical: Verifying KVM Support</h3>
+<p>Before creating virtual machines, it is imperative to verify that the host system is correctly configured to support hardware-assisted virtualization. This involves checking the CPU capabilities, kernel module status, and user permissions.</p>
+<h4 id="131-verifying-hardware-virtualization-cpu-flags">1.3.1 Verifying Hardware Virtualization (CPU Flags)</h4>
+<p>The first step is to confirm that the physical processor supports the necessary virtualization extensions (Intel VT-x or AMD-V) and that these extensions are enabled in the system BIOS/UEFI. In Linux, we verify this by inspecting the CPU flags via the <code>lscpu</code> command. We specifically filter for "Virtualization" to see the vendor-specific technology.</p>
+<div class="codehilite"><pre><span></span><code>lscpu<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Virtualization
+<span class="c1"># Expected Output: VT-x (for Intel processors) or AMD-V (for AMD processors)</span>
+</code></pre></div>
+
+<p>If this command returns no output, it indicates that hardware virtualization is disabled at the firmware level. You must reboot the machine, enter the BIOS setup, and enable "Virtualization Technology" (often labeled as VT-x, Vanderpool, or SVM).</p>
+<h4 id="132-confirming-kernel-module-loading">1.3.2 Confirming Kernel Module Loading</h4>
+<p>Once hardware support is confirmed, we must ensure the Linux kernel has loaded the KVM modules. The KVM system consists of a core module (<code>kvm.ko</code>) and a processor-specific module (<code>kvm_intel.ko</code> or <code>kvm_amd.ko</code>). We use <code>lsmod</code> to list loaded modules:</p>
+<div class="codehilite"><pre><span></span><code>lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>kvm
+<span class="c1"># Expected Output: Should list &#39;kvm&#39; and either &#39;kvm_intel&#39; or &#39;kvm_amd&#39;</span>
+</code></pre></div>
+
+<p>If these modules are not present, they can often be loaded manually using <code>modprobe kvm_intel</code> (or <code>amd</code>), provided the hardware support is active.</p>
+<h4 id="133-verifying-access-permissions">1.3.3 Verifying Access Permissions</h4>
+<p>Security is a critical aspect of virtualization. The kernel interface for creating VMs, located at <code>/dev/kvm</code>, is restricted. Standard users cannot access this device by default. To allow a user to run VMs without root privileges (a security best practice), the user must be added to the specialized <code>kvm</code> group.</p>
+<div class="codehilite"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>/dev/kvm
+<span class="c1"># Shows ownership, typically root:kvm with permissions crw-rw----</span>
+</code></pre></div>
+
+<p>If you encounter a "Permission Denied" error when running QEMU, verify your group membership using the <code>groups</code> command. If the <code>kvm</code> group is missing, you must add your user to it (<code>sudo usermod -aG kvm $USER</code>) and log out/in to apply the changes.</p>
+<h4 id="134-troubleshooting-common-failures">1.3.4 Troubleshooting Common Failures</h4>
+<p>You may encounter specific error messages during this verification process.</p>
 <ul>
-<li>Start conservative with allocations</li>
-<li>Monitor actual usage patterns</li>
-<li>Adjust resources as needed</li>
-<li>Use snapshots before major changes</li>
-<li>Regular backups are essential</li>
+<li><strong>"KVM: disabled by BIOS"</strong>: This message explicitly states that while the CPU supports virtualization, the feature is turned off in the computer's firmware. This cannot be fixed from within the OS; a physical reboot is required to modify BIOS settings.</li>
+<li><strong>"KVM support not available"</strong>: This often occurs when trying to run KVM inside another virtual machine (e.g., a cloud VPS) that does not support Nested Virtualization. In this scenario, the "outer" hypervisor has not passed the hardware extensions through to your "inner" guest.</li>
+</ul>
+<h3 id="14-the-hardware-qemu-quick-emulator">1.4 The Hardware: QEMU (Quick Emulator)</h3>
+<p>While KVM enables the kernel to execute instructions, it does not provide the "Computer." It is the role of QEMU to provide the motherboard, the chipset, the PCI bus, and the plugged-in devices. Without QEMU, KVM is just a fast calculator; with QEMU, it becomes a server.</p>
+<h4 id="141-the-threading-architecture">1.4.1 The Threading Architecture</h4>
+<p>To the Host Linux Kernel, a running Virtual Machine is purely a standard user-space process (<code>qemu-system-x86_64</code>) that happens to be multi-threaded. It does not look different from a web browser or database server from the scheduler's perspective. The architecture relies on three distinct thread types. The <strong>Main Loop (iothread)</strong> is a single thread running a glib-based event loop responsible for non-blocking tasks, such as handling the QEMU Monitor (management interface), updating VNC/SPICE displays, and dispatching general I/O events. Parallel to this are the <strong>vCPU Threads</strong>; for every Virtual CPU core assigned to the guest, QEMU spawns a dedicated POSIX thread (<code>pthread</code>) that enters the <code>KVM_RUN</code> ioctl loop to execute guest code on the physical CPU. Finally, heavy I/O operations, such as writing large blocks to a disk image, are offloaded to a pool of <strong>Worker Threads</strong>. This asynchronous design prevents the main loop or vCPU threads from blocking (freezing) while waiting for slow physical storage.</p>
+<h4 id="142-defining-the-virtual-motherboard">1.4.2 Defining the Virtual Motherboard</h4>
+<p>When you configure a VM in Proxmox, you are actually selecting arguments for the QEMU binary, starting with the Machine Type.</p>
+<div class="codehilite"><pre><span></span><code>-machine<span class="w"> </span>pc-q35-8.1,accel<span class="o">=</span>kvm
+</code></pre></div>
+
+<p>This single line defines the fundamental architecture of the virtual motherboard. The <code>pc-q35</code> argument selects the modern Q35 chipset, which provides support for PCIe native handling and Secure Boot, as opposed to the legacy <code>i440fx</code> type which mimics a 1996-era PC. Crucially, the <code>accel=kvm</code> flag explicitly links the <em>Emulator</em> (QEMU) to the <em>Engine</em> (KVM). Without this flag, QEMU would default to "TCG" (Tiny Code Generator), a software-only mode that interprets every instruction, resulting in agonizingly slow performance.</p>
+<h4 id="143-constructing-the-processor-topology">1.4.3 Constructing the Processor Topology</h4>
+<p>QEMU allows granular control over how the CPU is presented to the guest OS. This is critical for licensing (some software is licensed per-socket) and performance (aligning with physical NUMA nodes).</p>
+<div class="codehilite"><pre><span></span><code>-smp<span class="w"> </span><span class="m">4</span>,sockets<span class="o">=</span><span class="m">1</span>,cores<span class="o">=</span><span class="m">4</span>,threads<span class="o">=</span><span class="m">1</span>
+</code></pre></div>
+
+<p>This argument creates a topology of 1 Socket with 4 Cores. The Guest OS sees this exactly as if it were physical silicon.</p>
+<h4 id="144-device-emulation-frontend-vs-backend">1.4.4 Device Emulation: Frontend vs Backend</h4>
+<p>In QEMU, every device is composed of two parts: the <strong>Frontend</strong> (what the Guest OS sees) and the <strong>Backend</strong> (how the Host handles the data).</p>
+<div class="codehilite"><pre><span></span><code>-drive<span class="w"> </span><span class="nv">file</span><span class="o">=</span>/dev/pve/vm-100-disk-0,format<span class="o">=</span>raw,if<span class="o">=</span>virtio<span class="w">  </span><span class="c1"># Backend &amp; Frontend</span>
+-netdev<span class="w"> </span>tap,id<span class="o">=</span>net0,ifname<span class="o">=</span>tap100i0<span class="w">                      </span><span class="c1"># Network Backend</span>
+-device<span class="w"> </span>virtio-net-pci,netdev<span class="o">=</span>net0<span class="w">                       </span><span class="c1"># Network Frontend</span>
+</code></pre></div>
+
+<p>The <strong>Backend</strong> (defined by <code>-netdev</code> or <code>-drive</code>) refers to the host-side resource, such as connecting to a Linux Bridge (<code>tap100i0</code>) or a disk image file. <em>(Note: The concept of the Linux Bridge and how it connects VMs to the physical network will be discussed in depth in the Network Chapter in Week 4.)</em> The <strong>Frontend</strong> (defined by <code>-device</code>) creates the virtual hardware that appears on the guest's PCI bus, such as a "VirtIO Network Card". The guest OS writes data to the Frontend device, and QEMU is responsible for passing that data to the polling Backend.</p>
+<h3 id="15-optimization-virtio-paravirtualization">1.5 Optimization: VirtIO (Paravirtualization)</h3>
+<p>Emulating physical hardware (like an Intel E1000 network card) is "expensive" because every packet sent requires a context switch (VM Exit) to write to device registers, which QEMU then has to decode and simulate.</p>
+<p><strong>The Solution: VirtIO</strong>
+VirtIO replaces full hardware emulation with a standardized "Paravirtualized" architecture. In this model, the Guest OS is aware that it is running in a virtual environment. Instead of trapping and emulating legacy hardware registers (which is slow), the Guest uses a specialized <code>virtio</code> driver to communicate directly with the Host via a shared memory interface.</p>
+<p><strong>Mechanism (The Ring Buffer)</strong>:
+The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented as a circular ring buffer in shared memory. The process begins with <strong>Shared Memory</strong>, where QEMU allocates a region of RAM that is mapped into the address spaces of both the Host and the Guest. When the Guest needs to send data (e.g., a network packet), it initiates a <strong>vRing Operation</strong> by placing a descriptor pointer into the vRing buffer. Subsequently, the Guest performs a <strong>Kick Notification</strong>óa lightweight signal (via <code>ioeventfd</code>)óto alert the Host that new data is available. Finally, the Host performs <strong>Zero-Copy Processing</strong> by reading the data directly from the shared memory without needing to simulate a physical device operation, processing it, and placing a response back in the ring. This architecture bypasses the context-switching overhead inherent in traditional emulation.</p>
+<p><em>Note: This is why you must select "VirtIO" for Network and Disk in Proxmox when performance matters.</em></p>
+<h3 id="16-essential-command-reference">1.6 Essential Command Reference</h3>
+<p>While Proxmox handles these automatically, knowing the underlying commands is useful for debugging and "deep dive" understanding. The following commands are provided for reference and theoretical understanding; you will have the opportunity to execute them and observe their output directly in this week's Lab exercises.</p>
+<h4 id="161-disk-management-qemu-img">1.6.1 Disk Management (qemu-img)</h4>
+<p>The <code>qemu-img</code> utility handles virtual disk creation and manipulation. To create a new disk, the <code>create</code> subcommand is used, specifying the format (typically <code>qcow2</code> for thin provisioning) and the size. For example, <code>qemu-img create -f qcow2 mydisk.qcow2 20G</code>. To inspect an existing disk's virtual size and actual disk usage, the <code>info</code> command provides detailed metadata. Furthermore, the <code>convert</code> subcommand interacts with the format translation engine, allowing administrators to transform a generic <code>.img</code> image into a VMware <code>.vmdk</code> or QEMU <code>.qcow2</code> image.</p>
+<h4 id="162-vm-execution-qemu-system-x86_64">1.6.2 VM Execution (qemu-system-x86_64)</h4>
+<p>Launching a VM manually involves the <code>qemu-system-x86_64</code> binary. A basic invocation usually requires defining the hard drive (<code>-hda</code>), the allocated RAM (<code>-m</code>), and crucially, the KVM accelerator (<code>-enable-kvm</code> or <code>-accel kvm</code>). For booting from an installer ISO, the <code>-cdrom</code> flag is added, often accompanied by <code>-boot d</code> to prioritize the optical drive in the boot order.</p>
+<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>KVM</strong>: The kernel module that handles CPU execution (Guest Mode).</li>
+<li><strong>QEMU</strong>: The process that provides virtual hardware (Disks, NICs).</li>
+<li><strong>VirtIO</strong>: Special drivers that bypass emulation for speed.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why does <code>top</code> on the host show a <code>qemu-kvm</code> process using 100% CPU if the VM is busy?</li>
+<li>What is the difference between "Full Emulation" and "Paravirtualization"?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/chap-kvm_architecture">Red Hat: KVM Architecture</a></li>
 </ul>
 <hr />
-<h1 id="hands-on-lab">Hands-On Lab</h1>
-<p><strong>Task: Create Your First VM</strong></p>
-<ol>
-<li>Launch Proxmox web interface</li>
-<li>Create a new VM with Ubuntu Server</li>
-<li>Install <strong>qemu-guest-agent</strong></li>
-<li>Test VM operations (start, stop, pause)</li>
-<li>Create a clone</li>
-<li>Take a snapshot</li>
-</ol>
-<hr />
-<h1 id="hands-on-lab-2-managing-vms">Hands-On Lab 2: Managing VMs</h1>
-<p><strong>Task: Advanced VM Operations</strong></p>
-<ol>
-<li><strong>Linked Clone</strong>: Create a space-saving clone of your Ubuntu VM.</li>
-<li>
-<p><strong>Snapshot Tree</strong>:</p>
+<h2 id="2-the-platform-proxmox-ve">2. The Platform: Proxmox VE</h2>
+<p>To understand Proxmox VE, one must first understand its relationship with the underlying technologies. If KVM is the <strong>engine</strong> that powers virtualization and QEMU is the <strong>chassis</strong> that constructs the virtual hardware, then Proxmox VE acts as the <strong>dashboard and control center</strong>. While it is technically possible to manage KVM and QEMU directly via the command line, this approach is granular, tedious, and unscalable for production environments. Proxmox VE solves this by serving as an orchestration layer; it automates the complex <code>qemu</code> commands and kernel interactions, wrapping them in a cohesive, enterprise-grade management platform that provides visibility, clustering, and backup capabilities which the raw tools lack on their own.</p>
+<h3 id="21-architectural-breakdown">2.1 Architectural Breakdown</h3>
+<p><img alt="Proxmox VE Structure" src="images/proxmox_ve_layers.png" />
+<em>Figure 2.1: Proxmox VE Architecture - Decoupling the Web Interface, API, and Core KVM Engine.</em></p>
+<p>As illustrated in <strong>Figure 2.1</strong>, Proxmox VE is designed as a layered interaction model. It is not a monolithic black box, but a collection of distinct services working in harmony.</p>
+<h4 id="211-the-management-layer-top">2.1.1 The Management Layer (Top)</h4>
+<p>This layer facilitates all human-to-machine interaction and is driven by several key daemons. The <strong>pveproxy</strong> service acts as the primary "front door," listening on port 8006 and serving the web interface via a secure HTTP server; it forwards valid requests to the internal API (pvedaemon). For console access, <strong>spiceproxy</strong> and <strong>vncterm</strong> handle the streaming of graphical display data from VMs to the browser. The <strong>pvedaemon</strong> (PVE API Daemon) is the worker background process that actually executes privileged tasks; whether triggered by the JSON-based Web GUI, the <strong>pvesh</strong> CLI tool, or an external script, all roads lead to this daemon, ensuring a consistent execution path for every command. This layer also enforces <strong>User Authentication</strong>, validating credentials against configurable realms (PAM, LDAP, AD) before granting access.</p>
+<h4 id="212-the-cluster-layer-middle">2.1.2 The Cluster Layer (Middle)</h4>
+<p>Invisible to the user, a suite of daemons maintains the cluster's brain. <strong>Corosync</strong> is the foundational cluster engine, providing the reliable, low-latency communication required to maintain quorum (node consensus). Data consistency is handled by <strong>pmxcfs</strong> (Proxmox Cluster File System), a database-driven filesystem that instantly replicates configuration files in <code>/etc/pve</code> to all nodes. Monitoring is the responsibility of <strong>pvestatd</strong> (PVE Status Daemon), which queries the status of VMs, containers, and storage every 10 seconds to update the management layer. Finally, the High Availability (HA) stack consists of two critical components: the <strong>pve-ha-crm</strong> (Cluster Resource Manager), which decides <em>where</em> a service should run, and the <strong>pve-ha-lrm</strong> (Local Resource Manager), which watches services on the local node and reports their state to the CRM, ensuring rapid recovery if a node fails.</p>
+<h4 id="213-the-resource-layer-bottom">2.1.3 The Resource Layer (Bottom)</h4>
+<p>This is where the actual work happens, overseen by the Proxmox Kernel. For full virtualization, the <strong>KVM</strong> kernel module turns the Linux kernel into a hypervisor, while <strong>QEMU</strong> processes utilize this to run guest operating systems. For lightweight virtualization, <strong>LXC</strong> (Linux Containers) enables kernel-shared environments, supported by <strong>lxcfs</strong>, a userspace filesystem that provides containers with virtualized views of <code>/proc</code> files (like CPU and memory stats) so they don't see the host's full resources. <strong>Storage Plugins</strong> simplify disk management by translating abstract requests ("create disk") into specific backend commands (e.g., <code>zfs create</code> or <code>rbd create</code>). Similarly, the <strong>pve-firewall</strong> service generates 'iptables' rules dynamically for each guest, creating isolated security zones (Interfaces/Bridges) at the kernel level.</p>
+<h3 id="22-key-components">2.2 Key Components</h3>
+<p>Proxmox VE is not a single application but a suite of integrated components. Understanding how these distinct partsóthe interface, storage backends, and clustering servicesófit together is essential for designing a resilient infrastructure. Although the architecture is layered, the daily operational experience revolves around extensive interaction with the following key subsystems.</p>
+<h4 id="221-web-interface-gui">2.2.1 Web Interface (GUI)</h4>
+<p><img alt="Proxmox VE Web Interface" src="images/proxmox_gui.png" />
+<em>Figure 2.2: The Proxmox VE Web Interface (GUI) providing a centralized view of the datacenter.</em></p>
+<p>The primary management point is the web-based Graphical User Interface, accessible via port <code>8006</code>. It abstracts the complexity of <code>qemu</code> command lines and configuration files, allowing administrators to create VMs, manage storage pools, and configure software-defined networking bridges with visual feedback.</p>
+<p>The interface organizes these capabilities into four distinct regions. At the top, the <strong>Header</strong> provides critical status information and action buttons for system-wide operations. To the left, the <strong>Resource Tree</strong> acts as the main navigation hub, allowing you to select specific objects such as nodes, VMs, or storage pools. The center region contains the <strong>Content Panel</strong>, which dynamically updates to show the configuration options and status for whichever object is selected in the tree. Finally, the <strong>Log Panel</strong> resides at the bottom, creating a real-time audit trail of recent tasks; administrators can double-click these entries to view detailed execution logs or abort running operations.</p>
+<h4 id="222-storage-backends">2.2.2 Storage Backends</h4>
+<p>Proxmox decouples compute from storage to facilitate flexibility across different environments. For standalone setups, administrators often utilize <strong>Local Storage</strong> such as LVM-Thin or ZFS, which support advanced features like instant snapshots. In clustered environments, the platform leverages <strong>Network Storage</strong> (NFS, iSCSI, or SMB) to enable VM mobility and Live Migration. Furthermore, Proxmox supports <strong>Hyper-Converged</strong> infrastructure through native integration with Ceph, a distributed object store that runs directly on the nodes themselves, eliminating the need for expensive external SAN hardware.</p>
+<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
 <ul>
-<li>Take State A ("Clean Install").</li>
-<li>Install simple app (e.g., <code>htop</code>).</li>
-<li>Take State B ("With App").</li>
-<li><strong>Rollback</strong> to State A and verify app is gone.</li>
-<li><strong>Resize</strong>: Increase RAM from 1GB to 2GB (requires reboot).</li>
+<li><strong>Architecture</strong>: Web UI -&gt; API -&gt; Corosync/pmxcfs -&gt; Kernel/KVM.</li>
+<li><strong>pmxcfs</strong>: The magic filesystem that keeps cluster configs in sync.</li>
+<li><strong>Storage</strong>: Decoupled from compute to allow flexibility (Local vs Shared).</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why is an API-first design better for automation?</li>
+<li>If <code>pmxcfs</code> replicates configs, what happens if you lose network connectivity between nodes?</li>
+</ul>
+<hr />
+<h2 id="3-vm-management-features">3. VM Management Features</h2>
+<h3 id="31-cloning">3.1 Cloning</h3>
+<p>Cloning is the process of creating a new virtual machine based on the state of an existing one. Proxmox offers two distinct methods suited for different use cases.</p>
+<h4 id="311-full-clone">3.1.1 Full Clone</h4>
+<p>A Full Clone is a complete, independent copy of the original VM. The system performs a block-by-block copy of the source disk image to a new file. Since it duplicates all data, it consumes significant time and storage space. However, its complete isolation makes it ideal for production deployments, as the new VM has no dependency on the original.</p>
+<h4 id="312-linked-clone">3.1.2 Linked Clone</h4>
+<p>A Linked Clone uses a "Copy-on-Write" mechanism. It does not copy the original disk; instead, it creates a new delta file that references the original "Base" disk. The new VM reads from the Base disk but writes changes to its own small delta file. This allows for near-instant creation and minimal storage usage, making it perfect for efficient testing or classroom labs. However, it introduces a critical dependency: the Base disk cannot be deleted without breaking all Linked Clones.</p>
+<p><img alt="Full Clone vs Linked Clone" src="images/full_vs_linked_clone.png" />
+<em>Figure 3.1: Full Clones copy data; Linked Clones reference data.</em></p>
+<h3 id="32-snapshots">3.2 Snapshots</h3>
+<p>A snapshot preserves the state of a virtual machine at a specific point in time. Unlike a backup, which is a copy of data, a snapshot is a freeze-frame of the disk and memory state.</p>
+<h4 id="321-use-cases-and-mechanism">3.2.1 Use Cases and Mechanism</h4>
+<p>Snapshots are primarily used as a safety net before performing risky operations, such as major OS upgrades or testing unstable software. If the operation fails, the administrator can perform a "Rollback" to revert the system state exactly to the moment the snapshot was taken.</p>
+<h4 id="322-the-snapshot-process">3.2.2 The Snapshot Process</h4>
+<p>When a snapshot is taken in Proxmox (specifically on QCOW2 or ZFS storage), the system marks the current data blocks as read-only. Any new writes are diverted to new blocks. If basic disk snapshotting is selected, only the disk state is saved (crash-consistent). If "Include RAM" is selected, the entire contents of the running memory are dumped to disk. This allows the VM to be restored to a running state, preserving open applications and processes, though it takes longer to complete.</p>
+<h3 id="33-console-access">3.3 Console Access</h3>
+<p>Accessing the VM's display is handled via remote desktop protocols integrated into the browser.</p>
+<h4 id="331-novnc">3.3.1 NoVNC</h4>
+<p>NoVNC is the default HTML5-based console. It requires no plugins and renders the VM's display directly in any modern web browser using WebSockets. It is lightweight and universally compatible but has limited support for clipboard integration and audio forwarding.</p>
+<h4 id="332-spice-simple-protocol-for-independent-computing-environments">3.3.2 SPICE (Simple Protocol for Independent Computing Environments)</h4>
+<p>For a richer desktop experience, Proxmox supports SPICE. This protocol offers advanced features such as high-quality audio streaming, multi-monitor support, and USB device redirection (plugging a USB drive into your client and having it appear in the VM). However, unlike NoVNC, SPICE requires a dedicated client viewer software (<code>virt-viewer</code>) to be installed on the user's machine.</p>
+<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Cloning</strong>: Full (Performance/Isolation) vs Linked (Speed/Space).</li>
+<li><strong>Snapshots</strong>: "Save Game" state before risky changes. Not a backup!</li>
+<li><strong>Consoles</strong>: NoVNC is convenient (browser-based), SPICE is powerful (requires client).</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why should you delete a Linked Clone if you delete the Parent?</li>
+<li>Does a snapshot consume disk space? If so, when?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://pve.proxmox.com/wiki/Live_Snapshots">Proxmox VE: Live Snapshots</a></li>
+</ul>
+<hr />
+<h2 id="4-summary-and-next-steps">4. Summary and Next Steps</h2>
+<p>This week we peeled back the layers of virtualization to reveal the mechanism inside. You learned that a "Virtual Machine" is not a magical black box, but simply a standard Linux process (<code>kvm</code>) managed by the kernel. You discovered that vCPUs are just threads scheduled by CFS, and vRAM is just memory allocated via <code>mmap()</code>. Finally, you mastered the art of tuning this engineóbalancing resources to ensure stabilityóand explored the management features that make virtualization so powerful.</p>
+<h3 id="preparing-for-week-3">Preparing for Week 3</h3>
+<p>Next week, we go deeper into the infrastructure. We will explore <strong>Virtual Networking Fundamentals</strong>. Since you now know that a VM is just a process, it's time to understand how to wire these processes together using Linux Bridges, veth pairs, and VLANs.</p>
+<p><strong>Checklist:</strong></p>
+<ul>
+<li>Can you explain what happens during a "VM Exit"?</li>
+<li>Do you understand why a vCPU is treated like a Chrome tab by the scheduler?</li>
+<li>Have you successfully SSH'd into your new Ubuntu Server?</li>
+</ul>
+<hr />
+<h2 id="5-lab-exercises">5. Lab Exercises</h2>
+<ul>
+<li><strong><a href="Week_2_Lab_1_Virtualization_Basics.html">Lab 1: KVM Virtualization Fundamentals</a></strong><ul>
+<li><strong>Part A</strong>: Verification &amp; Preparation (Hardware/Disks).</li>
+<li><strong>Part B</strong>: Launching &amp; Logging In (CLI VM Boot).</li>
 </ul>
 </li>
-</ol>
-<hr />
-<h1 id="questions">Questions?</h1>
-<p>Next Week: <strong>Containers and Resource Management</strong> (LXC, Docker, Podman)</p>
-<p><a href="../index.html">‚Üê Back to Course Index</a></p>
+<li><strong><a href="Week_2_Lab_2_Managing_VMs.html">Lab 2: Proxmox VM Management</a></strong><ul>
+<li><strong>Goal</strong>: Deploy Ubuntu VMs, install Guest Agents, and perform Snapshots/Cloning.</li>
+</ul>
+</li>
+</ul>
+<p><a href="../index.html">? Back to Course Index</a></p>
+                <div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
+                    <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
+                    <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+                    <a href="Week_2_Quiz.html" id="start-quiz-btn" class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+                        Start Quiz
+                    </a>
+                </div>
+                
     </article>
 </main>
 
@@ -578,3 +673,4 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">en
 
 </body>
 </html>
+

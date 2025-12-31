@@ -1,4 +1,4 @@
-Ôªø
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -402,153 +402,334 @@
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
     <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
-        <hr />
-<p>marp: true
-theme: default
-class: lead
-paginate: true
-backgroundColor: #f0f0f0
-backgroundImage: url('https://marp.app/assets/hero-background.svg')</p>
+        <p><a href="../index.html">? Back to Course Index</a></p>
+<div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+<div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+    <img src="images/week_6_icon.png" class="h-full w-full object-cover" alt="Cluster and HA Icon">
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-6">
+    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Cluster and High Availability</h1>
+    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
+</div>
+</div>
+
+<p><strong>Course</strong>: Computer Systems Engineering
+<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
+<strong>Topic</strong>: Cluster and High Availability
+<strong>Estimated Reading Time</strong>: 30 Minutes</p>
+<blockquote>
+<p>[!TIP]
+<strong>How to succeed in this week</strong>:
+Clustering is a complex topic where "split-brain" and "quorum" are more than just buzzwordsóthey determine if your data survives a failure. We strongly recommend you strictly follow the lab exercises to build a 3-node cluster. Seeing a node fail and recover automatically in your lab will make these abstract concepts concrete.</p>
+</blockquote>
 <hr />
-<p><a href="../index.html">‚Üê Back to Course Index</a></p>
-<h1 id="clustering-and-high-availability">Clustering and High Availability</h1>
-<h2 id="week-6">Week 6</h2>
-<p><strong>Operating Systems 3 (Virtualisation &amp; Cloud Technologies)</strong>
-Instructor: KT Nshimba</p>
+<h2 id="welcome-to-week-6">Welcome to Week 6!</h2>
+<p>Up until now, our journey has focused on singular, standalone "pet" servers. We have treated each Proxmox node as an individual entity: if it fails, the virtual machines hosted on it fail with it, requiring manual intervention to restore service. This model is acceptable for home labs but insufficient for enterprise environments where uptime is critical. In a true Cloud Environment, servers are treated as "cattle"óinterchangeable resources where the failure of one unit does not disrupt the overall system.</p>
+<p>This week, we transition from standalone virtualization to <strong>Clustering</strong>. We will link multiple Proxmox nodes together to form a unified datacenter. We will explore the mechanics of the <strong>Quorum</strong> (the decision-making algorithm that maintains cluster integrity) and implement <strong>High Availability (HA)</strong>, ensuring that our workloads become resilient to physical hardware failure.</p>
 <hr />
-<h1 id="learning-objectives">Learning Objectives</h1>
+<h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
 <ul>
-<li><strong>Cluster</strong>: Managing multiple nodes as one datacenter.</li>
-<li><strong>Corosync</strong>: The heartbeat protocol.</li>
-<li><strong>Quorum</strong>: How the cluster makes decisions.</li>
-<li><strong>HA</strong>: Automated VM recovery.</li>
-<li><strong>Migration</strong>: Moving live workloads.</li>
+<li><strong>Cluster Management:</strong> We will master <code>pvecm</code>, the command-line tool for creating, joining, and managing cluster nodes.</li>
+<li><strong>The Voting Algorithm:</strong> We will deconstruct the mathematical logic behind Quorum and how it prevents the catastrophic "Split Brain" scenario.</li>
+<li><strong>Corosync Engine:</strong> We will examine the low-latency communication protocol that acts as the cluster's heartbeat.</li>
+<li><strong>High Availability (HA):</strong> We will configure Watchdogs and Fencing to automate the recovery of VMs during node failures.</li>
+<li><strong>Live Migration:</strong> We will perform the magic of moving running workloads between servers without dropping a single network packet.</li>
 </ul>
 <hr />
-<h1 id="why-cluster">Why Cluster?</h1>
-<h2 id="single-node-pet">Single Node (Pet)</h2>
+<h1 id="part-1-the-cluster-stack">Part 1: The Cluster Stack</h1>
+<p>At the heart of Proxmox VE's clustering capability lies the <strong>Corosync Cluster Engine</strong>. This crucial component provides the reliable, low-latency communication layer that allows nodes to share state. Proxmox Cluster Manager (<code>pvecm</code>) wraps this complex engine into a user-friendly toolset.</p>
+<p><img alt="Proxmox Cluster Architecture" src="images/promox_cluster_architecture.png" />
+<em>Figure 1: Proxmox Cluster Architecture - Nodes communicating via Corosync Ring X on a dedicated low-latency network to maintain shared state</em></p>
+<h2 id="1-creating-a-cluster">1. Creating a Cluster</h2>
+<p>While the web interface provides a convenient way to create clusters, understanding the Command Line Interface (CLI) is essential for troubleshooting and automation. The CLI exposes the underlying steps of key generation and configuration distribution.</p>
+<h3 id="11-initialization">1.1 Initialization</h3>
+<p>When you initialize a cluster, Proxmox performs several critical actions. It generates a cryptographic key (<code>/etc/corosync/authkey</code>) appearing to secure communication and creates the central configuration database (<code>/etc/pve/corosync.conf</code>). This database is essentially the "source of truth" for the entire cluster.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a cluster named &#39;Education-Cloud&#39;</span>
+pvecm<span class="w"> </span>create<span class="w"> </span>Education-Cloud
+
+<span class="c1"># Verify status to confirm the local node determines it is now part of a cluster</span>
+pvecm<span class="w"> </span>status
+</code></pre></div>
+
+<h3 id="12-joining-a-node">1.2 Joining a Node</h3>
+<p>Adding a second server is a "join" operation, not a creation operation. You instruct the new node to connect to the existing ring. The new node authenticates using the root password or an explicit join token, downloads the cluster keys and configuration files, and restarts its local services to synchronize with the quorum.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Run this on Node 2</span>
+pvecm<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.1.10<span class="w">  </span><span class="c1"># IP of Node 1</span>
+</code></pre></div>
+
+<p><strong>Crucial Requirement</strong>: For a cluster to function correctly, every node must have a unique Hostname and a persistent Static IP address. If an IP address changes after the cluster is formed, Corosync communication will break, causing the node to lose quorum and effectively disconnecting it from the datacenter.</p>
+<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Management</strong>: Log into every server individually.</li>
-<li><strong>Failure</strong>: Hardware death = Service Down.</li>
-<li><strong>Maintenance</strong>: To patch the OS, you must stop all VMs.</li>
+<li><strong>pvecm</strong> is the primary command-line tool for managing the cluster lifecycle, wrapping the underlying Corosync engine.</li>
+<li><strong>Cluster Requirements</strong> are strict: nodes must have unique hostnames, static network configurations, and a reliable low-latency network connection.</li>
+<li><strong>Joining</strong> involves a node authenticating to an existing cluster leader to download shared keys and configuration state.</li>
 </ul>
-<h2 id="cluster-cattle">Cluster (Cattle)</h2>
+<p><strong>Reflection</strong>:</p>
 <ul>
-<li><strong>Management</strong>: Single Pane of Glass.</li>
-<li><strong>Failure</strong>: Hardware death = VMs restart elsewhere.</li>
-<li><strong>Maintenance</strong>: Migrate VMs off -&gt; Patch Node -&gt; Migrate back.</li>
+<li>Why does Proxmox use SSH keys for cluster communication alongside Corosync keys?</li>
+<li>What is the impact on the cluster configuration file <code>/etc/pve/corosync.conf</code> if you change a node's IP address without updating it?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://pve.proxmox.com/wiki/Cluster_Manager">Proxmox VE Cluster Manager</a></li>
 </ul>
 <hr />
-<h1 id="cluster-architecture-corosync">Cluster Architecture: Corosync</h1>
-<p><strong>Corosync</strong> is the engine that keeps nodes in sync.</p>
+<h2 id="2-quorum-the-rule-of-majority-algorithm">2. Quorum: The Rule of Majority Algorithm</h2>
+<p>The most critical safety mechanism in any distributed system is <strong>Quorum</strong>. In the context of Proxmox, Quorum refers to the minimum number of votes required for the cluster to be considered "functional." This ensures that if the cluster fragments into disconnected pieces, only one pieceóthe majorityóis allowed to modify state. This maintains data consistency and prevents divergent histories.</p>
+<p><img alt="Quorum Voting Logic" src="images/quorum_voting_logic.png" />
+<em>Figure 2: Quorum Voting Logic - How the formula (Total/2)+1 determines the operational status of a cluster segment</em></p>
+<h3 id="21-the-split-brain-condition">2.1 The Split Brain Condition</h3>
+<p>"Split Brain" is a catastrophic failure state in a clustered environment where network communication is severed between nodes, yet the nodes themselves remain operational.</p>
+<p>Consider a two-node cluster (Node A and Node B) where the heartbeat connection fails:</p>
 <ul>
-<li><strong>Heartbeat</strong>: &lt; 10ms messages sent constantly.</li>
-<li><strong>Database (pmxcfs)</strong>: The <code>/etc/pve</code> filesystem is actually a database replicated across all nodes.</li>
-<li><strong>Requirement</strong>: Low Latency. Do not run clustering over Wi-Fi or WAN.</li>
+<li><strong>The Divergence</strong>: Node A cannot see Node B and assumes Node B has failed. Simultaneously, Node B assumes Node A has failed.</li>
+<li><strong>The Conflict</strong>: Both nodes promote themselves to "Master" status and attempt to take ownership of the same resources (e.g., VM ID 100).</li>
+<li><strong>The Consequence</strong>: Both nodes mount the same shared storage volume and attempt to write data concurrently.</li>
+<li><strong>The Result</strong>: Since they are unaware of each other's write operations, they overwrite each other's filesystem journals, leading to irreversible data corruption within milliseconds.</li>
+</ul>
+<p><img alt="Split Brain Scenario" src="images/split_brain_scenario.png" />
+<em>Figure 3: Split Brain Scenario - A network cut leads to dual active masters ensuring data corruption without quorum logic</em></p>
+<h3 id="22-quorum-logic">2.2 Quorum Logic</h3>
+<p>To prevent Split Brain, the Proxmox Cluster Manager (pvecm) enforces a strictly democratic requirement: operations can only proceed if a strict majority of nodes are present. The formula for this is <code>(Total Votes / 2) + 1</code>.</p>
+<p>In a <strong>2-Node Cluster</strong>, there are 2 total votes. The majority needed is <code>(2/2) + 1 = 2</code>. This implies that if a single node fails, the survivor has only 1 vote. Since 1 is less than 2, Quorum is lost. The surviving node essentially "locks down," forcing the filesystem into Read-Only mode to prevent any possibility of corruption.</p>
+<p>In a <strong>3-Node Cluster</strong>, there are 3 total votes. The majority needed is <code>(3/2) + 1 = 2.5</code> (which rounds down to integer 2). If one node fails, the remaining two nodes have 2 votes. Since 2 equals 2, Quorum is maintained, and the cluster remains fully operational. This highlights the architectural best practice of always designing clusters with an <strong>ODD</strong> number of nodes (3, 5, 7) to allow for reliable tie-breaking.</p>
+<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Quorum</strong> enforces the "Rule of Majority" using the formula <code>(Total/2)+1</code> to ensure only one part of a partitioned cluster remains active.</li>
+<li><strong>Split Brain</strong> occurs when disconnected nodes both attempt to become Master, leading to guaranteed data corruption.</li>
+<li><strong>Safety Mechanism</strong>: If Quorum is lost, the cluster automatically locks down to Read-Only mode to preserve data integrity.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why is a 2-node cluster considered "dangerous" without an external vote (QDevice)?</li>
+<li>Does a "Majority" mean 51% (more than half) or exactly half?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="http://corosync.github.io/corosync/">Corosync Project</a></li>
 </ul>
 <hr />
-<h1 id="the-most-important-concept-quorum">The Most Important Concept: Quorum</h1>
-<p>"A Cluster acts only when a <strong>Majority</strong> agrees."</p>
-<h3 id="the-formula">The Formula</h3>
-<p><code>Quorum = (Total Votes / 2) + 1</code></p>
-<h3 id="the-split-brain-scenario">The "Split Brain" Scenario</h3>
-<p>Two nodes (A &amp; B) lose connection. Both think the other is dead.</p>
+<h2 id="3-high-availability-ha-manager">3. High Availability (HA) Manager</h2>
+<p>Clustering provides a unified management interface, but it does not automatically guarantee uptime. If a node fails in a standard cluster, its VMs simply turn off. <strong>High Availability (HA)</strong> is the automated subsystem designed to solve this problem. Its primary function is to detect physical hardware failures (such as power loss or kernel panic) and automatically restart the affected Virtual Machines on the remaining healthy nodes. This capability minimizes downtime from hours (waiting for an administrator to intervene) to minutes (automatic recovery).</p>
+<p><img alt="HA Manager Architecture" src="images/ha_manager_architecture.png" />
+<em>Figure 4: HA Manager Architecture - The Master CRM orchestrating Local LRMs to maintain service availability</em></p>
+<h3 id="31-architecture-components">3.1 Architecture Components</h3>
+<p>The HA system is composed of two primary agents that work in tandem to maintain service availability.</p>
+<h4 id="311-ha-resource-manager-crm">3.1.1 HA Resource Manager (CRM)</h4>
+<p>The <strong>Cluster Resource Manager (<code>pve-ha-crm</code>)</strong> acts as the "Cluster Manager" or the "Boss." It runs as a single active instance on the current master node. Its job is to maintain the state of the cluster and make high-level decisions about where services should live. If the node running the active CRM fails, the cluster automatically elects a new master to take over this role.</p>
+<h4 id="312-ha-local-resource-manager-lrm">3.1.2 HA Local Resource Manager (LRM)</h4>
+<p>The <strong>Local Resource Manager (<code>pve-ha-lrm</code>)</strong> acts as the "Worker." An instance runs on every single node in the cluster. It receives orders from the CRM to start or stop services and reports the status of local resources back to the master. It is responsible for the actual execution of service management commands on the local hypervisor.</p>
+<h3 id="32-fencing-mechanism">3.2 Fencing Mechanism</h3>
+<p>The HA mechanism relies on absolute certainty. Before the cluster can steal VMs from a non-responsive node, it must be 100% sure that the node is truly dead.</p>
+<h4 id="321-the-split-brain-problem">3.2.1 The Split-Brain Problem</h4>
+<p>If Node A stops responding to heartbeats, Node B cannot know if Node A has crashed or if just the network cable was unplugged. If Node B starts Node A's VMs while Node A is still running them, both nodes would attempt to write to the same virtual disks simultaneously, guaranteeing severe data corruption.</p>
+<h4 id="322-the-stonith-solution">3.2.2 The STONITH Solution</h4>
+<p>To solve this, we use <strong>Fencing</strong>, often referred to by the acronym <strong>STONITH</strong> (Shoot The Other Node In The Head). Upon detecting a failure, the cluster issues a command to a physical hardware device (like an IPMI controller or a Smart PDU) to physically cut power to the faulty node. This guarantees the node is dead. Only after this confirmation does the cluster restart the VMs on healthy nodes.</p>
+<p><img alt="Fencing / STONITH Process" src="images/fencing_stonith_process.png" />
+<em>Figure 5: The Fencing Process - How the cluster physically isolates a failed node before recovering its workloads</em></p>
+<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
 <ul>
-<li>If A starts a VM, and B starts the same VM...</li>
-<li><strong>DATA CORRUPTION</strong>. Both write to the same disk blocks.</li>
+<li><strong>High Availability (HA)</strong> automates the recovery of services by restarting VMs on healthy nodes after a hardware failure.</li>
+<li><strong>CRM and LRM</strong> act as the "Manager" and "Worker" services, respectively, to orchestrate the monitoring and recovery process.</li>
+<li><strong>Fencing (STONITH)</strong> is the essential safety mechanism that physically powers off a non-responsive node to prevent Split Brain before recovery begins.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why is Fencing (STONITH) safer than just assuming a silent node is down?</li>
+<li>Can you have High Availability without Shared Storage? (Consider the implications of ZFS Replication).</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://pve.proxmox.com/wiki/High_Availability_Cluster#pve_ha_manager_simulator">Proxmox HA Simulator</a></li>
 </ul>
 <hr />
-<h1 id="quorum-calculations">Quorum Calculations</h1>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Nodes</th>
-<th style="text-align: left;">Total Votes</th>
-<th style="text-align: left;">Majority Needed</th>
-<th style="text-align: left;">Fault Tolerance</th>
-<th style="text-align: left;">Risk</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>1</strong></td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">None (It's a standalone)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2</strong></td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">2 (2/2 + 1)</td>
-<td style="text-align: left;"><strong>0</strong></td>
-<td style="text-align: left;"><strong>HIGH</strong>. If 1 dies, the other stops.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>3</strong></td>
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">2 (3/2 + 1)</td>
-<td style="text-align: left;"><strong>1</strong></td>
-<td style="text-align: left;">Good.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>5</strong></td>
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">3 (5/2 + 1)</td>
-<td style="text-align: left;"><strong>2</strong></td>
-<td style="text-align: left;">Excellent.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Rule</strong>: Always use an <strong>OLD Number</strong> of nodes (3, 5, 7).</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-</tbody>
-</table>
+<h1 id="part-2-cli-operations">Part 2: CLI Operations</h1>
+<h2 id="4-troubleshooting-the-cluster">4. Troubleshooting the Cluster</h2>
+<p>When cluster issues ariseótypically indicated by red or gray nodes in the GUIóthe web interface often lacks sufficient detail to diagnose the root cause. In these scenarios, the Command Line Interface becomes the primary diagnostic tool.</p>
+<p><img alt="Cluster Troubleshooting Flow" src="images/cluster_troubleshooting_flow.png" />
+<em>Figure 6: Cluster Troubleshooting Flowchart - Decision tree for diagnosing Quorum, Corosync, and Network issues</em></p>
+<h3 id="41-check-quorum">4.1 Check Quorum</h3>
+<p>The first step in any cluster diagnosis is to verify the voting state. Run <code>pvecm status</code> to see the cluster's health from the perspective of the local node. Key fields to observe are <code>Votes</code> (number of nodes currently active) and <code>Quorate</code>. If <code>Quorate</code> is <strong>No</strong>, the cluster has lost its majority and will block any changes to the configuration database (<code>pmxcfs</code>) to prevent split-brain, effectively locking the cluster into a read-only mode.</p>
+<div class="codehilite"><pre><span></span><code>pvecm<span class="w"> </span>status
+</code></pre></div>
+
+<h3 id="42-check-corosync">4.2 Check Corosync</h3>
+<p>If nodes are not syncing but the network appears up, the issue often lies with Corosync latency. Use <code>systemctl status corosync</code> to check the service health. The logs will reveal if the "token retransmit time" is being exceeded. Corosync requires extremely low latency (typically &lt; 2ms) to function correctly. High latency links, such as Wi-Fi or saturated 1Gbps uplinks during backups, often cause Corosync to drop packets and declare nodes dead falsely.</p>
+<div class="codehilite"><pre><span></span><code>systemctl<span class="w"> </span>status<span class="w"> </span>corosync
+</code></pre></div>
+
+<h3 id="43-force-quorum-emergency-only">4.3 Force Quorum (Emergency Only)</h3>
+<p>In a catastrophic scenario where you have a 2-node cluster and one node permanently fails, the survivor will lose quorum (1 vote &lt; 2 required). To recover management capability on the survivor, you can artificially lower the expected vote count.</p>
+<div class="codehilite"><pre><span></span><code>pvecm<span class="w"> </span>expected<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+
+<p><strong>Warning</strong>: This command tells the survivor, "Pretend we only expected 1 vote." This allows it to become quorate alone. You must <strong>only</strong> do this if you are absolutely certain the other node is dead. If the other node comes back online while this is active, you will cause a Split Brain scenario.</p>
+<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong><code>pvecm status</code></strong> is the primary diagnostic tool for assessing voting health and determining if the cluster is Quorate.</li>
+<li><strong>Corosync Latency</strong> is the most common cause of instability; high latency triggers false failure detection.</li>
+<li><strong>Forcing Quorum (<code>expected 1</code>)</strong> is a destructive emergency measure to recover a surviving node in a broken cluster.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why is latency (Ping time) so critical for Corosync compared to bandwidth?</li>
+<li>What does "Quorate: No" actually mean for your ability to start, stop, or migrate VMs?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://clusterlabs.org/">Clusterlabs Troubleshooting</a></li>
+</ul>
 <hr />
-<h1 id="high-availability-ha">High Availability (HA)</h1>
-<p>HA = "If a node dies, restart its VMs elsewhere."</p>
-<h2 id="the-sequence">The Sequence</h2>
+<h2 id="5-live-migration-cli">5. Live Migration CLI</h2>
+<p><strong>Live Migration</strong> is the ability to move a running Virtual Machine from one physical node to another with <strong>zero downtime</strong>. It works by copying the VM's active RAM state over the network to the destination node. Once the memory is synchronized, the hypervisor pauses the VM on the source node for a fraction of a second, transfers the final CPU state, and resumes execution on the destination node. To the user, this transition is seamlessónetwork connections remain active, and applications continue running without interruption.</p>
+<p><img alt="Live Migration Workflow" src="images/live_migration_workflow.png" />
+<em>Figure 7: Live Migration Workflow - Iterative RAM copy followed by atomic switchover for zero-downtime maintenance</em></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># General Syntax: qm migrate &lt;VMID&gt; &lt;TargetNode&gt; [OPTIONS]</span>
+</code></pre></div>
+
+<p>To perform this manually via the CLI:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Migrate VM 100 to Node named &#39;pve2&#39;</span>
+<span class="c1"># --online: Keep it running (True Live Migration)</span>
+<span class="c1"># --with-local-disks: Move the storage (disk image) too using storage migration</span>
+qm<span class="w"> </span>migrate<span class="w"> </span><span class="m">100</span><span class="w"> </span>pve2<span class="w"> </span>--online<span class="w"> </span>--with-local-disks
+</code></pre></div>
+
+<h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Live Migration</strong> moves active RAM state between nodes, allowing hardware maintenance without service interruption.</li>
+<li><strong>--online</strong> ensures the VM remains responsive during the transfer; without it, the VM would hibernate and resume (offline migration).</li>
+<li><strong>--with-local-disks</strong> enables migrations even without shared storage by copying the disk image alongside the RAM, though this takes significantly longer.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>What happens to the VM if the network cable is unplugged <em>during</em> the RAM copy phase of a migration?</li>
+<li>Why must the CPU Type often be set to <code>kvm64</code> or <code>host</code> model carefully in heterogeneous clusters?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://www.qemu.org/docs/master/system/migration.html">QEMU Migration Documentation</a></li>
+</ul>
+<hr />
+<h1 id="part-3-cluster-storage-backups">Part 3: Cluster Storage &amp; Backups</h1>
+<h2 id="6-enterprise-shared-storage-architectures">6. Enterprise Shared Storage Architectures</h2>
+<h3 id="61-distributed-storage-ceph-advanced">6.1 Distributed Storage: Ceph (Advanced)</h3>
+<p>While ZFS is the gold standard for <em>local</em> storage, modern data centers often span multiple servers. <strong>Ceph</strong> is a massively scalable, distributed, self-healing file system that runs across a cluster of Proxmox nodes.</p>
+<p><strong>6.1.1 Architecture Components</strong>
+Ceph is not just software; it is a living ecosystem made of daemons:</p>
+<ul>
+<li><strong>OSD (Object Storage Daemon)</strong>: The workhorse. One OSD runs per physical disk. It handles reading, writing, and replicating data.</li>
+<li><strong>MON (Monitor)</strong>: The brain. It maintains the "Cluster Map"óthe master list of which nodes are alive and where data lives. You usually need at least 3 MONs for quorum.</li>
+<li><strong>MGR (Manager)</strong>: Collects metrics and state for the GUI dashboard.</li>
+</ul>
+<p><strong>6.1.2 Implementation in Proxmox (HCI)</strong>
+Proxmox VE is unique because it integrates Ceph directly into the hypervisor (Hyper-Converged Infrastructure). You do not need external storage servers. The architecture diagram below shows how OSDs, MONs, and MGRs work together across a Ceph cluster:</p>
+<p><img alt="Ceph Distributed Storage Architecture" src="../Week%204%20-%20Storage%20and%20Backup/images/ceph_arch.png" />
+<em>Figure 8: Ceph Distributed Storage - OSDs manage disks, MONs maintain cluster maps, and MGRs collect metrics across multiple nodes</em></p>
 <ol>
-<li><strong>Failure</strong>: Node A stops sending heartbeats.</li>
-<li><strong>Detection</strong>: The HA Manager (CRM) notices via Corosync.</li>
-<li><strong>Fencing (STONITH)</strong>: The Cluster cuts power to Node A to <em>gurantee</em> it is dead.</li>
-<li><strong>Recovery</strong>: Node B takes ownership of the Dead VMs and boots them.</li>
+<li><strong>Hardware Requirements</strong>: To be viable, you need at least <strong>3 Nodes</strong> (for a 2/3 replica quorum) and a <strong>10GbE+ Dedicated Network</strong> (re-balancing data consumes massive bandwidth).</li>
+<li><strong>The "Proxmox Way"</strong>: You don't edit config files manually. You use the Proxmox Web GUI -&gt; Datacenter -&gt; Ceph to install packages, initialize the network, and create OSDs.</li>
+<li><strong>Self-Healing</strong>: If a drive fails, Ceph detects the missing "Placement Groups" (PGs) and automatically re-replicates that data to other OSDs to restore full health.</li>
 </ol>
-<hr />
-<h1 id="live-migration">Live Migration</h1>
-<p>The magic of moving a VM without users noticing.</p>
-<ol>
-<li><strong>Pre-Copy</strong>: RAM is copied to Target while VM runs.</li>
-<li><strong>Dirty Pages</strong>: As RAM changes, differences are re-sent.</li>
-<li><strong>Switchover</strong>: VM pauses for milliseconds. CPU state moved.</li>
-<li><strong>Resume</strong>: VM runs on Target.</li>
-</ol>
-<p><em>Requires Shared Storage (NFS/Ceph) for instant speed.</em></p>
-<hr />
-<h1 id="lab-overview">Lab Overview</h1>
-<ol>
-<li><strong>Build a Cluster</strong>: Join two Proxmox nodes.</li>
-<li><strong>Live Migrate</strong>: Move a dummy VM while pinging it.</li>
-<li>
-<p><strong>Simulate Disaster</strong>:</p>
+<h3 id="62-external-shared-storage-san-nas">6.2 External Shared Storage (SAN &amp; NAS)</h3>
+<p>While Ceph is great for internal storage, many enterprises already have massive external storage arrays (SANs). Proxmox connects to these using standard protocols.</p>
 <ul>
-<li>Setup HA.</li>
-<li><strong>Unplug Power</strong> to Node 1.</li>
-<li>Watch VM revive on Node 2.</li>
+<li><strong>Network Attached Storage (NAS)</strong>: Uses <strong>NFS</strong> or <strong>SMB</strong>. The storage array manages the filesystem. Proxmox simply mounts a folder. It's easy, but effectively "Serial" (files are locked individually).</li>
+<li><strong>Storage Area Network (SAN)</strong>: Uses <strong>iSCSI</strong> or <strong>Fibre Channel</strong>. Proxmox sees a raw block device over the network.</li>
+<li><strong>Parallel / Cluster File Systems</strong>: To allow multiple Proxmox nodes to mount the <em>same</em> SAN LUN simultaneously and write to it without corrupting data, we use a <strong>Clustered File System</strong> like <strong>GFS2</strong> (Global File System 2) or <strong>OCFS2</strong>.<ul>
+<li><strong>Locking</strong>: These systems use a specialized Distributed Lock Manager (DLM) to ensure that if Node A is writing to a file, Node B knows about it instantly.</li>
 </ul>
 </li>
-</ol>
-<hr />
-<h1 id="next-week">Next Week</h1>
-<h2 id="transition-to-cloud-openstack">Transition to Cloud (OpenStack)</h2>
-<ul>
-<li>Moving from "Virtualization" to "Infrastructure as a Service".</li>
-<li>Understanding the Cloud Layers.</li>
+<li><strong>LVM-Shared</strong>: Alternatively, Proxmox often uses <strong>LVM</strong> on top of iSCSI in "Shared Mode" to manage raw disk volumes for VMs without a full filesystem layer.</li>
 </ul>
-<p><a href="../index.html">‚Üê Back to Course Index</a></p>
+<h3 id="section-6-checkpoint">Section 6 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Ceph</strong> (HCI): Distributed, self-healing storage on compute nodes (3+ nodes req).</li>
+<li><strong>SAN/NAS</strong>: External storage arrays. Block (iSCSI/FC) vs File (NFS).</li>
+<li><strong>Cluster FS</strong>: GFS2/OCFS2 needed for simultaneous shared writes.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why is a 10GbE network mandatory for Ceph?</li>
+<li>What happens if two servers write to a standard ext4 non-clustered disk at the same time?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://docs.ceph.com/en/latest/start/intro/">Ceph Intro</a></li>
+</ul>
+<hr />
+<h2 id="7-proxmox-backups-vzdump">7. Proxmox Backups (VZDump)</h2>
+<p>One of the most persistent dangerous misconceptions in cloud infrastructure is equating a <strong>Snapshot</strong> with a <strong>Backup</strong>.</p>
+<h3 id="71-backups-vzdump-vs-snapshots">7.1 Backups (VZDump) vs Snapshots</h3>
+<ul>
+<li><strong>Snapshot</strong>: A point-in-time "difference file" linked to the original disk. Dependent.</li>
+<li><strong>Backup (VZDump)</strong>: A comprehensive, independent archive (config + compressed disk data, e.g., <code>.vma.zst</code>). It can be moved offsite for disaster recovery.</li>
+</ul>
+<p><img alt="Snapshot vs. Backup - Understanding the Difference" src="../Week%204%20-%20Storage%20and%20Backup/images/snapshot_backup.png" />
+<em>Figure 9: Snapshot vs. Backup - Snapshots are dependent save points for testing; Backups are independent archives for disaster recovery</em></p>
+<h3 id="72-proxmox-backup-modes">7.2 Proxmox Backup Modes</h3>
+<p>When performing a backup, the state of the VM determines the consistency of the data.</p>
+<p><img alt="Proxmox Backup Modes - Trade-offs and Use Cases" src="../Week%204%20-%20Storage%20and%20Backup/images/backup_modes.png" />
+<em>Figure 10: Proxmox Backup Modes - Live (Snapshot), Suspend (Frozen), and Stop (Consistent) modes balance uptime vs. data consistency</em></p>
+<ol>
+<li><strong>Snapshot Mode (Live)</strong>: No downtime. Uses QEMU to pause writes for a microsecond. Ideal for production.</li>
+<li><strong>Suspend Mode</strong>: Brief pause. Good for consistency but disrupts services.</li>
+<li><strong>Stop Mode</strong>: Full power off. 100% consistent, maximum downtime.</li>
+</ol>
+<h3 id="section-7-checkpoint">Section 7 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Backup</strong>: Independent Archive, essential for DR.</li>
+<li><strong>Modes</strong>: Snapshot (Live), Suspend (Frozen), Stop (Consistent).</li>
+</ul>
+<hr />
+<h2 id="8-managing-storage-via-cli-pvesm">8. Managing Storage via CLI (<code>pvesm</code>)</h2>
+<p>Advanced troubleshooting often requires the **Proxmox VE Storage Manager`.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Edit the Storage Configuration file</span>
+nano<span class="w"> </span>/etc/pve/storage.cfg
+
+<span class="c1"># 2. List all configured storage</span>
+pvesm<span class="w"> </span>status
+
+<span class="c1"># 3. Allocating a volume manually</span>
+pvesm<span class="w"> </span>alloc<span class="w"> </span>local-lvm<span class="w"> </span><span class="m">100</span><span class="w"> </span>vm-100-disk-1<span class="w"> </span>20G
+</code></pre></div>
+
+<h3 id="section-8-checkpoint">Section 8 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><code>pvesm</code> helps when the GUI is unavailable.</li>
+<li><code>storage.cfg</code> is the cluster-wide storage definition file.</li>
+</ul>
+<hr />
+<h2 id="9-additional-resources">9. Additional Resources</h2>
+<ul>
+<li><strong>Cluster Manager Wiki</strong>: <a href="https://pve.proxmox.com/wiki/Cluster_Manager">Proxmox Docs</a></li>
+<li><strong>HA Simulator</strong>: <a href="https://pve.proxmox.com/wiki/High_Availability_Cluster#pve_ha_manager_simulator">PVE HA Sim</a></li>
+<li><strong>Corosync Overview</strong>: <a href="http://clusterlabs.org/corosync.html">ClusterLabs</a></li>
+</ul>
+<hr />
+<h2 id="10-lab-exercises">10. Lab Exercises</h2>
+<ul>
+<li><a href="Week_6_Lab_Cluster_and_HA.html">Lab: Cluster &amp; HA</a><ul>
+<li><strong>Goal</strong>: Building a Multi-Node Cluster, configuring HA, and Live Migration.</li>
+</ul>
+</li>
+</ul>
+<p><a href="../index.html">? Back to Course Index</a></p>
+                <div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
+                    <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
+                    <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+                    <a href="Week_6_Quiz.html" id="start-quiz-btn" class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+                        Start Quiz
+                    </a>
+                </div>
+                
     </article>
 </main>
 
@@ -561,3 +742,4 @@ Instructor: KT Nshimba</p>
 
 </body>
 </html>
+

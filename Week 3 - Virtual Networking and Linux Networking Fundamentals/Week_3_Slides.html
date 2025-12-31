@@ -1,4 +1,4 @@
-Ôªø
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -402,283 +402,724 @@
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
     <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
-        <hr />
-<p>marp: true
-theme: default
-class: lead
-paginate: true
-backgroundColor: #f0f0f0
-backgroundImage: url('https://marp.app/assets/hero-background.svg')</p>
+        <p><a href="../index.html">? Back to Course Index</a></p>
+<div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+<div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+    <img src="images/week_3_icon.png" class="h-full w-full object-cover" alt="Networking Icon">
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-6">
+    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Virtual Networking and Linux Networking Fundamentals</h1>
+    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
+</div>
+</div>
+
+<p><strong>Course</strong>: Computer Systems Engineering
+<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
+<strong>Topic</strong>: Virtual Networking and Linux Networking Fundamentals
+<strong>Estimated Reading Time</strong>: 35 Minutes</p>
+<blockquote>
+<p>[!TIP]
+<strong>How to succeed in this week</strong>:
+Networking is where VMs become useful. The concepts of bridges, NAT, and routing apply universally. Draw diagrams as you readóvisualizing packet flow makes troubleshooting much easier later.</p>
+</blockquote>
 <hr />
-<p><a href="../index.html">‚Üê Back to Course Index</a></p>
-<h1 id="virtual-networking-and-linux-networking-fundamentals">Virtual Networking and Linux Networking Fundamentals</h1>
-<h2 id="week-3">Week 3</h2>
-<p><strong>Operating Systems 3 (Virtualisation &amp; Cloud Technologies)</strong>
-Instructor: KT Nshimba</p>
+<h2 id="welcome-to-week-3">Welcome to Week 3!</h2>
+<p>Networking is the nervous system of any virtualized infrastructure. In a traditional data center, network engineers run physical cables, configure hardware switches, and plug in routers. In a Virtualized or Cloud environment, all of this hardware is replaced by <strong>software</strong>.</p>
+<p>As a Cloud Engineer, you are not just managing servers; you are managing the <em>wires</em> between them. When a Proxmox VM cannot reach the internet, or when a Kubernetes pod often fails to talk to a database, the problem rarely lies in the physical switch. It lies in the complex web of virtual interfaces, bridges, and namespaces <em>inside</em> the Linux kernel.</p>
+<p>This week is designed to bridge the gap between "clicking a button in Proxmox" and understanding the kernel-level mechanics that make that click possible. We will dismantle the underlying abstraction and rebuild it command by command.</p>
 <hr />
-<h1 id="welcome-to-week-3">Welcome to Week 3!</h1>
-<p>Networking is the nervous system of specific virtualized infrastructure.</p>
+<h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
 <ul>
-<li><strong>Traditional:</strong> Physical cables, hardware switches.</li>
-<li><strong>Virtual/Cloud:</strong> Software-defined wires, bridges, and routers.</li>
+<li><strong>Linux Networking Core:</strong> Understanding the distinction between ephemeral runtime configurations (<code>ip</code>) and persistent system configurations (<code>nmcli</code>).</li>
+<li><strong>Virtual Wiring:</strong> How <code>veth</code> pairs replace physical patch cables.</li>
+<li><strong>Virtual Switching:</strong> How Linux Bridges simulate Layer 2 switches and manage MAC address tables.</li>
+<li><strong>Network Isolation:</strong> Using Namespaces to solve the "Multi-Tenant" problem.</li>
+<li><strong>Advanced Operations:</strong> Implementing redundancy (Bonding), Routing, and Security (Firewalls).</li>
+<li><strong>Software Defined Networking:</strong> An introduction to Open vSwitch (OVS).</li>
+<li><strong>Proxmox Implementation:</strong> Applying these concepts to real-world VM networking modes.</li>
 </ul>
-<p><strong>The Goal</strong>
-Bridge the gap between "clicking a button in Proxmox" and understanding the kernel-level mechanics (<code>ip</code>, <code>bridge</code>, <code>iptables</code>) that make that click possible.</p>
 <hr />
 <h1 id="part-1-linux-networking-fundamentals">Part 1: Linux Networking Fundamentals</h1>
-<p>Proxmox is Debian Linux. To manage it, you must master Linux networking.</p>
-<h2 id="1-runtime-vs-persistent-networking">1. Runtime vs. Persistent Networking</h2>
+<p>Proxmox is, at its core, a Debian Linux operating system. To troubleshoot or configure it effectively, you must master Linux networking.</p>
+<h2 id="1-runtime-vs-persistent-networking-ip-vs-nmcli">1. Runtime vs. Persistent Networking (<code>ip</code> vs <code>nmcli</code>)</h2>
+<p>In the early days of Unix, network interfaces were configured using <code>ifconfig</code>. This tool has been deprecated for over a decade because it cannot handle modern complexities like multiple IP addresses per interface or policy-based routing. Today, we rely on two distinct layers of configuration.</p>
+<h3 id="11-the-kernel-layer-ip-runtime">1.1 The Kernel Layer: <code>ip</code> (Runtime)</h3>
+<p>The <code>ip</code> command is part of the <code>iproute2</code> suite. It communicates directly with the Linux Kernel via <strong>Netlink sockets</strong>. When you run an <code>ip</code> command, you are modifying the direct, in-memory state of the network stack.</p>
+<ul>
+<li><strong>Speed</strong>: Changes happen instantly (microseconds).</li>
+<li><strong>Scope</strong>: Changes affect the running system only.</li>
+<li><strong>Risk</strong>: <strong>Changes are lost on reboot.</strong> If you restart the server, the kernel reloads, and your manual <code>ip</code> changes disappear.</li>
+</ul>
+<p><strong>Key Commands:</strong></p>
+<ul>
+<li><strong>Link Status</strong>: <code>ip link show</code> (Displays MTU, MAC addresses, and UP/DOWN state).</li>
+<li><strong>IP Addresses</strong>: <code>ip addr show</code> (Displays IPv4/IPv6 addresses attached to links).</li>
+<li><strong>Routing Table</strong>: <code>ip route get 8.8.8.8</code> (Simulates a packet to 8.8.8.8 and tells you which interface and gateway would be used).</li>
+</ul>
+<h3 id="12-the-configuration-layer-nmcli-persistent">1.2 The Configuration Layer: <code>nmcli</code> (Persistent)</h3>
+<p>To make settings permanent, we need a daemon that reads config files and applies them at boot. In modern Linux (including RHEL/CentOS and many Debian setups), this is <strong>NetworkManager</strong>. The command-line tool for this is <code>nmcli</code>.</p>
+<ul>
+<li><strong>Profiles</strong>: NetworkManager saves settings as "Connection Profiles" (saved in <code>/etc/NetworkManager/system-connections/</code>).</li>
+<li><strong>Logic</strong>: It handles complex logic, like "connect to Wi-Fi X when available, otherwise fall back to Ethernet Y."</li>
+<li><strong>Persistence</strong>: Changes made here are written to disk and survive reboots.</li>
+</ul>
+<p><strong>Hands-On Example:</strong>
+Use <code>nmcli</code> to set a static IP, ensuring the server always boots with the same address.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Modify the connection profile for interface &#39;eno1&#39;</span>
+<span class="c1"># Set the IP address and Subnet Mask</span>
+nmcli<span class="w"> </span>con<span class="w"> </span>mod<span class="w"> </span>eno1<span class="w"> </span>ipv4.addresses<span class="w"> </span><span class="m">192</span>.168.1.50/24
+
+<span class="c1"># 2. Set the Default Gateway (The router packets go to)</span>
+nmcli<span class="w"> </span>con<span class="w"> </span>mod<span class="w"> </span>eno1<span class="w"> </span>ipv4.gateway<span class="w"> </span><span class="m">192</span>.168.1.1
+
+<span class="c1"># 3. Disable DHCP (Method: Manual)</span>
+nmcli<span class="w"> </span>con<span class="w"> </span>mod<span class="w"> </span>eno1<span class="w"> </span>ipv4.method<span class="w"> </span>manual
+
+<span class="c1"># 4. Apply the changes (Bounce the interface)</span>
+nmcli<span class="w"> </span>con<span class="w"> </span>up<span class="w"> </span>eno1
+</code></pre></div>
+
+<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><code>ip</code> commands are runtime only (lost on reboot).</li>
+<li><code>nmcli</code> commands are persistent (saved to disk).</li>
+<li>Correct networking requires understanding both layers.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why did Linux move away from <code>ifconfig</code>?</li>
+<li>If you set an IP with <code>ip addr add</code> and then reboot, what happens?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf">Red Hat: ip Command Cheat Sheet</a></li>
+</ul>
+<hr />
+<h2 id="2-network-namespaces-the-containers-of-networking">2. Network Namespaces (The "Containers" of Networking)</h2>
+<p>In a standard Linux server, there is one global network stack. There is one routing table, one firewall, and one list of interfaces. This creates a problem for Cloud Providers: <strong>The Multi-Tenant Problem</strong>.</p>
+<p><strong>Understanding Linux Namespaces</strong>
+A namespace is a fundamental Linux kernel feature that allows the kernel to provide a process with its own isolated view of global system resources. While there are several types of namespacesósuch as <strong>pid</strong> (Process IDs), <strong>mnt</strong> (Mount Points), and <strong>user</strong> (User IDs)óour primary focus here is on the <strong>Network Namespace (<code>net</code>)</strong>.</p>
+<p><strong>The Network Namespace</strong>
+A Network Namespace provides a completely encapsulated network stack. When a process is placed inside a network namespace, it sees a unique set of:</p>
+<ul>
+<li><strong>Network Interfaces</strong> (e.g., its own <code>eth0</code> and <code>lo</code>).</li>
+<li><strong>IP Addresses</strong> (which can overlap with other namespaces).</li>
+<li><strong>Routing Tables</strong> (its own default gateway).</li>
+<li><strong>Firewall Rules</strong> (its own independent <code>iptables</code> chains).</li>
+</ul>
+<p>Even though multiple containers share the same underlying Linux Kernel, this isolation ensures they cannot see or interfere with each other's traffic.</p>
+<h3 id="21-the-tenant-problem">2.1 The "Tenant Problem"</h3>
+<p>Imagine you are hosting Amazon Web Services. Customer A wants a private network using the IP range <code>192.168.1.0/24</code>. Customer B <em>also</em> wants to use <code>192.168.1.0/24</code>. On a normal OS, you cannot have the same IP address twice. It would cause an IP conflict.</p>
+<p>To solve this, we use <strong>Namespaces</strong>. A Network Namespace is like a parallel universe for networking. It partitions the kernel's network structures. Inside a namespace, you have a completely independent set of interfaces, routes, and firewall rules. Customer A lives in Namespace A, and Customer B lives in Namespace B. They can use identical IP addresses without ever conflicting. This is the fundamental technology behind <strong>Docker</strong>, <strong>Kubernetes</strong>, and <strong>LXC</strong>.</p>
+<p><img alt="Linux Network Namespaces" src="images/linux_namespaces.png" />
+<em>Figure 2.1: Visualizing Isolation of Network Resources within a Single Linux Kernel.</em></p>
+<h3 id="22-hands-on-example">2.2 Hands-On Example</h3>
+<p>We will create a "sandbox" namespace to demonstrate this total isolation.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create a new namespace called &quot;sandbox&quot;</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span>add<span class="w"> </span>sandbox
+
+<span class="c1"># 2. Verify Isolation</span>
+<span class="c1"># Run &#39;ip link&#39; on the main host. You see all your physical cards.</span>
+ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>
+
+<span class="c1"># Run &#39;ip link&#39; INSIDE the sandbox. You see NOTHING (except loopback).</span>
+<span class="c1"># The syntax is: ip netns exec &lt;name&gt; &lt;command&gt;</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sandbox<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span>show
+
+<span class="c1"># 3. Activate the Loopback</span>
+<span class="c1"># Ideally, every network stack needs a standard localhost (127.0.0.1)</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sandbox<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>lo<span class="w"> </span>up
+</code></pre></div>
+
+<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li>Namespaces isolate network stacks (interfaces, routes, firewalls).</li>
+<li>They solve the "Multi-Tenant" problem (overlapping IPs).</li>
+<li>They are the foundation of all Container technology.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Can a process in Namespace A see the network traffic of Namespace B?</li>
+<li>How does this isolation improve security in a cloud environment?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/">Introduction to Linux Namespaces</a></li>
+</ul>
+<hr />
+<h2 id="3-connecting-the-dots-veth-pairs-and-bridges">3. Connecting the Dots: Veth Pairs and Bridges</h2>
+<p>Isolation is excellent for security, but now our namespace is a digital islands. It helps no one if it cannot communicate. We need two things to fix this: a cable and a switch.</p>
+<h3 id="31-the-virtual-cable-veth">3.1 The Virtual Cable (<code>veth</code>)</h3>
+<p>You cannot plug a physical Ethernet cable into a software namespace. Instead, Linux provides the <strong>Virtual Ethernet (veth)</strong> device.
+A <code>veth</code> pair is always created as two connected interfacesóa "pipe." Packets sent into Interface A instantly arrive at Interface B, and vice versa. This allows us to tunnel traffic from the Global Host namespace into the isolated "sandbox" namespace.</p>
+<p><strong>Hands-On Example:</strong>
+Connecting the Sandbox to the Host.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create the pair. We name the ends specifically to avoid confusion.</span>
+<span class="c1"># &#39;veth-host&#39; will stay on the outside. &#39;veth-sandbox&#39; will go inside.</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>veth-host<span class="w"> </span><span class="nb">type</span><span class="w"> </span>veth<span class="w"> </span>peer<span class="w"> </span>name<span class="w"> </span>veth-sandbox
+
+<span class="c1"># 2. Move one end through the &quot;portal&quot; into the namespace</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-sandbox<span class="w"> </span>netns<span class="w"> </span>sandbox
+
+<span class="c1"># 3. Configure IPs (The Host side is the Gateway; The Sandbox side is the Client)</span>
+<span class="c1"># Host Side: 10.0.0.1</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.0.1/24<span class="w"> </span>dev<span class="w"> </span>veth-host
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-host<span class="w"> </span>up
+
+<span class="c1"># Sandbox Side: 10.0.0.2</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sandbox<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.0.2/24<span class="w"> </span>dev<span class="w"> </span>veth-sandbox
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sandbox<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-sandbox<span class="w"> </span>up
+
+<span class="c1"># 4. Test Connectivity</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sandbox<span class="w"> </span>ping<span class="w"> </span><span class="m">10</span>.0.0.1
+</code></pre></div>
+
+<h3 id="32-the-virtual-switch-bridge">3.2 The Virtual Switch (<code>bridge</code>)</h3>
+<p>Connecting two points with a <code>veth</code> is easy. But what if you have 50 Containers? You cannot create a mesh of cables between every single one. You need a device to connect them all to a central point.
+A <strong>Linux Bridge</strong> is a software implementation of a standard Ethernet Switch. It operates at <strong>Layer 2 (Data Link Layer)</strong>.</p>
+<!-- ![Virtual Ethernet & Bridging](images/veth_bridge_architecture.png) -->
+<!-- *Figure 3.1: Veth pairs connecting Namespaces to a Linux Bridge.* -->
+
+<ul>
+<li><strong>MAC Learning</strong>: The bridge listens to incoming frames. If it sees a packet from MAC <code>AA:BB:CC</code> coming from Port 1, it records this in a table.</li>
+<li><strong>Forwarding</strong>: If it later receives a packet destined for <code>AA:BB:CC</code>, it looks up the table and sends it <em>only</em> to Port 1. This reduces traffic congestion compared to a "Hub" which broadcasts everything.</li>
+</ul>
+<p><strong>How devices plug in:</strong></p>
+<ul>
+<li><strong>Containers</strong>: Use <code>veth</code> pairs (as discussed in 3.1).</li>
+<li><strong>Virtual Machines</strong>: Use <strong>TAP Interfaces</strong>. A <code>tap</code> device simulates an Ethernet device at Layer 2. QEMU/KVM creates a <code>tap</code> interface (e.g., <code>tap100i0</code>) for the VM, and the other end connects to the Bridge. This allows the VM to send raw Ethernet frames onto the switch.</li>
+</ul>
+<p><strong>Example: Manually creating a TAP interface (What Proxmox does behind the scenes)</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create the TAP interface</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>tuntap<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>tap0<span class="w"> </span>mode<span class="w"> </span>tap
+
+<span class="c1"># 2. Plug it into the Bridge</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>tap0<span class="w"> </span>master<span class="w"> </span>br0
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>tap0<span class="w"> </span>up
+</code></pre></div>
+
+<p><strong>Hands-On Example: Connecting Two Namespaces (Red &amp; Blue)</strong>
+We will act as a "Virtual Switch" administrator. We want to connect two isolated namespaces so they can talk to each other.</p>
+<ol>
+<li>
+<p><strong>Create the Bridge (The Switch)</strong>:
+    <code>bash
+    sudo ip link add name br0 type bridge
+    sudo ip link set br0 up</code></p>
+</li>
+<li>
+<p><strong>Create the "Computers" (Namespaces)</strong>:
+    <code>bash
+    sudo ip netns add red
+    sudo ip netns add blue</code></p>
+</li>
+<li>
+<p><strong>Create the Cables (Veth Pairs)</strong>:
+    We need two cables. One for Red, one for Blue.</p>
+<ul>
+<li>Cable 1: <code>veth-red</code> (Switch side) &lt;-&gt; <code>veth-red-ns</code> (Computer side)</li>
+<li>Cable 2: <code>veth-blue</code> (Switch side) &lt;-&gt; <code>veth-blue-ns</code> (Computer side)
+<code>bash
+sudo ip link add veth-red type veth peer name veth-red-ns
+sudo ip link add veth-blue type veth peer name veth-blue-ns</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Plug them in (Wiring)</strong>:</p>
+<ul>
+<li>Plug the "NS" ends into the namespaces.</li>
+<li>Plug the other ends into the Bridge (<code>master br0</code>).</li>
+</ul>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Wiring Red</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-red-ns<span class="w"> </span>netns<span class="w"> </span>red
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-red<span class="w"> </span>master<span class="w"> </span>br0
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-red<span class="w"> </span>up
+
+<span class="c1"># Wiring Blue</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-blue-ns<span class="w"> </span>netns<span class="w"> </span>blue
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-blue<span class="w"> </span>master<span class="w"> </span>br0
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-blue<span class="w"> </span>up
+</code></pre></div>
+
+<ol>
+<li><strong>Configure IPs (Inside Namespaces)</strong>:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Red Computer: 192.168.50.1</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>red<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.50.1/24<span class="w"> </span>dev<span class="w"> </span>veth-red-ns
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>red<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-red-ns<span class="w"> </span>up
+
+<span class="c1"># Blue Computer: 192.168.50.2</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>blue<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.50.2/24<span class="w"> </span>dev<span class="w"> </span>veth-blue-ns
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>blue<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>veth-blue-ns<span class="w"> </span>up
+</code></pre></div>
+
+<ol>
+<li><strong>Test Connectivity</strong>:
+    Ping Blue from Red. The packet goes: <code>Red -&gt; veth -&gt; br0 -&gt; veth -&gt; Blue</code>.</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>red<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">192</span>.168.50.2
+</code></pre></div>
+
+<hr />
+<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><code>veth</code> pairs act as virtual cables connecting namespaces.</li>
+<li>Linux Bridges act as virtual switches, forwarding frames based on MAC addresses.</li>
+<li>We can build complex topologies entirely in software.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>If you forget to "plug" the veth into the bridge (<code>master br0</code>), what happens?</li>
+<li>Why do we need two ends to a veth pair?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://man7.org/linux/man-pages/man8/bridge.8.html">Linux Bridge Command Help</a></li>
+</ul>
+<hr />
+<h2 id="4-container-networking-in-practice-docker-podman-lxc">4. Container Networking in Practice (Docker, Podman, LXC)</h2>
+<p>In Week 3, we discussed containers. Now we see how they use the Linux networking primitives we just learned.</p>
+<h3 id="41-docker-the-standard-bridge">4.1 Docker (The Standard Bridge)</h3>
+<p>When you install Docker, it creates a Linux Bridge named <code>docker0</code>.</p>
+<ul>
+<li><strong>The Bridge</strong>: <code>docker0</code> (Usually 172.17.0.1/16).</li>
+<li><strong>The Veth</strong>: Every time you run <code>docker run</code>, Docker creates a <code>veth</code> pair. One end sits on the host (plugged into <code>docker0</code>), the other sits inside the container.</li>
+<li><strong>The Namespace</strong>: The container <em>is</em> just a process running inside a network namespace.</li>
+</ul>
+<p><strong>CLI Comparison:</strong></p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;"><strong>Runtime (<code>ip</code>)</strong></th>
-<th style="text-align: left;"><strong>Persistent (<code>nmcli</code> / Config)</strong></th>
+<th style="text-align: left;">Action</th>
+<th style="text-align: left;">Manual Linux Command</th>
+<th style="text-align: left;">Docker Command</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Layer</strong></td>
-<td style="text-align: left;">Kernel Layer (Netlink)</td>
-<td style="text-align: left;">Configuration Daemon</td>
+<td style="text-align: left;">Create Net</td>
+<td style="text-align: left;"><code>ip link add br0 type bridge</code></td>
+<td style="text-align: left;"><code>docker network create mynet</code></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Speed</strong></td>
-<td style="text-align: left;">Instant (Microseconds)</td>
-<td style="text-align: left;">Applies on reload/reboot</td>
+<td style="text-align: left;">Create NS</td>
+<td style="text-align: left;"><code>ip netns add container1</code></td>
+<td style="text-align: left;"><code>docker run --name container1 ...</code></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Scope</strong></td>
-<td style="text-align: left;">In-Memory (RAM)</td>
-<td style="text-align: left;">Written to Disk (<code>/etc/...</code>)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Risk</strong></td>
-<td style="text-align: left;"><strong>LOST ON REBOOT</strong></td>
-<td style="text-align: left;"><strong>SAVED</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Best Practice:</strong></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<td style="text-align: left;">Use <code>ip</code> for instantaneous troubleshooting. Use <code>nmcli</code> or <code>/etc/network/interfaces</code> for permanent changes.</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Connect</td>
+<td style="text-align: left;"><code>ip link set veth master br0</code></td>
+<td style="text-align: left;">Auto-connected to <code>docker0</code> or custom net</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="11-the-kernel-layer-ip-runtime">1.1 The Kernel Layer: <code>ip</code> (Runtime)</h2>
-<p>The <code>ip</code> command is part of the modern <code>iproute2</code> suite.</p>
+<!-- End of CLI Comparison table -->
+
+<h3 id="42-podman-rootless-networking">4.2 Podman (Rootless Networking)</h3>
+<p>Podman often manages containers without root privileges. Standard bridges require root. How does it work?</p>
 <ul>
-<li><strong>Link Status:</strong> <code>ip link show</code><ul>
-<li>Shows Up/Down state, MTU, and MAC addresses.</li>
+<li><strong>slirp4netns</strong>: Podman uses a User-Space networking stack. It "slurps" traffic from the host interface and pipes it into the container namespace without touching the kernel's actual bridge settings.</li>
+<li><strong>Performance</strong>: Slightly slower than Docker's bridge, but much more secure.</li>
 </ul>
-</li>
-<li><strong>IP Addresses:</strong> <code>ip addr show</code><ul>
-<li>Shows IPv4 (inet) and IPv6 (inet6) addresses attached to interfaces.</li>
-</ul>
-</li>
-<li><strong>Routing Table:</strong> <code>ip route get 8.8.8.8</code><ul>
-<li>Simulates a packet path to tell you which interface and gateway would be used.</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="12-the-configuration-layer-nmcli-persistent">1.2 The Configuration Layer: <code>nmcli</code> (Persistent)</h2>
+<h3 id="43-lxc-system-containers">4.3 LXC (System Containers)</h3>
+<p>LXC is closer to Proxmox's approach. It typically uses <code>lxcbr0</code>.</p>
 <ul>
-<li><strong>Profiles:</strong> Settings generally saved in <code>/etc/NetworkManager/system-connections/</code>.</li>
-<li><strong>Logic:</strong> Handles complex logic like "Connect to WiFi if Ethernet fails."</li>
-<li><strong>Example Command:</strong>
-    <code>bash
-    # Set IP and Gateway persistently
-    nmcli con mod eno1 ipv4.addresses 192.168.1.50/24
-    nmcli con mod eno1 ipv4.gateway 192.168.1.1
-    # Apply changes
-    nmcli con up eno1</code></li>
+<li>Unlike Docker, LXC networking is defined in a <strong>config file</strong>. By default, it connects to <code>lxcbr0</code> and requests an IP via DHCP, just like a physical computer would.</li>
 </ul>
-<hr />
-<h1 id="part-2-network-namespaces">Part 2: Network Namespaces</h1>
-<h2 id="21-the-tenant-problem">2.1 The "Tenant Problem"</h2>
-<p><strong>Scenario:</strong>
-Imagine you are hosting Amazon Web Services.</p>
-<ul>
-<li>Customer A wants a private network using <code>192.168.1.0/24</code>.</li>
-<li>Customer B <em>also</em> wants to use <code>192.168.1.0/24</code>.</li>
-</ul>
-<p><strong>The Conflict:</strong>
-On a normal OS, you cannot have the same IP address twice. It would cause an IP conflict.</p>
-<hr />
-<h2 id="22-the-solution-namespaces">2.2 The Solution: Namespaces</h2>
-<p>A Network Namespace is a fundamental Linux kernel feature.
-It provides a completely encapsulated network stack:</p>
-<ul>
-<li><strong>Interfaces:</strong> Its own <code>eth0</code>, <code>lo</code>.</li>
-<li><strong>Routes:</strong> Its own Routing Table.</li>
-<li><strong>Firewall:</strong> Its own <code>iptables</code> chains.</li>
-</ul>
-<p><strong>Result:</strong>
-Customer A lives in Namespace A. Customer B lives in Namespace B. They use identical IPs without ever conflicting. This is the technology behind <strong>Docker</strong> and <strong>Kubernetes</strong>.</p>
-<hr />
-<h1 id="part-3-connecting-the-dots">Part 3: Connecting the Dots</h1>
-<h2 id="31-the-virtual-cable-veth">3.1 The Virtual Cable (<code>veth</code>)</h2>
-<p>Isolation is safe, but useless if we cannot communicate.</p>
-<ul>
-<li><strong>Definition:</strong> Virtual Ethernet pair. A "pipe" with two ends.</li>
-<li><strong>Behavior:</strong> Packets sent into Interface A instantly arrive at Interface B.</li>
-<li><strong>Usage:</strong><ul>
-<li>Plug one end into the Namespace ("inside").</li>
-<li>Plug the other end into the Host ("outside").</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="32-the-virtual-switch-bridge">3.2 The Virtual Switch (<code>bridge</code>)</h2>
-<ul>
-<li><strong>Definition:</strong> A software implementation of a Layer 2 Ethernet Switch.</li>
-<li><strong>Function:</strong> It maintains a MAC Address Table and forwards frames.</li>
-<li><strong>Proxmox Context:</strong><ul>
-<li><code>vmbr0</code> acts as the physical switch.</li>
-<li>Physical NIC (<code>eno1</code>) is the uplink.</li>
-<li>VM Interfaces (<code>tap100i0</code>) are the downlinks.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Note on VMs:</strong>
-VMs use <code>tap</code> interfaces (Simulated L2 Ethernet) to plug into bridges.</p>
-<hr />
-<h1 id="part-4-container-networking">Part 4: Container Networking</h1>
-<h2 id="41-docker-the-standard-bridge">4.1 Docker (The Standard Bridge)</h2>
-<ul>
-<li><strong>Architecture:</strong> Docker creates a bridge named <code>docker0</code> by default.</li>
-<li><strong>IPAM:</strong> It manages its own internal IP pool (<code>172.17.0.x</code>).</li>
-<li><strong>Connectivity:</strong><ul>
-<li>Every container gets a <code>veth</code> pair.</li>
-<li>Traffic to the outside world is <strong>NAT'd</strong> (Masqueraded) via the host IP.</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="42-podman-and-rootless-networking">4.2 Podman and Rootless Networking</h2>
-<ul>
-<li><strong>Security Focus:</strong> Podman can run containers as a standard user (non-root).</li>
-<li><strong>Challenge:</strong> Standard users cannot create Global Network Interfaces.</li>
-<li><strong>Solution: <code>slirp4netns</code></strong><ul>
-<li>Uses a user-space network stack to translate packets.</li>
-<li>Slower than Kernel bridging, but much more secure.</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="43-lxc-system-containers">4.3 LXC (System Containers)</h2>
-<ul>
-<li><strong>Approach:</strong> LXC containers behave like lightweight Virtual Machines.</li>
-<li><strong>Network:</strong><ul>
-<li>Often bridged directly to the physical LAN (<code>vmbr0</code>).</li>
-<li>Requests an IP from your physical Router via DHCP.</li>
-<li>Visible to the rest of the network as a distinct device.</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h1 id="part-5-advanced-linux-operations">Part 5: Advanced Linux Operations</h1>
-<h2 id="51-link-aggregation-bonding">5.1 Link Aggregation (Bonding)</h2>
-<ul>
-<li><strong>Problem:</strong> Single Point of Failure. If <code>eno1</code> breaks, the server goes offline.</li>
-<li><strong>Solution:</strong> Bond <code>eno1</code> + <code>eno2</code> -&gt; <code>bond0</code>.</li>
-<li><strong>Modes:</strong><ul>
-<li><strong>Active-Backup:</strong> One cable works. If it fails, the other takes over instantly (Default).</li>
-<li><strong>LACP (Mode 4):</strong> Uses both cables for Speed + Redundancy. Requires Switch Support (802.3ad).</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="52-ip-forwarding-routing">5.2 IP Forwarding (Routing)</h2>
-<ul>
-<li><strong>Host Behavior:</strong> By default, Linux acts as a specific destination. It drops packets not meant for its own IP.</li>
-<li><strong>Router Behavior:</strong> To act as a Gateway (passing packets from VM -&gt; Internet), we must enable forwarding.</li>
-</ul>
-<p><strong>Command:</strong></p>
-<div class="codehilite"><pre><span></span><code>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create a container</span>
+sudo<span class="w"> </span>lxc-create<span class="w"> </span>-n<span class="w"> </span>my-container<span class="w"> </span>-t<span class="w"> </span>download<span class="w"> </span>--<span class="w"> </span>-d<span class="w"> </span>ubuntu<span class="w"> </span>-r<span class="w"> </span>focal<span class="w"> </span>-a<span class="w"> </span>amd64
+
+<span class="c1"># 2. View the Network Config (How does it get an IP?)</span>
+<span class="c1"># You will see: lxc.net.0.type = veth</span>
+<span class="c1"># You will see: lxc.net.0.link = lxcbr0</span>
+cat<span class="w"> </span>/var/lib/lxc/my-container/config
+
+<span class="c1"># 3. Start the container (It creates the veth and asks for DHCP)</span>
+sudo<span class="w"> </span>lxc-start<span class="w"> </span>-n<span class="w"> </span>my-container
+
+<span class="c1"># 4. Check the assigned IP</span>
+sudo<span class="w"> </span>lxc-info<span class="w"> </span>-n<span class="w"> </span>my-container
 </code></pre></div>
 
-<hr />
-<h2 id="53-the-linux-firewall-iptables">5.3 The Linux Firewall (<code>iptables</code>)</h2>
-<p>The "Security Group" of the kernel.</p>
-<p><strong>Chains:</strong>
-1.  <strong>INPUT:</strong> Traffic TO the host (e.g., SSH).
-2.  <strong>OUTPUT:</strong> Traffic FROM the host.
-3.  <strong>FORWARD:</strong> Traffic THROUGH the host (VMs).</p>
-<p><strong>Frontends:</strong></p>
+<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Firewalld (RHEL):</strong> Zone-based management.</li>
-<li><strong>UFW (Ubuntu):</strong> Profile-based management ("Allow SSH").</li>
+<li>Docker automates the creation of Bridges (<code>docker0</code>) and Veth pairs.</li>
+<li>Podman uses <code>slirp4netns</code> for rootless, secure networking.</li>
+<li>LXC behaves more like traditional VMs on the network.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>Why is "Rootless" networking considered more secure?</li>
+<li>How does <code>docker network create</code> simplify what we did in Section 3?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://docs.docker.com/network/">Docker Networking Overview</a></li>
 </ul>
 <hr />
-<h2 id="54-network-reconnaissance">5.4 Network Reconnaissance</h2>
-<p><strong>Tools for Discovery:</strong></p>
+<h2 id="5-advanced-linux-operations">5. Advanced Linux Operations</h2>
+<p>Mastering the basics is enough to build a lab, but production environments require robustness, redundancy, and security.</p>
+<h3 id="51-link-aggregation-bondinglacp">5.1 Link Aggregation (Bonding/LACP)</h3>
+<p>Hardware fails. Cables get cut, SFP modules burn out, and switch ports die. If your Hypervisor is connected via a single cable, you have a <strong>Single Point of Failure (SPOF)</strong>.</p>
+<p><strong>Bonding</strong> allows you to combine multiple physical interfaces (e.g., <code>eno1</code> and <code>eno2</code>) into a single virtual interface (<code>bond0</code>).</p>
+<ul>
+<li><strong>Mode 1 (Active-Backup)</strong>: Only one cable is used. If it fails, the traffic flips to the second cable. Simple, but wastes 50% bandwidth.</li>
+<li><strong>Mode 4 (802.3ad LACP)</strong>: The Gold Standard. The server and switch communicate to balance traffic across <em>both</em> cables simultaneously. You get double the speed and redundancy.</li>
+</ul>
+<p><strong>Configuration:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create the Bond Interface</span>
+nmcli<span class="w"> </span>con<span class="w"> </span>add<span class="w"> </span><span class="nb">type</span><span class="w"> </span>bond<span class="w"> </span>con-name<span class="w"> </span>bond0<span class="w"> </span>ifname<span class="w"> </span>bond0<span class="w"> </span>mode<span class="w"> </span><span class="m">802</span>.3ad
+
+<span class="c1"># 2. Enslave Physical NICs to the Bond</span>
+nmcli<span class="w"> </span>con<span class="w"> </span>add<span class="w"> </span><span class="nb">type</span><span class="w"> </span>ethernet<span class="w"> </span>slave-type<span class="w"> </span>bond<span class="w"> </span>con-name<span class="w"> </span>bond0-eno1<span class="w"> </span>ifname<span class="w"> </span>eno1<span class="w"> </span>master<span class="w"> </span>bond0
+nmcli<span class="w"> </span>con<span class="w"> </span>add<span class="w"> </span><span class="nb">type</span><span class="w"> </span>ethernet<span class="w"> </span>slave-type<span class="w"> </span>bond<span class="w"> </span>con-name<span class="w"> </span>bond0-eno2<span class="w"> </span>ifname<span class="w"> </span>eno2<span class="w"> </span>master<span class="w"> </span>bond0
+
+<span class="c1"># 3. Bring up the Bond</span>
+nmcli<span class="w"> </span>con<span class="w"> </span>up<span class="w"> </span>bond0
+</code></pre></div>
+
+<h3 id="52-ip-forwarding-routing">5.2 IP Forwarding &amp; Routing</h3>
+<p>A Linux server usually behaves like an <strong>End Host</strong>óit consumes packets sent to it and ignores the rest. However, in virtualization (specifically NAT Mode), the Linux host must act as a <strong>Router</strong>. It needs to accept packets from VMs and forward them to the Internet.</p>
+<p>To do this, we must toggle a specialized kernel parameter: <code>ip_forward</code>. We also need to manipulate the <strong>Routing Table</strong> to tell the kernel where networks live.</p>
+<p><strong>Commands:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check status (0 = Disabled, 1 = Enabled)</span>
+cat<span class="w"> </span>/proc/sys/net/ipv4/ip_forward
+
+<span class="c1"># Enable Forwarding Temporarily</span>
+sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span>
+
+<span class="c1"># Add a Static Route</span>
+<span class="c1"># &quot;Traffic for 10.99.0.0/24 should be sent to the gateway at 192.168.1.254&quot;</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.99.0.0/24<span class="w"> </span>via<span class="w"> </span><span class="m">192</span>.168.1.254
+</code></pre></div>
+
+<h3 id="53-the-linux-firewall-iptables">5.3 The Linux Firewall (<code>iptables</code>)</h3>
+<p>Security in the cloud isn't just about an external firewall appliance. Every Linux kernel has a built-in firewall called <strong>Netfilter</strong>. We manipulate it using <code>iptables</code>. It processes packets in "Chains":
+1.  <strong>INPUT</strong>: Filters traffic destined for the localhost.
+2.  <strong>OUTPUT</strong>: Filters traffic created by the localhost.
+3.  <strong>FORWARD</strong>: Filters traffic passing <em>through</em> the localhost (e.g., VM to Internet traffic).</p>
+<p><strong>Hands-On Example:</strong> securing a host.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Allow &quot;Established&quot; traffic</span>
+<span class="c1"># If we sent a request out, allow the reply back in. Essential!</span>
+sudo<span class="w"> </span>iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-m<span class="w"> </span>state<span class="w"> </span>--state<span class="w"> </span>ESTABLISHED,RELATED<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+
+<span class="c1"># 2. Allow SSH (Port 22) so we can manage the server</span>
+sudo<span class="w"> </span>iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">22</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># 3. Drop Everything Else</span>
+<span class="c1"># This is the &quot;Default Deny&quot; posture. If it&#39;s not explicitly allowed, kill it.</span>
+sudo<span class="w"> </span>iptables<span class="w"> </span>-P<span class="w"> </span>INPUT<span class="w"> </span>DROP
+</code></pre></div>
+
+<p><strong>Modern Frontends: <code>firewalld</code> vs <code>iptables</code></strong>
+While <code>iptables</code> (and its successor <code>nftables</code>) is the low-level tool, managing thousands of rules manually is hard. Modern distros use "Frontend Controllers":</p>
+<ul>
+<li><strong>RHEL/CentOS/Fedora</strong>: Use <code>firewalld</code>. It organizes rules into "Zones" (Public, Home, Work).</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Check which zone is active</span>
+sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--get-active-zones
+
+<span class="c1"># 2. Allow HTTP traffic permanently</span>
+sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--permanent<span class="w"> </span>--add-service<span class="o">=</span>http
+
+<span class="c1"># 3. Allow a specific port (e.g., 8080)</span>
+sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--permanent<span class="w"> </span>--add-port<span class="o">=</span><span class="m">8080</span>/tcp
+
+<span class="c1"># 4. Reload to apply changes</span>
+sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--reload
+</code></pre></div>
+
+<ul>
+<li><strong>Debian/Ubuntu</strong>: Often use <code>ufw</code> (Uncomplicated Firewall).</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Check status (Inactive by default)</span>
+sudo<span class="w"> </span>ufw<span class="w"> </span>status
+
+<span class="c1"># 2. Allow SSH first (Important!)</span>
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span>ssh
+
+<span class="c1"># 3. Allow specific ports</span>
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">80</span>/tcp
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">8080</span>/tcp
+
+<span class="c1"># 4. Enable the firewall</span>
+sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</span>
+</code></pre></div>
+
+<p>These tools write the underlying <code>iptables</code>/<code>nftables</code> rules for you.</p>
+<h3 id="54-network-reconnaissance-ss-nmap">5.4 Network Reconnaissance (<code>ss</code> &amp; <code>nmap</code>)</h3>
+<p>Before you can analyze traffic, you often need to know what ports are open or who is listening.</p>
+<p><strong>Socket Statistics (<code>ss</code>)</strong>
+<code>ss</code> is the modern replacement for the deprecated <code>netstat</code>. It allows you to see which processes on <em>your</em> server are listening for connections.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Show all Listening (l) TCP (t) and UDP (u) ports with Numeric (n) values and Process names (p)</span>
+sudo<span class="w"> </span>ss<span class="w"> </span>-tulpn
+</code></pre></div>
+
+<p><strong>Network Mapper (<code>nmap</code>)</strong>
+<code>nmap</code> is the industry standard for network discovery. Unlike <code>ss</code> (which looks locally), <code>nmap</code> allows you to scan <em>remote</em> servers to see what they are exposing.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Scan a target IP to see open ports</span>
+nmap<span class="w"> </span><span class="m">192</span>.168.1.50
+</code></pre></div>
+
+<h3 id="55-traffic-analysis-tcpdump">5.5 Traffic Analysis (<code>tcpdump</code>)</h3>
+<p>When networking breaks, it often fails silently. A firewall drops a packet without an error message. A route sends traffic into a black hole. To fix this, we need <strong>Packet Capture</strong>.</p>
+<p><code>tcpdump</code> is the CLI version of Wireshark. It puts the network card into "Promiscuous Mode," allowing it to see every packet on the wire, not just those addressed to it.</p>
+<p><strong>Commands:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Basic Capture: Listen on interface &#39;vmbr0&#39; for Port 80 (HTTP)</span>
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>vmbr0<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>
+
+<span class="c1"># Source Filtering: Show traffic only from a specific &quot;Bad IP&quot;</span>
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>vmbr0<span class="w"> </span>src<span class="w"> </span><span class="m">10</span>.0.0.5
+
+<span class="c1"># File Capture: Save packets to a file for detailed analysis in Wireshark later</span>
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>vmbr0<span class="w"> </span>-w<span class="w"> </span>crash_report.pcap
+</code></pre></div>
+
+<h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong>Bonding</strong> aggregates links for redundancy (Active/Backup) or speed (LACP).</li>
+<li><strong>Routing</strong> allows a Linux host to act as a Gateway.</li>
+<li><strong>IPTables</strong> controls traffic flow (Input, Output, Forward).</li>
+<li><strong>SS/Nmap</strong> allow you to discover open ports and listening services.</li>
+<li><strong>Tcpdump</strong> allows us to see the actual packets on the wire.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>If you have a Bond with 2 cables and one is cut, does the server go offline?</li>
+<li>Why do we need <code>ip_forward=1</code> for NAT?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://danielmiessler.com/study/tcpdump/">Tcpdump 101</a></li>
+</ul>
+<hr />
+<h1 id="part-2-virtual-networking-in-proxmox">Part 2: Virtual Networking in Proxmox</h1>
+<p>Now that we have dismantled the Linux kernel concepts, we can look at how <strong>Proxmox Virtual Environment (PVE)</strong> uses them to manage VM networking. Proxmox does not invent its own networking stack; it "orchestrates" standard Linux tools (Bridges, OVS, IPTables) via a web interface.</p>
+<h2 id="6-open-vswitch-ovs-the-cloud-switch">6. Open vSwitch (OVS): The Cloud Switch</h2>
+<p>While the standard Linux Bridge is reliable and simple, it was designed for a single server. It lacks the intelligence required for massive, multi-tenant clouds. <strong>Open vSwitch (OVS)</strong> is an industrial-grade, programmable virtual switch used by giants like OpenStack, Red Hat, and Citrix.</p>
+<h3 id="61-architecture-control-plane-vs-data-plane">6.1 Architecture: Control Plane vs. Data Plane</h3>
+<p>Unlike a physical dumb switch, OVS is split into two parts:
+1.  <strong>Userspace (Control Plane)</strong>: <code>ovs-vswitchd</code> and <code>ovsdb-server</code> handle the database and logic. This is where you configure "Flows" and "Ports".
+2.  <strong>Kernel Module (Data Plane)</strong>: This handles the actual packet switching at wire speed. It caches decisions made by the Control Plane so that future matching packets don't need to check the database again.</p>
+<h3 id="62-installing-ovs">6.2 Installing OVS</h3>
+<p>Unlike the standard bridge, OVS is not always installed by default.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Ubuntu/Debian</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>openvswitch-switch
+
+<span class="c1"># Start the service</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>openvswitch-switch
+
+<span class="c1"># Verify</span>
+sudo<span class="w"> </span>ovs-vsctl<span class="w"> </span>show
+</code></pre></div>
+
+<h3 id="63-the-power-of-flows">6.3 The Power of Flows</h3>
+<p>Standard bridges forward based on MAC addresses. OVS forwards based on <strong>Flow Rules</strong>. A flow rule matches a packet's header fields and performs an action.</p>
+<p><strong>Example Scenario:</strong>
+You want to block a specific "Bad Neighbor" VM (IP 10.0.0.66) from sending traffic, but allow everything else.</p>
+<ul>
+<li><strong>Linux Bridge:</strong> Cannot do this natively (needs complex iptables).</li>
+<li><strong>OVS:</strong> One simple command.</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create a programmable bridge</span>
+<span class="c1"># This creates a virtual switch that listens for OpenFlow commands.</span>
+ovs-vsctl<span class="w"> </span>add-br<span class="w"> </span>ovsbr0
+
+<span class="c1"># 2. Add a Flow Rule to DROP traffic from specific source IP</span>
+<span class="c1"># &quot;If a packet comes from 10.0.0.66, DROP it explicitly.&quot;</span>
+ovs-ofctl<span class="w"> </span>add-flow<span class="w"> </span>ovsbr0<span class="w"> </span><span class="s2">&quot;ip,nw_src=10.0.0.66 actions=drop&quot;</span>
+
+<span class="c1"># 3. Add a fallback rule (Normal Switching)</span>
+<span class="c1"># &quot;If no other rules match, behave like a normal L2 Switch.&quot;</span>
+ovs-ofctl<span class="w"> </span>add-flow<span class="w"> </span>ovsbr0<span class="w"> </span><span class="s2">&quot;priority=0 actions=NORMAL&quot;</span>
+</code></pre></div>
+
+<h3 id="64-sdn-controller-integration">6.4 SDN Controller Integration</h3>
+<p>OVS is designed to be controlled remotely by an SDN Controller (like OpenDaylight or ONOS). This allows a central brain to program the switches across the entire datacenter.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Point the switch to a Controller IP</span>
+ovs-vsctl<span class="w"> </span>set-controller<span class="w"> </span>ovsbr0<span class="w"> </span>tcp:192.168.56.10:6653
+</code></pre></div>
+
+<h3 id="section-6-checkpoint">Section 6 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li>OVS is a programmable, carrier-grade virtual switch.</li>
+<li>It separates the Control Plane (Logic) from the Data Plane (Forwarding).</li>
+<li>It uses "Flows" instead of just MAC tables, allowing for complex logic (Drop IP X, Redirect Port Y).</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>How does OVS differ from a standard Linux Bridge?</li>
+<li>What is the role of an SDN Controller?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://www.openvswitch.org/">Open vSwitch Crash Course</a></li>
+</ul>
+<hr />
+<h2 id="7-proxmox-networking">7. Proxmox Networking</h2>
+<p>Proxmox VE is not a "black box." It is simply a Debian Linux host with a nice web interface. Every networking button you click in the GUI corresponds directly to the Linux commands we learned in Part 1.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Proxmox GUI Term</th>
+<th style="text-align: left;">Underlying Linux Technology</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Linux Bridge (<code>vmbr0</code>)</td>
+<td style="text-align: left;">Standard <code>bridge</code> (Section 3.2)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bond (<code>bond0</code>)</td>
+<td style="text-align: left;">Linux Bonding (Section 5.1)</td>
+</tr>
+<tr>
+<td style="text-align: left;">VLAN Tag</td>
+<td style="text-align: left;"><code>vlan</code> interface or Bridge VLAN Filtering (Section 7.3)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Firewall</td>
+<td style="text-align: left;"><code>iptables</code> / <code>nftables</code> (Section 5.3)</td>
+</tr>
+</tbody>
+</table>
+<!-- End of table -->
+
+<p>When you start a VM, Proxmox creates a dynamic <code>tap</code> interface (e.g., <code>tap100i0</code>) and plugs it into the bridge (<code>vmbr0</code>), exactly like we plugged in <code>veth</code> pairs in the Lab.</p>
+<h3 id="71-networking-modes">7.1 Networking Modes</h3>
+<p>When configuring a VM's hardware, you choose how it connects to the bridge. We primarily see three patterns.</p>
+<!-- ![Proxmox Networking Modes](images/proxmox_networking_modes.png) -->
+<!-- *Figure 7.1: Comparison of Bridged vs. NAT vs. VLAN Modes.* -->
+
+<h4 id="1-bridged-mode-default">1. Bridged Mode (Default)</h4>
+<p>This is the standard configuration for 90% of deployments. The VM becomes a full peer on the physical network.</p>
+<p><strong>Packet Flow:</strong>
+<code>[VM eth0] -&gt; [Host tap100i0] -&gt; [Linux Bridge vmbr0] -&gt; [Physical NIC eno1] -&gt; [Physical Switch]</code></p>
+<p><strong>Detailed Configuration:</strong>
+In <code>/etc/network/interfaces</code>, a Bridge looks like this:</p>
+<div class="codehilite"><pre><span></span><code>auto<span class="w"> </span>vmbr0
+iface<span class="w"> </span>vmbr0<span class="w"> </span>inet<span class="w"> </span>static
+<span class="w">    </span>address<span class="w"> </span><span class="m">192</span>.168.1.10/24
+<span class="w">    </span>gateway<span class="w"> </span><span class="m">192</span>.168.1.1
+<span class="w">    </span>bridge-ports<span class="w"> </span>eno1<span class="w">        </span><span class="c1"># This links the bridge to the physical cable</span>
+<span class="w">    </span>bridge-stp<span class="w"> </span>off
+<span class="w">    </span>bridge-fd<span class="w"> </span><span class="m">0</span>
+</code></pre></div>
+
+<p><strong>Implication:</strong></p>
+<ul>
+<li><strong>DHCP</strong>: The VM sends a broadcast <code>DISCOVER</code> packet. It traverses the bridge, hits the physical wire, and reaches your office router. The router assigns an IP directly to the VM.</li>
+<li><strong>Visibility</strong>: Every device on your LAN can ping the VM.</li>
+</ul>
+<h4 id="2-nat-mode-network-address-translation">2. NAT Mode (Network Address Translation)</h4>
+<p>Sometimes you cannot get extra public IPs (e.g., in a data center giving you only 1 IP). You need to create a private network inside the host and share the single public IP.</p>
+<p><strong>Packet Flow:</strong>
+<code>[VM eth0] -&gt; [Host tap100i0] -&gt; [Private Bridge vmbr1] -&gt; [Host Routing/NAT] -&gt; [Physical NIC eno1] -&gt; Internet</code></p>
+<p><strong>Detailed Configuration:</strong>
+This mode requires <strong>Masquerading</strong> (Source NAT) in <code>iptables</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># In /etc/network/interfaces</span>
+
+auto<span class="w"> </span>vmbr1
+iface<span class="w"> </span>vmbr1<span class="w"> </span>inet<span class="w"> </span>static
+<span class="w">    </span>address<span class="w"> </span><span class="m">10</span>.10.10.1/24<span class="w">    </span><span class="c1"># The Host acts as the Gateway for VMs</span>
+<span class="w">    </span>bridge-ports<span class="w"> </span>none<span class="w">        </span><span class="c1"># NOT connected to any physical card</span>
+<span class="w">    </span>bridge-stp<span class="w"> </span>off
+<span class="w">    </span>bridge-fd<span class="w"> </span><span class="m">0</span>
+
+<span class="w">    </span><span class="c1"># 1. Enable forwarding</span>
+<span class="w">    </span>post-up<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;<span class="w"> </span>/proc/sys/net/ipv4/ip_forward
+
+<span class="w">    </span><span class="c1"># 2. Masquerade traffic leaving the physical interface (eno1)</span>
+<span class="w">    </span><span class="c1"># &quot;If traffic comes from 10.10.10.0/24, replace Source IP with Host IP&quot;</span>
+<span class="w">    </span>post-up<span class="w">   </span>iptables<span class="w"> </span>-t<span class="w"> </span>nat<span class="w"> </span>-A<span class="w"> </span>POSTROUTING<span class="w"> </span>-s<span class="w"> </span><span class="m">10</span>.10.10.0/24<span class="w"> </span>-o<span class="w"> </span>eno1<span class="w"> </span>-j<span class="w"> </span>MASQUERADE
+<span class="w">    </span>post-down<span class="w"> </span>iptables<span class="w"> </span>-t<span class="w"> </span>nat<span class="w"> </span>-D<span class="w"> </span>POSTROUTING<span class="w"> </span>-s<span class="w"> </span><span class="m">10</span>.10.10.0/24<span class="w"> </span>-o<span class="w"> </span>eno1<span class="w"> </span>-j<span class="w"> </span>MASQUERADE
+</code></pre></div>
+
+<h4 id="3-vlan-tagging-8021q">3. VLAN Tagging (802.1Q)</h4>
+<p>VLANs allow multiple logical networks to share one physical cable. To do this, we insert a 4-byte "Tag" into the Ethernet Frame Header.</p>
+<p><strong>Processing Flow:</strong></p>
 <ol>
 <li>
-<p><strong>Socket Statistics (<code>ss</code>)</strong></p>
-<ul>
-<li>Inspect <em>local</em> listening ports.</li>
-<li><code>ss -tulpn</code> -&gt; "Is port 80 actually open?"</li>
-</ul>
+<p><strong>Ingress (VM -&gt; Host):</strong><br />
+    The VM sends a standard "untagged" packet.</p>
 </li>
 <li>
-<p><strong>Network Mapper (<code>nmap</code>)</strong></p>
-<ul>
-<li>Scan <em>remote</em> targets.</li>
-<li><code>nmap 192.168.1.50</code> -&gt; "What ports is that server hiding?"</li>
-</ul>
+<p><strong>Tagging:</strong><br />
+    As the packet enters the bridge port (configured with <code>tag=20</code>), Proxmox inserts the VLAN ID 20.</p>
+</li>
+<li>
+<p><strong>Transit:</strong><br />
+    The bridge sees the packet belongs to VLAN 20 and forwards it <em>only</em> to ports that are members of VLAN 20 (including the uplink).</p>
 </li>
 </ol>
-<hr />
-<h1 id="part-6-open-vswitch-ovs">Part 6: Open vSwitch (OVS)</h1>
-<h2 id="61-architecture">6.1 Architecture</h2>
-<p>The Cloud-Grade Switch.</p>
+<h4 id="31-configuring-vlans-manually-linux-cli">3.1 Configuring VLANs manually (Linux CLI):</h4>
+<p>You can create VLAN interfaces on standard Linux without a bridge using the <code>ip</code> command. This creates a virtual interface that automatically tags/untags packets.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a VLAN 10 interface on top of eno1</span>
+<span class="c1"># Packets sent to &#39;eno1.10&#39; will leave physical &#39;eno1&#39; with Tag 10.</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>link<span class="w"> </span>eno1<span class="w"> </span>name<span class="w"> </span>eno1.10<span class="w"> </span><span class="nb">type</span><span class="w"> </span>vlan<span class="w"> </span>id<span class="w"> </span><span class="m">10</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.10.1/24<span class="w"> </span>dev<span class="w"> </span>eno1.10
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eno1.10<span class="w"> </span>up
+</code></pre></div>
+
+<p><strong>Egress (Host -&gt; Switch):</strong> The packet leaves <code>eno1</code> with the tag attached. The physical switch reads "20" and puts it in the correct broadcast domain.</p>
+<p><strong>VLAN Aware Bridge:</strong>
+Modern Proxmox uses "VLAN Aware" bridges. Instead of creating <code>vmbr0.10</code>, <code>vmbr0.20</code>, etc., you toggle <code>bridge-vlan-aware yes</code>. The bridge then acts like a "Trunk Port", capable of carrying all VLANs simultaneously.</p>
+<h3 id="section-7-checkpoint">Section 7 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Control Plane:</strong> <code>ovs-vswitchd</code>. Handles complex logic, High Availability, and API calls.</li>
-<li><strong>Data Plane:</strong> <code>openvswitch.ko</code>. Kernel module that switches packets at wire speed.</li>
+<li>Proxmox uses standard Linux Bridges and IPTables underneath the GUI.</li>
+<li><strong>Bridged Mode</strong>: VM is on the LAN. Simplest.</li>
+<li><strong>NAT Mode</strong>: VM is hidden behind the Host. Requires Masquerading.</li>
+<li><strong>VLANs</strong>: Isolate traffic on the same physical wire using Tags.</li>
+</ul>
+<p><strong>Reflection</strong>:</p>
+<ul>
+<li>If you are in a Data Center with only 1 Public IP, which mode MUST you use?</li>
+<li>How does a switch know which VLAN a packet belongs to?</li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://pve.proxmox.com/wiki/Network_Configuration">Proxmox Network Model</a></li>
 </ul>
 <hr />
-<h2 id="62-key-features">6.2 Key Features</h2>
-<p>Why use OVS over Linux Bridge?</p>
-<ol>
-<li><strong>SDN:</strong> Fully programmable via centralized controllers (OpenStack Neutron).</li>
-<li><strong>Overlay Networks:</strong> VXLAN and GRE tunneling support for multi-tenant clouds.</li>
-<li><strong>Telemetry:</strong> sFlow/NetFlow support to analyze every single packet flow.</li>
-</ol>
-<hr />
-<h1 id="part-7-proxmox-networking">Part 7: Proxmox Networking</h1>
-<h2 id="71-networking-modes">7.1 Networking Modes</h2>
-<p><strong>1. Bridged Mode (Default)</strong></p>
+<h2 id="8-additional-resources">8. Additional Resources</h2>
 <ul>
-<li>VM is a full citizen on the LAN.</li>
-<li>Traffic flows: <code>VM -&gt; Bridge -&gt; Physical Router</code>.</li>
-</ul>
-<p><strong>2. NAT Mode</strong></p>
-<ul>
-<li>VM sits behind the Host's IP.</li>
-<li>Secure, but requires Port Forwarding for inbound access.</li>
-</ul>
-<p><strong>3. VLAN Tagging</strong></p>
-<ul>
-<li>Proxmox tags packets leaving the VM interface (e.g., Tag 10).</li>
-<li>Enables segmentation (Student VLAN vs Admin VLAN).</li>
+<li><strong>Linux Bonding Guide</strong>: <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/ch-configure_network_bonding">Red Hat Documentation</a></li>
+<li><strong>Tcpdump Cheat Sheet</strong>: <a href="https://packetlife.net/media/library/12/tcpdump.pdf">PacketLife</a></li>
+<li><strong>Proxmox Networking</strong>: <a href="https://pve.proxmox.com/wiki/Network_Configuration">Official Wiki</a></li>
 </ul>
 <hr />
-<h1 id="summary">Summary</h1>
+<h2 id="9-lab-exercises">9. Lab Exercises</h2>
 <ul>
-<li><strong>Tools:</strong> Move from <code>ifconfig</code> to <code>ip</code>.</li>
-<li><strong>Isolation:</strong> Namespaces are the foundation of Containers.</li>
-<li><strong>Connectivity:</strong> Bridges + Veth/Tap cables.</li>
-<li><strong>Advanced:</strong> Bonding for redundancy, OVS for SDN.</li>
+<li><strong><a href="Week_3_Lab_1_Linux_Networking.html">Lab 1: Linux Networking</a></strong><ul>
+<li><strong>Goal</strong>: Hands-on with ip commands, bridges, and routing.</li>
 </ul>
-<p><strong>Next Week</strong>: Storage and Backup (ZFS, LVM, NFS).</p>
-<p><a href="../index.html">‚Üê Back to Course Index</a></p>
+</li>
+<li><strong><a href="Week_3_Lab_2_Proxmox_Networking.html">Lab 2: Proxmox Networking</a></strong><ul>
+<li><strong>Goal</strong>: Configuring Bridges, Bonds, and VLANs in Proxmox VE.</li>
+</ul>
+</li>
+</ul>
+<p><a href="../index.html">? Back to Course Index</a></p>
+                <div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
+                    <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
+                    <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+                    <a href="Week_3_Quiz.html" id="start-quiz-btn" class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+                        Start Quiz
+                    </a>
+                </div>
+                
     </article>
 </main>
 
@@ -691,3 +1132,4 @@ VMs use <code>tap</code> interfaces (Simulated L2 Ethernet) to plug into bridges
 
 </body>
 </html>
+

@@ -1,4 +1,4 @@
-Ôªø
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -402,176 +402,605 @@
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
     <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
-        <hr />
-<p>marp: true
-theme: default
-class: lead
-paginate: true
-backgroundColor: #ffffff
-backgroundImage: url('https://w.wallhaven.cc/full/8o/wallhaven-8ogljo.jpg')
-style: |
-  section.lead h1 {
-text-shadow: 2px 2px 0px #000;
-  }
-  section.lead h2 {
-text-shadow: 2px 2px 0px #000;
-  }</p>
-<hr />
-<p><a href="../index.html">‚Üê Back to Course Index</a></p>
-<h1 id="week-8-the-cloud-foundation"><strong>Week 8: The Cloud Foundation</strong></h1>
-<h2 id="identity-keystone-images-glance-and-networking-neutron">Identity (Keystone), Images (Glance), and Networking (Neutron)</h2>
-<p><img alt="bg right:40%" src="https://upload.wikimedia.org/wikipedia/commons/e/e0/OpenStack_Logo_Mark.svg" /></p>
-<p><strong>Operating Systems 3 (Virtualisation &amp; Cloud Technologies)</strong>
-Instructor: KT Nshimba</p>
-<hr />
-<h1 id="1-the-scenario-nebula-inc">1. The Scenario: Nebula Inc.</h1>
-<ul>
-<li><strong>Your Role</strong>: Lead Cloud Engineer.</li>
-<li><strong>The Client</strong>: "Nebula Inc" (A new startup).</li>
-<li><strong>The Asset</strong>: An empty OpenStack Cloud.</li>
-<li><strong>The Goal</strong>: Build a Virtual Data Center (VDC) from scratch.</li>
-</ul>
-<blockquote>
-<p>"A cloud without users, images, or networks is just a pile of cold metal."</p>
-</blockquote>
-<hr />
-<h1 id="2-identity-keystone">2. Identity: Keystone</h1>
-<p><strong>The "Doorman" of the Cloud.</strong></p>
-<ul>
-<li><strong>Authentication (AuthN)</strong>: "Who are you?" (Username/Password).</li>
-<li><strong>Authorization (AuthZ)</strong>: "What can you do?" (Roles).</li>
-<li><strong>Service Catalog</strong>: "Where is Nova? Where is Glance?"</li>
-</ul>
-<hr />
-<h2 id="21-the-token-dance">2.1 The "Token Dance"</h2>
-<ol>
-<li><strong>User</strong> sends Credentials -&gt; <strong>Keystone</strong>.</li>
-<li><strong>Keystone</strong> validates &amp; issues <strong>Token</strong>.</li>
-<li><strong>User</strong> sends Request + Token -&gt; <strong>Nova</strong>.</li>
-<li><strong>Nova</strong> asks <strong>Keystone</strong>: "Is this valid?"</li>
-<li><strong>Keystone</strong> confirms -&gt; <strong>Nova</strong> executes command.</li>
-</ol>
-<blockquote>
-<p><strong>Fernet Tokens</strong>: Modern, encrypted, stateless tokens. No database lookup required!</p>
-</blockquote>
-<hr />
-<h2 id="22-keystone-hierarchy-the-4-pillars">2.2 Keystone Hierarchy (The 4 Pillars)</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Component</th>
-<th style="text-align: left;">Analogy</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Domain</strong></td>
-<td style="text-align: left;">The Building</td>
-<td style="text-align: left;">High-level isolation (Corporate A vs Corporate B).</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Project</strong></td>
-<td style="text-align: left;">The Office</td>
-<td style="text-align: left;">The resource container. VMs live here.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>User</strong></td>
-<td style="text-align: left;">The Employee</td>
-<td style="text-align: left;">The person logging in.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Role</strong></td>
-<td style="text-align: left;">The Job Title</td>
-<td style="text-align: left;">Permission level (e.g., <code>member</code>, <code>admin</code>).</td>
-</tr>
-<tr>
-<td style="text-align: left;">---</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-</tbody>
-</table>
-<h1 id="3-images-glance">3. Images: Glance</h1>
-<p><strong>The "Library" of the Cloud.</strong></p>
-<ul>
-<li>Stores/Retrieves Virtual Machine disk images.</li>
-<li><strong>Backends</strong>: File System, Ceph, AWS S3.</li>
-<li><strong>Formats</strong>:<ul>
-<li><strong>QCOW2</strong>: Copy-on-Write. Supports snapshots &amp; thin provisioning (Standard).</li>
-<li><strong>RAW</strong>: Fast but huge. No snapshots.</li>
-<li><strong>ISO</strong>: Installation media (Rarely used in cloud).</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="31-managing-images-day-2">3.1 Managing Images (Day 2)</h2>
-<ul>
-<li><strong>Golden Image</strong>: A pre-hardened, approved OS template (SOE).</li>
-<li><strong>Visibility</strong>:<ul>
-<li><code>--public</code>: Everyone can see it.</li>
-<li><code>--private</code>: Only my project can see it.</li>
-<li><code>--shared</code>: Shared with specific projects.</li>
-</ul>
-</li>
-</ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Uploading the Nebula Standard OS</span>
-openstack<span class="w"> </span>image<span class="w"> </span>create<span class="w"> </span><span class="s2">&quot;nebula_std&quot;</span><span class="w"> </span>--file<span class="w"> </span>cirros.img<span class="w"> </span>--public
-</code></pre></div>
+            <p><a href="../index.html">? Back to Course Index</a></p>
+            <div
+                class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+                <div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+                    <img src="images/week_8_icon.png" class="h-full w-full object-cover" alt="Cloud Foundation Icon">
+                </div>
+                <div class="flex-1 flex flex-col items-center justify-center p-6">
+                    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Cloud Foundation
+                        (OpenStack)</h1>
+                    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
+                </div>
+            </div>
 
-<hr />
-<h1 id="4-networking-neutron">4. Networking: Neutron</h1>
-<p><strong>The "Plumber" of the Cloud.</strong></p>
-<ul>
-<li><strong>SDN (Software Defined Networking)</strong>:<ul>
-<li><strong>Control Plane</strong>: The Brain (Neutron Server). Decides flows.</li>
-<li><strong>Data Plane</strong>: The Muscle (OVS Agents). Moves packets.</li>
-</ul>
-</li>
-<li><strong>OVS (Open vSwitch)</strong>:<ul>
-<li>Virtual Switch using <strong>Flow Tables</strong>.</li>
-<li>Replaces physical VLAN tagging with logical rules.</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="41-under-the-hood-linux">4.1 Under the Hood (Linux)</h2>
-<p>Neutron uses the Linux tools we learned in Week 4:</p>
-<ol>
-<li><strong>Isolation</strong> -&gt; <strong>Linux Network Namespaces</strong> (<code>ip netns</code>).</li>
-<li><strong>Switching</strong> -&gt; <strong>OVS Bridges</strong> (<code>ovs-vsctl</code>).</li>
-<li><strong>Cabling</strong> -&gt; <strong>Veth Pairs</strong>.</li>
-</ol>
-<hr />
-<h2 id="42-traffic-flows">4.2 Traffic Flows</h2>
-<ul>
-<li><strong>North-South</strong>:<ul>
-<li>User &lt;-&gt; Internet &lt;-&gt; Router &lt;-&gt; VM.</li>
-<li>Uses <strong>SNAT</strong> (Source NAT) and <strong>Floating IPs</strong>.</li>
-</ul>
-</li>
-<li><strong>East-West</strong>:<ul>
-<li>VM A &lt;-&gt; VM B.</li>
-<li>Travels via <strong>VXLAN Tunnels</strong> between Compute Nodes.</li>
-<li>Never leaves the cloud overlay.</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h1 id="5-lab-objectives-nebula-inc">5. Lab Objectives (Nebula Inc.)</h1>
-<ol>
-<li><strong>Identity</strong>: Create <code>nebula_prod</code> project and <code>nebula_admin</code> user.</li>
-<li><strong>Image</strong>: Upload <code>CirrOS</code> as the standard image.</li>
-<li><strong>Network</strong>: Create <code>nebula_net</code> (Private) and <code>nebula_router</code> (Gateway).</li>
-<li><strong>Launch</strong>: (Next Week!)</li>
-</ol>
-<blockquote>
-<p><strong>Next Week</strong>: We finally launch instances (Nova) and secure them (Security Groups).</p>
-</blockquote>
-<hr />
-<h1 id="questions">Questions?</h1>
-<p><a href="../index.html">‚Üê Back to Course Index</a></p>
-    </article>
+            <p><strong>Course</strong>: Computer Systems Engineering
+                <strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
+                <strong>Topic</strong>: Cloud Foundation (OpenStack)
+                <strong>Estimated Reading Time</strong>: 25 Minutes
+            </p>
+            <blockquote>
+                <p>[!TIP]
+                    <strong>How to succeed in this week</strong>:
+                    OpenStack is complex, but it's just virtualization at scale with an API. Map each OpenStack service
+                    to concepts you already know (Nova=VMs, Neutron=Networking, etc.). The architecture diagram is your
+                    roadmap.
+                </p>
+            </blockquote>
+            <hr />
+            <h2 id="welcome-to-week-8">Welcome to Week 8!</h2>
+            <h3 id="1-case-study-the-nebula-inc-startup">1. Case Study: The "Nebula Inc." Startup</h3>
+            <p>To understand how a cloud is built, we will follow a continuous scenario for the next three weeks. You
+                have been hired as the Lead Cloud Engineer for a new software startup called <strong>"Nebula
+                    Inc."</strong> Currently, they have no infrastructureójust a credit card and a dream. Your job is to
+                build their Virtual Data Center (VDC) from scratch using OpenStack. This is not a theoretical exercise;
+                you will be typing the actual commands that cloud administrators use daily to construct the digital
+                fabric of the modern internet.</p>
+            <p><strong>The Roadmap</strong>:</p>
+            <ul>
+                <li><strong>Week 8 (Foundation)</strong>: You must create the secure environment. This involves setting
+                    up the company's "Tenant" (Project), hiring the staff (Users), purchasing the software licenses
+                    (Images), and cabling the office (Networking).</li>
+                <li><strong>Week 9 (Compute)</strong>: You will deploy their first web servers and secure them with
+                    firewalls.</li>
+                <li><strong>Week 10 (Storage)</strong>: You will attach persistent storage for their customer database.
+                </li>
+            </ul>
+            <p>By the end of this module, you will have a fully functional, multi-tier cloud application environment
+                running on infrastructure you defined yourself.</p>
+            <hr />
+            <h2 id="2-deep-dive-identity-management-keystone">2. Deep Dive: Identity Management (Keystone)</h2>
+            <p>Keystone is the central nervous system of OpenStack. If Keystone is down, <strong>nothing</strong> works.
+                It is responsible for Authentication (AuthN - "Who are you?") and Authorization (AuthZ - "What can you
+                do?"). In a physical building, Keystone is the security guard at the front desk who checks your ID badge
+                and decides which floors you are allowed to visit.</p>
+            <h3 id="21-the-authentication-workflow-the-token-dance">2.1 The Authentication Workflow (The "Token Dance")
+            </h3>
+            <p>When you run a command like <code>openstack server list</code>, a complex sequence of events, often
+                called the "Token Dance," occurs in the background before you see any output.</p>
+            <p><img alt="Keystone Authentication Token Dance" src="images/keystone_token_dance.png" />
+                <em>Figure 1: The Keystone "Token Dance" - Documenting the 7-step process of authentication and
+                    authorization</em>
+            </p>
+            <ol>
+                <li><strong>Credentials</strong>: Your client (CLI or Horizon) sends your Username, Password, and Domain
+                    to the Keystone API.</li>
+                <li><strong>Validation</strong>: Keystone validates these credentials against its
+                    <strong>Backend</strong> (SQL or LDAP).</li>
+                <li><strong>Token Issue</strong>: If the credentials are valid, Keystone generates a
+                    <strong>Token</strong> (a temporary digital ID card) and sends it back to you.</li>
+                <li><strong>Service Request</strong>: The client then sends the actual request to Nova
+                    (<code>GET /servers</code>), placing the Token in the HTTP Header (<code>X-Auth-Token</code>) as
+                    proof of identity.</li>
+                <li><strong>Token Validation</strong>: Nova does not trust you or your token blindly. It authenticates
+                    the token by sending it <em>back</em> to Keystone with the question: "Is this token valid?"</li>
+                <li><strong>Confirmation</strong>: Keystone validates the token's signature and expiry in its database.
+                    It replies to Nova: "Yes, this is valid. The user is 'admin' and has the 'member' role."</li>
+                <li><strong>Execution</strong>: Once confirmed, Nova finally executes the command and returns the server
+                    list.</li>
+            </ol>
+            <h3 id="22-the-backend-where-are-users-stored">2.2 The Backend (Where are users stored?)</h3>
+            <p>Keystone is modular and capable of integrating with existing enterprise systems. It can store users
+                locally or talk to external systems:</p>
+            <ul>
+                <li><strong>SQL (Local)</strong>: Users are stored in the OpenStack database (MariaDB). This is the
+                    standard configuration for small deployments and our lab environment.</li>
+                <li><strong>LDAP / Active Directory (Enterprise)</strong>: In large enterprises, you do not want to
+                    create separate accounts for every system. Keystone can plug directly into the corporate Active
+                    Directory. When a user logs in, Keystone forwards the password to the Domain Controller for
+                    validation, ensuring Single Sign-On (SSO).</li>
+            </ul>
+            <h3 id="23-token-providers-fernet-vs-uuid">2.3 Token Providers (Fernet vs UUID)</h3>
+            <p>The format of the token itself determines the performance of the cloud.</p>
+            <ul>
+                <li><strong>UUID (Legacy)</strong>: A random string stored in the Keystone Database. The problem with
+                    this method is that <em>every</em> validation requires a Database Lookup. In massive clouds handling
+                    10,000 requests per second, this would crush the database.</li>
+                <li><strong>Fernet (Modern)</strong>: A cryptographic token format. The token contains the User ID and
+                    Expiry Time, <em>encrypted</em> using a secret key held by the Keystone server. The major benefit is
+                    that Keystone does <em>not</em> need to store the token in a database. To validate it, it simply
+                    decrypts the token significantly reducing database load and allowing Keystone to scale infinitely.
+                </li>
+            </ul>
+            <h3 id="24-the-hierarchy">2.4 The Hierarchy</h3>
+            <ul>
+                <li><strong>Domain</strong>: A high-level container (e.g., "Default" or "Corporate_A"). Use for
+                    multi-tenant isolation.</li>
+                <li><strong>Project (Tenant)</strong>: The workspace. Resources (VMs, Networks) belong to a Project.
+                </li>
+                <li><strong>User</strong>: The human or service account.</li>
+                <li><strong>Role</strong>: The permission set. A User <em>must</em> have a Role on a Project to do
+                    anything.</li>
+            </ul>
+            <h3 id="25-cli-implementation-case-study-nebula-inc">2.5 CLI Implementation (Case Study: Nebula Inc.)</h3>
+            <p>Now we apply this theory to our startup. "Nebula Inc." requires a dedicated, isolated environment where
+                its developers can work without interfering with other departments. In OpenStack, we achieve this
+                "Multi-Tenancy" by creating a specific <strong>Project</strong>. This project will act as the container
+                for all their future VMs, networks, and storage volumes. It also allows us to set quotas (e.g., "Maximum
+                10 CPUs") to control their budget.</p>
+            <p><strong>Step 1: Create the Project</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>project<span class="w"> </span>create<span class="w"> </span>--domain<span class="w"> </span>default<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;Nebula Inc. Production&quot;</span><span class="w"> </span>nebula_prod
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>:<ul>
+                        <li><code>--domain default</code>: Specifies that this project lives in the default domain.</li>
+                        <li><code>--description</code>: Metadata for admins.</li>
+                        <li><strong>Result</strong>: Creates a record in the <code>projects</code> table. Returns a UUID
+                            (e.g., <code>a1b2c3...</code>).</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Step 2: Create the User</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>--domain<span class="w"> </span>default<span class="w"> </span>--password-prompt<span class="w"> </span>nebula_admin
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>:<ul>
+                        <li><code>--password-prompt</code>: Hides input for security.</li>
+                        <li><strong>Result</strong>: Creating a user identity does NOT grant access. The user is
+                            currently "unemployed".</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Step 3: Assign the Role</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>role<span class="w"> </span>add<span class="w"> </span>--project<span class="w"> </span>nebula_prod<span class="w"> </span>--user<span class="w"> </span>nebula_admin<span class="w"> </span>member
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>:<ul>
+                        <li><code>member</code>: The standard permission level (can create VMs/Networks but cannot
+                            delete other users).</li>
+                        <li><strong>Result</strong>: Creates a row in the <code>role_assignments</code> table linking
+                            User+Project+Role.</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 id="26-identity-verification-management">2.6 Identity Verification &amp; Management</h3>
+            <p>In a production cloud, security is an ongoing process, not a one-time setup. The "Principle of Least
+                Privilege" dictates that we must continuously verify that only the correct people have access to our
+                sensitive data. Simply listing the users in the system is insufficient; a user might exist but have no
+                access to anything. To audit this, we must inspect the <strong>Role Assignments</strong>.</p>
+            <p><strong>Auditing Access</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--user<span class="w"> </span>nebula_admin<span class="w"> </span>--names
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>:<ul>
+                        <li><code>--names</code>: Resolves UUIDs to human-readable names.</li>
+                        <li><strong>Result</strong>: Displays exactly which project the user can access and with what
+                            level of authority.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Managing Users</strong></p>
+            <ul>
+                <li>
+                    <p><strong>Disabling a User</strong>:
+                        <code>bash
+    openstack user set --disable nebula_admin</code>
+                    </p>
+                    <ul>
+                        <li><strong>Explanation</strong>: Sets <code>enabled=False</code> in the DB. The user cannot
+                            request <em>new</em> tokens.</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li><strong>Keystone</strong>: The core authentication and authorization service; without it, nothing
+                    works.</li>
+                <li><strong>Fernet Tokens</strong>: Modern, stateless tokens that improve performance by removing
+                    database lookups.</li>
+                <li><strong>Role Assignments</strong>: The critical link that grants a User permission on a Project.
+                </li>
+            </ul>
+            <p><strong>Reflection</strong>:
+                1. Why do we use tokens (like Fernet) instead of just passing the username/password to every service?
+                (Hint: Performance and Security).
+                2. If you delete a user, their history disappears. If you disable them, it remains. Why is this
+                important for audit trails?</p>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a href="https://docs.openstack.org/keystone/latest/">OpenStack Keystone Guide</a></li>
+                <li><a href="https://docs.aws.amazon.com/iam/">AWS Identity and Access Management (IAM)</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/fundamentals/">Microsoft Entra ID (Azure AD)</a>
+                </li>
+            </ul>
+            <hr />
+            <h2 id="3-deep-dive-image-management-glance">3. Deep Dive: Image Management (Glance)</h2>
+            <p>Every Virtual Machine needs a hard drive to boot from. In the physical world, you might walk around with
+                a USB stick containing a Windows or Linux ISO installer. In the cloud, this is inefficient. Instead, we
+                use <strong>Glance</strong>, the OpenStack Image Service. Glance acts as a central library where
+                validated, pre-installed operating system templates are stored. When you launch a VM, Nova contacts
+                Glance to request a copy of the "Master Image" to be streamed to the hypervisor.</p>
+            <h3 id="31-understanding-disk-formats">3.1 Understanding Disk Formats</h3>
+            <p>Not all virtual disks are created equal. You must choose the right format for your cloud workload:</p>
+            <p><strong>RAW</strong> is a bit-for-bit copy of the disk. It offers the fastest performance because there
+                is no overhead, but it is space-inefficient. A 10GB drive takes up 10GB of physical space, even if it is
+                empty, making it slow to copy over the network.</p>
+            <p><strong>QCOW2 (QEMU Copy On Write)</strong> is the standard format for OpenStack. It supports compression
+                and "Thin Provisioning," meaning a 10GB drive with only 100MB of data takes up only 100MB of physical
+                space. Crucially, it logic enables snapshot capabilities, allowing you to save the state of a VM
+                instantly.</p>
+            <p><strong>ISO</strong> is a read-only archive used for installation media. While essential for building
+                images, it is rarely used in cloud "boot-from-image" scenarios because we prefer pre-installed operating
+                systems.</p>
+            <h3 id="32-glance-architecture">3.2 Glance Architecture</h3>
+            <p>Glance is split into distinct components to separate the metadata from the actual data payload.</p>
+            <p><img alt="Glance Architecture" src="images/glance_architecture.png" />
+                <em>Figure 2: Glance Architecture - The separation of the API, Registry (Metadata), and Backend Store
+                    (Data)</em>
+            </p>
+            <ul>
+                <li><strong>Glance API</strong>: The front-end service that accepts user requests (e.g., "Upload this
+                    image", "List images"). It verifies the user's token with Keystone before proceeding.</li>
+                <li><strong>Glance Registry</strong>: An internal service that stores the <em>metadata</em> about images
+                    (Name, Size, Format, Owner) in the SQL database.</li>
+                <li><strong>Backend Store</strong>: The driver responsible for storing the <em>actual binary data</em>
+                    (the heavy bits). While this can be a local file system (<code>/var/lib/glance</code>), production
+                    clouds typically use a distributed storage cluster like <strong>Ceph</strong> or an object store
+                    like <strong>AWS S3</strong> to ensure data durability and accessibility across all compute nodes.
+                </li>
+            </ul>
+            <h3 id="33-cli-implementation-case-study-nebula-inc">3.3 CLI Implementation (Case Study: Nebula Inc.)</h3>
+            <p>For any software company, consistency is key. We cannot have one developer running Ubuntu 20.04 and
+                another running Fedora 35, as this leads to the infamous "it works on my machine" problem. To solve
+                this, Nebula Inc. enforces a <strong>Standard Operating Environment (SOE)</strong>. We will upload a
+                "Golden Image"óa pre-approved, security-hardened operating system template that all staff must use. For
+                our initial testing phase, we will utilize <strong>CirrOS</strong>, a lightweight (15MB) Linux
+                distribution designed specifically for validating OpenStack clouds, before graduating to full-sized
+                Ubuntu Server images in production.</p>
+            <p><strong>Step 1: Download the Source</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>wget<span class="w"> </span>http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>: We assume we are on the "Jumpbox" or Controller node. Browsers cannot
+                    upload directly to Glance CLI; the file must exist locally.</li>
+            </ul>
+            <p><strong>Step 2: Upload to Glance</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>create<span class="w"> </span><span class="s2">&quot;nebula_standard_os&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--file<span class="w"> </span>cirros-0.5.1-x86_64-disk.img<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--disk-format<span class="w"> </span>qcow2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-format<span class="w"> </span>bare<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--public<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--min-ram<span class="w"> </span><span class="m">64</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--min-disk<span class="w"> </span><span class="m">1</span>
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>:<ul>
+                        <li><code>--disk-format qcow2</code>: Defines how the bits are organized.</li>
+                        <li><code>--container-format bare</code>: Indicates no extra metadata wrapper (OVF) is around
+                            the file.</li>
+                        <li><code>--public</code>: IMPORTANT. By default, images are "Private" (only visible to the
+                            uploader). This flag makes it visible to <em>all</em> projects in the cloud (Nebula, Admin,
+                            Testing, etc.).</li>
+                        <li><code>--min-ram 64</code>: A metadata tag. Nova checks this before booting. If a user tries
+                            to launch this on a Flavor with 32MB RAM, Nova will block the request to prevent a crash.
+                        </li>
+                        <li><strong>Result</strong>: The file is streamed into the Glance Backend Store, and a UUID is
+                            generated.</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 id="34-managing-images-day-2-operations">3.4 Managing Images (Day 2 Operations)</h3>
+            <p>Once images are uploaded, they are not static. You may need to update their metadata or remove obsolete
+                versions.</p>
+            <p><strong>Listing Images</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>list
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>: Returns a table of available images.</li>
+                <li><strong>Result</strong>: Checks ID, Name, and Status. Status should be <code>active</code>. If
+                    status is <code>queued</code>, the upload failed.</li>
+            </ul>
+            <p><strong>Updating Metadata (Properties)</strong>
+                Sometimes we forget a flag or need to deprecate an OS.</p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--property<span class="w"> </span><span class="nv">cpu_arch</span><span class="o">=</span>x86_64<span class="w"> </span>nebula_standard_os
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>: Adds a custom key-value pair to the image metadata. The Scheduler use
+                    this to ensure the VM lands on Intel hardware, not ARM.</li>
+                <li><strong>Result</strong>: The Glance Registry is updated; the actual file is untouched.</li>
+            </ul>
+            <p><strong>Deleting Images</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>delete<span class="w"> </span>nebula_standard_os
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>: Marks the image for deletion.</li>
+                <li><strong>Result</strong>: The metadata is removed from the Registry, and the backend storage driver
+                    (Ceph/File) is instructed to free the space.</li>
+            </ul>
+            <h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li><strong>Glance</strong>: The image repository that provides boot disks to Nova.</li>
+                <li><strong>QCOW2</strong>: The preferred format for cloud images due to thin provisioning and snapshot
+                    support.</li>
+                <li><strong>SOE</strong>: Standard Operating Environment ensuring consistency across all machines.</li>
+            </ul>
+            <p><strong>Reflection</strong>:
+                1. If you have a slow 1Gb link interconnecting your data centers, which image format (RAW or QCOW2)
+                would be faster to replicate? Why?
+                2. Why is it dangerous to make every image <code>--public</code>? (Think about licensed software like
+                Windows Server).</p>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a href="https://docs.openstack.org/glance/latest/">OpenStack Glance Guide</a></li>
+                <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">AWS AMIs (Amazon Machine
+                        Images)</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/azure-compute-gallery-overview">Azure
+                        Compute Gallery</a></li>
+            </ul>
+            <hr />
+            <h2 id="4-deep-dive-networking-neutron">4. Deep Dive: Networking (Neutron)</h2>
+            <p>Neutron is the "Software Defined Networking" (SDN) component of OpenStack. In a traditional data center,
+                creating a new network segment means filing a ticket with the network team to configure VLANs on
+                physical Cisco/Juniper switches. In OpenStack, Neutron gives this power to the user. A tenant can create
+                their own private switching infrastructure, subnets, and routers via API, without ever touching a
+                physical cable.</p>
+            <h3 id="41-what-is-sdn-software-defined-networking">4.1 What is SDN (Software Defined Networking)?</h3>
+            <p>Network Engineers often rely on physical switches and routers to move traffic. In the cloud, we
+                virtualize this entirely using <strong>Software Defined Networking (SDN)</strong>. The core concept of
+                SDN is the separation of the <strong>Control Plane</strong> (The Brain) from the <strong>Data
+                    Plane</strong> (The Muscle).</p>
+            <p><img alt="Neutron SDN Layers" src="images/neutron_sdn_layers.png" />
+                <em>Figure 3: Neutron SDN Architecture - The separation of the Logical Control Plane (API) from the
+                    Physical Data Plane (Open vSwitch)</em>
+            </p>
+            <p><strong>The Control Plane (Neutron API/Server)</strong> acts as the brain of the operation. When you
+                execute a command to create a network or open port 80, you are communicating with the Control Plane. It
+                calculates the necessary logic and updates the state of the cloud database, but it does not touch a
+                single network packet itself.</p>
+            <p><strong>The Data Plane (OVS Agent/L2 Agent)</strong> sits on every compute node and acts as the muscle.
+                It receives instructions from the Control Plane via a message bus (RabbitMQ) and implements them by
+                programming the local virtual switch. It is the actual software responsible for moving packets from your
+                VM to the physical network card.</p>
+            <h3 id="42-the-virtual-switch-open-vswitch-ovs">4.2 The Virtual Switch: Open vSwitch (OVS)</h3>
+            <p>In a physical rack, servers plug into a top-of-rack switch. In OpenStack, VMs plug into a virtual switch
+                called <strong>Open vSwitch (OVS)</strong>. Unlike a standard unmanaged switch that simply learns MAC
+                addresses, OVS is a production-quality, multilayer virtual switch that uses <strong>Flow
+                    Tables</strong>. A Flow Table is a list of programmable rules that match specific packets (e.g., "If
+                source IP is A and dest IP is B...") and applies specific actions (e.g., "...drop packet" or "...tag
+                with VLAN 100"). Neutron programs these flow tables dynamically to implement sophisticated features like
+                Security Groups (Distributed Firewalls) and Virtual Routing.</p>
+            <h3 id="43-under-the-hood-the-linux-connection">4.3 Under the Hood: The Linux Connection</h3>
+            <p>Everything you learned in Week 4 applies here. Neutron uses standard Linux kernel features to build these
+                structures:</p>
+            <ul>
+                <li><strong>Isolation = Namespaces</strong>: When you create a Router or a DHCP server, Neutron creates
+                    a <strong>Linux Network Namespace</strong> (<code>ip netns</code>). This allows Project A and
+                    Project B to both use "192.168.0.1" without conflict; they live in parallel, isolated universes.
+                </li>
+                <li><strong>Cabling = Veth Pairs</strong>: When a VM "plugs in" to the OVS Bridge, Neutron creates a
+                    <strong>Virtual Ethernet (veth) pair</strong>. One end connects to the VM's interface (inside KVM),
+                    and the other connects to the OVS Bridge.</li>
+            </ul>
+            <h3 id="44-flow-of-traffic-north-south-vs-east-west">4.4 Flow of Traffic (North-South vs East-West)</h3>
+            <p>Designing a cloud network requires understanding the two primary directions of traffic flow, as they
+                traverse different paths through the infrastructure.</p>
+            <p><img alt="Neutron Traffic Flows" src="images/neutron_traffic_flows.png" />
+                <em>Figure 4: North-South vs East-West Traffic - Visualizing how traffic stays within the cloud versus
+                    how it exits to the internet</em>
+            </p>
+            <p><strong>East-West Traffic</strong> refers to communication between VMs inside the <em>same</em> cloud
+                environment (e.g., Web Server A talking to Database Server B). Ideally, this traffic should never leave
+                the virtual infrastructure. It flows from the source VM, through the local OVS Bridge, and is typically
+                encapsulated in a tunnel protocol like <strong>VXLAN</strong> to cross the physical network before
+                arriving at the destination compute node.</p>
+            <p><strong>North-South Traffic</strong> refers to communication entering or leaving the cloud (e.g., a User
+                accessing your Web Server from the Internet). This traffic must leave the virtual overlay network. It
+                passes through the Neutron Router (which lives inside a Network Namespace), undergoes
+                <strong>SNAT</strong> (Source NAT) to mask its private IP, and exits via the external provider network
+                gateway.</p>
+            <h3 id="45-cli-implementation-case-study-nebula-inc">4.5 CLI Implementation (Case Study: Nebula Inc.)</h3>
+            <p>Now that we understand the theory of pipelines and flows, it is time to build. Nebula Inc. requires a
+                private, isolated network segment where their web servers can communicate safely. We will construct a
+                topology consisting of a private Virtual Switch (<code>nebula_net</code>), an IP addressing scheme
+                (<code>nebula_subnet</code>), and a Virtual Router (<code>nebula_router</code>) to connect to the
+                outside world.</p>
+            <p><strong>Step 1: Create the Switch (Network)</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>nebula_net
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>: Initializes the logical switch in the database (Control Plane).</li>
+                <li><strong>Result</strong>: A network UUID is created. OVS is not touched yet.</li>
+            </ul>
+            <p><strong>Step 2: Define Addressing (Subnet)</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>subnet<span class="w"> </span>create<span class="w"> </span>--network<span class="w"> </span>nebula_net<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--subnet-range<span class="w"> </span><span class="m">192</span>.168.50.0/24<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--gateway<span class="w"> </span><span class="m">192</span>.168.50.1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--dns-nameserver<span class="w"> </span><span class="m">8</span>.8.8.8<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>nebula_subnet
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>:<ul>
+                        <li><code>--network nebula_net</code>: Attaches this IP logic to the switch.</li>
+                        <li><strong>Result</strong>: The DHCP Agent (Data Plane) spawns a <code>dnsmasq</code> process
+                            in a namespace to serve IPs.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Step 3: Build the Gateway (Router)</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>router<span class="w"> </span>create<span class="w"> </span>nebula_router
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>: Creates a virtual router instance.</li>
+            </ul>
+            <p><strong>Step 4: Wiring (Interface Attachment)</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>router<span class="w"> </span>add<span class="w"> </span>subnet<span class="w"> </span>nebula_router<span class="w"> </span>nebula_subnet
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>: This is the equivalent of plugging a patch cable from the Switch
+                    (<code>nebula_subnet</code>) into the Router's LAN port.</li>
+                <li><strong>Result</strong>: The L3 Agent creates a generic router namespace and assigns the gateway IP
+                    <code>192.168.50.1</code>.</li>
+            </ul>
+            <p><strong>Step 5: Uplink (External Gateway)</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>openstack<span class="w"> </span>router<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--external-gateway<span class="w"> </span>public<span class="w"> </span>nebula_router
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Explanation</strong>: Connects the Router's WAN port to the Provider Network
+                    (<code>public</code>).</li>
+                <li><strong>Result</strong>: Enables the router to route traffic to the internet (North-South flow).
+                </li>
+            </ul>
+            <h3 id="46-verification">4.6 Verification</h3>
+            <p>Log in to <strong>Horizon -&gt; Network -&gt; Network Topology</strong>. You should see the Nebula Router
+                creating a bridge between the Blue (Private) line and the Red (Public) line.</p>
+            <h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li><strong>SDN</strong>: Separates the "Brain" (Neutron API) from the "Muscle" (OVS/Agents).</li>
+                <li><strong>OVS</strong>: Uses Flow Tables to direct traffic and enforce security, replacing physical
+                    switch logic.</li>
+                <li><strong>Linux Foundations</strong>: Capabilities like Namespaces and Veth pairs are the building
+                    blocks of the cloud.</li>
+            </ul>
+            <p><strong>Reflection</strong>:
+                1. <strong>Recall</strong>: In Week 4, we used <code>ip netns exec</code>. How does that relate to a
+                Neutron Router?
+                2. <strong>Flows</strong>: If you add a Security Group rule to allow SSH, what actually changes on the
+                Compute Node? (Hint: Does Neutron update the database or OVS flow tables?)</p>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a href="https://docs.openstack.org/neutron/latest/">OpenStack Neutron Guide</a></li>
+                <li><a href="https://docs.aws.amazon.com/vpc/">AWS VPC (Virtual Private Cloud)</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview">Azure
+                        Virtual Network (VNet)</a></li>
+            </ul>
+            <hr />
+            <hr />
+            <h2 id="6-industry-comparison-the-polyglot-cloud-engineer">6. Industry Comparison: The "Polyglot" Cloud
+                Engineer</h2>
+            <p>While this course uses OpenStack because it allows us to see "under the hood," the concepts you learned
+                this weekóTenants, Golden Images, and SDNóare the exact same primitives used by the public cloud giants.
+            </p>
+            <h3 id="61-concept-mapping">6.1 Concept Mapping</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Concept</th>
+                        <th style="text-align: left;">OpenStack Term</th>
+                        <th style="text-align: left;">AWS Term</th>
+                        <th style="text-align: left;">Azure Term</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: left;"><strong>Identity Service</strong></td>
+                        <td style="text-align: left;">Keystone</td>
+                        <td style="text-align: left;">IAM (Identity &amp; Access Mgmt)</td>
+                        <td style="text-align: left;">Microsoft Entra ID (Azure AD)</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><strong>The "Container"</strong></td>
+                        <td style="text-align: left;">Project (Tenant)</td>
+                        <td style="text-align: left;">Account</td>
+                        <td style="text-align: left;">Subscription / Resource Group</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><strong>Image Service</strong></td>
+                        <td style="text-align: left;">Glance</td>
+                        <td style="text-align: left;">AMI Registry</td>
+                        <td style="text-align: left;">Azure Compute Gallery</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><strong>Network Service</strong></td>
+                        <td style="text-align: left;">Neutron</td>
+                        <td style="text-align: left;">VPC (Virtual Private Cloud)</td>
+                        <td style="text-align: left;">VNet (Virtual Network)</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><strong>Routing</strong></td>
+                        <td style="text-align: left;">Neutron Router</td>
+                        <td style="text-align: left;">Internet Gateway (IGW)</td>
+                        <td style="text-align: left;">VPN Gateway / VNet Peering</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="62-the-standard-operating-environment-across-clouds">6.2 The "Standard Operating Environment" across
+                Clouds</h3>
+            <p>In Section 3, we discussed the "Golden Image." This strategy is universal.</p>
+            <ul>
+                <li><strong>OpenStack</strong>: You use <strong>Packer</strong> to build a QCOW2 image and upload it to
+                    <strong>Glance</strong>.</li>
+                <li><strong>AWS</strong>: You use <strong>Packer</strong> to build an AMI and upload it to
+                    <strong>EC2</strong>.</li>
+                <li><strong>Azure</strong>: You use <strong>Packer</strong> to build a VHD and upload it to
+                    <strong>Azure Compute Gallery</strong>.</li>
+                <li><em>The Conclusion</em>: The tool (Packer) and the workflow (Build -&gt; Validate -&gt; Upload) are
+                    identical; only the target file format changes.</li>
+            </ul>
+            <hr />
+            <h2 id="7-summary">7. Summary</h2>
+            <p>We have built the <strong>Foundation</strong> for Nebula Inc.:
+                1. <strong>Identity</strong>: A secure Project and User with assigned Roles.
+                2. <strong>Image</strong>: A validated OS template in Glance.
+                3. <strong>Network</strong>: A fully routed Layer 3 topology.</p>
+            <p>Next week, we Launch.</p>
+            <hr />
+            <h2 id="4-lab-exercises">4. Lab Exercises</h2>
+            <ul>
+                <li><strong><a href="Week_8_Lab_1_Foundation.html">Lab 1: Cloud Foundation</a></strong>
+                    <ul>
+                        <li><strong>Goal</strong>: Introduction to Keystone (Identity) and Glance (Image) services.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><a href="../index.html">? Back to Course Index</a></p>
+            <div
+                class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
+                <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
+                <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take
+                    the interactive quiz now!</p>
+                <a href="Week_8_Quiz.html" id="start-quiz-btn"
+                    class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+                    Start Quiz
+                </a>
+            </div>
+
+        </article>
 </main>
 
 <!-- Footer -->
@@ -583,3 +1012,4 @@ openstack<span class="w"> </span>image<span class="w"> </span>create<span class=
 
 </body>
 </html>
+
