@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Glossary - OPS3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #142a46 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(30, 58, 95, 0.6);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 3em;
+            color: #c9984a;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            color: #c8c8c8;
+        }
+        
+        .search-bar {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        #searchInput {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 2px solid #c9984a;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
+        #searchInput::placeholder {
+            color: #c8c8c8;
+        }
+        
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background: rgba(201, 152, 74, 0.2);
+            border: 2px solid #c9984a;
+            border-radius: 25px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #c9984a;
+            color: #1e3a5f;
+        }
+        
+        .letter-index {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(30, 58, 95, 0.4);
+            border-radius: 10px;
+        }
+        
+        .letter-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201, 152, 74, 0.2);
+            border: 2px solid #c9984a;
+            border-radius: 50%;
+            color: #c9984a;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .letter-link:hover {
+            background: #c9984a;
+            color: #1e3a5f;
+            transform: scale(1.1);
+        }
+        
+        .glossary-section {
+            margin: 40px 0;
+        }
+        
+        .letter-header {
+            font-size: 2.5em;
+            color: #c9984a;
+            border-bottom: 3px solid #c9984a;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            margin-top: 40px;
+        }
+        
+        .term-card {
+            background: rgba(30, 58, 95, 0.6);
+            border-left: 5px solid #c9984a;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .term-card:hover {
+            background: rgba(30, 58, 95, 0.8);
+            transform: translateX(10px);
+        }
+        
+        .term-title {
+            font-size: 1.8em;
+            color: #c9984a;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .term-definition {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .term-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(201, 152, 74, 0.3);
+        }
+        
+        .term-category,
+        .term-week {
+            background: rgba(201, 152, 74, 0.2);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #c9984a;
+        }
+        
+        .related-terms {
+            margin-top: 10px;
+        }
+        
+        .related-terms strong {
+            color: #c9984a;
+        }
+        
+        .related-link {
+            color: #c8c8c8;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: color 0.3s;
+        }
+        
+        .related-link:hover {
+            color: #c9984a;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #c9984a;
+            color: #1e3a5f;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            display: none;
+        }
+        
+        .back-to-top:hover {
+            transform: scale(1.1);
+        }
+        
+        .home-button {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 12px 30px;
+            background: #c9984a;
+            color: #1e3a5f;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .home-button:hover {
+            background: #ffffff;
+            transform: scale(1.05);
+        }
+        
+        .stats {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(30, 58, 95, 0.4);
+            border-radius: 10px;
+        }
+        
+        .stats-item {
+            display: inline-block;
+            margin: 0 20px;
+            font-size: 1.1em;
+        }
+        
+        .stats-number {
+            font-size: 2em;
+            color: #c9984a;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .term-title {
+                font-size: 1.4em;
+            }
+            
+            .letter-index {
+                gap: 5px;
+            }
+            
+            .letter-link {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Course Glossary</h1>
+            <p>OPS3 - Virtualization and Cloud Infrastructure</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Comprehensive technical terms and definitions</p>
+        </header>
+        
+        <div style="text-align: center;">
+            <a href="index.html" class="home-button">← Back to Course Home</a>
+        </div>
+        
+        <div class="stats">
+            <div class="stats-item">
+                <div class="stats-number">64</div>
+                <div>Total Terms</div>
+            </div>
+            <div class="stats-item">
+                <div class="stats-number">8</div>
+                <div>Categories</div>
+            </div>
+            <div class="stats-item">
+                <div class="stats-number">12</div>
+                <div>Weeks Covered</div>
+            </div>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="🔍 Search for terms..." onkeyup="filterTerms()">
+        </div>
+        
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterByCategory('all')">All Categories</button>
+            <button class="filter-btn" onclick="filterByCategory('Automation')">Automation</button>
+            <button class="filter-btn" onclick="filterByCategory('Cloud')">Cloud</button>
+            <button class="filter-btn" onclick="filterByCategory('Containers')">Containers</button>
+            <button class="filter-btn" onclick="filterByCategory('High Availability')">High Availability</button>
+            <button class="filter-btn" onclick="filterByCategory('Networking')">Networking</button>
+            <button class="filter-btn" onclick="filterByCategory('Storage')">Storage</button>
+            <button class="filter-btn" onclick="filterByCategory('Virtual Machines')">Virtual Machines</button>
+            <button class="filter-btn" onclick="filterByCategory('Virtualization')">Virtualization</button>
+        </div>
+        
+        <div class="letter-index">
+            <a href="#letter-A" class="letter-link">A</a>
+            <a href="#letter-B" class="letter-link">B</a>
+            <a href="#letter-C" class="letter-link">C</a>
+            <a href="#letter-D" class="letter-link">D</a>
+            <a href="#letter-F" class="letter-link">F</a>
+            <a href="#letter-G" class="letter-link">G</a>
+            <a href="#letter-H" class="letter-link">H</a>
+            <a href="#letter-I" class="letter-link">I</a>
+            <a href="#letter-J" class="letter-link">J</a>
+            <a href="#letter-K" class="letter-link">K</a>
+            <a href="#letter-L" class="letter-link">L</a>
+            <a href="#letter-M" class="letter-link">M</a>
+            <a href="#letter-N" class="letter-link">N</a>
+            <a href="#letter-O" class="letter-link">O</a>
+            <a href="#letter-P" class="letter-link">P</a>
+            <a href="#letter-Q" class="letter-link">Q</a>
+            <a href="#letter-R" class="letter-link">R</a>
+            <a href="#letter-S" class="letter-link">S</a>
+            <a href="#letter-T" class="letter-link">T</a>
+            <a href="#letter-V" class="letter-link">V</a>
+            <a href="#letter-Z" class="letter-link">Z</a>
+        </div>
+        
+        <div class="glossary-section" id="glossary-content">
+        <div id="letter-A">
+            <h2 class="letter-header">A</h2>
+            <div class="term-card" data-category="Automation">
+                <div class="term-title">API</div>
+                <div class="term-definition">Application Programming Interface - A set of protocols and tools for building software applications, enabling programmatic access to services.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Automation</span>
+                    <span class="term-week">📅 Week 11</span>
+                </div>
+            </div>
+            <div class="term-card" data-category="Automation">
+                <div class="term-title">Ansible</div>
+                <div class="term-definition">An open-source automation tool for configuration management, application deployment, and task automation using declarative YAML playbooks.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Automation</span>
+                    <span class="term-week">📅 Week 11</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Infrastructure as Code'); return false;">Infrastructure as Code</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-B">
+            <h2 class="letter-header">B</h2>
+            <div class="term-card" data-category="Networking">
+                <div class="term-title">Bridge</div>
+                <div class="term-definition">A network device that connects two or more network segments, allowing VMs to appear on the same network as the physical host.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Networking</span>
+                    <span class="term-week">📅 Week 3</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Virtual Network'); return false;">Virtual Network</a><a href="#" class="related-link" onclick="searchTerm('VLAN'); return false;">VLAN</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-C">
+            <h2 class="letter-header">C</h2>
+            <div class="term-card" data-category="Automation">
+                <div class="term-title">CLI</div>
+                <div class="term-definition">Command Line Interface - A text-based interface for interacting with software and operating systems through commands.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Automation</span>
+                    <span class="term-week">📅 Week 11</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('OpenStack CLI'); return false;">OpenStack CLI</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Storage">
+                <div class="term-title">Ceph</div>
+                <div class="term-definition">A unified, distributed storage system providing object, block, and file storage in a single platform with no single point of failure.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Storage</span>
+                    <span class="term-week">📅 Week 4</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Distributed Storage'); return false;">Distributed Storage</a><a href="#" class="related-link" onclick="searchTerm('OpenStack Cinder'); return false;">OpenStack Cinder</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Cinder</div>
+                <div class="term-definition">OpenStack's block storage service providing persistent block storage volumes for virtual machines.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 10</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('OpenStack'); return false;">OpenStack</a><a href="#" class="related-link" onclick="searchTerm('Block Storage'); return false;">Block Storage</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtual Machines">
+                <div class="term-title">Clone</div>
+                <div class="term-definition">An exact copy of a virtual machine, which can be either linked (shares storage with original) or full (independent copy).</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtual Machines</span>
+                    <span class="term-week">📅 Week 2</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Template'); return false;">Template</a><a href="#" class="related-link" onclick="searchTerm('Virtual Machine'); return false;">Virtual Machine</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Cloud Computing</div>
+                <div class="term-definition">The delivery of computing services including servers, storage, databases, networking, and software over the internet on-demand.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 7</span>
+                </div>
+            </div>
+            <div class="term-card" data-category="High Availability">
+                <div class="term-title">Cluster</div>
+                <div class="term-definition">A group of interconnected servers working together to provide increased availability, scalability, and performance.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 High Availability</span>
+                    <span class="term-week">📅 Week 6</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Proxmox Cluster'); return false;">Proxmox Cluster</a><a href="#" class="related-link" onclick="searchTerm('Quorum'); return false;">Quorum</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Containers">
+                <div class="term-title">Container</div>
+                <div class="term-definition">A lightweight, standalone executable package that includes application code, runtime, libraries, and dependencies, sharing the host OS kernel.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Containers</span>
+                    <span class="term-week">📅 Week 5</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Docker'); return false;">Docker</a><a href="#" class="related-link" onclick="searchTerm('LXC'); return false;">LXC</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="High Availability">
+                <div class="term-title">Corosync</div>
+                <div class="term-definition">A cluster engine providing group communication and membership services for high availability clusters.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 High Availability</span>
+                    <span class="term-week">📅 Week 6</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Cluster'); return false;">Cluster</a><a href="#" class="related-link" onclick="searchTerm('Quorum'); return false;">Quorum</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-D">
+            <h2 class="letter-header">D</h2>
+            <div class="term-card" data-category="Networking">
+                <div class="term-title">DHCP</div>
+                <div class="term-definition">Dynamic Host Configuration Protocol - A network protocol that automatically assigns IP addresses and network configuration to devices.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Networking</span>
+                    <span class="term-week">📅 Week 3</span>
+                </div>
+            </div>
+            <div class="term-card" data-category="Networking">
+                <div class="term-title">DNS</div>
+                <div class="term-definition">Domain Name System - A hierarchical naming system that translates human-readable domain names to IP addresses.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Networking</span>
+                    <span class="term-week">📅 Week 3</span>
+                </div>
+            </div>
+            <div class="term-card" data-category="Containers">
+                <div class="term-title">Docker</div>
+                <div class="term-definition">A platform for developing, shipping, and running applications in containers, providing tools for container lifecycle management.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Containers</span>
+                    <span class="term-week">📅 Week 5</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Container'); return false;">Container</a><a href="#" class="related-link" onclick="searchTerm('Docker Image'); return false;">Docker Image</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Containers">
+                <div class="term-title">Docker Image</div>
+                <div class="term-definition">A read-only template containing application code and dependencies used to create Docker containers.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Containers</span>
+                    <span class="term-week">📅 Week 5</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Docker'); return false;">Docker</a><a href="#" class="related-link" onclick="searchTerm('Container'); return false;">Container</a><a href="#" class="related-link" onclick="searchTerm('Dockerfile'); return false;">Dockerfile</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Containers">
+                <div class="term-title">Dockerfile</div>
+                <div class="term-definition">A text file containing instructions for building a Docker image, defining the base image, dependencies, and configuration.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Containers</span>
+                    <span class="term-week">📅 Week 5</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Docker Image'); return false;">Docker Image</a><a href="#" class="related-link" onclick="searchTerm('Docker'); return false;">Docker</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-F">
+            <h2 class="letter-header">F</h2>
+            <div class="term-card" data-category="High Availability">
+                <div class="term-title">Failover</div>
+                <div class="term-definition">The automatic transfer of operations from a failed component to a redundant backup component to maintain service availability.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 High Availability</span>
+                    <span class="term-week">📅 Week 6</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('High Availability'); return false;">High Availability</a><a href="#" class="related-link" onclick="searchTerm('Redundancy'); return false;">Redundancy</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="High Availability">
+                <div class="term-title">Fencing</div>
+                <div class="term-definition">A safety mechanism in clusters that isolates or powers off failed nodes to prevent data corruption and split-brain scenarios.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 High Availability</span>
+                    <span class="term-week">📅 Week 6</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Cluster'); return false;">Cluster</a><a href="#" class="related-link" onclick="searchTerm('STONITH'); return false;">STONITH</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Flavor</div>
+                <div class="term-definition">In OpenStack, a template defining virtual machine resources including vCPUs, RAM, and disk size.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 9</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Nova'); return false;">Nova</a><a href="#" class="related-link" onclick="searchTerm('Virtual Machine'); return false;">Virtual Machine</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-G">
+            <h2 class="letter-header">G</h2>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Glance</div>
+                <div class="term-definition">OpenStack's image service for discovering, registering, and retrieving virtual machine images.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 8</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('OpenStack'); return false;">OpenStack</a><a href="#" class="related-link" onclick="searchTerm('VM Image'); return false;">VM Image</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">Guest OS</div>
+                <div class="term-definition">The operating system running inside a virtual machine, as opposed to the host operating system.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+            </div>
+        </div>
+        <div id="letter-H">
+            <h2 class="letter-header">H</h2>
+            <div class="term-card" data-category="High Availability">
+                <div class="term-title">High Availability (HA)</div>
+                <div class="term-definition">A system design approach ensuring a service remains operational and accessible with minimal downtime, typically targeting 99.9% or higher uptime.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 High Availability</span>
+                    <span class="term-week">📅 Week 6</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Cluster'); return false;">Cluster</a><a href="#" class="related-link" onclick="searchTerm('Failover'); return false;">Failover</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Horizon</div>
+                <div class="term-definition">OpenStack's web-based dashboard providing a graphical interface for managing cloud resources.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 8</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('OpenStack'); return false;">OpenStack</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">Host OS</div>
+                <div class="term-definition">The primary operating system running on physical hardware that hosts virtual machines (in Type 2 hypervisors).</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">Hypervisor</div>
+                <div class="term-definition">Software that creates and manages virtual machines by abstracting physical hardware resources. Also known as Virtual Machine Monitor (VMM).</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Type 1 Hypervisor'); return false;">Type 1 Hypervisor</a><a href="#" class="related-link" onclick="searchTerm('Type 2 Hypervisor'); return false;">Type 2 Hypervisor</a><a href="#" class="related-link" onclick="searchTerm('Virtual Machine'); return false;">Virtual Machine</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-I">
+            <h2 class="letter-header">I</h2>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">IaaS</div>
+                <div class="term-definition">Infrastructure as a Service - Cloud service model providing virtualized computing resources over the internet, including servers, storage, and networking.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 7</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('PaaS'); return false;">PaaS</a><a href="#" class="related-link" onclick="searchTerm('SaaS'); return false;">SaaS</a><a href="#" class="related-link" onclick="searchTerm('Cloud Computing'); return false;">Cloud Computing</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Automation">
+                <div class="term-title">Infrastructure as Code (IaC)</div>
+                <div class="term-definition">The practice of managing and provisioning infrastructure through machine-readable definition files rather than manual processes.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Automation</span>
+                    <span class="term-week">📅 Week 11</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Ansible'); return false;">Ansible</a><a href="#" class="related-link" onclick="searchTerm('Terraform'); return false;">Terraform</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-J">
+            <h2 class="letter-header">J</h2>
+            <div class="term-card" data-category="Automation">
+                <div class="term-title">JSON</div>
+                <div class="term-definition">JavaScript Object Notation - A lightweight data interchange format that is easy for humans to read and write and for machines to parse.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Automation</span>
+                    <span class="term-week">📅 Week 11</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('API'); return false;">API</a><a href="#" class="related-link" onclick="searchTerm('REST API'); return false;">REST API</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-K">
+            <h2 class="letter-header">K</h2>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">KVM</div>
+                <div class="term-definition">Kernel-based Virtual Machine - A Type 1 hypervisor built into the Linux kernel, providing hardware-assisted virtualization.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('QEMU'); return false;">QEMU</a><a href="#" class="related-link" onclick="searchTerm('Proxmox'); return false;">Proxmox</a><a href="#" class="related-link" onclick="searchTerm('Hypervisor'); return false;">Hypervisor</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Keystone</div>
+                <div class="term-definition">OpenStack's identity service providing authentication and authorization for all OpenStack services.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 8</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('OpenStack'); return false;">OpenStack</a><a href="#" class="related-link" onclick="searchTerm('Authentication'); return false;">Authentication</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Containers">
+                <div class="term-title">Kubernetes</div>
+                <div class="term-definition">An open-source container orchestration platform for automating deployment, scaling, and management of containerized applications.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Containers</span>
+                    <span class="term-week">📅 Week 5</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Docker'); return false;">Docker</a><a href="#" class="related-link" onclick="searchTerm('Container Orchestration'); return false;">Container Orchestration</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-L">
+            <h2 class="letter-header">L</h2>
+            <div class="term-card" data-category="Storage">
+                <div class="term-title">LVM</div>
+                <div class="term-definition">Logical Volume Manager - A device mapper framework providing logical volume management for the Linux kernel, allowing flexible disk management.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Storage</span>
+                    <span class="term-week">📅 Week 4</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Storage Pool'); return false;">Storage Pool</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Containers">
+                <div class="term-title">LXC</div>
+                <div class="term-definition">Linux Containers - An operating system-level virtualization method providing isolated environments using Linux kernel features.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Containers</span>
+                    <span class="term-week">📅 Week 5</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Container'); return false;">Container</a><a href="#" class="related-link" onclick="searchTerm('Proxmox'); return false;">Proxmox</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtual Machines">
+                <div class="term-title">Live Migration</div>
+                <div class="term-definition">The process of moving a running virtual machine from one physical host to another without downtime.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtual Machines</span>
+                    <span class="term-week">📅 Week 2</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('High Availability'); return false;">High Availability</a><a href="#" class="related-link" onclick="searchTerm('Cluster'); return false;">Cluster</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-M">
+            <h2 class="letter-header">M</h2>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Multi-tenancy</div>
+                <div class="term-definition">A software architecture where a single instance serves multiple customers (tenants) with isolated data and configurations.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 8</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Project'); return false;">Project</a><a href="#" class="related-link" onclick="searchTerm('Tenant'); return false;">Tenant</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-N">
+            <h2 class="letter-header">N</h2>
+            <div class="term-card" data-category="Networking">
+                <div class="term-title">NAT</div>
+                <div class="term-definition">Network Address Translation - A method of mapping private IP addresses to public IP addresses, commonly used to allow VMs to access external networks.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Networking</span>
+                    <span class="term-week">📅 Week 3</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Routing'); return false;">Routing</a><a href="#" class="related-link" onclick="searchTerm('Firewall'); return false;">Firewall</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Storage">
+                <div class="term-title">NFS</div>
+                <div class="term-definition">Network File System - A distributed file system protocol allowing remote file access over a network as if locally attached.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Storage</span>
+                    <span class="term-week">📅 Week 4</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Shared Storage'); return false;">Shared Storage</a><a href="#" class="related-link" onclick="searchTerm('CIFS'); return false;">CIFS</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Neutron</div>
+                <div class="term-definition">OpenStack's networking service providing network connectivity as a service, including virtual networks, routers, and firewalls.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 8</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('OpenStack'); return false;">OpenStack</a><a href="#" class="related-link" onclick="searchTerm('Software-Defined Networking'); return false;">Software-Defined Networking</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Nova</div>
+                <div class="term-definition">OpenStack's compute service responsible for provisioning and managing virtual machine instances.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 9</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('OpenStack'); return false;">OpenStack</a><a href="#" class="related-link" onclick="searchTerm('Virtual Machine'); return false;">Virtual Machine</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-O">
+            <h2 class="letter-header">O</h2>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">OpenStack</div>
+                <div class="term-definition">An open-source cloud computing platform for building and managing public and private clouds, providing IaaS services.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 8</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Nova'); return false;">Nova</a><a href="#" class="related-link" onclick="searchTerm('Neutron'); return false;">Neutron</a><a href="#" class="related-link" onclick="searchTerm('Cinder'); return false;">Cinder</a><a href="#" class="related-link" onclick="searchTerm('Glance'); return false;">Glance</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Automation">
+                <div class="term-title">Orchestration</div>
+                <div class="term-definition">The automated configuration, coordination, and management of computer systems and software, especially in cloud environments.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Automation</span>
+                    <span class="term-week">📅 Week 11</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Kubernetes'); return false;">Kubernetes</a><a href="#" class="related-link" onclick="searchTerm('OpenStack Heat'); return false;">OpenStack Heat</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-P">
+            <h2 class="letter-header">P</h2>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">PaaS</div>
+                <div class="term-definition">Platform as a Service - Cloud service model providing a platform for developing, testing, and deploying applications without managing underlying infrastructure.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 7</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('IaaS'); return false;">IaaS</a><a href="#" class="related-link" onclick="searchTerm('SaaS'); return false;">SaaS</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Containers">
+                <div class="term-title">Pod</div>
+                <div class="term-definition">The smallest deployable unit in Kubernetes, consisting of one or more containers that share storage and network resources.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Containers</span>
+                    <span class="term-week">📅 Week 5</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Kubernetes'); return false;">Kubernetes</a><a href="#" class="related-link" onclick="searchTerm('Container'); return false;">Container</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">Proxmox VE</div>
+                <div class="term-definition">Proxmox Virtual Environment - An open-source virtualization platform combining KVM hypervisor and LXC containers with an integrated web-based management interface.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('KVM'); return false;">KVM</a><a href="#" class="related-link" onclick="searchTerm('LXC'); return false;">LXC</a><a href="#" class="related-link" onclick="searchTerm('Container'); return false;">Container</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-Q">
+            <h2 class="letter-header">Q</h2>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">QEMU</div>
+                <div class="term-definition">Quick Emulator - An open-source machine emulator and virtualizer that works with KVM to provide full system virtualization.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('KVM'); return false;">KVM</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="High Availability">
+                <div class="term-title">Quorum</div>
+                <div class="term-definition">The minimum number of cluster nodes that must be available for the cluster to function, preventing split-brain scenarios.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 High Availability</span>
+                    <span class="term-week">📅 Week 6</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Cluster'); return false;">Cluster</a><a href="#" class="related-link" onclick="searchTerm('Corosync'); return false;">Corosync</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-R">
+            <h2 class="letter-header">R</h2>
+            <div class="term-card" data-category="Automation">
+                <div class="term-title">REST API</div>
+                <div class="term-definition">Representational State Transfer API - An architectural style for web services using HTTP methods (GET, POST, PUT, DELETE) for operations.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Automation</span>
+                    <span class="term-week">📅 Week 11</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('API'); return false;">API</a><a href="#" class="related-link" onclick="searchTerm('JSON'); return false;">JSON</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-S">
+            <h2 class="letter-header">S</h2>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">SaaS</div>
+                <div class="term-definition">Software as a Service - Cloud service model delivering software applications over the internet on a subscription basis.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 7</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('IaaS'); return false;">IaaS</a><a href="#" class="related-link" onclick="searchTerm('PaaS'); return false;">PaaS</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtual Machines">
+                <div class="term-title">Snapshot</div>
+                <div class="term-definition">A point-in-time copy of a virtual machine's state, including disk, memory, and configuration, allowing rollback to previous states.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtual Machines</span>
+                    <span class="term-week">📅 Week 2</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Virtual Machine'); return false;">Virtual Machine</a><a href="#" class="related-link" onclick="searchTerm('Backup'); return false;">Backup</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Networking">
+                <div class="term-title">Software-Defined Networking (SDN)</div>
+                <div class="term-definition">An approach to networking that uses software-based controllers to manage network traffic and behavior, separating the control plane from the data plane.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Networking</span>
+                    <span class="term-week">📅 Week 3</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('OpenStack Neutron'); return false;">OpenStack Neutron</a><a href="#" class="related-link" onclick="searchTerm('Virtual Network'); return false;">Virtual Network</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Storage">
+                <div class="term-title">Storage Pool</div>
+                <div class="term-definition">A collection of storage resources aggregated together to be allocated to virtual machines as needed.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Storage</span>
+                    <span class="term-week">📅 Week 4</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('ZFS'); return false;">ZFS</a><a href="#" class="related-link" onclick="searchTerm('LVM'); return false;">LVM</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-T">
+            <h2 class="letter-header">T</h2>
+            <div class="term-card" data-category="Virtual Machines">
+                <div class="term-title">Template</div>
+                <div class="term-definition">A pre-configured virtual machine image used as a baseline for creating new VMs quickly and consistently.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtual Machines</span>
+                    <span class="term-week">📅 Week 2</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Clone'); return false;">Clone</a><a href="#" class="related-link" onclick="searchTerm('Virtual Machine'); return false;">Virtual Machine</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Cloud">
+                <div class="term-title">Tenant</div>
+                <div class="term-definition">In OpenStack, a grouping of users and resources with isolated access. Also called a Project.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Cloud</span>
+                    <span class="term-week">📅 Week 8</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('OpenStack'); return false;">OpenStack</a><a href="#" class="related-link" onclick="searchTerm('Multi-tenancy'); return false;">Multi-tenancy</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">Type 1 Hypervisor</div>
+                <div class="term-definition">A bare-metal hypervisor that runs directly on physical hardware without a host operating system. Examples include VMware ESXi, KVM, and Proxmox VE.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Hypervisor'); return false;">Hypervisor</a><a href="#" class="related-link" onclick="searchTerm('KVM'); return false;">KVM</a><a href="#" class="related-link" onclick="searchTerm('Proxmox'); return false;">Proxmox</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">Type 2 Hypervisor</div>
+                <div class="term-definition">A hosted hypervisor that runs on top of a host operating system. Examples include VMware Workstation, VirtualBox, and QEMU.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Hypervisor'); return false;">Hypervisor</a><a href="#" class="related-link" onclick="searchTerm('VirtualBox'); return false;">VirtualBox</a><a href="#" class="related-link" onclick="searchTerm('QEMU'); return false;">QEMU</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-V">
+            <h2 class="letter-header">V</h2>
+            <div class="term-card" data-category="Networking">
+                <div class="term-title">VLAN</div>
+                <div class="term-definition">Virtual Local Area Network - A logical network segment that groups devices regardless of physical location, improving security and reducing broadcast domains.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Networking</span>
+                    <span class="term-week">📅 Week 3</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Bridge'); return false;">Bridge</a><a href="#" class="related-link" onclick="searchTerm('Network Segmentation'); return false;">Network Segmentation</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtual Machines">
+                <div class="term-title">Virtual Disk</div>
+                <div class="term-definition">A file or volume that appears as a physical disk drive to a virtual machine, storing the VM's operating system and data.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtual Machines</span>
+                    <span class="term-week">📅 Week 2</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('qcow2'); return false;">qcow2</a><a href="#" class="related-link" onclick="searchTerm('Raw Disk'); return false;">Raw Disk</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">Virtual Machine (VM)</div>
+                <div class="term-definition">A software-based emulation of a physical computer that runs an operating system and applications, isolated from the host system.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Hypervisor'); return false;">Hypervisor</a><a href="#" class="related-link" onclick="searchTerm('Guest OS'); return false;">Guest OS</a>
+                </div>
+            </div>
+            <div class="term-card" data-category="Networking">
+                <div class="term-title">Virtual Network</div>
+                <div class="term-definition">A software-defined network that enables communication between virtual machines and external networks.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Networking</span>
+                    <span class="term-week">📅 Week 3</span>
+                </div>
+            </div>
+            <div class="term-card" data-category="Virtualization">
+                <div class="term-title">Virtualization</div>
+                <div class="term-definition">The creation of virtual versions of physical computing resources, including servers, storage devices, and networks.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtualization</span>
+                    <span class="term-week">📅 Week 1</span>
+                </div>
+            </div>
+        </div>
+        <div id="letter-Z">
+            <h2 class="letter-header">Z</h2>
+            <div class="term-card" data-category="Storage">
+                <div class="term-title">ZFS</div>
+                <div class="term-definition">Zettabyte File System - An advanced file system with built-in volume management, data integrity verification, and efficient snapshots.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Storage</span>
+                    <span class="term-week">📅 Week 4</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Storage Pool'); return false;">Storage Pool</a><a href="#" class="related-link" onclick="searchTerm('Snapshot'); return false;">Snapshot</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-I">
+            <h2 class="letter-header">I</h2>
+            <div class="term-card" data-category="Storage">
+                <div class="term-title">iSCSI</div>
+                <div class="term-definition">Internet Small Computer System Interface - A protocol for transmitting SCSI commands over IP networks, enabling block-level storage access.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Storage</span>
+                    <span class="term-week">📅 Week 4</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('SAN'); return false;">SAN</a><a href="#" class="related-link" onclick="searchTerm('Block Storage'); return false;">Block Storage</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-Q">
+            <h2 class="letter-header">Q</h2>
+            <div class="term-card" data-category="Storage">
+                <div class="term-title">qcow2</div>
+                <div class="term-definition">QEMU Copy-On-Write version 2 - A disk image format that supports compression, encryption, and snapshots.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Storage</span>
+                    <span class="term-week">📅 Week 2</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Virtual Disk'); return false;">Virtual Disk</a><a href="#" class="related-link" onclick="searchTerm('Snapshot'); return false;">Snapshot</a>
+                </div>
+            </div>
+        </div>
+        <div id="letter-V">
+            <h2 class="letter-header">V</h2>
+            <div class="term-card" data-category="Virtual Machines">
+                <div class="term-title">vCPU</div>
+                <div class="term-definition">Virtual Central Processing Unit - A portion of physical CPU resources allocated to a virtual machine.</div>
+                <div class="term-meta">
+                    <span class="term-category">📂 Virtual Machines</span>
+                    <span class="term-week">📅 Week 2</span>
+                </div>
+                <div class="related-terms">
+                    <strong>Related:</strong> <a href="#" class="related-link" onclick="searchTerm('Virtual Machine'); return false;">Virtual Machine</a><a href="#" class="related-link" onclick="searchTerm('CPU Scheduling'); return false;">CPU Scheduling</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+    
+    <script>
+        // Search functionality
+        function filterTerms() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.term-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.term-title').textContent.toLowerCase();
+                const definition = card.querySelector('.term-definition').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || definition.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Search for specific term
+        function searchTerm(term) {
+            document.getElementById('searchInput').value = term;
+            filterTerms();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        // Category filter
+        let currentCategory = 'all';
+        function filterByCategory(category) {
+            currentCategory = category;
+            const cards = document.querySelectorAll('.term-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+        
+        document.getElementById('backToTop').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+        
+        // Smooth scrolling for letter links
+        document.querySelectorAll('.letter-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                target.scrollIntoView({behavior: 'smooth', block: 'start'});
+            });
+        });
+    </script>
+</body>
+</html>
