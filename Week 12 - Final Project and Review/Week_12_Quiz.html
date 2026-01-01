@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 8 Quiz - OPS3</title>
+    <title>Week 12 Quiz - OPS3</title>
     <style>
         * {
             margin: 0;
@@ -276,7 +276,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>📝 Week 8 Quiz</h1>
+            <h1>📝 Week 12 Quiz</h1>
             <p>OPS3 - Virtualization and Cloud Infrastructure</p>
         </header>
         
@@ -330,83 +330,76 @@
         const quizData = {
             "scenario": [
                         {
-                                    "question": "Users need to authenticate before accessing OpenStack services. Which component handles this?",
+                                    "question": "You're designing a high-availability web application on OpenStack. Which components are essential? (Select the BEST comprehensive answer)",
                                     "options": [
-                                                "Nova",
-                                                "Neutron",
-                                                "Keystone",
-                                                "Horizon"
+                                                "Just multiple VMs",
+                                                "Load balancer, multiple VMs across availability zones, persistent storage, automated failover",
+                                                "Single large VM",
+                                                "Containers only"
                                     ],
-                                    "answer": "Keystone",
-                                    "explanation": "Keystone is OpenStack's identity service, providing authentication and authorization."
+                                    "answer": "Load balancer, multiple VMs across availability zones, persistent storage, automated failover",
+                                    "explanation": "HA requires redundancy, load distribution, data persistence, and automatic recovery mechanisms."
                         },
                         {
-                                    "question": "Administrators want a web-based GUI to manage OpenStack resources. Which component provides this?",
+                                    "question": "A project requires virtualization for VMs, container orchestration, and cloud management. Which combination provides all three?",
                                     "options": [
-                                                "Keystone",
-                                                "Glance",
-                                                "Horizon",
-                                                "Cinder"
+                                                "Proxmox + Docker + OpenStack",
+                                                "Only VirtualBox",
+                                                "Only Kubernetes",
+                                                "Only OpenStack"
                                     ],
-                                    "answer": "Horizon",
-                                    "explanation": "Horizon is the OpenStack dashboard providing web-based management interface."
+                                    "answer": "Proxmox + Docker + OpenStack",
+                                    "explanation": "This stack provides VM management (Proxmox), containers (Docker), and cloud orchestration (OpenStack)."
                         },
                         {
-                                    "question": "You need to store and manage VM images in OpenStack. Which service handles this?",
+                                    "question": "What's the key advantage of using Infrastructure as Code for cloud deployments?",
                                     "options": [
-                                                "Nova",
-                                                "Glance",
-                                                "Swift",
-                                                "Cinder"
+                                                "It's faster to type",
+                                                "Reproducibility, version control, and automation",
+                                                "It looks professional",
+                                                "It's required by law"
                                     ],
-                                    "answer": "Glance",
-                                    "explanation": "Glance is the image registry service for storing and retrieving VM images."
+                                    "answer": "Reproducibility, version control, and automation",
+                                    "explanation": "IaC enables consistent, version-controlled, automated infrastructure deployments."
                         }
             ],
             "fill_blank": [
                         {
-                                    "question": "_______ is OpenStack's compute service responsible for managing virtual machine instances.",
+                                    "question": "The three main cloud service models are IaaS, PaaS, and _______.",
+                                    "answer": "SaaS",
+                                    "alternatives": [
+                                                "saas",
+                                                "Software as a Service"
+                                    ],
+                                    "explanation": "IaaS, PaaS, and SaaS are the three primary cloud service delivery models."
+                        },
+                        {
+                                    "question": "In OpenStack, _______ manages compute, _______ manages networking, and _______ manages block storage.",
                                     "answer": "Nova",
                                     "alternatives": [
                                                 "nova"
                                     ],
-                                    "explanation": "Nova handles VM provisioning, scheduling, and lifecycle management."
-                        },
-                        {
-                                    "question": "In OpenStack, a _______ is a logical grouping of users and resources for isolation.",
-                                    "answer": "project",
-                                    "alternatives": [
-                                                "Project",
-                                                "tenant",
-                                                "Tenant"
-                                    ],
-                                    "explanation": "Projects (formerly tenants) provide resource and user isolation in OpenStack."
-                        },
-                        {
-                                    "question": "_______ provides networking-as-a-service for OpenStack environments.",
-                                    "answer": "Neutron",
-                                    "alternatives": [
-                                                "neutron"
-                                    ],
-                                    "explanation": "Neutron manages virtual networks, routers, and firewalls in OpenStack."
+                                    "explanation": "Nova (compute), Neutron (networking), and Cinder (storage) are core OpenStack services."
                         }
             ],
             "command": [
                         {
-                                    "question": "Complete the command to source OpenStack credentials:",
-                                    "prompt": "source _______",
-                                    "answer": "openrc",
+                                    "question": "Complete the command to check if KVM is properly loaded:",
+                                    "prompt": "lsmod | grep _______",
+                                    "answer": "kvm",
                                     "alternatives": [
-                                                "adminrc",
-                                                "admin-openrc"
+                                                "KVM"
                                     ],
-                                    "explanation": "Sourcing the openrc file loads OpenStack environment variables for authentication."
+                                    "explanation": "This checks if the KVM kernel module is loaded."
                         },
                         {
-                                    "question": "Complete the command to list OpenStack projects:",
+                                    "question": "Complete the command to view all OpenStack endpoints:",
                                     "prompt": "openstack _______ list",
-                                    "answer": "project",
-                                    "explanation": "'openstack project list' displays all projects in the OpenStack deployment."
+                                    "answer": "endpoint",
+                                    "alternatives": [
+                                                "catalog"
+                                    ],
+                                    "explanation": "'openstack endpoint list' shows all service API endpoints."
                         }
             ]
 };

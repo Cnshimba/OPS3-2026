@@ -7,6 +7,13 @@ Creates VUT-themed quizzes with dynamic question generation
 from pathlib import Path
 import json
 import random
+import sys
+
+# Import questions for weeks 3-12
+try:
+    from quiz_questions_3_12 import WEEKS_3_12_QUESTIONS
+except ImportError:
+    WEEKS_3_12_QUESTIONS = {}
 
 # Quiz question bank for all weeks
 QUIZ_QUESTIONS = {
@@ -111,8 +118,11 @@ QUIZ_QUESTIONS = {
             }
         ]
     },
-    # Add questions for remaining weeks...
+    # Questions for weeks 3-12 imported separately
 }
+
+# Merge with weeks 3-12 questions
+QUIZ_QUESTIONS.update(WEEKS_3_12_QUESTIONS)
 
 def generate_quiz_html(week_num, output_path):
     """Generate interactive quiz HTML for a specific week"""
