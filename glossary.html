@@ -2509,7 +2509,13 @@
     <!-- AI Chat Assistant -->
     <div class="chat-container" id="chatContainer">
         <div class="chat-header" onclick="toggleChat()">
-            <h3>🤖 AI Study Assistant</h3>
+            <!-- Flat Theme Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="#c9984a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="inline-block mr-2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <h3>AI Study Assistant</h3>
             <button class="chat-toggle" id="chatToggle">−</button>
         </div>
         <div class="chat-messages" id="chatMessages">
@@ -2529,7 +2535,7 @@
         <div class="chat-input-container">
             <input class="chat-input" id="chatInput" onkeypress="if(event.key==='Enter') sendMessage()"
                 placeholder="Ask a question..." type="text" />
-            <button class="chat-send-btn" onclick="sendMessage()">Send Question</button>
+            <button class="chat-send-btn" onclick="sendMessage()">Send</button>
         </div>
         <div class="typing-indicator" id="typingIndicator">
             <span class="typing-dot"></span>
@@ -2537,125 +2543,6 @@
             <span class="typing-dot"></span>
         </div>
     </div>
-    <script>
-        // Chat functionality
-        let chatMinimized = false;
-
-        function toggleChat() {
-            const container = document.getElementById('chatContainer');
-            const toggle = document.getElementById('ce');
-            chatMinimized = !chatMinimized;
-
-            if (chatMinimized) {
-                container.classList.add(ed');
-                toggle.textContent = '+';
-            } else {
-                container.classList.remove('minimized');
-                toggle.textContent = '−';
-            }
-        }
-
-        function addMessage(text, isUser) {
-            const messagesDiv = document.geById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message ${isUser ? 'user' : messageDiv.innerHTML = text  messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            function showTyping() {
-                document.getElementByIdcator').classList.add('active');
-            }
-
-            function hideTyping() {
-                document.getElementById('typingIndicator').classList.remove('active');
-            }
-
-            function askQuestion(question) {
-                document.getElementById('chatInput').value = question; sendMessage();
-            }
-
-            async function sendMessage() {
-                const input = tElementById('chatInput');
-                const question = input.value.trim();
-
-                if (!question) return;
-
-                // Add user message
-                addMessage(question, true);
-                input.value = '';
-
-                // Show typing indicator
-                showTyping();
-
-                // Simulate AI response (you can replace this with actual API call)
-                // Logic moved to js/ai_chat.js
-            }
-
-            getAIResponse(question) {
-                const lowerQ = question.toLowerCase();
-
-                // Simple pattern matching for demo - you can integrate real AI API here
-                if (lowerQ.includes('hypervisor')) {
-                    return `<strong>Hypervisors:</strong><br>
-                    <strong>Type 1 (Bare-metal):</strong> Runs directly on hardware without a host OS. Examples: KVM, VMware ESXi, Proxmox VE. More efficient and better for production.<br><br>
-                Type 2 (Hosted):</strong> Runs on top of a host OS. Examples: VirtualBox, VMware Workstation. Easier to set up but less efficient.`;
-                }
-
-                if (lowerQ.includes('container') && lowerQ.includes('vm')) {
-                    return `<strong>Containers vs Virtual Machines:</strong><br>
-                    <strong>Containers:</strong> Share the host OS kernel, lightweight, start in seconds, less overhead. Good for microservices.<br><br>
-                    <strong>VMs:</strong> Have their own OS, more isolated, heavier, start in minutes. Better for running different OSes or complete isolation.`;
-                }
-                if (lowerQ.includes('openstack')) {
-                    return `<strong>OpenStack:</strong> An open-source cloud computing platform for building IaaS clouds.<br><br>
-                    <strong>Key Components:</strong><br>
-                    • <strong>Nova:</strong> Comput                    • <strong>Neutron:</strong> Networking<br>
-                    • <strong>Cinder:</strong> Block Storage<br>
-                    • <strong>Glance:</strong> Images<br>
-                    • <strong>Keystone:</strong> Authentication<br>
-                    • <strong>Horizon:</strong> Web Dashboard`;
-                }
-
-                if (lowerQ.includes('kvm')) {
-                    return `<strong>KVM (Kernel-based Virtual Machine):</strong> A Type 1 hypervisor builtnux kernel. Works with QEMU for full virtualization. Used by Proxmox VE and many cloud providers.`;
-                }
-
-                if (lowerQ.includes('docker')) {
-                    return `<strong>Docker:</strong> A platform for building, shipping, and running containers.<                • <strong>Images:</strong> Templates for containers<br>
-                    • <strong>Containers:</strong> Running instances<br>
-                    • <strong>Dockerfile:</strong> Instructions to build images<br>
-                    • <strong>Docker Hub:</strong> Image registry`;
-                }
-
-                if (lowerQ.includes('proxmox')) {
-                    return `<strong>Proxmox VE:</strong> Open-source virtualization platform combining KVM (for VMs) and LXC (for containers). Features web-based management, clustering, and high availability.`;
-                }
-
-                icludes('high availability') || lowerQ.includes(' ha ')) {
-                    return `<strong>High Availability:</strong> System design to ensure minimal downtime (99.9%+ uptime).<br><br>
-                    <strong>Key Concepts:</strong><br>
-                    • <strong>Clustering:</strong> Multiple servers working together<br>
-                    • <strong>Failover:</strong> Automatic switch to backup<br>
-                    • <strong>Quorum:</strong> Minimum nodes needed<br>
-        • <strong>Fencing:</strong> Isolating failed nodes`;
-                }
-
-                if (lowerQ.includes('cloud') && lowerQ.includes('service')) {
-                    return `<strong>Cloud Service Models:</strong><br>
-                    <strong>IaaS:</strong> Infrastructure (servers, storage, networks). Example: OpenStack, AWS EC2<br><br>
-                    <strong>PaaS:</strong> Platform for development. Example: Google App Engine <br><br>
-                    <strong>SaaS:</strong> Software applications. Example: Gmail, Office 365`;
-                }
-
-            // Default response
-            rn g > Great question!</strong > I can help with topics like: <br>
-                    • Virtualization (hypervisors, VMs, KVM, Proxmox)<br>
-                        • Containers (Docker, Kubernetes, LXC)<br>
-                            • Cloud Computing (OpenStack, IaaS/PaaS/SaaS)<br>
-                                • Networking (VLANs, SDN, bridges)<br>
-                                    • Storage (ZFS, Ceph, LVM)<br>
-                                        • High Availability (clusters, failover)<br><br>
-                                            Try asking about specific terms from the glossary, or check the term definitions above! <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9984a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-1"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`;
-        }
-    </script>
 </body>
 
 </html>

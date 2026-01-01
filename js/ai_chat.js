@@ -172,3 +172,48 @@ function renderMarkdown(text) {
 
     return text;
 }
+
+// --- UI Helpers (Moved from glossary.html) ---
+
+let chatMinimized = false;
+
+window.toggleChat = function () {
+    const container = document.getElementById('chatContainer');
+    const toggle = document.getElementById('chatToggle');
+    chatMinimized = !chatMinimized;
+
+    if (chatMinimized) {
+        container.classList.add('minimized');
+        toggle.textContent = '+';
+    } else {
+        container.classList.remove('minimized');
+        toggle.textContent = '−';
+    }
+}
+
+window.askQuestion = function (question) {
+    const input = document.getElementById('chatInput');
+    input.value = question;
+    // Trigger resize or focus if needed
+    input.focus();
+    window.sendMessage();
+}
+
+function addMessage(text, isUser) {
+    const messagesDiv = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+    messageDiv.innerHTML = text;
+    messagesDiv.appendChild(messageDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function showTyping() {
+    const indicator = document.getElementById('typingIndicator');
+    if (indicator) indicator.classList.add('active');
+}
+
+function hideTyping() {
+    const indicator = document.getElementById('typingIndicator');
+    if (indicator) indicator.classList.remove('active');
+}
