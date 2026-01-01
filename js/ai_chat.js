@@ -128,15 +128,79 @@ window.sendMessage = async function () {
     await sendToGemini(question, 0);
 };
 
+// Helper: Prune Context to stay within Rate Limits
+function getRelevantContext(question) {
+    if (!COURSE_CONTEXT) return "";
+
+    // If context is huge, we split it by Weeks
+    // Delimiter based on your course_context.js format "--- WEEK X NOTES ---"
+    const weeks = COURSE_CONTEXT.split("--- WEEK");
+
+    // Always keep the Introduction/Week 1 if it falls before the first split or is the first chunk
+    let relevantChunks = [];
+
+    // Simple Keyword Matching
+    const lowerQ = question.toLowerCase();
+
+    // Check which week might be relevant
+    weeks.forEach(chunk => {
+        if (!chunk.trim()) return;
+
+        // Re-add the "WEEK" prefix removed by split if needed, or just process the chunk
+        // Let's identify the week number from the chunk header roughly
+        const content = "WEEK" + chunk;
+
+        // Strategy: 
+        // 1. If question mentions "Week X", explicitly include that.
+        // 2. If chunk contains keywords from the question, include it.
+        // 3. Limit to max 2-3 chunks to save tokens.
+
+        let score = 0;
+
+        // Explicit Week Mention
+        // e.g. "Week 3" -> matches "WEEK 3"
+        if (content.match(/WEEK\s+(\d+)/i)) {
+            const weekNum = content.match(/WEEK\s+(\d+)/i)[1];
+            if (lowerQ.includes(`week ${weekNum}`) || lowerQ.includes(`week${weekNum}`)) {
+                score += 100;
+            }
+        }
+
+        // Keyword matching
+        const words = lowerQ.split(/\s+/).filter(w => w.length > 3);
+        words.forEach(word => {
+            if (content.toLowerCase().includes(word)) score++;
+        });
+
+        if (score > 0) {
+            relevantChunks.push({ content, score });
+        }
+    });
+
+    // Sort by relevance
+    relevantChunks.sort((a, b) => b.score - a.score);
+
+    // Take top 3 relevant chunks + basic system info
+    // If no keywords matched, default to the first chunk (Introduction) or just a short summary
+    if (relevantChunks.length === 0) {
+        // Fallback: Send the first ~2000 chars or just Week 1
+        return weeks[0] ? "WEEK" + weeks[0] : COURSE_CONTEXT.slice(0, 5000);
+    }
+
+    // Combine top chunks
+    return relevantChunks.slice(0, 2).map(c => c.content).join("\n\n ... [Context Truncated] ... \n\n");
+}
+
 // Recursive function to handle sending with retries
 async function sendToGemini(question, retryCount = 0) {
     showTyping();
 
-    // Simple "Full Context" approach: Text + Question
-    const fullPrompt = `${SYSTEM_PROMPT} \n\nCOURSE CONTEXT: \n${COURSE_CONTEXT} \n\nSTUDENT QUESTION: ${question} `;
+    // INTELLIGENT CONTEXT: Only send relevant parts to save tokens/quota
+    const slimContext = getRelevantContext(question);
+    const fullPrompt = `${SYSTEM_PROMPT} \n\nCOURSE CONTEXT (Filtered): \n${slimContext} \n\nSTUDENT QUESTION: ${question} `;
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
