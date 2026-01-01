@@ -1,14 +1,13 @@
 ﻿<!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Week 12 Project Brief</title>
-
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Week 12 Project Brief</title>
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -152,7 +151,7 @@
             },
         }
     </script>
-    <script>
+<script>
         // Theme Toggle Logic
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggle = document.getElementById('theme-toggle');
@@ -186,7 +185,7 @@
             });
         });
     </script>
-    <style>
+<style>
         /* CSS Variables for Theming */
         :root {
             --bg-body: #f8fafc;
@@ -885,261 +884,283 @@
 
         /* Literal.String.Symbol */
     </style>
-
-</head>
-
+<style>
+        /* Glossary Tooltip Styles */
+        .glossary-term {
+            color: #c9984a;
+            border-bottom: 2px dotted #c9984a;
+            cursor: help;
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .glossary-term:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+        
+        .glossary-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            z-index: 1000;
+            background: linear-gradient(135deg, #1e3a5f 0%, #142a46 100%);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #c9984a;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 300px;
+            width: max-content;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glossary-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #c9984a transparent transparent transparent;
+        }
+        
+        .glossary-term:hover .glossary-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .glossary-icon {
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 0.8em;
+            color: #c9984a;
+        }
+        </style></head>
 <body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
-
-    <!-- Navigation -->
-    <nav
-        class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
-        <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
-            <a href="../index.html"
-                class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
-                <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
-                <div class="flex flex-col">
-                    <span
-                        class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
+<div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+<a class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline" href="../index.html">
+<img alt="VUT Logo" class="h-12 w-auto object-contain" src="../ops3_logo.png"/>
+<div class="flex flex-col">
+<span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating
                         Systems 3</span>
-                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation
-                        & Cloud Technologies</span>
-                    <span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
-                </div>
-            </a>
-            <div class="flex items-center space-x-6">
-                <a href="../index.html"
-                    class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation
+                        &amp; Cloud Technologies</span>
+<span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
+</div>
+</a>
+<div class="flex items-center space-x-6">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
                     Course Home
                 </a>
-                <!-- Theme Toggle Button -->
-                <button id="theme-toggle"
-                    class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                    <!-- Sun Icon -->
-                    <svg id="icon-sun" class="w-5 h-5 text-yellow-500 hidden" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                        </path>
-                    </svg>
-                    <!-- Moon Icon -->
-                    <svg id="icon-moon" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
-                        </path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 max-w-5xl mb-12">
-        <article
-            class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
-            <p><a href="../index.html">← Back to Course Index</a></p>
-
-            <!-- Header with Icon -->
-            <div
-                class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
-                <div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
-                    <img src="images/week_12_icon.png" class="h-full w-full object-cover" alt="Capstone Project Icon">
-                </div>
-                <div class="flex-1 flex flex-col items-center justify-center p-6">
-                    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Week 12: Capstone
+<!-- Theme Toggle Button -->
+<button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
+<!-- Sun Icon -->
+<svg class="w-5 h-5 text-yellow-500 hidden" fill="none" id="icon-sun" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+</path>
+</svg>
+<!-- Moon Icon -->
+<svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+</path>
+</svg>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="container mx-auto px-4 max-w-5xl mb-12">
+<article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
+<p><a href="../index.html">← Back to Course Index</a></p>
+<!-- Header with Icon -->
+<div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+<div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+<img alt="Capstone Project Icon" class="h-full w-full object-cover" src="images/week_12_icon.png"/>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-6">
+<h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Week 12: Capstone
                         Project Brief</h1>
-                    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Final Project &
+<span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Final Project &amp;
                         Review</span>
-                </div>
-            </div>
-
-            <p><strong>Course</strong>: Computer Systems Engineering<br>
-                <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br>
-                <strong>Instructor</strong>: KT Nshimba<br>
-                <strong>Total Marks</strong>: 100<br>
-                <strong>Duration</strong>: 4 Hours (Practical) + 1 Hour (Review)
+</div>
+</div>
+<p><strong>Course</strong>: Computer Systems Engineering<br/>
+<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)<br/>
+<strong>Instructor</strong>: KT Nshimba<br/>
+<strong>Total Marks</strong>: 100<br/>
+<strong>Duration</strong>: 4 Hours (Practical) + 1 Hour (Review)
             </p>
-
-            <hr>
-
-            <h2 id="1-project-overview">1. Project Overview</h2>
-            <p>You have been hired as a Cloud Architect for "VaalTech Solutions". They require a fully functional
+<hr/>
+<h2 id="1-project-overview">1. Project Overview</h2>
+<p>You have been hired as a Cloud Architect for "VaalTech Solutions". They require a fully functional
                 Private Cloud environment to host their new intranet application.
-                You must use <strong>OpenStack (MicroStack)</strong> to build the infrastructure, secure it, and deploy
+                You must use <strong><a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a> (MicroStack)</strong> to build the infrastructure, secure it, and deploy
                 a web application automatically.</p>
-
-            <p><img src="images/three_tier_architecture.png" alt="Three Tier Architecture"><br>
-                <em>Figure 1: Conceptual Architecture - The goal is to build a standard 3-Tier Web Application
+<p><img alt="Three Tier Architecture" src="images/three_tier_architecture.png"/><br/>
+<em>Figure 1: Conceptual Architecture - The goal is to build a standard 3-Tier Web Application
                     (Frontend, Logic, Database)</em>
-            </p>
-
-            <h2 id="2-requirements">2. Requirements</h2>
-
-            <h3 id="part-a-infrastructure-30-marks">Part A: Infrastructure (30 Marks)</h3>
-            <ol>
-                <li><strong>Network</strong>:
+</p>
+<h2 id="2-requirements">2. Requirements</h2>
+<h3 id="part-a-infrastructure-30-marks">Part A: Infrastructure (30 Marks)</h3>
+<ol>
+<li><strong>Network</strong>:
                     <ul>
-                        <li>Create a private network <code>corporate-net</code> with subnet <code>10.10.10.0/24</code>.
+<li>Create a private network <code>corporate-net</code> with subnet <code>10.10.10.0/24</code>.
                         </li>
-                        <li>Create a Router <code>corp-router</code> connected to the External Provider Network.</li>
-                    </ul>
-                </li>
-                <li><strong>Storage</strong>:
+<li>Create a Router <code>corp-router</code> connected to the External Provider Network.</li>
+</ul>
+</li>
+<li><strong>Storage</strong>:
                     <ul>
-                        <li>Create a Cinder Volume <code>db-data</code> (2GB).</li>
-                    </ul>
-                </li>
-                <li><strong>Security</strong>:
+<li>Create a <a class="glossary-term" href="glossary.html#Cinder">Cinder<span class="glossary-tooltip">OpenStack block storage service 📖</span><span class="glossary-icon">📚</span></a> Volume <code>db-data</code> (2GB).</li>
+</ul>
+</li>
+<li><strong>Security</strong>:
                     <ul>
-                        <li>Create two Security Groups:
+<li>Create two Security Groups:
                             <ul>
-                                <li><code>frontend-sg</code>: Allow HTTP (TCP 80), HTTPS (TCP 443), and SSH (TCP 22).
+<li><code>frontend-sg</code>: Allow HTTP (TCP 80), HTTPS (TCP 443), and SSH (TCP 22).
                                 </li>
-                                <li><code>backend-sg</code>: Allow MySQL (TCP 3306) <strong>ONLY</strong> from the
+<li><code>backend-sg</code>: Allow MySQL (TCP 3306) <strong>ONLY</strong> from the
                                     Frontend IP. Allow SSH (TCP 22).</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ol>
-
-            <h3 id="part-b-deployment-40-marks">Part B: Deployment (40 Marks)</h3>
-            <ol>
-                <li><strong>Frontend Server</strong>:
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="part-b-deployment-40-marks">Part B: Deployment (40 Marks)</h3>
+<ol>
+<li><strong>Frontend Server</strong>:
                     <ul>
-                        <li>Name: <code>web-01</code>.</li>
-                        <li>Flavor: <code>m1.tiny</code>.</li>
-                        <li>Image: <code>ubuntu</code> (or <code>cirros</code>).</li>
-                        <li><strong>Automation</strong>: Must use <code>User-Data</code> (Cloud-Init) to install a web
+<li>Name: <code>web-01</code>.</li>
+<li><a class="glossary-term" href="glossary.html#Flavor">Flavor<span class="glossary-tooltip"><a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> template defining vCPUs, RAM, and disk 📖</span><span class="glossary-icon">📚</span></a>: <code>m1.tiny</code>.</li>
+<li>Image: <code>ubuntu</code> (or <code>cirros</code>).</li>
+<li><strong>Automation</strong>: Must use <code>User-Data</code> (Cloud-Init) to install a web
                             server (<code>apache2</code> or <code>nginx</code>) and create a customized
                             <code>index.html</code> containing your Student Name and Number.</li>
-                        <li>Networking: Attached to <code>corporate-net</code>. Assigned a <strong>Floating IP</strong>.
+<li>Networking: Attached to <code>corporate-net</code>. Assigned a <strong>Floating IP</strong>.
                         </li>
-                        <li>Security: <code>frontend-sg</code>.</li>
-                    </ul>
-                </li>
-                <li><strong>Backend Server</strong>:
+<li>Security: <code>frontend-sg</code>.</li>
+</ul>
+</li>
+<li><strong>Backend Server</strong>:
                     <ul>
-                        <li>Name: <code>db-01</code>.</li>
-                        <li>Network: Attached to <code>corporate-net</code>. No Floating IP.</li>
-                        <li>Storage: Attach the <code>db-data</code> Cinder Volume.</li>
-                        <li>Security: <code>backend-sg</code>.</li>
-                    </ul>
-                </li>
-            </ol>
-
-            <h3 id="part-c-verification-30-marks">Part C: Verification (30 Marks)</h3>
-            <ol>
-                <li><strong>Access</strong>:
+<li>Name: <code>db-01</code>.</li>
+<li>Network: Attached to <code>corporate-net</code>. No Floating IP.</li>
+<li>Storage: Attach the <code>db-data</code> <a class="glossary-term" href="glossary.html#Cinder">Cinder<span class="glossary-tooltip">OpenStack block storage service 📖</span><span class="glossary-icon">📚</span></a> Volume.</li>
+<li>Security: <code>backend-sg</code>.</li>
+</ul>
+</li>
+</ol>
+<h3 id="part-c-verification-30-marks">Part C: Verification (30 Marks)</h3>
+<ol>
+<li><strong>Access</strong>:
                     <ul>
-                        <li>The examiner must be able to load your website via the Floating IP.</li>
-                        <li>The website must display your Name.</li>
-                    </ul>
-                </li>
-                <li><strong>Persistence</strong>:
+<li>The examiner must be able to load your website via the Floating IP.</li>
+<li>The website must display your Name.</li>
+</ul>
+</li>
+<li><strong>Persistence</strong>:
                     <ul>
-                        <li>Create a file on the <code>db-01</code> attached volume.</li>
-                        <li>Detach the volume, attach it to <code>web-01</code>, and prove the file exists.</li>
-                    </ul>
-                </li>
-                <li><strong>Security Penetration Test</strong>:
+<li>Create a file on the <code>db-01</code> attached volume.</li>
+<li>Detach the volume, attach it to <code>web-01</code>, and prove the file exists.</li>
+</ul>
+</li>
+<li><strong>Security Penetration Test</strong>:
                     <ul>
-                        <li>Attempting to SSH into <code>db-01</code> from the public internet must FAIL.</li>
-                        <li>Attempting to SSH into <code>db-01</code> from <code>web-01</code> must SUCCEED.</li>
-                    </ul>
-                </li>
-            </ol>
-
-            <p><img src="images/final_project_topology.png" alt="Final Project Topology"><br>
-                <em>Figure 2: Reference Topology - The target network configuration, showing the Router, Internal
+<li>Attempting to SSH into <code>db-01</code> from the public internet must FAIL.</li>
+<li>Attempting to SSH into <code>db-01</code> from <code>web-01</code> must SUCCEED.</li>
+</ul>
+</li>
+</ol>
+<p><img alt="Final Project Topology" src="images/final_project_topology.png"/><br/>
+<em>Figure 2: Reference Topology - The target network configuration, showing the Router, Internal
                     Network, and Security Boundaries</em>
-            </p>
-
-            <h3 id="part-d-bonus-challenge-10-marks-extra-credit">Part D: Bonus Challenge (10 Marks - Extra Credit)</h3>
-            <ol>
-                <li><strong>Golden Image Strategy</strong>:
+</p>
+<h3 id="part-d-bonus-challenge-10-marks-extra-credit">Part D: Bonus Challenge (10 Marks - Extra Credit)</h3>
+<ol>
+<li><strong>Golden Image Strategy</strong>:
                     <ul>
-                        <li>Create a <strong>Snapshot</strong> of your configured <code>web-01</code> server.</li>
-                        <li>Launch a new instance <code>web-02</code> from this Snapshot.</li>
-                        <li><strong>Requirement</strong>: <code>web-02</code> must serve the website
+<li>Create a <strong><a class="glossary-term" href="glossary.html#Snapshot">Snapshot<span class="glossary-tooltip">Point-in-time copy of <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> state for rollback 📖</span><span class="glossary-icon">📚</span></a></strong> of your configured <code>web-01</code> server.</li>
+<li>Launch a new instance <code>web-02</code> from this <a class="glossary-term" href="glossary.html#Snapshot">Snapshot<span class="glossary-tooltip">Point-in-time copy of <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> state for rollback 📖</span><span class="glossary-icon">📚</span></a>.</li>
+<li><strong>Requirement</strong>: <code>web-02</code> must serve the website
                             <em>immediately</em> upon boot without needing <code>User-Data</code>.</li>
-                        <li><strong>Theory</strong>: In your report, explain why this "Golden Image" approach boots
+<li><strong>Theory</strong>: In your report, explain why this "Golden Image" approach boots
                             faster than the "Post-Boot Configuration" approach used in Part B.</li>
-                    </ul>
-                </li>
-            </ol>
-
-            <hr>
-
-            <h2 id="3-submission-guidelines">3. Submission Guidelines</h2>
-            <p>You must submit a <strong>PDF Report</strong> containing:</p>
-            <ol>
-                <li><strong>Topology Diagram</strong>: A screenshot of the Horizon Network Topology tab.</li>
-                <li><strong>Automation Script</strong>: The Cloud-Init (<code>user-data</code>) file you used.</li>
-                <li><strong>Proof of Life</strong>: A screenshot of the web browser showing your index page.</li>
-                <li><strong>CLI Verification</strong>: Output of <code>openstack server list</code> and
+</ul>
+</li>
+</ol>
+<hr/>
+<h2 id="3-submission-guidelines">3. Submission Guidelines</h2>
+<p>You must submit a <strong>PDF Report</strong> containing:</p>
+<ol>
+<li><strong>Topology Diagram</strong>: A screenshot of the <a class="glossary-term" href="glossary.html#Horizon">Horizon<span class="glossary-tooltip">OpenStack web dashboard 📖</span><span class="glossary-icon">📚</span></a> Network Topology tab.</li>
+<li><strong>Automation Script</strong>: The Cloud-Init (<code>user-data</code>) file you used.</li>
+<li><strong>Proof of Life</strong>: A screenshot of the web browser showing your index page.</li>
+<li><strong><a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface 📖</span><span class="glossary-icon">📚</span></a> Verification</strong>: Output of <code>openstack server list</code> and
                     <code>openstack volume list</code>.</li>
-            </ol>
-
-            <hr>
-
-            <h2 id="4-grading-rubric">4. Grading Rubric</h2>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th style="text-align: left;">Component</th>
-                        <th style="text-align: left;">Criteria</th>
-                        <th style="text-align: left;">Marks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="text-align: left;"><strong>Networking</strong></td>
-                        <td style="text-align: left;">Internal Network, Router, Gateway configured correctly.</td>
-                        <td style="text-align: left;">20</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;"><strong>Security</strong></td>
-                        <td style="text-align: left;">Security Groups implement "Least Privilege" correctly.</td>
-                        <td style="text-align: left;">20</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;"><strong>Automation</strong></td>
-                        <td style="text-align: left;">Web server installs without human intervention.</td>
-                        <td style="text-align: left;">20</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;"><strong>Storage</strong></td>
-                        <td style="text-align: left;">Volume created, attached, formatted, and persistent.</td>
-                        <td style="text-align: left;">20</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;"><strong>Documentation</strong></td>
-                        <td style="text-align: left;">Clear screenshots, correct CLI outputs, professional formatting.
+</ol>
+<hr/>
+<h2 id="4-grading-rubric">4. Grading Rubric</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Criteria</th>
+<th style="text-align: left;">Marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Networking</strong></td>
+<td style="text-align: left;">Internal Network, Router, Gateway configured correctly.</td>
+<td style="text-align: left;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Security</strong></td>
+<td style="text-align: left;">Security Groups implement "Least Privilege" correctly.</td>
+<td style="text-align: left;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Automation</strong></td>
+<td style="text-align: left;">Web server installs without human intervention.</td>
+<td style="text-align: left;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Storage</strong></td>
+<td style="text-align: left;">Volume created, attached, formatted, and persistent.</td>
+<td style="text-align: left;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Documentation</strong></td>
+<td style="text-align: left;">Clear screenshots, correct <a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface 📖</span><span class="glossary-icon">📚</span></a> outputs, professional formatting.
                         </td>
-                        <td style="text-align: left;">20</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;"><strong>TOTAL</strong></td>
-                        <td style="text-align: left;"></td>
-                        <td style="text-align: left;"><strong>100</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p><a href="../index.html">← Back to Course Index</a></p>
-
-        </article>
-    </main>
-
-    <!-- Footer -->
-    <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
-    </footer>
-
-    <!-- Progress Tracking -->
-    <script src="../js/course_logic.js"></script>
-
+<td style="text-align: left;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TOTAL</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<p><a href="../index.html">← Back to Course Index</a></p>
+</article>
+</main>
+<!-- Footer -->
+<footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
+</footer>
+<!-- Progress Tracking -->
+<script src="../js/course_logic.js"></script>
 </body>
-
 </html>

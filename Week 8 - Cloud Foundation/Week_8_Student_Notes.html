@@ -1,14 +1,13 @@
 ﻿<!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Week 8 Student Notes</title>
-
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Week 8 Student Notes</title>
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -152,7 +151,7 @@
             },
         }
     </script>
-    <script>
+<script>
         // Theme Toggle Logic
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggle = document.getElementById('theme-toggle');
@@ -186,7 +185,7 @@
             });
         });
     </script>
-    <style>
+<style>
         /* CSS Variables for Theming */
         :root {
             --bg-body: #f8fafc;
@@ -885,330 +884,368 @@
 
         /* Literal.String.Symbol */
     </style>
-
-</head>
-
+<style>
+        /* Glossary Tooltip Styles */
+        .glossary-term {
+            color: #c9984a;
+            border-bottom: 2px dotted #c9984a;
+            cursor: help;
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .glossary-term:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+        
+        .glossary-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            z-index: 1000;
+            background: linear-gradient(135deg, #1e3a5f 0%, #142a46 100%);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #c9984a;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 300px;
+            width: max-content;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glossary-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #c9984a transparent transparent transparent;
+        }
+        
+        .glossary-term:hover .glossary-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .glossary-icon {
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 0.8em;
+            color: #c9984a;
+        }
+        </style></head>
 <body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
-
-    <!-- Navigation -->
-    <nav
-        class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
-        <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
-            <a href="../index.html"
-                class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
-                <img src="../ops3_logo.png" alt="VUT Logo" class="h-12 w-auto object-contain">
-                <div class="flex flex-col">
-                    <span
-                        class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
+<div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+<a class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline" href="../index.html">
+<img alt="VUT Logo" class="h-12 w-auto object-contain" src="../ops3_logo.png"/>
+<div class="flex flex-col">
+<span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating
                         Systems 3</span>
-                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation
-                        & Cloud Technologies</span>
-                    <span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
-                </div>
-            </a>
-            <div class="flex items-center space-x-6">
-                <a href="../index.html"
-                    class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation
+                        &amp; Cloud Technologies</span>
+<span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
+</div>
+</a>
+<div class="flex items-center space-x-6">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
                     Course Home
                 </a>
-                <!-- Theme Toggle Button -->
-                <button id="theme-toggle"
-                    class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                    <!-- Sun Icon -->
-                    <svg id="icon-sun" class="w-5 h-5 text-yellow-500 hidden" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                        </path>
-                    </svg>
-                    <!-- Moon Icon -->
-                    <svg id="icon-moon" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
-                        </path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 max-w-5xl mb-12">
-        <article
-            class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
-            <p><a href="../index.html">← Back to Course Index</a></p>
-            <div
-                class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
-                <div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
-                    <img src="images/week_8_icon.png" class="h-full w-full object-cover" alt="Cloud Foundation Icon">
-                </div>
-                <div class="flex-1 flex flex-col items-center justify-center p-6">
-                    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Cloud Foundation
-                        (OpenStack)</h1>
-                    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
-                </div>
-            </div>
-
-            <p><strong>Course</strong>: Computer Systems Engineering
+<!-- Theme Toggle Button -->
+<button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
+<!-- Sun Icon -->
+<svg class="w-5 h-5 text-yellow-500 hidden" fill="none" id="icon-sun" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+</path>
+</svg>
+<!-- Moon Icon -->
+<svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+</path>
+</svg>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="container mx-auto px-4 max-w-5xl mb-12">
+<article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
+<p><a href="../index.html">← Back to Course Index</a></p>
+<div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+<div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+<img alt="Cloud Foundation Icon" class="h-full w-full object-cover" src="images/week_8_icon.png"/>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-6">
+<h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Cloud Foundation
+                        (<a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a>)</h1>
+<span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
+</div>
+</div>
+<p><strong>Course</strong>: Computer Systems Engineering
                 <strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-                <strong>Topic</strong>: Cloud Foundation (OpenStack)
+                <strong>Topic</strong>: Cloud Foundation (<a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a>)
                 <strong>Estimated Reading Time</strong>: 25 Minutes
             </p>
-            <blockquote>
-                <p>[!TIP]
+<blockquote>
+<p>[!TIP]
                     <strong>How to succeed in this week</strong>:
-                    OpenStack is complex, but it's just virtualization at scale with an API. Map each OpenStack service
-                    to concepts you already know (Nova=VMs, Neutron=Networking, etc.). The architecture diagram is your
+                    <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a> is complex, but it's just <a class="glossary-term" href="glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources 📖</span><span class="glossary-icon">📚</span></a> at scale with an <a class="glossary-term" href="glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface 📖</span><span class="glossary-icon">📚</span></a>. Map each <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a> service
+                    to concepts you already know (<a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs 📖</span><span class="glossary-icon">📚</span></a>=VMs, <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a>=Networking, etc.). The architecture diagram is your
                     roadmap.
                 </p>
-            </blockquote>
-            <hr />
-            <h2 id="welcome-to-week-8">Welcome to Week 8!</h2>
-            <h3 id="1-case-study-the-nebula-inc-startup">1. Case Study: The "Nebula Inc." Startup</h3>
-            <p>To understand how a cloud is built, we will follow a continuous scenario for the next three weeks. You
+</blockquote>
+<hr/>
+<h2 id="welcome-to-week-8">Welcome to Week 8!</h2>
+<h3 id="1-case-study-the-nebula-inc-startup">1. Case Study: The "Nebula Inc." Startup</h3>
+<p>To understand how a cloud is built, we will follow a continuous scenario for the next three weeks. You
                 have been hired as the Lead Cloud Engineer for a new software startup called <strong>"Nebula
                     Inc."</strong> Currently, they have no infrastructure—just a credit card and a dream. Your job is to
-                build their Virtual Data Center (VDC) from scratch using OpenStack. This is not a theoretical exercise;
+                build their Virtual Data Center (VDC) from scratch using <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a>. This is not a theoretical exercise;
                 you will be typing the actual commands that cloud administrators use daily to construct the digital
                 fabric of the modern internet.</p>
-            <p><strong>The Roadmap</strong>:</p>
-            <ul>
-                <li><strong>Week 8 (Foundation)</strong>: You must create the secure environment. This involves setting
-                    up the company's "Tenant" (Project), hiring the staff (Users), purchasing the software licenses
+<p><strong>The Roadmap</strong>:</p>
+<ul>
+<li><strong>Week 8 (Foundation)</strong>: You must create the secure environment. This involves setting
+                    up the company's "<a class="glossary-term" href="glossary.html#Tenant">Tenant<span class="glossary-tooltip">Grouping of users and resources (also called Project) 📖</span><span class="glossary-icon">📚</span></a>" (Project), hiring the staff (Users), purchasing the software licenses
                     (Images), and cabling the office (Networking).</li>
-                <li><strong>Week 9 (Compute)</strong>: You will deploy their first web servers and secure them with
+<li><strong>Week 9 (Compute)</strong>: You will deploy their first web servers and secure them with
                     firewalls.</li>
-                <li><strong>Week 10 (Storage)</strong>: You will attach persistent storage for their customer database.
+<li><strong>Week 10 (Storage)</strong>: You will attach persistent storage for their customer database.
                 </li>
-            </ul>
-            <p>By the end of this module, you will have a fully functional, multi-tier cloud application environment
+</ul>
+<p>By the end of this module, you will have a fully functional, multi-tier cloud application environment
                 running on infrastructure you defined yourself.</p>
-            <hr />
-            <h2 id="2-deep-dive-identity-management-keystone">2. Deep Dive: Identity Management (Keystone)</h2>
-            <p>Keystone is the central nervous system of OpenStack. If Keystone is down, <strong>nothing</strong> works.
+<hr/>
+<h2 id="2-deep-dive-identity-management-keystone">2. Deep Dive: Identity Management (<a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a>)</h2>
+<p><a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> is the central nervous system of <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a>. If <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> is down, <strong>nothing</strong> works.
                 It is responsible for Authentication (AuthN - "Who are you?") and Authorization (AuthZ - "What can you
-                do?"). In a physical building, Keystone is the security guard at the front desk who checks your ID badge
+                do?"). In a physical building, <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> is the security guard at the front desk who checks your ID badge
                 and decides which floors you are allowed to visit.</p>
-            <h3 id="21-the-authentication-workflow-the-token-dance">2.1 The Authentication Workflow (The "Token Dance")
+<h3 id="21-the-authentication-workflow-the-token-dance">2.1 The Authentication Workflow (The "Token Dance")
             </h3>
-            <p>When you run a command like <code>openstack server list</code>, a complex sequence of events, often
+<p>When you run a command like <code>openstack server list</code>, a complex sequence of events, often
                 called the "Token Dance," occurs in the background before you see any output.</p>
-            <p><img alt="Keystone Authentication Token Dance" src="images/keystone_token_dance.png" />
-                <em>Figure 1: The Keystone "Token Dance" - Documenting the 7-step process of authentication and
+<p><img alt="Keystone Authentication Token Dance" src="images/keystone_token_dance.png">
+<em>Figure 1: The <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> "Token Dance" - Documenting the 7-step process of authentication and
                     authorization</em>
-            </p>
-            <ol>
-                <li><strong>Credentials</strong>: Your client (CLI or Horizon) sends your Username, Password, and Domain
-                    to the Keystone API.</li>
-                <li><strong>Validation</strong>: Keystone validates these credentials against its
+</img></p>
+<ol>
+<li><strong>Credentials</strong>: Your client (<a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface 📖</span><span class="glossary-icon">📚</span></a> or <a class="glossary-term" href="glossary.html#Horizon">Horizon<span class="glossary-tooltip">OpenStack web dashboard 📖</span><span class="glossary-icon">📚</span></a>) sends your Username, Password, and Domain
+                    to the <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> <a class="glossary-term" href="glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface 📖</span><span class="glossary-icon">📚</span></a>.</li>
+<li><strong>Validation</strong>: <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> validates these credentials against its
                     <strong>Backend</strong> (SQL or LDAP).</li>
-                <li><strong>Token Issue</strong>: If the credentials are valid, Keystone generates a
+<li><strong>Token Issue</strong>: If the credentials are valid, <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> generates a
                     <strong>Token</strong> (a temporary digital ID card) and sends it back to you.</li>
-                <li><strong>Service Request</strong>: The client then sends the actual request to Nova
+<li><strong>Service Request</strong>: The client then sends the actual request to <a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs 📖</span><span class="glossary-icon">📚</span></a>
                     (<code>GET /servers</code>), placing the Token in the HTTP Header (<code>X-Auth-Token</code>) as
                     proof of identity.</li>
-                <li><strong>Token Validation</strong>: Nova does not trust you or your token blindly. It authenticates
-                    the token by sending it <em>back</em> to Keystone with the question: "Is this token valid?"</li>
-                <li><strong>Confirmation</strong>: Keystone validates the token's signature and expiry in its database.
-                    It replies to Nova: "Yes, this is valid. The user is 'admin' and has the 'member' role."</li>
-                <li><strong>Execution</strong>: Once confirmed, Nova finally executes the command and returns the server
+<li><strong>Token Validation</strong>: <a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs 📖</span><span class="glossary-icon">📚</span></a> does not trust you or your token blindly. It authenticates
+                    the token by sending it <em>back</em> to <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> with the question: "Is this token valid?"</li>
+<li><strong>Confirmation</strong>: <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> validates the token's signature and expiry in its database.
+                    It replies to <a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs 📖</span><span class="glossary-icon">📚</span></a>: "Yes, this is valid. The user is 'admin' and has the 'member' role."</li>
+<li><strong>Execution</strong>: Once confirmed, <a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs 📖</span><span class="glossary-icon">📚</span></a> finally executes the command and returns the server
                     list.</li>
-            </ol>
-            <h3 id="22-the-backend-where-are-users-stored">2.2 The Backend (Where are users stored?)</h3>
-            <p>Keystone is modular and capable of integrating with existing enterprise systems. It can store users
+</ol>
+<h3 id="22-the-backend-where-are-users-stored">2.2 The Backend (Where are users stored?)</h3>
+<p><a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> is modular and capable of integrating with existing enterprise systems. It can store users
                 locally or talk to external systems:</p>
-            <ul>
-                <li><strong>SQL (Local)</strong>: Users are stored in the OpenStack database (MariaDB). This is the
+<ul>
+<li><strong>SQL (Local)</strong>: Users are stored in the <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a> database (MariaDB). This is the
                     standard configuration for small deployments and our lab environment.</li>
-                <li><strong>LDAP / Active Directory (Enterprise)</strong>: In large enterprises, you do not want to
-                    create separate accounts for every system. Keystone can plug directly into the corporate Active
-                    Directory. When a user logs in, Keystone forwards the password to the Domain Controller for
+<li><strong>LDAP / Active Directory (Enterprise)</strong>: In large enterprises, you do not want to
+                    create separate accounts for every system. <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> can plug directly into the corporate Active
+                    Directory. When a user logs in, <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> forwards the password to the Domain Controller for
                     validation, ensuring Single Sign-On (SSO).</li>
-            </ul>
-            <h3 id="23-token-providers-fernet-vs-uuid">2.3 Token Providers (Fernet vs UUID)</h3>
-            <p>The format of the token itself determines the performance of the cloud.</p>
-            <ul>
-                <li><strong>UUID (Legacy)</strong>: A random string stored in the Keystone Database. The problem with
+</ul>
+<h3 id="23-token-providers-fernet-vs-uuid">2.3 Token Providers (Fernet vs UUID)</h3>
+<p>The format of the token itself determines the performance of the cloud.</p>
+<ul>
+<li><strong>UUID (Legacy)</strong>: A random string stored in the <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> Database. The problem with
                     this method is that <em>every</em> validation requires a Database Lookup. In massive clouds handling
                     10,000 requests per second, this would crush the database.</li>
-                <li><strong>Fernet (Modern)</strong>: A cryptographic token format. The token contains the User ID and
-                    Expiry Time, <em>encrypted</em> using a secret key held by the Keystone server. The major benefit is
-                    that Keystone does <em>not</em> need to store the token in a database. To validate it, it simply
-                    decrypts the token significantly reducing database load and allowing Keystone to scale infinitely.
+<li><strong>Fernet (Modern)</strong>: A cryptographic token format. The token contains the User ID and
+                    Expiry Time, <em>encrypted</em> using a secret key held by the <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> server. The major benefit is
+                    that <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> does <em>not</em> need to store the token in a database. To validate it, it simply
+                    decrypts the token significantly reducing database load and allowing <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> to scale infinitely.
                 </li>
-            </ul>
-            <h3 id="24-the-hierarchy">2.4 The Hierarchy</h3>
-            <ul>
-                <li><strong>Domain</strong>: A high-level container (e.g., "Default" or "Corporate_A"). Use for
-                    multi-tenant isolation.</li>
-                <li><strong>Project (Tenant)</strong>: The workspace. Resources (VMs, Networks) belong to a Project.
+</ul>
+<h3 id="24-the-hierarchy">2.4 The Hierarchy</h3>
+<ul>
+<li><strong>Domain</strong>: A high-level <a class="glossary-term" href="glossary.html#Container">container<span class="glossary-tooltip">Lightweight package with app code and dependencies 📖</span><span class="glossary-icon">📚</span></a> (e.g., "Default" or "Corporate_A"). Use for
+                    multi-<a class="glossary-term" href="glossary.html#Tenant">tenant<span class="glossary-tooltip">Grouping of users and resources (also called Project) 📖</span><span class="glossary-icon">📚</span></a> isolation.</li>
+<li><strong>Project (<a class="glossary-term" href="glossary.html#Tenant">Tenant<span class="glossary-tooltip">Grouping of users and resources (also called Project) 📖</span><span class="glossary-icon">📚</span></a>)</strong>: The workspace. Resources (VMs, Networks) belong to a Project.
                 </li>
-                <li><strong>User</strong>: The human or service account.</li>
-                <li><strong>Role</strong>: The permission set. A User <em>must</em> have a Role on a Project to do
+<li><strong>User</strong>: The human or service account.</li>
+<li><strong>Role</strong>: The permission set. A User <em>must</em> have a Role on a Project to do
                     anything.</li>
-            </ul>
-            <h3 id="25-cli-implementation-case-study-nebula-inc">2.5 CLI Implementation (Case Study: Nebula Inc.)</h3>
-            <p>Now we apply this theory to our startup. "Nebula Inc." requires a dedicated, isolated environment where
-                its developers can work without interfering with other departments. In OpenStack, we achieve this
-                "Multi-Tenancy" by creating a specific <strong>Project</strong>. This project will act as the container
+</ul>
+<h3 id="25-cli-implementation-case-study-nebula-inc">2.5 <a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface 📖</span><span class="glossary-icon">📚</span></a> Implementation (Case Study: Nebula Inc.)</h3>
+<p>Now we apply this theory to our startup. "Nebula Inc." requires a dedicated, isolated environment where
+                its developers can work without interfering with other departments. In <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a>, we achieve this
+                "<a class="glossary-term" href="glossary.html#Multi-tenancy">Multi-Tenancy<span class="glossary-tooltip">Single instance serving multiple customers 📖</span><span class="glossary-icon">📚</span></a>" by creating a specific <strong>Project</strong>. This project will act as the <a class="glossary-term" href="glossary.html#Container">container<span class="glossary-tooltip">Lightweight package with app code and dependencies 📖</span><span class="glossary-icon">📚</span></a>
                 for all their future VMs, networks, and storage volumes. It also allows us to set quotas (e.g., "Maximum
                 10 CPUs") to control their budget.</p>
-            <p><strong>Step 1: Create the Project</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>project<span class="w"> </span>create<span class="w"> </span>--domain<span class="w"> </span>default<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;Nebula Inc. Production&quot;</span><span class="w"> </span>nebula_prod
+<p><strong>Step 1: Create the Project</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>project<span class="w"> </span>create<span class="w"> </span>--domain<span class="w"> </span>default<span class="w"> </span>--description<span class="w"> </span><span class="s2">"Nebula Inc. Production"</span><span class="w"> </span>nebula_prod
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>:<ul>
-                        <li><code>--domain default</code>: Specifies that this project lives in the default domain.</li>
-                        <li><code>--description</code>: Metadata for admins.</li>
-                        <li><strong>Result</strong>: Creates a record in the <code>projects</code> table. Returns a UUID
+</div>
+<ul>
+<li><strong>Explanation</strong>:<ul>
+<li><code>--domain default</code>: Specifies that this project lives in the default domain.</li>
+<li><code>--description</code>: Metadata for admins.</li>
+<li><strong>Result</strong>: Creates a record in the <code>projects</code> table. Returns a UUID
                             (e.g., <code>a1b2c3...</code>).</li>
-                    </ul>
-                </li>
-            </ul>
-            <p><strong>Step 2: Create the User</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>--domain<span class="w"> </span>default<span class="w"> </span>--password-prompt<span class="w"> </span>nebula_admin
+</ul>
+</li>
+</ul>
+<p><strong>Step 2: Create the User</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>--domain<span class="w"> </span>default<span class="w"> </span>--password-prompt<span class="w"> </span>nebula_admin
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>:<ul>
-                        <li><code>--password-prompt</code>: Hides input for security.</li>
-                        <li><strong>Result</strong>: Creating a user identity does NOT grant access. The user is
+</div>
+<ul>
+<li><strong>Explanation</strong>:<ul>
+<li><code>--password-prompt</code>: Hides input for security.</li>
+<li><strong>Result</strong>: Creating a user identity does NOT grant access. The user is
                             currently "unemployed".</li>
-                    </ul>
-                </li>
-            </ul>
-            <p><strong>Step 3: Assign the Role</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>role<span class="w"> </span>add<span class="w"> </span>--project<span class="w"> </span>nebula_prod<span class="w"> </span>--user<span class="w"> </span>nebula_admin<span class="w"> </span>member
+</ul>
+</li>
+</ul>
+<p><strong>Step 3: Assign the Role</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>role<span class="w"> </span>add<span class="w"> </span>--project<span class="w"> </span>nebula_prod<span class="w"> </span>--user<span class="w"> </span>nebula_admin<span class="w"> </span>member
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>:<ul>
-                        <li><code>member</code>: The standard permission level (can create VMs/Networks but cannot
+</div>
+<ul>
+<li><strong>Explanation</strong>:<ul>
+<li><code>member</code>: The standard permission level (can create VMs/Networks but cannot
                             delete other users).</li>
-                        <li><strong>Result</strong>: Creates a row in the <code>role_assignments</code> table linking
+<li><strong>Result</strong>: Creates a row in the <code>role_assignments</code> table linking
                             User+Project+Role.</li>
-                    </ul>
-                </li>
-            </ul>
-            <h3 id="26-identity-verification-management">2.6 Identity Verification &amp; Management</h3>
-            <p>In a production cloud, security is an ongoing process, not a one-time setup. The "Principle of Least
+</ul>
+</li>
+</ul>
+<h3 id="26-identity-verification-management">2.6 Identity Verification &amp; Management</h3>
+<p>In a production cloud, security is an ongoing process, not a one-time setup. The "Principle of Least
                 Privilege" dictates that we must continuously verify that only the correct people have access to our
                 sensitive data. Simply listing the users in the system is insufficient; a user might exist but have no
                 access to anything. To audit this, we must inspect the <strong>Role Assignments</strong>.</p>
-            <p><strong>Auditing Access</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--user<span class="w"> </span>nebula_admin<span class="w"> </span>--names
+<p><strong>Auditing Access</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--user<span class="w"> </span>nebula_admin<span class="w"> </span>--names
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>:<ul>
-                        <li><code>--names</code>: Resolves UUIDs to human-readable names.</li>
-                        <li><strong>Result</strong>: Displays exactly which project the user can access and with what
+</div>
+<ul>
+<li><strong>Explanation</strong>:<ul>
+<li><code>--names</code>: Resolves UUIDs to human-readable names.</li>
+<li><strong>Result</strong>: Displays exactly which project the user can access and with what
                             level of authority.</li>
-                    </ul>
-                </li>
-            </ul>
-            <p><strong>Managing Users</strong></p>
-            <ul>
-                <li>
-                    <p><strong>Disabling a User</strong>:
+</ul>
+</li>
+</ul>
+<p><strong>Managing Users</strong></p>
+<ul>
+<li>
+<p><strong>Disabling a User</strong>:
                         <code>bash
     openstack user set --disable nebula_admin</code>
-                    </p>
-                    <ul>
-                        <li><strong>Explanation</strong>: Sets <code>enabled=False</code> in the DB. The user cannot
+</p>
+<ul>
+<li><strong>Explanation</strong>: Sets <code>enabled=False</code> in the DB. The user cannot
                             request <em>new</em> tokens.</li>
-                    </ul>
-                </li>
-            </ul>
-            <h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li><strong>Keystone</strong>: The core authentication and authorization service; without it, nothing
+</ul>
+</li>
+</ul>
+<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong><a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a></strong>: The core authentication and authorization service; without it, nothing
                     works.</li>
-                <li><strong>Fernet Tokens</strong>: Modern, stateless tokens that improve performance by removing
+<li><strong>Fernet Tokens</strong>: Modern, stateless tokens that improve performance by removing
                     database lookups.</li>
-                <li><strong>Role Assignments</strong>: The critical link that grants a User permission on a Project.
+<li><strong>Role Assignments</strong>: The critical link that grants a User permission on a Project.
                 </li>
-            </ul>
-            <p><strong>Reflection</strong>:
+</ul>
+<p><strong>Reflection</strong>:
                 1. Why do we use tokens (like Fernet) instead of just passing the username/password to every service?
                 (Hint: Performance and Security).
                 2. If you delete a user, their history disappears. If you disable them, it remains. Why is this
                 important for audit trails?</p>
-            <p><strong>Resources</strong>:</p>
-            <ul>
-                <li><a href="https://docs.openstack.org/keystone/latest/">OpenStack Keystone Guide</a></li>
-                <li><a href="https://docs.aws.amazon.com/iam/">AWS Identity and Access Management (IAM)</a></li>
-                <li><a href="https://learn.microsoft.com/en-us/entra/fundamentals/">Microsoft Entra ID (Azure AD)</a>
-                </li>
-            </ul>
-            <hr />
-            <h2 id="3-deep-dive-image-management-glance">3. Deep Dive: Image Management (Glance)</h2>
-            <p>Every Virtual Machine needs a hard drive to boot from. In the physical world, you might walk around with
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://docs.openstack.org/keystone/latest/">OpenStack Keystone Guide</a></li>
+<li><a href="https://docs.aws.amazon.com/iam/">AWS Identity and Access Management (IAM)</a></li>
+<li><a href="https://learn.microsoft.com/en-us/entra/fundamentals/">Microsoft Entra ID (Azure AD)</a>
+</li>
+</ul>
+<hr/>
+<h2 id="3-deep-dive-image-management-glance">3. Deep Dive: Image Management (<a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a>)</h2>
+<p>Every <a class="glossary-term" href="glossary.html#Virtual-Machine">Virtual Machine<span class="glossary-tooltip">A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> needs a hard drive to boot from. In the physical world, you might walk around with
                 a USB stick containing a Windows or Linux ISO installer. In the cloud, this is inefficient. Instead, we
-                use <strong>Glance</strong>, the OpenStack Image Service. Glance acts as a central library where
-                validated, pre-installed operating system templates are stored. When you launch a VM, Nova contacts
-                Glance to request a copy of the "Master Image" to be streamed to the hypervisor.</p>
-            <h3 id="31-understanding-disk-formats">3.1 Understanding Disk Formats</h3>
-            <p>Not all virtual disks are created equal. You must choose the right format for your cloud workload:</p>
-            <p><strong>RAW</strong> is a bit-for-bit copy of the disk. It offers the fastest performance because there
+                use <strong><a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a></strong>, the <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a> Image Service. <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> acts as a central library where
+                validated, pre-installed operating system templates are stored. When you launch a <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a>, <a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs 📖</span><span class="glossary-icon">📚</span></a> contacts
+                <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> to request a copy of the "Master Image" to be streamed to the <a class="glossary-term" href="glossary.html#Hypervisor">hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines 📖</span><span class="glossary-icon">📚</span></a>.</p>
+<h3 id="31-understanding-disk-formats">3.1 Understanding Disk Formats</h3>
+<p>Not all virtual disks are created equal. You must choose the right format for your cloud workload:</p>
+<p><strong>RAW</strong> is a bit-for-bit copy of the disk. It offers the fastest performance because there
                 is no overhead, but it is space-inefficient. A 10GB drive takes up 10GB of physical space, even if it is
                 empty, making it slow to copy over the network.</p>
-            <p><strong>QCOW2 (QEMU Copy On Write)</strong> is the standard format for OpenStack. It supports compression
+<p><strong><a class="glossary-term" href="glossary.html#qcow2">QCOW2<span class="glossary-tooltip"><a class="glossary-term" href="glossary.html#QEMU">QEMU<span class="glossary-tooltip">Quick Emulator - Works with <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor 📖</span><span class="glossary-icon">📚</span></a> for virtualization 📖</span><span class="glossary-icon">📚</span></a> Copy-On-Write disk image format 📖</span><span class="glossary-icon">📚</span></a> (<a class="glossary-term" href="glossary.html#QEMU">QEMU<span class="glossary-tooltip">Quick Emulator - Works with <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor 📖</span><span class="glossary-icon">📚</span></a> for virtualization 📖</span><span class="glossary-icon">📚</span></a> Copy On Write)</strong> is the standard format for <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a>. It supports compression
                 and "Thin Provisioning," meaning a 10GB drive with only 100MB of data takes up only 100MB of physical
-                space. Crucially, it logic enables snapshot capabilities, allowing you to save the state of a VM
+                space. Crucially, it logic enables <a class="glossary-term" href="glossary.html#Snapshot">snapshot<span class="glossary-tooltip">Point-in-time copy of <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> state for rollback 📖</span><span class="glossary-icon">📚</span></a> capabilities, allowing you to save the state of a <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a>
                 instantly.</p>
-            <p><strong>ISO</strong> is a read-only archive used for installation media. While essential for building
+<p><strong>ISO</strong> is a read-only archive used for installation media. While essential for building
                 images, it is rarely used in cloud "boot-from-image" scenarios because we prefer pre-installed operating
                 systems.</p>
-            <h3 id="32-glance-architecture">3.2 Glance Architecture</h3>
-            <p>Glance is split into distinct components to separate the metadata from the actual data payload.</p>
-            <p><img alt="Glance Architecture" src="images/glance_architecture.png" />
-                <em>Figure 2: Glance Architecture - The separation of the API, Registry (Metadata), and Backend Store
+<h3 id="32-glance-architecture">3.2 <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> Architecture</h3>
+<p><a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> is split into distinct components to separate the metadata from the actual data payload.</p>
+<p><img alt="Glance Architecture" src="images/glance_architecture.png">
+<em>Figure 2: <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> Architecture - The separation of the <a class="glossary-term" href="glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface 📖</span><span class="glossary-icon">📚</span></a>, Registry (Metadata), and Backend Store
                     (Data)</em>
-            </p>
-            <ul>
-                <li><strong>Glance API</strong>: The front-end service that accepts user requests (e.g., "Upload this
-                    image", "List images"). It verifies the user's token with Keystone before proceeding.</li>
-                <li><strong>Glance Registry</strong>: An internal service that stores the <em>metadata</em> about images
+</img></p>
+<ul>
+<li><strong><a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> <a class="glossary-term" href="glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface 📖</span><span class="glossary-icon">📚</span></a></strong>: The front-end service that accepts user requests (e.g., "Upload this
+                    image", "List images"). It verifies the user's token with <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> before proceeding.</li>
+<li><strong><a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> Registry</strong>: An internal service that stores the <em>metadata</em> about images
                     (Name, Size, Format, Owner) in the SQL database.</li>
-                <li><strong>Backend Store</strong>: The driver responsible for storing the <em>actual binary data</em>
+<li><strong>Backend Store</strong>: The driver responsible for storing the <em>actual binary data</em>
                     (the heavy bits). While this can be a local file system (<code>/var/lib/glance</code>), production
-                    clouds typically use a distributed storage cluster like <strong>Ceph</strong> or an object store
+                    clouds typically use a distributed storage <a class="glossary-term" href="glossary.html#Cluster">cluster<span class="glossary-tooltip">Group of servers working together 📖</span><span class="glossary-icon">📚</span></a> like <strong><a class="glossary-term" href="glossary.html#Ceph">Ceph<span class="glossary-tooltip">Distributed storage system for object/block/file storage 📖</span><span class="glossary-icon">📚</span></a></strong> or an object store
                     like <strong>AWS S3</strong> to ensure data durability and accessibility across all compute nodes.
                 </li>
-            </ul>
-            <h3 id="33-cli-implementation-case-study-nebula-inc">3.3 CLI Implementation (Case Study: Nebula Inc.)</h3>
-            <p>For any software company, consistency is key. We cannot have one developer running Ubuntu 20.04 and
+</ul>
+<h3 id="33-cli-implementation-case-study-nebula-inc">3.3 <a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface 📖</span><span class="glossary-icon">📚</span></a> Implementation (Case Study: Nebula Inc.)</h3>
+<p>For any software company, consistency is key. We cannot have one developer running Ubuntu 20.04 and
                 another running Fedora 35, as this leads to the infamous "it works on my machine" problem. To solve
                 this, Nebula Inc. enforces a <strong>Standard Operating Environment (SOE)</strong>. We will upload a
-                "Golden Image"—a pre-approved, security-hardened operating system template that all staff must use. For
+                "Golden Image"—a pre-approved, security-hardened operating system <a class="glossary-term" href="glossary.html#Template">template<span class="glossary-tooltip">Pre-configured <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> image for quick deployment 📖</span><span class="glossary-icon">📚</span></a> that all staff must use. For
                 our initial testing phase, we will utilize <strong>CirrOS</strong>, a lightweight (15MB) Linux
-                distribution designed specifically for validating OpenStack clouds, before graduating to full-sized
+                distribution designed specifically for validating <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a> clouds, before graduating to full-sized
                 Ubuntu Server images in production.</p>
-            <p><strong>Step 1: Download the Source</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>wget<span class="w"> </span>http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img
+<p><strong>Step 1: Download the Source</strong></p>
+<div class="codehilite">
+<pre><span></span><code>wget<span class="w"> </span>http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>: We assume we are on the "Jumpbox" or Controller node. Browsers cannot
-                    upload directly to Glance CLI; the file must exist locally.</li>
-            </ul>
-            <p><strong>Step 2: Upload to Glance</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>create<span class="w"> </span><span class="s2">&quot;nebula_standard_os&quot;</span><span class="w"> </span><span class="se">\</span>
+</div>
+<ul>
+<li><strong>Explanation</strong>: We assume we are on the "Jumpbox" or Controller node. Browsers cannot
+                    upload directly to <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> <a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface 📖</span><span class="glossary-icon">📚</span></a>; the file must exist locally.</li>
+</ul>
+<p><strong>Step 2: Upload to <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a></strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>create<span class="w"> </span><span class="s2">"nebula_standard_os"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--file<span class="w"> </span>cirros-0.5.1-x86_64-disk.img<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--disk-format<span class="w"> </span>qcow2<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--container-format<span class="w"> </span>bare<span class="w"> </span><span class="se">\</span>
@@ -1216,335 +1253,319 @@
 <span class="w">  </span>--min-ram<span class="w"> </span><span class="m">64</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--min-disk<span class="w"> </span><span class="m">1</span>
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>:<ul>
-                        <li><code>--disk-format qcow2</code>: Defines how the bits are organized.</li>
-                        <li><code>--container-format bare</code>: Indicates no extra metadata wrapper (OVF) is around
+</div>
+<ul>
+<li><strong>Explanation</strong>:<ul>
+<li><code>--disk-format qcow2</code>: Defines how the bits are organized.</li>
+<li><code>--container-format bare</code>: Indicates no extra metadata wrapper (OVF) is around
                             the file.</li>
-                        <li><code>--public</code>: IMPORTANT. By default, images are "Private" (only visible to the
+<li><code>--public</code>: IMPORTANT. By default, images are "Private" (only visible to the
                             uploader). This flag makes it visible to <em>all</em> projects in the cloud (Nebula, Admin,
                             Testing, etc.).</li>
-                        <li><code>--min-ram 64</code>: A metadata tag. Nova checks this before booting. If a user tries
-                            to launch this on a Flavor with 32MB RAM, Nova will block the request to prevent a crash.
+<li><code>--min-ram 64</code>: A metadata tag. <a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs 📖</span><span class="glossary-icon">📚</span></a> checks this before booting. If a user tries
+                            to launch this on a <a class="glossary-term" href="glossary.html#Flavor">Flavor<span class="glossary-tooltip"><a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> template defining vCPUs, RAM, and disk 📖</span><span class="glossary-icon">📚</span></a> with 32MB RAM, <a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs 📖</span><span class="glossary-icon">📚</span></a> will block the request to prevent a crash.
                         </li>
-                        <li><strong>Result</strong>: The file is streamed into the Glance Backend Store, and a UUID is
+<li><strong>Result</strong>: The file is streamed into the <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> Backend Store, and a UUID is
                             generated.</li>
-                    </ul>
-                </li>
-            </ul>
-            <h3 id="34-managing-images-day-2-operations">3.4 Managing Images (Day 2 Operations)</h3>
-            <p>Once images are uploaded, they are not static. You may need to update their metadata or remove obsolete
+</ul>
+</li>
+</ul>
+<h3 id="34-managing-images-day-2-operations">3.4 Managing Images (Day 2 Operations)</h3>
+<p>Once images are uploaded, they are not static. You may need to update their metadata or remove obsolete
                 versions.</p>
-            <p><strong>Listing Images</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>list
+<p><strong>Listing Images</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>list
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>: Returns a table of available images.</li>
-                <li><strong>Result</strong>: Checks ID, Name, and Status. Status should be <code>active</code>. If
+</div>
+<ul>
+<li><strong>Explanation</strong>: Returns a table of available images.</li>
+<li><strong>Result</strong>: Checks ID, Name, and Status. Status should be <code>active</code>. If
                     status is <code>queued</code>, the upload failed.</li>
-            </ul>
-            <p><strong>Updating Metadata (Properties)</strong>
+</ul>
+<p><strong>Updating Metadata (Properties)</strong>
                 Sometimes we forget a flag or need to deprecate an OS.</p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--property<span class="w"> </span><span class="nv">cpu_arch</span><span class="o">=</span>x86_64<span class="w"> </span>nebula_standard_os
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--property<span class="w"> </span><span class="nv">cpu_arch</span><span class="o">=</span>x86_64<span class="w"> </span>nebula_standard_os
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>: Adds a custom key-value pair to the image metadata. The Scheduler use
-                    this to ensure the VM lands on Intel hardware, not ARM.</li>
-                <li><strong>Result</strong>: The Glance Registry is updated; the actual file is untouched.</li>
-            </ul>
-            <p><strong>Deleting Images</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>delete<span class="w"> </span>nebula_standard_os
+</div>
+<ul>
+<li><strong>Explanation</strong>: Adds a custom key-value pair to the image metadata. The Scheduler use
+                    this to ensure the <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> lands on Intel hardware, not ARM.</li>
+<li><strong>Result</strong>: The <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> Registry is updated; the actual file is untouched.</li>
+</ul>
+<p><strong>Deleting Images</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>delete<span class="w"> </span>nebula_standard_os
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>: Marks the image for deletion.</li>
-                <li><strong>Result</strong>: The metadata is removed from the Registry, and the backend storage driver
-                    (Ceph/File) is instructed to free the space.</li>
-            </ul>
-            <h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li><strong>Glance</strong>: The image repository that provides boot disks to Nova.</li>
-                <li><strong>QCOW2</strong>: The preferred format for cloud images due to thin provisioning and snapshot
+</div>
+<ul>
+<li><strong>Explanation</strong>: Marks the image for deletion.</li>
+<li><strong>Result</strong>: The metadata is removed from the Registry, and the backend storage driver
+                    (<a class="glossary-term" href="glossary.html#Ceph">Ceph<span class="glossary-tooltip">Distributed storage system for object/block/file storage 📖</span><span class="glossary-icon">📚</span></a>/File) is instructed to free the space.</li>
+</ul>
+<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong><a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a></strong>: The image repository that provides boot disks to <a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs 📖</span><span class="glossary-icon">📚</span></a>.</li>
+<li><strong><a class="glossary-term" href="glossary.html#qcow2">QCOW2<span class="glossary-tooltip"><a class="glossary-term" href="glossary.html#QEMU">QEMU<span class="glossary-tooltip">Quick Emulator - Works with <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor 📖</span><span class="glossary-icon">📚</span></a> for virtualization 📖</span><span class="glossary-icon">📚</span></a> Copy-On-Write disk image format 📖</span><span class="glossary-icon">📚</span></a></strong>: The preferred format for cloud images due to thin provisioning and <a class="glossary-term" href="glossary.html#Snapshot">snapshot<span class="glossary-tooltip">Point-in-time copy of <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> state for rollback 📖</span><span class="glossary-icon">📚</span></a>
                     support.</li>
-                <li><strong>SOE</strong>: Standard Operating Environment ensuring consistency across all machines.</li>
-            </ul>
-            <p><strong>Reflection</strong>:
-                1. If you have a slow 1Gb link interconnecting your data centers, which image format (RAW or QCOW2)
+<li><strong>SOE</strong>: Standard Operating Environment ensuring consistency across all machines.</li>
+</ul>
+<p><strong>Reflection</strong>:
+                1. If you have a slow 1Gb link interconnecting your data centers, which image format (RAW or <a class="glossary-term" href="glossary.html#qcow2">QCOW2<span class="glossary-tooltip"><a class="glossary-term" href="glossary.html#QEMU">QEMU<span class="glossary-tooltip">Quick Emulator - Works with <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor 📖</span><span class="glossary-icon">📚</span></a> for virtualization 📖</span><span class="glossary-icon">📚</span></a> Copy-On-Write disk image format 📖</span><span class="glossary-icon">📚</span></a>)
                 would be faster to replicate? Why?
                 2. Why is it dangerous to make every image <code>--public</code>? (Think about licensed software like
                 Windows Server).</p>
-            <p><strong>Resources</strong>:</p>
-            <ul>
-                <li><a href="https://docs.openstack.org/glance/latest/">OpenStack Glance Guide</a></li>
-                <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">AWS AMIs (Amazon Machine
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://docs.openstack.org/glance/latest/">OpenStack Glance Guide</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">AWS AMIs (Amazon Machine
                         Images)</a></li>
-                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/azure-compute-gallery-overview">Azure
+<li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/azure-compute-gallery-overview">Azure
                         Compute Gallery</a></li>
-            </ul>
-            <hr />
-            <h2 id="4-deep-dive-networking-neutron">4. Deep Dive: Networking (Neutron)</h2>
-            <p>Neutron is the "Software Defined Networking" (SDN) component of OpenStack. In a traditional data center,
+</ul>
+<hr/>
+<h2 id="4-deep-dive-networking-neutron">4. Deep Dive: Networking (<a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a>)</h2>
+<p><a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> is the "Software Defined Networking" (<a class="glossary-term" href="glossary.html#SDN">SDN<span class="glossary-tooltip">Software-Defined Networking - Software-based network control 📖</span><span class="glossary-icon">📚</span></a>) component of <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a>. In a traditional data center,
                 creating a new network segment means filing a ticket with the network team to configure VLANs on
-                physical Cisco/Juniper switches. In OpenStack, Neutron gives this power to the user. A tenant can create
-                their own private switching infrastructure, subnets, and routers via API, without ever touching a
+                physical Cisco/Juniper switches. In <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a>, <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> gives this power to the user. A <a class="glossary-term" href="glossary.html#Tenant">tenant<span class="glossary-tooltip">Grouping of users and resources (also called Project) 📖</span><span class="glossary-icon">📚</span></a> can create
+                their own private switching infrastructure, subnets, and routers via <a class="glossary-term" href="glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface 📖</span><span class="glossary-icon">📚</span></a>, without ever touching a
                 physical cable.</p>
-            <h3 id="41-what-is-sdn-software-defined-networking">4.1 What is SDN (Software Defined Networking)?</h3>
-            <p>Network Engineers often rely on physical switches and routers to move traffic. In the cloud, we
-                virtualize this entirely using <strong>Software Defined Networking (SDN)</strong>. The core concept of
-                SDN is the separation of the <strong>Control Plane</strong> (The Brain) from the <strong>Data
+<h3 id="41-what-is-sdn-software-defined-networking">4.1 What is <a class="glossary-term" href="glossary.html#SDN">SDN<span class="glossary-tooltip">Software-Defined Networking - Software-based network control 📖</span><span class="glossary-icon">📚</span></a> (Software Defined Networking)?</h3>
+<p>Network Engineers often rely on physical switches and routers to move traffic. In the cloud, we
+                virtualize this entirely using <strong>Software Defined Networking (<a class="glossary-term" href="glossary.html#SDN">SDN<span class="glossary-tooltip">Software-Defined Networking - Software-based network control 📖</span><span class="glossary-icon">📚</span></a>)</strong>. The core concept of
+                <a class="glossary-term" href="glossary.html#SDN">SDN<span class="glossary-tooltip">Software-Defined Networking - Software-based network control 📖</span><span class="glossary-icon">📚</span></a> is the separation of the <strong>Control Plane</strong> (The Brain) from the <strong>Data
                     Plane</strong> (The Muscle).</p>
-            <p><img alt="Neutron SDN Layers" src="images/neutron_sdn_layers.png" />
-                <em>Figure 3: Neutron SDN Architecture - The separation of the Logical Control Plane (API) from the
+<p><img alt="Neutron SDN Layers" src="images/neutron_sdn_layers.png"/>
+<em>Figure 3: <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> <a class="glossary-term" href="glossary.html#SDN">SDN<span class="glossary-tooltip">Software-Defined Networking - Software-based network control 📖</span><span class="glossary-icon">📚</span></a> Architecture - The separation of the Logical Control Plane (<a class="glossary-term" href="glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface 📖</span><span class="glossary-icon">📚</span></a>) from the
                     Physical Data Plane (Open vSwitch)</em>
-            </p>
-            <p><strong>The Control Plane (Neutron API/Server)</strong> acts as the brain of the operation. When you
+</p>
+<p><strong>The Control Plane (<a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> <a class="glossary-term" href="glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface 📖</span><span class="glossary-icon">📚</span></a>/Server)</strong> acts as the brain of the operation. When you
                 execute a command to create a network or open port 80, you are communicating with the Control Plane. It
                 calculates the necessary logic and updates the state of the cloud database, but it does not touch a
                 single network packet itself.</p>
-            <p><strong>The Data Plane (OVS Agent/L2 Agent)</strong> sits on every compute node and acts as the muscle.
+<p><strong>The Data Plane (OVS Agent/L2 Agent)</strong> sits on every compute node and acts as the muscle.
                 It receives instructions from the Control Plane via a message bus (RabbitMQ) and implements them by
                 programming the local virtual switch. It is the actual software responsible for moving packets from your
-                VM to the physical network card.</p>
-            <h3 id="42-the-virtual-switch-open-vswitch-ovs">4.2 The Virtual Switch: Open vSwitch (OVS)</h3>
-            <p>In a physical rack, servers plug into a top-of-rack switch. In OpenStack, VMs plug into a virtual switch
+                <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> to the physical network card.</p>
+<h3 id="42-the-virtual-switch-open-vswitch-ovs">4.2 The Virtual Switch: Open vSwitch (OVS)</h3>
+<p>In a physical rack, servers plug into a top-of-rack switch. In <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a>, VMs plug into a virtual switch
                 called <strong>Open vSwitch (OVS)</strong>. Unlike a standard unmanaged switch that simply learns MAC
                 addresses, OVS is a production-quality, multilayer virtual switch that uses <strong>Flow
                     Tables</strong>. A Flow Table is a list of programmable rules that match specific packets (e.g., "If
                 source IP is A and dest IP is B...") and applies specific actions (e.g., "...drop packet" or "...tag
-                with VLAN 100"). Neutron programs these flow tables dynamically to implement sophisticated features like
+                with <a class="glossary-term" href="glossary.html#VLAN">VLAN<span class="glossary-tooltip">Virtual LAN - Logical network segmentation 📖</span><span class="glossary-icon">📚</span></a> 100"). <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> programs these flow tables dynamically to implement sophisticated features like
                 Security Groups (Distributed Firewalls) and Virtual Routing.</p>
-            <h3 id="43-under-the-hood-the-linux-connection">4.3 Under the Hood: The Linux Connection</h3>
-            <p>Everything you learned in Week 4 applies here. Neutron uses standard Linux kernel features to build these
+<h3 id="43-under-the-hood-the-linux-connection">4.3 Under the Hood: The Linux Connection</h3>
+<p>Everything you learned in Week 4 applies here. <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> uses standard Linux kernel features to build these
                 structures:</p>
-            <ul>
-                <li><strong>Isolation = Namespaces</strong>: When you create a Router or a DHCP server, Neutron creates
+<ul>
+<li><strong>Isolation = Namespaces</strong>: When you create a Router or a <a class="glossary-term" href="glossary.html#DHCP">DHCP<span class="glossary-tooltip">Dynamic Host Configuration Protocol - Assigns IP addresses 📖</span><span class="glossary-icon">📚</span></a> server, <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> creates
                     a <strong>Linux Network Namespace</strong> (<code>ip netns</code>). This allows Project A and
                     Project B to both use "192.168.0.1" without conflict; they live in parallel, isolated universes.
                 </li>
-                <li><strong>Cabling = Veth Pairs</strong>: When a VM "plugs in" to the OVS Bridge, Neutron creates a
-                    <strong>Virtual Ethernet (veth) pair</strong>. One end connects to the VM's interface (inside KVM),
-                    and the other connects to the OVS Bridge.</li>
-            </ul>
-            <h3 id="44-flow-of-traffic-north-south-vs-east-west">4.4 Flow of Traffic (North-South vs East-West)</h3>
-            <p>Designing a cloud network requires understanding the two primary directions of traffic flow, as they
+<li><strong>Cabling = Veth Pairs</strong>: When a <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> "plugs in" to the OVS <a class="glossary-term" href="glossary.html#Bridge">Bridge<span class="glossary-tooltip">Network device connecting network segments 📖</span><span class="glossary-icon">📚</span></a>, <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> creates a
+                    <strong>Virtual Ethernet (veth) pair</strong>. One end connects to the <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a>'s interface (inside <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor 📖</span><span class="glossary-icon">📚</span></a>),
+                    and the other connects to the OVS <a class="glossary-term" href="glossary.html#Bridge">Bridge<span class="glossary-tooltip">Network device connecting network segments 📖</span><span class="glossary-icon">📚</span></a>.</li>
+</ul>
+<h3 id="44-flow-of-traffic-north-south-vs-east-west">4.4 Flow of Traffic (North-South vs East-West)</h3>
+<p>Designing a cloud network requires understanding the two primary directions of traffic flow, as they
                 traverse different paths through the infrastructure.</p>
-            <p><img alt="Neutron Traffic Flows" src="images/neutron_traffic_flows.png" />
-                <em>Figure 4: North-South vs East-West Traffic - Visualizing how traffic stays within the cloud versus
+<p><img alt="Neutron Traffic Flows" src="images/neutron_traffic_flows.png"/>
+<em>Figure 4: North-South vs East-West Traffic - Visualizing how traffic stays within the cloud versus
                     how it exits to the internet</em>
-            </p>
-            <p><strong>East-West Traffic</strong> refers to communication between VMs inside the <em>same</em> cloud
+</p>
+<p><strong>East-West Traffic</strong> refers to communication between VMs inside the <em>same</em> cloud
                 environment (e.g., Web Server A talking to Database Server B). Ideally, this traffic should never leave
-                the virtual infrastructure. It flows from the source VM, through the local OVS Bridge, and is typically
+                the virtual infrastructure. It flows from the source <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a>, through the local OVS <a class="glossary-term" href="glossary.html#Bridge">Bridge<span class="glossary-tooltip">Network device connecting network segments 📖</span><span class="glossary-icon">📚</span></a>, and is typically
                 encapsulated in a tunnel protocol like <strong>VXLAN</strong> to cross the physical network before
                 arriving at the destination compute node.</p>
-            <p><strong>North-South Traffic</strong> refers to communication entering or leaving the cloud (e.g., a User
+<p><strong>North-South Traffic</strong> refers to communication entering or leaving the cloud (e.g., a User
                 accessing your Web Server from the Internet). This traffic must leave the virtual overlay network. It
-                passes through the Neutron Router (which lives inside a Network Namespace), undergoes
-                <strong>SNAT</strong> (Source NAT) to mask its private IP, and exits via the external provider network
+                passes through the <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> Router (which lives inside a Network Namespace), undergoes
+                <strong>SNAT</strong> (Source <a class="glossary-term" href="glossary.html#NAT">NAT<span class="glossary-tooltip">Network Address Translation - Maps private to public IPs 📖</span><span class="glossary-icon">📚</span></a>) to mask its private IP, and exits via the external provider network
                 gateway.</p>
-            <h3 id="45-cli-implementation-case-study-nebula-inc">4.5 CLI Implementation (Case Study: Nebula Inc.)</h3>
-            <p>Now that we understand the theory of pipelines and flows, it is time to build. Nebula Inc. requires a
+<h3 id="45-cli-implementation-case-study-nebula-inc">4.5 <a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface 📖</span><span class="glossary-icon">📚</span></a> Implementation (Case Study: Nebula Inc.)</h3>
+<p>Now that we understand the theory of pipelines and flows, it is time to build. Nebula Inc. requires a
                 private, isolated network segment where their web servers can communicate safely. We will construct a
                 topology consisting of a private Virtual Switch (<code>nebula_net</code>), an IP addressing scheme
                 (<code>nebula_subnet</code>), and a Virtual Router (<code>nebula_router</code>) to connect to the
                 outside world.</p>
-            <p><strong>Step 1: Create the Switch (Network)</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>nebula_net
+<p><strong>Step 1: Create the Switch (Network)</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>nebula_net
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>: Initializes the logical switch in the database (Control Plane).</li>
-                <li><strong>Result</strong>: A network UUID is created. OVS is not touched yet.</li>
-            </ul>
-            <p><strong>Step 2: Define Addressing (Subnet)</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>subnet<span class="w"> </span>create<span class="w"> </span>--network<span class="w"> </span>nebula_net<span class="w"> </span><span class="se">\</span>
+</div>
+<ul>
+<li><strong>Explanation</strong>: Initializes the logical switch in the database (Control Plane).</li>
+<li><strong>Result</strong>: A network UUID is created. OVS is not touched yet.</li>
+</ul>
+<p><strong>Step 2: Define Addressing (Subnet)</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>subnet<span class="w"> </span>create<span class="w"> </span>--network<span class="w"> </span>nebula_net<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--subnet-range<span class="w"> </span><span class="m">192</span>.168.50.0/24<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--gateway<span class="w"> </span><span class="m">192</span>.168.50.1<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dns-nameserver<span class="w"> </span><span class="m">8</span>.8.8.8<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>nebula_subnet
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>:<ul>
-                        <li><code>--network nebula_net</code>: Attaches this IP logic to the switch.</li>
-                        <li><strong>Result</strong>: The DHCP Agent (Data Plane) spawns a <code>dnsmasq</code> process
+</div>
+<ul>
+<li><strong>Explanation</strong>:<ul>
+<li><code>--network nebula_net</code>: Attaches this IP logic to the switch.</li>
+<li><strong>Result</strong>: The <a class="glossary-term" href="glossary.html#DHCP">DHCP<span class="glossary-tooltip">Dynamic Host Configuration Protocol - Assigns IP addresses 📖</span><span class="glossary-icon">📚</span></a> Agent (Data Plane) spawns a <code>dnsmasq</code> process
                             in a namespace to serve IPs.</li>
-                    </ul>
-                </li>
-            </ul>
-            <p><strong>Step 3: Build the Gateway (Router)</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>router<span class="w"> </span>create<span class="w"> </span>nebula_router
+</ul>
+</li>
+</ul>
+<p><strong>Step 3: Build the Gateway (Router)</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>router<span class="w"> </span>create<span class="w"> </span>nebula_router
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>: Creates a virtual router instance.</li>
-            </ul>
-            <p><strong>Step 4: Wiring (Interface Attachment)</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>router<span class="w"> </span>add<span class="w"> </span>subnet<span class="w"> </span>nebula_router<span class="w"> </span>nebula_subnet
+</div>
+<ul>
+<li><strong>Explanation</strong>: Creates a virtual router instance.</li>
+</ul>
+<p><strong>Step 4: Wiring (Interface Attachment)</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>router<span class="w"> </span>add<span class="w"> </span>subnet<span class="w"> </span>nebula_router<span class="w"> </span>nebula_subnet
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>: This is the equivalent of plugging a patch cable from the Switch
+</div>
+<ul>
+<li><strong>Explanation</strong>: This is the equivalent of plugging a patch cable from the Switch
                     (<code>nebula_subnet</code>) into the Router's LAN port.</li>
-                <li><strong>Result</strong>: The L3 Agent creates a generic router namespace and assigns the gateway IP
+<li><strong>Result</strong>: The L3 Agent creates a generic router namespace and assigns the gateway IP
                     <code>192.168.50.1</code>.</li>
-            </ul>
-            <p><strong>Step 5: Uplink (External Gateway)</strong></p>
-            <div class="codehilite">
-                <pre><span></span><code>openstack<span class="w"> </span>router<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--external-gateway<span class="w"> </span>public<span class="w"> </span>nebula_router
+</ul>
+<p><strong>Step 5: Uplink (External Gateway)</strong></p>
+<div class="codehilite">
+<pre><span></span><code>openstack<span class="w"> </span>router<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--external-gateway<span class="w"> </span>public<span class="w"> </span>nebula_router
 </code></pre>
-            </div>
-
-            <ul>
-                <li><strong>Explanation</strong>: Connects the Router's WAN port to the Provider Network
+</div>
+<ul>
+<li><strong>Explanation</strong>: Connects the Router's WAN port to the Provider Network
                     (<code>public</code>).</li>
-                <li><strong>Result</strong>: Enables the router to route traffic to the internet (North-South flow).
+<li><strong>Result</strong>: Enables the router to route traffic to the internet (North-South flow).
                 </li>
-            </ul>
-            <h3 id="46-verification">4.6 Verification</h3>
-            <p>Log in to <strong>Horizon -&gt; Network -&gt; Network Topology</strong>. You should see the Nebula Router
-                creating a bridge between the Blue (Private) line and the Red (Public) line.</p>
-            <h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li><strong>SDN</strong>: Separates the "Brain" (Neutron API) from the "Muscle" (OVS/Agents).</li>
-                <li><strong>OVS</strong>: Uses Flow Tables to direct traffic and enforce security, replacing physical
+</ul>
+<h3 id="46-verification">4.6 Verification</h3>
+<p>Log in to <strong><a class="glossary-term" href="glossary.html#Horizon">Horizon<span class="glossary-tooltip">OpenStack web dashboard 📖</span><span class="glossary-icon">📚</span></a> -&gt; Network -&gt; Network Topology</strong>. You should see the Nebula Router
+                creating a <a class="glossary-term" href="glossary.html#Bridge">bridge<span class="glossary-tooltip">Network device connecting network segments 📖</span><span class="glossary-icon">📚</span></a> between the Blue (Private) line and the Red (Public) line.</p>
+<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong><a class="glossary-term" href="glossary.html#SDN">SDN<span class="glossary-tooltip">Software-Defined Networking - Software-based network control 📖</span><span class="glossary-icon">📚</span></a></strong>: Separates the "Brain" (<a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> <a class="glossary-term" href="glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface 📖</span><span class="glossary-icon">📚</span></a>) from the "Muscle" (OVS/Agents).</li>
+<li><strong>OVS</strong>: Uses Flow Tables to direct traffic and enforce security, replacing physical
                     switch logic.</li>
-                <li><strong>Linux Foundations</strong>: Capabilities like Namespaces and Veth pairs are the building
+<li><strong>Linux Foundations</strong>: Capabilities like Namespaces and Veth pairs are the building
                     blocks of the cloud.</li>
-            </ul>
-            <p><strong>Reflection</strong>:
+</ul>
+<p><strong>Reflection</strong>:
                 1. <strong>Recall</strong>: In Week 4, we used <code>ip netns exec</code>. How does that relate to a
-                Neutron Router?
+                <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> Router?
                 2. <strong>Flows</strong>: If you add a Security Group rule to allow SSH, what actually changes on the
-                Compute Node? (Hint: Does Neutron update the database or OVS flow tables?)</p>
-            <p><strong>Resources</strong>:</p>
-            <ul>
-                <li><a href="https://docs.openstack.org/neutron/latest/">OpenStack Neutron Guide</a></li>
-                <li><a href="https://docs.aws.amazon.com/vpc/">AWS VPC (Virtual Private Cloud)</a></li>
-                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview">Azure
+                Compute Node? (Hint: Does <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> update the database or OVS flow tables?)</p>
+<p><strong>Resources</strong>:</p>
+<ul>
+<li><a href="https://docs.openstack.org/neutron/latest/">OpenStack Neutron Guide</a></li>
+<li><a href="https://docs.aws.amazon.com/vpc/">AWS VPC (Virtual Private Cloud)</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview">Azure
                         Virtual Network (VNet)</a></li>
-            </ul>
-            <hr />
-            <hr />
-            <h2 id="6-industry-comparison-the-polyglot-cloud-engineer">6. Industry Comparison: The "Polyglot" Cloud
+</ul>
+<hr/>
+<hr/>
+<h2 id="6-industry-comparison-the-polyglot-cloud-engineer">6. Industry Comparison: The "Polyglot" Cloud
                 Engineer</h2>
-            <p>While this course uses OpenStack because it allows us to see "under the hood," the concepts you learned
-                this week—Tenants, Golden Images, and SDN—are the exact same primitives used by the public cloud giants.
+<p>While this course uses <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a> because it allows us to see "under the hood," the concepts you learned
+                this week—Tenants, Golden Images, and <a class="glossary-term" href="glossary.html#SDN">SDN<span class="glossary-tooltip">Software-Defined Networking - Software-based network control 📖</span><span class="glossary-icon">📚</span></a>—are the exact same primitives used by the public cloud giants.
             </p>
-            <h3 id="61-concept-mapping">6.1 Concept Mapping</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="text-align: left;">Concept</th>
-                        <th style="text-align: left;">OpenStack Term</th>
-                        <th style="text-align: left;">AWS Term</th>
-                        <th style="text-align: left;">Azure Term</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="text-align: left;"><strong>Identity Service</strong></td>
-                        <td style="text-align: left;">Keystone</td>
-                        <td style="text-align: left;">IAM (Identity &amp; Access Mgmt)</td>
-                        <td style="text-align: left;">Microsoft Entra ID (Azure AD)</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;"><strong>The "Container"</strong></td>
-                        <td style="text-align: left;">Project (Tenant)</td>
-                        <td style="text-align: left;">Account</td>
-                        <td style="text-align: left;">Subscription / Resource Group</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;"><strong>Image Service</strong></td>
-                        <td style="text-align: left;">Glance</td>
-                        <td style="text-align: left;">AMI Registry</td>
-                        <td style="text-align: left;">Azure Compute Gallery</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;"><strong>Network Service</strong></td>
-                        <td style="text-align: left;">Neutron</td>
-                        <td style="text-align: left;">VPC (Virtual Private Cloud)</td>
-                        <td style="text-align: left;">VNet (Virtual Network)</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;"><strong>Routing</strong></td>
-                        <td style="text-align: left;">Neutron Router</td>
-                        <td style="text-align: left;">Internet Gateway (IGW)</td>
-                        <td style="text-align: left;">VPN Gateway / VNet Peering</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3 id="62-the-standard-operating-environment-across-clouds">6.2 The "Standard Operating Environment" across
+<h3 id="61-concept-mapping">6.1 Concept Mapping</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Concept</th>
+<th style="text-align: left;"><a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a> Term</th>
+<th style="text-align: left;">AWS Term</th>
+<th style="text-align: left;">Azure Term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Identity Service</strong></td>
+<td style="text-align: left;"><a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a></td>
+<td style="text-align: left;">IAM (Identity &amp; Access Mgmt)</td>
+<td style="text-align: left;">Microsoft Entra ID (Azure AD)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>The "<a class="glossary-term" href="glossary.html#Container">Container<span class="glossary-tooltip">Lightweight package with app code and dependencies 📖</span><span class="glossary-icon">📚</span></a>"</strong></td>
+<td style="text-align: left;">Project (<a class="glossary-term" href="glossary.html#Tenant">Tenant<span class="glossary-tooltip">Grouping of users and resources (also called Project) 📖</span><span class="glossary-icon">📚</span></a>)</td>
+<td style="text-align: left;">Account</td>
+<td style="text-align: left;">Subscription / Resource Group</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Image Service</strong></td>
+<td style="text-align: left;"><a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a></td>
+<td style="text-align: left;">AMI Registry</td>
+<td style="text-align: left;">Azure Compute Gallery</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Network Service</strong></td>
+<td style="text-align: left;"><a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a></td>
+<td style="text-align: left;">VPC (Virtual Private Cloud)</td>
+<td style="text-align: left;">VNet (<a class="glossary-term" href="glossary.html#Virtual-Network">Virtual Network<span class="glossary-tooltip">Software-defined network for <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> communication 📖</span><span class="glossary-icon">📚</span></a>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Routing</strong></td>
+<td style="text-align: left;"><a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service 📖</span><span class="glossary-icon">📚</span></a> Router</td>
+<td style="text-align: left;">Internet Gateway (IGW)</td>
+<td style="text-align: left;">VPN Gateway / VNet Peering</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-the-standard-operating-environment-across-clouds">6.2 The "Standard Operating Environment" across
                 Clouds</h3>
-            <p>In Section 3, we discussed the "Golden Image." This strategy is universal.</p>
-            <ul>
-                <li><strong>OpenStack</strong>: You use <strong>Packer</strong> to build a QCOW2 image and upload it to
-                    <strong>Glance</strong>.</li>
-                <li><strong>AWS</strong>: You use <strong>Packer</strong> to build an AMI and upload it to
+<p>In Section 3, we discussed the "Golden Image." This strategy is universal.</p>
+<ul>
+<li><strong><a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform 📖</span><span class="glossary-icon">📚</span></a></strong>: You use <strong>Packer</strong> to build a <a class="glossary-term" href="glossary.html#qcow2">QCOW2<span class="glossary-tooltip"><a class="glossary-term" href="glossary.html#QEMU">QEMU<span class="glossary-tooltip">Quick Emulator - Works with <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor 📖</span><span class="glossary-icon">📚</span></a> for virtualization 📖</span><span class="glossary-icon">📚</span></a> Copy-On-Write disk image format 📖</span><span class="glossary-icon">📚</span></a> image and upload it to
+                    <strong><a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a></strong>.</li>
+<li><strong>AWS</strong>: You use <strong>Packer</strong> to build an AMI and upload it to
                     <strong>EC2</strong>.</li>
-                <li><strong>Azure</strong>: You use <strong>Packer</strong> to build a VHD and upload it to
+<li><strong>Azure</strong>: You use <strong>Packer</strong> to build a VHD and upload it to
                     <strong>Azure Compute Gallery</strong>.</li>
-                <li><em>The Conclusion</em>: The tool (Packer) and the workflow (Build -&gt; Validate -&gt; Upload) are
+<li><em>The Conclusion</em>: The tool (Packer) and the workflow (Build -&gt; Validate -&gt; Upload) are
                     identical; only the target file format changes.</li>
-            </ul>
-            <hr />
-            <h2 id="7-summary">7. Summary</h2>
-            <p>We have built the <strong>Foundation</strong> for Nebula Inc.:
+</ul>
+<hr/>
+<h2 id="7-summary">7. Summary</h2>
+<p>We have built the <strong>Foundation</strong> for Nebula Inc.:
                 1. <strong>Identity</strong>: A secure Project and User with assigned Roles.
-                2. <strong>Image</strong>: A validated OS template in Glance.
+                2. <strong>Image</strong>: A validated OS <a class="glossary-term" href="glossary.html#Template">template<span class="glossary-tooltip">Pre-configured <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer 📖</span><span class="glossary-icon">📚</span></a> image for quick deployment 📖</span><span class="glossary-icon">📚</span></a> in <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a>.
                 3. <strong>Network</strong>: A fully routed Layer 3 topology.</p>
-            <p>Next week, we Launch.</p>
-            <hr />
-            <h2 id="4-lab-exercises">4. Lab Exercises</h2>
-            <ul>
-                <li><strong><a href="Week_8_Lab_1_Foundation.html">Lab 1: Cloud Foundation</a></strong>
-                    <ul>
-                        <li><strong>Goal</strong>: Introduction to Keystone (Identity) and Glance (Image) services.</li>
-                    </ul>
-                </li>
-            </ul>
-            <p><a href="../index.html">← Back to Course Index</a></p>
-            <div
-                class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-                <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-                <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take
+<p>Next week, we Launch.</p>
+<hr/>
+<h2 id="4-lab-exercises">4. Lab Exercises</h2>
+<ul>
+<li><strong><a href="Week_8_Lab_1_Foundation.html">Lab 1: Cloud Foundation</a></strong>
+<ul>
+<li><strong>Goal</strong>: Introduction to <a class="glossary-term" href="glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service 📖</span><span class="glossary-icon">📚</span></a> (Identity) and <a class="glossary-term" href="glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service 📖</span><span class="glossary-icon">📚</span></a> (Image) services.</li>
+</ul>
+</li>
+</ul>
+<p><a href="../index.html">← Back to Course Index</a></p>
+<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
+<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
+<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take
                     the interactive quiz now!</p>
-                <a href="Week_8_Quiz.html" id="start-quiz-btn"
-                    class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_8_Quiz.html" id="start-quiz-btn">
                     Start Quiz
                 </a>
-            </div>
-
-        </article>
-    </main>
-
-    <!-- Footer -->
-    <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
-    </footer>
-
-    <!-- Progress Tracking -->
-    <script src="../js/course_logic.js"></script>
-
+</div>
+</article>
+</main>
+<!-- Footer -->
+<footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
+</footer>
+<!-- Progress Tracking -->
+<script src="../js/course_logic.js"></script>
 </body>
-
 </html>
