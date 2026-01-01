@@ -594,6 +594,19 @@ def generate_glossary_html(output_path):
             border-radius: 15px;
             font-size: 0.9em;
             color: #c9984a;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .term-week {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .term-week:hover {
+            background: #c9984a;
+            color: #1e3a5f;
+            transform: scale(1.05);
         }
         
         .related-terms {
@@ -762,7 +775,28 @@ def generate_glossary_html(output_path):
         html += f'                <div class="term-definition">{data["definition"]}</div>\n'
         html += '                <div class="term-meta">\n'
         html += f'                    <span class="term-category">📂 {data["category"]}</span>\n'
-        html += f'                    <span class="term-week">📅 Week {data["week"]}</span>\n'
+        
+        # Make week badge clickable to student notes
+        week_num = data["week"]
+        week_folders = {
+            1: "Week 1 - Introduction to Virtualization",
+            2: "Week 2 - Virtual Machines",
+            3: "Week 3 - Virtual Networking and Linux Networking Fundamentals",
+            4: "Week 4 - Storage and Backup",
+            5: "Week 5 - Containers and Resource Management",
+            6: "Week 6 - Proxmox Cluster and High Availability",
+            7: "Week 7 - Transition to Cloud Computing Concepts",
+            8: "Week 8 - Cloud Foundation",
+            9: "Week 9 - Compute Operations",
+            10: "Week 10 - Storage and Persistence",
+            11: "Week 11 - Automation and Cloud API",
+            12: "Week 12 - Final Project and Review"
+        }
+        
+        week_folder = week_folders.get(week_num, "")
+        week_link = f"{week_folder}/Week_{week_num}_Student_Notes.html" if week_folder else "#"
+        
+        html += f'                    <a href="{week_link}" class="term-week" title="Jump to Week {week_num} Student Notes">📅 Week {week_num}</a>\n'
         html += '                </div>\n'
         
         if 'related' in data:
