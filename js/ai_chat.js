@@ -18,6 +18,8 @@ Your Goal: Answer student questions accurately using ONLY the provided Course Co
 6. Keep answers concise unless a detailed explanation is requested.
 `;
 
+const MAX_RETRIES = 3;
+
 // Initialize
 document.addEventListener("DOMContentLoaded", () => {
     // Check if context is loaded
@@ -92,8 +94,7 @@ function saveApiKey() {
     }
 }
 
-// Override existing sendMessage from glossary.html (or replace logic there)
-// We will simply attach this to the global scope to be called by HTML
+// Global wrapper to start the message flow
 window.sendMessage = async function () {
     const input = document.getElementById('chatInput');
     const question = input.value.trim();
@@ -110,12 +111,16 @@ window.sendMessage = async function () {
     // 2. Add User Message
     addMessage(question, true);
     input.value = '';
+
+    // 3. Start recursive sending process
+    await sendToGemini(question, 0);
+};
+
+// Recursive function to handle sending with retries
+async function sendToGemini(question, retryCount = 0) {
     showTyping();
 
-    // 3. Build Payload
     // Simple "Full Context" approach: Text + Question
-    // For 180k tokens, we send it all. Gemini 1.5 Flash handles 1M.
-
     const fullPrompt = `${SYSTEM_PROMPT} \n\nCOURSE CONTEXT: \n${COURSE_CONTEXT} \n\nSTUDENT QUESTION: ${question} `;
 
     try {
@@ -130,20 +135,28 @@ window.sendMessage = async function () {
         });
 
         const data = await response.json();
-
         hideTyping();
 
         if (data.error) {
             console.error("Gemini Error:", data.error);
 
-            // Nice handling for Rate Limits
-            if (data.error.code === 429 || data.error.message.includes('Quota')) {
-                addMessage("⏳ <strong>Rate Limit Exceeded:</strong> Please wait a few seconds before sending another message.", false);
-            } else {
-                // Show immediate error
-                addMessage(`❌ API Error: ${data.error.message}`, false);
+            // 429 / Quota Error Handling with Auto-Retry
+            if ((data.error.code === 429 || data.error.message.includes('Quota')) && retryCount < MAX_RETRIES) {
+                const waitTimeSeconds = (retryCount + 1) * 3; // 3s, 6s, 9s
+                const waitTimeMs = waitTimeSeconds * 1000;
 
-                // Checking models in background only for non-quota errors
+                addMessage(`⏳ Rate limit hit. Auto-retrying in ${waitTimeSeconds}s... (Attempt ${retryCount + 1}/${MAX_RETRIES})`, false);
+
+                setTimeout(() => {
+                    sendToGemini(question, retryCount + 1);
+                }, waitTimeMs);
+                return; // Exit this execution, retry will trigger
+            }
+
+            if (data.error.code === 429) {
+                addMessage("❌ <strong>Rate Limit Exceeded:</strong> Maximum retries reached. Please wait a minute before trying again.", false);
+            } else {
+                addMessage(`❌ API Error: ${data.error.message}`, false);
                 diagnoseAvailableModels();
             }
 
@@ -158,9 +171,9 @@ window.sendMessage = async function () {
         hideTyping();
         console.error("Fetch Error:", error);
         addMessage(`❌ Connection Error: ${error.message}`, false);
-        diagnoseAvailableModels();
+        // We generally do NOT retry on hard connection errors unless specific codes
     }
-};
+}
 
 async function diagnoseAvailableModels() {
     try {
