@@ -91,6 +91,47 @@ def add_title_slide(prs, title, week_num, logo_path=None):
     p.font.color.rgb = VUT_LIGHT_GRAY
 
 
+def add_objectives_slide(prs, objectives, logo_path=None):
+    """Add a 'What You Will Learn This Week' slide with learning objectives"""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])  # Blank layout
+    set_slide_background(slide, VUT_NAVY_DARK)
+    
+    # Add logo
+    add_logo(slide, logo_path)
+    
+    # Title
+    title_box = slide.shapes.add_textbox(
+        Inches(0.5), Inches(1.0), Inches(9), Inches(0.7)
+    )
+    tf = title_box.text_frame
+    tf.text = "What You Will Learn This Week"
+    p = tf.paragraphs[0]
+    p.font.size = Pt(36)
+    p.font.color.rgb = VUT_GOLD
+    p.font.bold = True
+    
+    # Objectives area
+    content_box = slide.shapes.add_textbox(
+        Inches(1.2), Inches(2.2), Inches(7.6), Inches(4.5)
+    )
+    tf = content_box.text_frame
+    tf.word_wrap = True
+    
+    # Add objectives as bullets
+    for idx, objective in enumerate(objectives[:6]):  # Limit to 6 objectives
+        if idx == 0:
+            p = tf.paragraphs[0]
+        else:
+            p = tf.add_paragraph()
+        
+        p.text = objective
+        p.level = 0
+        p.font.size = Pt(22)
+        p.font.color.rgb = WHITE
+        p.space_before = Pt(10)
+        p.space_after = Pt(10)
+
+
 def add_content_slide(prs, title, content_items, logo_path=None):
     """Add a content slide with title and bullet points, extras go to notes"""
     slide = prs.slides.add_slide(prs.slide_layouts[6])  # Blank layout
