@@ -143,13 +143,6 @@ def add_glossary_tooltips(html_content, output_path):
             visibility: visible;
             opacity: 1;
         }
-        
-        .glossary-icon {
-            display: inline-block;
-            margin-left: 4px;
-            font-size: 0.8em;
-            color: #c9984a;
-        }
         """
         head.append(style_tag)
     
@@ -159,9 +152,9 @@ def add_glossary_tooltips(html_content, output_path):
         # Sort terms by length (longest first) to match longer phrases first
         sorted_terms = sorted(GLOSSARY_TERMS.items(), key=lambda x: len(x[0]), reverse=True)
         
-        # Process text content
+        # Process text content - ONLY in paragraphs, NOT in headings
         for element in article.find_all(text=True):
-            if element.parent.name in ['script', 'style', 'code', 'pre', 'a']:
+            if element.parent.name in ['script', 'style', 'code', 'pre', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
                 continue  # Skip these elements
             
             text = str(element)
@@ -175,8 +168,8 @@ def add_glossary_tooltips(html_content, output_path):
                 # Replace matches (in reverse to maintain positions)
                 for match in reversed(matches):
                     matched_text = match.group()
-                    # Create tooltip HTML
-                    tooltip_html = f'<a href="glossary.html#{term.replace(" ", "-")}" class="glossary-term">{matched_text}<span class="glossary-tooltip">{definition} 📖</span><span class="glossary-icon">📚</span></a>'
+                    # Create tooltip HTML without icon
+                    tooltip_html = f'<a href="glossary.html#{term.replace(" ", "-")}" class="glossary-term">{matched_text}<span class="glossary-tooltip">{definition} 📖</span></a>'
                     
                     # Replace in text
                     modified_text = modified_text[:match.start()] + tooltip_html + modified_text[match.end():]
