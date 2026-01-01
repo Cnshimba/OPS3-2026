@@ -135,24 +135,11 @@ window.sendMessage = async function () {
 
         if (data.error) {
             console.error("Gemini Error:", data.error);
-            let errorMsg = `❌ API Error: ${data.error.message}`;
+            // Show immediate error
+            addMessage(`❌ API Error: ${data.error.message}`, false);
 
-            // Auto-diagnose: List available models
-            try {
-                addMessage("⚠️ API Error encountered. Checking available models...", false);
-                const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_API_KEY}`);
-                const listData = await listResp.json();
-
-                if (listData.models) {
-                    const modelNames = listData.models.map(m => m.name.replace('models/', '')).join(', ');
-                    errorMsg += `<br><br><strong>Available Models:</strong> ${modelNames}`;
-                    // Try to auto-fix? No, valid to just inform for now.
-                }
-            } catch (e) {
-                errorMsg += "<br>(Could not list models)";
-            }
-
-            addMessage(errorMsg, false);
+            // Checking models in background
+            diagnoseAvailableModels();
         } else if (data.candidates && data.candidates[0].content) {
             const aiText = data.candidates[0].content.parts[0].text;
             addMessage(renderMarkdown(aiText), false);
@@ -164,8 +151,23 @@ window.sendMessage = async function () {
         hideTyping();
         console.error("Fetch Error:", error);
         addMessage(`❌ Connection Error: ${error.message}`, false);
+        diagnoseAvailableModels();
     }
 };
+
+async function diagnoseAvailableModels() {
+    try {
+        const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_API_KEY}`);
+        const listData = await listResp.json();
+
+        if (listData.models) {
+            const modelNames = listData.models.map(m => m.name.replace('models/', '')).join(', ');
+            addMessage(`ℹ️ <strong>Debug Info: Your Key supports:</strong> <span style="font-size:0.8em">${modelNames}</span>`, false);
+        }
+    } catch (e) {
+        console.error("Could not list models:", e);
+    }
+}
 
 // Simple Markdown Parser for responses
 function renderMarkdown(text) {
