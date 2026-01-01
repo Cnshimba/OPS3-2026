@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,22 +187,22 @@
         <div class="week-number">Week 4</div>
         <h1>Storage and Backup</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Welcome to Week 4!</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>What You'll Learn This Week</h2>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. Block Devices and Partitions</h2>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -215,13 +215,13 @@
             <li>The diagram below illustrates how Linux represents different types of storage devices and their partition schemes:</li>
         </ul>
         <p>Figure 1: Linux Block Devices and Partitions - How the kernel represents different storage types (SATA, NVMe, and their partitions)</p>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>1.2 Managing Partitions (fdisk)</h3>
         <p>To create a formatted space on a disk, we use fdisk or parted.</p>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -235,12 +235,12 @@
         <ul>
             <li>Arch Wiki: Fdisk</li>
         </ul>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. Logical Volume Manager (LVM)</h2>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -253,13 +253,13 @@
             <li>These physical volumes are then combined into a Volume Group (VG), which acts as a unified storage pool—for instance, a data_pool might aggregate multiple drives to provide 500GB of total capacity.</li>
             <li>Finally, Logical Volumes (LV) are carved out from the volume group and allocated for specific uses, such as vm-100-disk for a virtual machine.</li>
         </ul>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>2.2 Hands-On LVM Commands</h3>
         <p>Proxmox uses LVM extensively. Here is how you manage it manually.</p>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -270,12 +270,12 @@
         <ul>
             <li>Red Hat LVM Administration</li>
         </ul>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. ZFS: The Enterprise Standard (New Material)</h2>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -297,13 +297,13 @@
         </ul>
         <p>The self-healing process is visualized below, showing how ZFS detects, validates, and repairs corrupted data blocks:</p>
         <p>Figure 4: ZFS Self-Healing - Checksums detect corrupted blocks, which are automatically repaired from redundant copies</p>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>3.2 Basic ZFS Commands</h3>
         <p>Proxmox installs ZFS tools by default.</p>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -315,7 +315,7 @@
             <li>The snapshot consumes zero disk space initially because it shares all its data blocks with the current filesystem.</li>
             <li>Only when data begins to change does the snapshot start consuming space, as ZFS preserves the old blocks that the snapshot references while writing new data to fresh locations.</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -329,12 +329,12 @@
         <ul>
             <li>OpenZFS Documentation</li>
         </ul>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. Virtual Disk Formats</h2>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -345,7 +345,7 @@
             <li>However, this simplicity comes at a cost; creating a 100GB Raw disk immediately consumes 100GB of physical space (unless sparse provisioning is strictly enforced), and it does not support advanced features like internal snapshots.</li>
             <li>If you require snapshot capabilities with Raw disks, you must rely on the underlying storage system, such as LVM-Thin or ZFS, to handle them.</li>
         </ul>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -356,7 +356,7 @@
             <li>This allows for powerful features such as internal snapshots, transparent compression, and encryption directly within the file itself.</li>
             <li>While this abstraction layer introduces a minor performance overhead compared to Raw, the flexibility it offers—particularly the ability to grow the disk file dynamically as data is added—makes it the standard choice for file-based storage backends like NFS or local directories.</li>
         </ul>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -418,24 +418,24 @@
         <ul>
             <li>QEMU Disk Images</li>
         </ul>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>8. Additional Resources</h2>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>9. Lab Exercises</h2>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

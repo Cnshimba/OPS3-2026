@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,22 +187,22 @@
         <div class="week-number">Week 6</div>
         <h1>Cluster and High Availability</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Welcome to Week 6!</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>What You'll Learn This Week</h2>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. Creating a Cluster</h2>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -212,7 +212,7 @@
             <li>It generates a cryptographic key (/etc/corosync/authkey) appearing to secure communication and creates the central configuration database (/etc/pve/corosync.conf).</li>
             <li>This database is essentially the "source of truth" for the entire cluster.</li>
         </ul>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -226,7 +226,7 @@
             <li>Crucial Requirement: For a cluster to function correctly, every node must have a unique Hostname and a persistent Static IP address.</li>
             <li>If an IP address changes after the cluster is formed, Corosync communication will break, causing the node to lose quorum and effectively disconnecting it from the datacenter.</li>
         </ul>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -246,12 +246,12 @@
         <ul>
             <li>Proxmox VE Cluster Manager</li>
         </ul>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. Quorum: The Rule of Majority Algorithm</h2>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -265,7 +265,7 @@
             <li>The Result: Since they are unaware of each other's write operations, they overwrite each other's filesystem journals, leading to irreversible data corruption within milliseconds.</li>
         </ul>
         <p>Figure 3: Split Brain Scenario - A network cut leads to dual active masters ensuring data corruption without quorum logic</p>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -285,7 +285,7 @@
             <li>Since 2 equals 2, Quorum is maintained, and the cluster remains fully operational.</li>
             <li>This highlights the architectural best practice of always designing clusters with an ODD number of nodes (3, 5, 7) to allow for reliable tie-breaking.</li>
         </ul>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -305,12 +305,12 @@
         <ul>
             <li>Corosync Project</li>
         </ul>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. High Availability (HA) Manager</h2>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -326,7 +326,7 @@
             <li>It receives orders from the CRM to start or stop services and reports the status of local resources back to the master.</li>
             <li>It is responsible for the actual execution of service management commands on the local hypervisor.</li>
         </ul>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -343,7 +343,7 @@
             <li>Only after this confirmation does the cluster restart the VMs on healthy nodes.</li>
         </ul>
         <p>Figure 5: The Fencing Process - How the cluster physically isolates a failed node before recovering its workloads</p>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -363,12 +363,12 @@
         <ul>
             <li>Proxmox HA Simulator</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. Troubleshooting the Cluster</h2>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -379,7 +379,7 @@
             <li>Key fields to observe are Votes (number of nodes currently active) and Quorate.</li>
             <li>If Quorate is No, the cluster has lost its majority and will block any changes to the configuration database (pmxcfs) to prevent split-brain, effectively locking the cluster into a read-only mode.</li>
         </ul>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -391,14 +391,14 @@
             <li>Corosync requires extremely low latency (typically < 2ms) to function correctly.</li>
             <li>High latency links, such as Wi-Fi or saturated 1Gbps uplinks during backups, often cause Corosync to drop packets and declare nodes dead falsely.</li>
         </ul>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>4.3 Force Quorum (Emergency Only)</h3>
         <p>In a catastrophic scenario where you have a 2-node cluster and one node permanently fails, the survivor will lose quorum (1 vote < 2 required). To recover management capability on the survivor, you can artificially lower the expected vote count.</p>
         <p>Warning: This command tells the survivor, "Pretend we only expected 1 vote." This allows it to become quorate alone. You must only do this if you are absolutely certain the other node is dead. If the other node comes back online while this is active, you will cause a Split Brain scenario.</p>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -418,12 +418,12 @@
         <ul>
             <li>Clusterlabs Troubleshooting</li>
         </ul>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>5. Live Migration CLI</h2>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -443,12 +443,12 @@
         <ul>
             <li>QEMU Migration Documentation</li>
         </ul>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>6. Enterprise Shared Storage Architectures</h2>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -464,7 +464,7 @@ Ceph is not just software; it is a living ecosystem made of daemons:</p>
         <p>6.1.2 Implementation in Proxmox (HCI)
 Proxmox VE is unique because it integrates Ceph directly into the hypervisor (Hyper-Converged Infrastructure). You do not need external storage servers. The architecture diagram below shows how OSDs, MONs, and MGRs work together across a Ceph cluster:</p>
         <p>Figure 8: Ceph Distributed Storage - OSDs manage disks, MONs maintain cluster maps, and MGRs collect metrics across multiple nodes</p>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -477,7 +477,7 @@ Proxmox VE is unique because it integrates Ceph directly into the hypervisor (Hy
 Locking: These systems use a specialized Distributed Lock Manager (DLM) to ensure that if Node A is writing to a file, Node B knows about it instantly.</li>
             <li>LVM-Shared: Alternatively, Proxmox often uses LVM on top of iSCSI in "Shared Mode" to manage raw disk volumes for VMs without a full filesystem layer.</li>
         </ul>
-        <div class="slide-number">Slide 25</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -497,12 +497,12 @@ Locking: These systems use a specialized Distributed Lock Manager (DLM) to ensur
         <ul>
             <li>Ceph Intro</li>
         </ul>
-        <div class="slide-number">Slide 26</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>7. Proxmox Backups (VZDump)</h2>
-        <div class="slide-number">Slide 27</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -512,14 +512,14 @@ Locking: These systems use a specialized Distributed Lock Manager (DLM) to ensur
             <li>Backup (VZDump): A comprehensive, independent archive (config + compressed disk data, e.g., .vma.zst). It can be moved offsite for disaster recovery.</li>
         </ul>
         <p>Figure 9: Snapshot vs. Backup - Snapshots are dependent save points for testing; Backups are independent archives for disaster recovery</p>
-        <div class="slide-number">Slide 28</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>7.2 Proxmox Backup Modes</h3>
         <p>When performing a backup, the state of the VM determines the consistency of the data.</p>
         <p>Figure 10: Proxmox Backup Modes - Live (Snapshot), Suspend (Frozen), and Stop (Consistent) modes balance uptime vs. data consistency</p>
-        <div class="slide-number">Slide 29</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -529,12 +529,12 @@ Locking: These systems use a specialized Distributed Lock Manager (DLM) to ensur
             <li>Backup: Independent Archive, essential for DR.</li>
             <li>Modes: Snapshot (Live), Suspend (Frozen), Stop (Consistent).</li>
         </ul>
-        <div class="slide-number">Slide 30</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>8. Managing Storage via CLI (pvesm)</h2>
-        <div class="slide-number">Slide 31</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -544,24 +544,24 @@ Locking: These systems use a specialized Distributed Lock Manager (DLM) to ensur
             <li>pvesm helps when the GUI is unavailable.</li>
             <li>storage.cfg is the cluster-wide storage definition file.</li>
         </ul>
-        <div class="slide-number">Slide 32</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>9. Additional Resources</h2>
-        <div class="slide-number">Slide 33</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>10. Lab Exercises</h2>
-        <div class="slide-number">Slide 34</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 35</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

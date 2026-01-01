@@ -166,13 +166,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -189,12 +189,12 @@
         <h1>Cloud Foundation
                         (OpenStack)</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Welcome to Week 8!</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -221,12 +221,12 @@
         </ul>
         <p>By the end of this module, you will have a fully functional, multi-tier cloud application environment
                 running on infrastructure you defined yourself.</p>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. Deep Dive: Identity Management (Keystone)</h2>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -235,7 +235,7 @@
                 called the "Token Dance," occurs in the background before you see any output.</p>
         <p>Figure 1: The Keystone "Token Dance" - Documenting the 7-step process of authentication and
                     authorization</p>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -250,7 +250,7 @@
                     Directory. When a user logs in, Keystone forwards the password to the Domain Controller for
                     validation, ensuring Single Sign-On (SSO).</li>
         </ul>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -265,7 +265,7 @@
                     that Keystone does not need to store the token in a database. To validate it, it simply
                     decrypts the token significantly reducing database load and allowing Keystone to scale infinitely.</li>
         </ul>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -278,7 +278,7 @@
             <li>Role: The permission set. A User must have a Role on a Project to do
                     anything.</li>
         </ul>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -317,7 +317,7 @@ member: The standard permission level (can create VMs/Networks but cannot
 Result: Creates a row in the role_assignments table linking
                             User+Project+Role.</li>
         </ul>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -348,7 +348,7 @@ Result: Displays exactly which project the user can access and with what
 Explanation: Sets enabled=False in the DB. The user cannot
                             request new tokens.</li>
         </ul>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -375,12 +375,12 @@ Explanation: Sets enabled=False in the DB. The user cannot
             <li>AWS Identity and Access Management (IAM)</li>
             <li>Microsoft Entra ID (Azure AD)</li>
         </ul>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. Deep Dive: Image Management (Glance)</h2>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -400,7 +400,7 @@ Explanation: Sets enabled=False in the DB. The user cannot
         <p>ISO is a read-only archive used for installation media. While essential for building
                 images, it is rarely used in cloud "boot-from-image" scenarios because we prefer pre-installed operating
                 systems.</p>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -418,7 +418,7 @@ Explanation: Sets enabled=False in the DB. The user cannot
                     clouds typically use a distributed storage cluster like Ceph or an object store
                     like AWS S3 to ensure data durability and accessibility across all compute nodes.</li>
         </ul>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -453,7 +453,7 @@ Explanation: Sets enabled=False in the DB. The user cannot
 Result: The file is streamed into the Glance Backend Store, and a UUID is
                             generated.</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -479,7 +479,7 @@ Result: The file is streamed into the Glance Backend Store, and a UUID is
             <li>Result: The metadata is removed from the Registry, and the backend storage driver
                     (Ceph/File) is instructed to free the space.</li>
         </ul>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -508,12 +508,12 @@ Result: The file is streamed into the Glance Backend Store, and a UUID is
             <li>Azure
                         Compute Gallery</li>
         </ul>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. Deep Dive: Networking (Neutron)</h2>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -543,7 +543,7 @@ Result: The file is streamed into the Glance Backend Store, and a UUID is
             <li>It is the actual software responsible for moving packets from your
                 VM to the physical network card.</li>
         </ul>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -561,7 +561,7 @@ Result: The file is streamed into the Glance Backend Store, and a UUID is
             <li>Neutron programs these flow tables dynamically to implement sophisticated features like
                 Security Groups (Distributed Firewalls) and Virtual Routing.</li>
         </ul>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -576,7 +576,7 @@ Result: The file is streamed into the Glance Backend Store, and a UUID is
                     Virtual Ethernet (veth) pair. One end connects to the VM's interface (inside KVM),
                     and the other connects to the OVS Bridge.</li>
         </ul>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -603,7 +603,7 @@ Result: The file is streamed into the Glance Backend Store, and a UUID is
                 SNAT (Source NAT) to mask its private IP, and exits via the external provider network
                 gateway.</li>
         </ul>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -647,14 +647,14 @@ Result: The DHCP Agent (Data Plane) spawns a dnsmasq process
                     (public).</li>
             <li>Result: Enables the router to route traffic to the internet (North-South flow).</li>
         </ul>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>4.6 Verification</h3>
         <p>Log in to Horizon -> Network -> Network Topology. You should see the Nebula Router
                 creating a bridge between the Blue (Private) line and the Red (Public) line.</p>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -684,13 +684,13 @@ Result: The DHCP Agent (Data Plane) spawns a dnsmasq process
             <li>Azure
                         Virtual Network (VNet)</li>
         </ul>
-        <div class="slide-number">Slide 25</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>6. Industry Comparison: The "Polyglot" Cloud
                 Engineer</h2>
-        <div class="slide-number">Slide 26</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -737,7 +737,7 @@ Result: The DHCP Agent (Data Plane) spawns a dnsmasq process
 </tr>
 </tbody>
 </table>
-        <div class="slide-number">Slide 27</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -754,24 +754,24 @@ Result: The DHCP Agent (Data Plane) spawns a dnsmasq process
             <li>The Conclusion: The tool (Packer) and the workflow (Build -> Validate -> Upload) are
                     identical; only the target file format changes.</li>
         </ul>
-        <div class="slide-number">Slide 28</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>7. Summary</h2>
-        <div class="slide-number">Slide 29</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. Lab Exercises</h2>
-        <div class="slide-number">Slide 30</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 31</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

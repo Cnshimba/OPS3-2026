@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,22 +187,22 @@
         <div class="week-number">Week 2</div>
         <h1>Virtual Machines (VMs)</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Welcome to Week 2!</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>What You'll Learn This Week</h2>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. Deep Dive: Linux Virtualization (KVM & QEMU)</h2>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -228,7 +228,7 @@ The interaction between User Mode (the QEMU process) and Guest Mode (the VM code
         <p>Figure 1.2: The Cycle of Direct Execution and Trapped Emulation.</p>
         <p>Code Snippet: Creating a VM via KVM API (C)</p>
         <p>Figure 1.1: Simplified C code showing how a user-space program instructs the kernel to create a VM.</p>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -265,7 +265,7 @@ The interaction between User Mode (the QEMU process) and Guest Mode (the VM code
             <li>The driver then informs the host which physical pages it has claimed, allowing the host to safely repurpose those physical pages for other tasks.</li>
             <li>Conversely, when the guest needs more memory, the balloon "deflates," returning the pages to the guest's free pool.</li>
         </ul>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -291,7 +291,7 @@ The interaction between User Mode (the QEMU process) and Guest Mode (the VM code
             <li>"KVM: disabled by BIOS": This message explicitly states that while the CPU supports virtualization, the feature is turned off in the computer's firmware. This cannot be fixed from within the OS; a physical reboot is required to modify BIOS settings.</li>
             <li>"KVM support not available": This often occurs when trying to run KVM inside another virtual machine (e.g., a cloud VPS) that does not support Nested Virtualization. In this scenario, the "outer" hypervisor has not passed the hardware extensions through to your "inner" guest.</li>
         </ul>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -319,7 +319,7 @@ The interaction between User Mode (the QEMU process) and Guest Mode (the VM code
             <li>(Note: The concept of the Linux Bridge and how it connects VMs to the physical network will be discussed in depth in the Network Chapter in Week 4.) The Frontend (defined by -device) creates the virtual hardware that appears on the guest's PCI bus, such as a "VirtIO Network Card".</li>
             <li>The guest OS writes data to the Frontend device, and QEMU is responsible for passing that data to the polling Backend.</li>
         </ul>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -340,7 +340,7 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
             <li>Finally, the Host performs Zero-Copy Processing by reading the data directly from the shared memory without needing to simulate a physical device operation, processing it, and placing a response back in the ring.</li>
         </ul>
         <p>Note: This is why you must select "VirtIO" for Network and Disk in Proxmox when performance matters.</p>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -361,7 +361,7 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
             <li>A basic invocation usually requires defining the hard drive (-hda), the allocated RAM (-m), and crucially, the KVM accelerator (-enable-kvm or -accel kvm).</li>
             <li>For booting from an installer ISO, the -cdrom flag is added, often accompanied by -boot d to prioritize the optical drive in the boot order.</li>
         </ul>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -381,12 +381,12 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
         <ul>
             <li>Red Hat: KVM Architecture</li>
         </ul>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. The Platform: Proxmox VE</h2>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -414,7 +414,7 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
             <li>Storage Plugins simplify disk management by translating abstract requests ("create disk") into specific backend commands (e.g., zfs create or rbd create).</li>
             <li>Similarly, the pve-firewall service generates 'iptables' rules dynamically for each guest, creating isolated security zones (Interfaces/Bridges) at the kernel level.</li>
         </ul>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -442,7 +442,7 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
             <li>In clustered environments, the platform leverages Network Storage (NFS, iSCSI, or SMB) to enable VM mobility and Live Migration.</li>
             <li>Furthermore, Proxmox supports Hyper-Converged infrastructure through native integration with Ceph, a distributed object store that runs directly on the nodes themselves, eliminating the need for expensive external SAN hardware.</li>
         </ul>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -458,12 +458,12 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
             <li>Why is an API-first design better for automation?</li>
             <li>If pmxcfs replicates configs, what happens if you lose network connectivity between nodes?</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. VM Management Features</h2>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -483,7 +483,7 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
             <li>However, it introduces a critical dependency: the Base disk cannot be deleted without breaking all Linked Clones.</li>
         </ul>
         <p>Figure 3.1: Full Clones copy data; Linked Clones reference data.</p>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -497,7 +497,7 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
             <li>If "Include RAM" is selected, the entire contents of the running memory are dumped to disk.</li>
             <li>This allows the VM to be restored to a running state, preserving open applications and processes, though it takes longer to complete.</li>
         </ul>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -509,7 +509,7 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
             <li>This protocol offers advanced features such as high-quality audio streaming, multi-monitor support, and USB device redirection (plugging a USB drive into your client and having it appear in the VM).</li>
             <li>However, unlike NoVNC, SPICE requires a dedicated client viewer software (virt-viewer) to be installed on the user's machine.</li>
         </ul>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -529,12 +529,12 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
         <ul>
             <li>Proxmox VE: Live Snapshots</li>
         </ul>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. Summary and Next Steps</h2>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -546,19 +546,19 @@ The core of VirtIO's performance is the Virtqueue, implemented as a circular rin
             <li>Do you understand why a vCPU is treated like a Chrome tab by the scheduler?</li>
             <li>Have you successfully SSH'd into your new Ubuntu Server?</li>
         </ul>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>5. Lab Exercises</h2>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

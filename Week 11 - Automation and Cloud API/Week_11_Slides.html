@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,17 +187,17 @@
         <div class="week-number">Week 11</div>
         <h1>Automation and Cloud API</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Welcome to DevOps</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. Advanced CLI Techniques</h2>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -205,7 +205,7 @@
         <p>The CLI natively supports JSON output, which provides a structured and predictable data format that scripting languages can easily parse. By appending --format json to any command, we strip away the visual formatting and receive raw data objects.</p>
         <div class="quote">Command Analysis:
 *   --format json: Forces the CLI to output raw JSON data instead of an ASCII table. This is essential for piping data into tools like jq or Python scripts.</div>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -217,7 +217,7 @@
 *   jq -r .id: Filters the JSON to find the key "id". The -r (raw) flag removes quotation marks, leaving just the UUID.
 *   select(): A powerful jq function that acts like a WHERE clause in SQL, allowing you to filter lists based on conditions.
 In the example above, the -f json flag forces OpenStack to output JSON. We then pipe this valid JSON to jq. The -r flag is crucial as it outputs "raw" strings without quotation marks, making the output ready for variable assignment. We also use the select function to filter the array, ignoring any servers that are building, paused, or shut down.</div>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -237,7 +237,7 @@ In the example above, the -f json flag forces OpenStack to output JSON. We then 
             <li>A single small base image can serve thousands of different purposes.</li>
             <li>Modern cloud architecture typically favors a Hybrid Approach, using a base image for the OS and tools like Ansible for the final application configuration.</li>
         </ul>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -253,12 +253,12 @@ In the example above, the -f json flag forces OpenStack to output JSON. We then 
         </ul>
         <p>Resources:
 jq Tutorial</p>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. Cloud-Init: The Standard for Bootstrapping</h2>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -269,7 +269,7 @@ jq Tutorial</p>
             <li>In OpenStack (and AWS), it typically queries the Metadata Service at the "Magic IP" 169.254.169.254.</li>
             <li>If it receives a response, it pulls down a JSON payload containing the instance's Hostname, SSH Keys, and the User Data provided by the operator.</li>
         </ul>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -282,7 +282,7 @@ jq Tutorial</p>
             <li>Local (Init): Finds the datasource and applies networking.</li>
             <li>This is critical because without networking, it cannot fetch further data.</li>
         </ul>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -292,7 +292,7 @@ jq Tutorial</p>
 *   #cloud-config: The required header telling Cloud-Init this is declarative YAML.
 *   packages: A list of software to install via the OS package manager (apt, yum).
 *   runcmd: A list of shell commands to execute after packages are installed. This is often used to start services or configure files.</div>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -312,7 +312,7 @@ This pattern creates a new user account, grants it sudo privileges without a pas
 This pattern instructs the system to upgrade all installed packages on boot. Use this cautiously, as it significantly increases the boot time.</p>
         <div class="quote">Pattern Analysis:
 *   package_upgrade: true: Forces an apt-get upgrade or yum update on first boot. While secure, it adds significant time to the boot process.</div>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -320,7 +320,7 @@ This pattern instructs the system to upgrade all installed packages on boot. Use
         <p>To inject this configuration, you save the YAML to a local file (e.g., setup.yaml) and pass it to the compute API during the server creation process.</p>
         <div class="quote">Command Analysis:
 *   --user-data setup.yaml: Injects the contents of the file setup.yaml into the instance's metadata service. Cloud-Init reads this file upon first boot.</div>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -330,7 +330,7 @@ This pattern instructs the system to upgrade all installed packages on boot. Use
             <li>/var/log/cloud-init.log: The high-level log of what cloud-init attempted to do.</li>
             <li>/var/log/cloud-init-output.log: The raw stdout/stderr of your scripts. If your apt-get install failed, the error message will be here.</li>
         </ul>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -344,12 +344,12 @@ This pattern instructs the system to upgrade all installed packages on boot. Use
         <p>Reflection: Why is the "Magic IP" (169.254.169.254) accessible from inside the VM without any internet access? (Hint: It is a Link-Local address routed explicitly by the Hypervisor/Neutron).</p>
         <p>Resources:
 Cloud-Init Documentation</p>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. Automating with Scripts</h2>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -359,7 +359,7 @@ Cloud-Init Documentation</p>
 *   for i in {1..5}: Creates a loop that runs 5 times, with variable $i set to 1, 2, 3, 4, 5.
 *   web-$i: Dynamically names the servers (web-1, web-2...) using the variable.
 *   --network private-net: Ensures all servers attach to the same internal network.</div>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -372,7 +372,7 @@ Cloud-Init Documentation</p>
             <li>Second, Python's native Data Structures, such as Dictionaries and Lists, are far easier to manipulate than parsing string output from a CLI commands.</li>
             <li>Finally, the logic required for Idempotency—checking if a resource exists before attempting to create it—is significantly cleaner to implement.</li>
         </ul>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -385,7 +385,7 @@ Cloud-Init Documentation</p>
 *   openstack: The specific profile name. In Python, we select this with cloud='openstack'.
 *   auth_url: The Keystone API endpoint. The SDK sends credentials here to get a token.</div>
         <p>Connecting in Python:</p>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -394,7 +394,7 @@ Cloud-Init Documentation</p>
         <div class="quote">Code Analysis:
 *   conn.compute.servers(): Returns a "generator" (an iterable list) of Server objects.
 *   server.name: We access the data using dot-notation, which is type-safe and cleaner than grep.</div>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -404,12 +404,12 @@ Cloud-Init Documentation</p>
 *   create_server(): Accepts arguments as standard Python types (Strings, Lists).
 *   wait_for_server(): A helper function that pauses the script until the server enters the ACTIVE state, replacing manual sleep loops.
 *   try/except: If the cloud is full or the network ID is wrong, the script captures the error and prints a friendly message instead of crashing with a stack trace.</div>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. Infrastructure as Code: Heat vs Terraform</h2>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -421,7 +421,7 @@ Cloud-Init Documentation</p>
             <li>It is the ideal choice for pure OpenStack environments where external tool dependencies are undesirable.</li>
             <li>Terraform, created by HashiCorp, is the Industry Standard for multi-cloud provisioning.</li>
         </ul>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -432,7 +432,7 @@ Cloud-Init Documentation</p>
 *   Heat: Uses type: OS::Nova::Server and nested properties.
 *   Terraform: Uses resource "type" "name" and = assignment syntax. Both achieve the exact same result.
 Note: In this course, we focus on Heat because it requires no external setup and allows you to understand the underlying OpenStack resource model directly. However, in a multi-cloud professional environment, Terraform is the tool you will most likely encounter.</div>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -446,12 +446,12 @@ Note: In this course, we focus on Heat because it requires no external setup and
             <li>Reflection: Consider why a company using multiple cloud providers (e.g., AWS and on-prem OpenStack) would prefer Terraform over Heat.</li>
             <li>Also, think about the consequences of removing a resource definition from a Terraform file or Heat template; unlike a script which simply stops running, IaC tools will actively destroy the resource to ensure the real world matches your definition.</li>
         </ul>
-        <div class="slide-number">Slide 25</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>5. Orchestration with Heat (The Template Engine)</h2>
-        <div class="slide-number">Slide 26</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -461,7 +461,7 @@ Note: In this course, we focus on Heat because it requires no external setup and
 *   Version: Always required. Defines the syntax version (HOT 2018-08-31 is standard for Queens/Rocky releases).
 *   Parameters: Variables passed in (Input).
 *   Outputs: Variables passed out (Return values).</div>
-        <div class="slide-number">Slide 27</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -491,7 +491,7 @@ Note: In this course, we focus on Heat because it requires no external setup and
 *   type: OS::Nova::Server: The standard compute instance type.
 *   image / flavor: The Mandatory properties defining the specs.
 *   Note: There are many other optional properties not shown here, such as key_name (SSH Access), networks (Connectivity), security_groups (Firewall), and user_data (Cloud-Init Scripts). We will combine these in the Unified Stack example below.</div>
-        <div class="slide-number">Slide 28</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -507,7 +507,7 @@ Note: In this course, we focus on Heat because it requires no external setup and
 *   Floating IP: We created a FloatingIP resource on the public network and then an Association resource to link it to our server. This is how the server becomes accessible from your laptop.
 *   User Data: We embedded a Cloud-Config payload to install Docker and launch Nginx as a container. Heat injects this into Cloud-Init, which executes the declarative instructions on boot.
 *   Dependency Chain: The association depends on both the floating_ip and the web_instance. Heat orchestrates this perfectly.</div>
-        <div class="slide-number">Slide 29</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -517,7 +517,7 @@ Note: In this course, we focus on Heat because it requires no external setup and
         <div class="quote">Translation Analysis:
 *   References: Heat uses get_resource. Terraform uses resource_type.resource_name.id.
 *   Structure: Both tools define resources, properties, and dependencies. The syntax changes (YAML vs HCL), but the concepts are universal. By learning Heat, you are effectively learning the logic needed for Terraform.</div>
-        <div class="slide-number">Slide 30</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -547,7 +547,7 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
         <div class="quote">Command Analysis:
 *   cluster config: This command fetches the TLS certificates and API endpoints from OpenStack.
 *   export KUBECONFIG: Tells the kubectl tool where to find these credentials. Without this, kubectl doesn't know which cluster to talk to.</div>
-        <div class="slide-number">Slide 31</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -557,19 +557,19 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
         <div class="quote">Stack Analysis:
 *   Replicas: 3: Instead of creating web_server_01, web_server_02, etc., we simply ask for "3 copies". Kubernetes ensures they are always running.
 *   Service (LoadBalancer): This object talks to OpenStack Neutron/Octavia to provision a real Load Balancer that distributes traffic to those 3 pods.</div>
-        <div class="slide-number">Slide 32</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>Section 5 Checkpoint</h3>
         <p>Summary: Heat templates allow us to define an entire infrastructure stack in a single file. By understanding the core structure (Parameters, Resources, Outputs) and the Building Blocks (Cinder, Nova, Neutron resources), we can assemble complex environments that are consistently reproducible.</p>
         <p>Reflection: Why is it better to define the Security Group inside the template rather than assuming it already exists? (Hint: It makes the template "self-contained" and easier to deploy in a fresh project).</p>
-        <div class="slide-number">Slide 33</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>6. Configuration Management with Ansible</h2>
-        <div class="slide-number">Slide 34</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -580,7 +580,7 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
 *   all: The root group containing every server.
 *   children: Sub-groups (e.g., webservers, databases) allow you to target specific roles.
 *   ansible_host: Variable defining the actual IP to connect to.</div>
-        <div class="slide-number">Slide 35</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -590,7 +590,7 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
 *   all / webservers: The target group from the inventory.
 *   -m ping: The Module to run. 'ping' in Ansible checks SSH connectivity and Python availability, not ICMP.
 *   -a: Arguments passed to the module.</div>
-        <div class="slide-number">Slide 36</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -600,7 +600,7 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
         <div class="quote">Playbook Analysis:
 *   apt, copy, service: These are Modules. They abstract away the OS details (e.g., you don't type apt-get install, you just say state: present).
 *   Idempotency: This is the most critical concept. If you run this playbook 100 times, it will only make changes the first time. On subsequent runs, it checks "Is Apache present?", sees "Yes", and does nothing. This makes it safe to run against production systems repeatedly.</div>
-        <div class="slide-number">Slide 37</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -610,19 +610,19 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
         <div class="quote">Pipeline Analysis:
 *   Glue Code: Bash is used here not to manage resources, but to manage tools. It bridges the gap between Heat (Infrastructure) and Ansible (Config).
 *   Dynamic Inventory: Note how we create hosts.ini on the fly. Note: ansible_user=ubuntu assumes an Ubuntu image; adjust this for Rocky/CentOS (rocky) or Fedora (fedora).</div>
-        <div class="slide-number">Slide 38</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>Section 6 Checkpoint</h3>
         <p>Summary: Ansible fills the gap of "Day 2 Operations." It uses an Inventory to group servers and Playbooks to define their configuration. Unlike a Bash script which runs blindly, Ansible is Idempotent—it only acts if the system is not in the desired state.</p>
         <p>Reflection: Compare this to the Bash script in Section 3. If you ran that Bash script twice, it would try to create the servers again (and fail). If you run an Ansible playbook twice, it simply reports "OK" (No Change).</p>
-        <div class="slide-number">Slide 39</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>7. Version Control: Managing your Templates</h2>
-        <div class="slide-number">Slide 40</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -632,7 +632,7 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
             <li>Rollback: If a new template breaks production, git revert allows you to instantly return to the working version.</li>
             <li>Collaboration: Multiple engineers can work on the same stack without overwriting each other's files.</li>
         </ul>
-        <div class="slide-number">Slide 41</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -641,7 +641,7 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
         <div class="quote">Git Analysis:
 *   commit: This is your "Save Game" button. Make a commit every time you reach a stable state (e.g., "Heat template works", "Ansible connects").
 *   GitOps: In advanced environments, applying a commit to a Git repository automatically triggers the deploy.sh pipeline we wrote above. This is known as GitOps.</div>
-        <div class="slide-number">Slide 42</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -698,12 +698,12 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
 </tr>
 </tbody>
 </table>
-        <div class="slide-number">Slide 43</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>8. Summary and Next Steps</h2>
-        <div class="slide-number">Slide 44</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -720,24 +720,24 @@ Once the cluster is CREATE_COMPLETE, we download the credentials to talk to it.<
             <li>Can you explain the transition from Infrastructure-as-Service (Nova) to Platform-as-Service (Magnum)?</li>
             <li>Are you ready to use Git to manage your project templates?</li>
         </ul>
-        <div class="slide-number">Slide 45</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>9. Additional Resources</h2>
-        <div class="slide-number">Slide 46</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>10. Lab Exercises</h2>
-        <div class="slide-number">Slide 47</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 48</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

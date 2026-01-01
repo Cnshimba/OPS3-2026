@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,22 +187,22 @@
         <div class="week-number">Week 1</div>
         <h1>Introduction to Virtualization</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Welcome to Week 1!</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>What You'll Learn This Week</h2>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. Understanding Virtualization</h2>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -223,7 +223,7 @@
         <p>Figure 1: The Abstraction Layer introduced by Virtualization</p>
         <p>The abstraction applies to all major hardware components. Physical CPU cores are divided into virtual CPUs (vCPUs) that can be allocated to different virtual machines. Physical memory is partitioned, with each VM receiving a dedicated allocation that appears to the guest OS as physical RAM.</p>
         <p>Note: While the Hypervisor handles these "Compute" abstractions directly, modern virtualization also abstracts the connectivity (Network) and persistence (Storage) layers. We will explore those broader concepts in Section 3: Beyond Compute.</p>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -240,7 +240,7 @@
             <li>These extensions allow the processor to directly support virtualization operations, eliminating the need for complex and performance-degrading software workarounds.</li>
             <li>The introduction of these hardware features coincided with the emergence of modern open-source virtualization solutions like KVM, which was merged into the Linux kernel in 2007.</li>
         </ul>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -270,7 +270,7 @@
             <li>Need a test environment identical to production?</li>
             <li>Clone the production VM and have a perfect replica ready immediately.</li>
         </ul>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -290,12 +290,12 @@
         <ul>
             <li>Red Hat: What is Virtualization?</li>
         </ul>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. Types of Hypervisors</h2>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -338,7 +338,7 @@
             <li>They excel in scenarios where performance, reliability, and resource efficiency are paramount.</li>
             <li>Organizations running business-critical applications, operating 24/7 services, or managing large-scale virtualization deployments invariably choose Type-1 hypervisors for their infrastructure.</li>
         </ul>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -378,7 +378,7 @@
             <li>Type-2 hypervisors represent a more accessible, flexible approach suitable for development, testing, and learning, accepting performance trade-offs in exchange for the convenience of running on an existing desktop operating system.</li>
             <li>For this course, we use Proxmox VE, a Type-1 hypervisor, because it provides professional-grade capabilities while remaining accessible for learning purposes.</li>
         </ul>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -398,12 +398,12 @@
         <ul>
             <li>VMware: Type 1 vs Type 2 Hypervisors</li>
         </ul>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. Virtual Machine Anatomy (Concepts & Components)</h2>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -421,7 +421,7 @@
             <li>However, this restricts portability; a VM created in Host Mode on an Intel server may crash if migrated to an AMD server.</li>
             <li>Alternatively, the Generic (kvm64) type presents a standard, simplified processor to the VM, guaranteeing it can run on any hardware at the cost of some performance optimizations.</li>
         </ul>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -433,7 +433,7 @@
             <li>Therefore, the golden rule of memory allocation is to never over-commit RAM.</li>
             <li>Unlike CPU cycles, which can be queued, RAM is a hard limit.</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -477,7 +477,7 @@
 </tr>
 </tbody>
 </table>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -489,7 +489,7 @@
             <li>The Emulated (E1000) interface mimics a real Intel network card, ensuring compatibility with almost any operating system out of the box, though it incurs higher CPU overhead.</li>
             <li>For performance-critical workloads, the Paravirtualized (VirtIO) interface is preferred; it is a software-defined card designed specifically for virtualization that works directly with the hypervisor to achieve network speeds often exceeding 10Gbps, though it requires specific drivers in the guest OS.</li>
         </ul>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -506,12 +506,12 @@
             <li>Why is "Thin Provisioning" dangerous if you are not monitoring your storage?</li>
             <li>If you have an 8-Core CPU, why is it bad to give a single VM 8 vCPUs?</li>
         </ul>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. Beyond Compute: The Software Defined Data Center</h2>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -522,7 +522,7 @@
             <li>This architecture decouples the network's control plane (intelligence) from the data plane (packet forwarding), allowing administrators to create complex network topologies, VLANs, and firewalls programmatically without ever touching a physical cable.</li>
             <li>We will explore these concepts in depth, including Linux Bridges, in Week 4: Virtual Networking.</li>
         </ul>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -534,7 +534,7 @@
             <li>By treating storage as a flexible software resource rather than a rigid hardware appliance, we gain immense scalability.</li>
             <li>These technologies, including Ceph and NFS, are the focus of Week 5: Storage & Backup.</li>
         </ul>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -550,12 +550,12 @@
             <li>If the network is "software," does it still need physical cables at all?</li>
             <li>How does SDS differ from a traditional RAID card?</li>
         </ul>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>5. The Future of Virtualization</h2>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -566,7 +566,7 @@
             <li>First, Multi-tenancy allows multiple distinct customers (tenants) to run their workloads on the exact same physical hardware, securely isolated from one another by the hypervisor.</li>
             <li>Second, Elasticity leverages the fact that VMs are merely files and processes, allowing them to be provisioned, scaled, or destroyed in seconds to match demand—something impossible with physical hardware.</li>
         </ul>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -575,7 +575,7 @@
             <li>By mastering the abstraction layer (the Hypervisor), you unlock the ability to understand even lighter forms of abstraction, such as Containers (Docker), which share the OS kernel, and Serverless Functions, which abstract the OS entirely.</li>
             <li>We will explore these evolutions specifically in Week 3: Containers & Resources.</li>
         </ul>
-        <div class="slide-number">Slide 25</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -595,12 +595,12 @@
         <ul>
             <li>IBM: What is Cloud Computing?</li>
         </ul>
-        <div class="slide-number">Slide 26</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>6. Summary and Next Steps</h2>
-        <div class="slide-number">Slide 27</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -617,14 +617,14 @@
             <li>Do you know which Hypervisor type is best for a Production Database vs a Developer Laptop?</li>
         </ul>
         <p>← Back to Course Index</p>
-        <div class="slide-number">Slide 28</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 29</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,17 +187,17 @@
         <div class="week-number">Week 7</div>
         <h1>Transition to Cloud Computing Concepts</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Welcome to Week 7!</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Core Comparison: Proxmox vs. OpenStack</h2>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -215,7 +215,7 @@
             <li>If a "Cattle" server gets sick, it is replaced, not fixed.</li>
             <li>This approach relies on horizontal scaling (adding more VMs) and is designed for developers who consume infrastructure via APIs.</li>
         </ul>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -230,12 +230,12 @@
             <li>It is designed for "dynamic" workloads where infrastructure needs to scale up and down automatically to match demand, such as web applications, CI/CD build pipelines, and big data clusters.</li>
             <li>Organizations choose OpenStack when they need to provide an "AWS-like" self-service experience to their internal teams while strictly maintaining Data Sovereignty within their own private data centers.</li>
         </ul>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. Defining "The Cloud" (NIST Model)</h2>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -255,7 +255,7 @@
             <li>You don't worry about Windows updates or Linux kernels; you focus solely on development.</li>
         </ul>
         <p>Software as a Service - SaaS (Dining Out) is the ultimate abstraction. You simply go to the restaurant and eat. The provider manages everything from the hardware to the application software itself. You just log in and use the tool (e.g., Gmail, Salesforce).</p>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -282,7 +282,7 @@
             <li>This model creates maximum convenience for users who simply need a tool to perform a task, such as email or document collaboration.</li>
             <li>Examples include Gmail, Salesforce, and Microsoft 365.</li>
         </ul>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -309,7 +309,7 @@
             <li>Unlike the hyperscalers where you rent space on someone else's computer, OpenStack allows you to build the cloud in your own data center.</li>
             <li>This is the preferred choice for telecommunications providers, governments, and research institutes (like CERN) who require absolute control over their data sovereignty, or who operate at such a massive scale that renting public cloud resources becomes cost-prohibitive.</li>
         </ul>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -331,7 +331,7 @@
             <li>Hybrid Cloud represents the best of both worlds, combining Public and Private clouds bound together by technology that allows data and applications to be shared between them.</li>
             <li>A typical enterprise use case involves keeping sensitive customer databases "on-premise" in a Private Cloud for strict security compliance, while running web-server frontends in a Public Cloud to take advantage of infinite scaling during traffic spikes (a technique known as Cloud Bursting).</li>
         </ul>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -350,7 +350,7 @@
             <li>To achieve High Availability, cloud architects deploy applications across multiple AZs.</li>
             <li>If "Building A" burns down, "Building B" continues to run the application without interruption.</li>
         </ul>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -364,7 +364,7 @@
             <li>Security Groups act as virtual distributed firewalls applied directly to each instance, controlling inbound and outbound traffic at the packet level regardless of network topology.</li>
             <li>Identity and Access Management (IAM) acts as the central directory, strictly controlling who (users/services) can perform what actions (permissions) on which specific resources.</li>
         </ul>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -376,7 +376,7 @@
             <li>You, the Customer, are responsible for securing the Guest OS, applications, data, and firewall configurations.</li>
             <li>As you move up the stack to PaaS and SaaS, the Provider takes on more responsibility (like patching the OS), but you are always responsible for your Data and Identity (User Accounts).</li>
         </ul>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -394,7 +394,7 @@
             <li>If you shut down your VMs at night, you stop paying.</li>
             <li>This shifts IT spending from a "Fixed Cost" to a "Variable Cost," allowing businesses to be more agile.</li>
         </ul>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -411,7 +411,7 @@
             <li>An elastic system adds servers when traffic spikes (e.g., during a Black Friday sale) and removes them when traffic drops (at 3 AM), maintaining performance while optimizing cost.</li>
             <li>It answers the question: "Can the system resize itself right now without human help?"</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -450,7 +450,7 @@ This involves abandoning the legacy application entirely and moving to a commerc
 Upon analysis, many organizations discover applications that are no longer useful. These are simply turned off, resulting in immediate cost savings.</p>
         <p>6. Retain
 Some applications are simply too complex, too sensitive, or too intertwined with legacy hardware (like mainframes) to serve as viable candidates for migration. These are deliberately kept on-premise.</p>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -478,12 +478,12 @@ Some applications are simply too complex, too sensitive, or too intertwined with
             <li>Book: CompTIA Cloud+ Certification Study Guide (Exam CV0-003) - Ben Piper.</li>
             <li>Whitepaper: AWS "6 Strategies for Migrating Applications"</li>
         </ul>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. Introducing OpenStack</h2>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -520,7 +520,7 @@ Some applications are simply too complex, too sensitive, or too intertwined with
             <li>It provides a web-based graphical user interface (GUI) that allows users to launch instances, configure networks, and managed storage without typing a single command.</li>
             <li>Under the hood, Horizon is simply a Python Django web application that translates user clicks into API calls sent to Nova, Neutron, and Keystone.</li>
         </ul>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -560,7 +560,7 @@ Finally, nova-compute instructs the Hypervisor (KVM/Libvirt) to define the VM.</
             <li>Simultaneously, the Neutron L2 Agent on that node detects the new port data and programs the local virtual switch (Open vSwitch) to connect the VM's virtual network card to the physical network bridge.</li>
             <li>Only then does the VM start booting, drawing its IP address from the DHCP agent as it initializes.</li>
         </ul>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -582,24 +582,24 @@ Finally, nova-compute instructs the Hypervisor (KVM/Libvirt) to define the VM.</
         <ul>
             <li>OpenStack Components Map</li>
         </ul>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. Additional Resources</h2>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>6. Lab Exercises</h2>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

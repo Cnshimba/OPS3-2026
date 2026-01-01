@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,22 +187,22 @@
         <div class="week-number">Week 3</div>
         <h1>Virtual Networking and Linux Networking Fundamentals</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Welcome to Week 3!</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>What You'll Learn This Week</h2>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. Runtime vs. Persistent Networking (ip vs nmcli)</h2>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -219,7 +219,7 @@
             <li>IP Addresses: ip addr show (Displays IPv4/IPv6 addresses attached to links).</li>
             <li>Routing Table: ip route get 8.8.8.8 (Simulates a packet to 8.8.8.8 and tells you which interface and gateway would be used).</li>
         </ul>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -232,7 +232,7 @@
         </ul>
         <p>Hands-On Example:
 Use nmcli to set a static IP, ensuring the server always boots with the same address.</p>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -252,12 +252,12 @@ Use nmcli to set a static IP, ensuring the server always boots with the same add
         <ul>
             <li>Red Hat: ip Command Cheat Sheet</li>
         </ul>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. Network Namespaces (The "Containers" of Networking)</h2>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -271,13 +271,13 @@ Use nmcli to set a static IP, ensuring the server always boots with the same add
             <li>Customer A lives in Namespace A, and Customer B lives in Namespace B.</li>
         </ul>
         <p>Figure 2.1: Visualizing Isolation of Network Resources within a Single Linux Kernel.</p>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>2.2 Hands-On Example</h3>
         <p>We will create a "sandbox" namespace to demonstrate this total isolation.</p>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -297,12 +297,12 @@ Use nmcli to set a static IP, ensuring the server always boots with the same add
         <ul>
             <li>Introduction to Linux Namespaces</li>
         </ul>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. Connecting the Dots: Veth Pairs and Bridges</h2>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -315,7 +315,7 @@ Use nmcli to set a static IP, ensuring the server always boots with the same add
         </ul>
         <p>Hands-On Example:
 Connecting the Sandbox to the Host.</p>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -339,7 +339,7 @@ Connecting the Sandbox to the Host.</p>
         <p>Example: Manually creating a TAP interface (What Proxmox does behind the scenes)</p>
         <p>Hands-On Example: Connecting Two Namespaces (Red & Blue)
 We will act as a "Virtual Switch" administrator. We want to connect two isolated namespaces so they can talk to each other.</p>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -359,12 +359,12 @@ We will act as a "Virtual Switch" administrator. We want to connect two isolated
         <ul>
             <li>Linux Bridge Command Help</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. Container Networking in Practice (Docker, Podman, LXC)</h2>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -402,7 +402,7 @@ We will act as a "Virtual Switch" administrator. We want to connect two isolated
 </tr>
 </tbody>
 </table>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -412,7 +412,7 @@ We will act as a "Virtual Switch" administrator. We want to connect two isolated
             <li>slirp4netns: Podman uses a User-Space networking stack. It "slurps" traffic from the host interface and pipes it into the container namespace without touching the kernel's actual bridge settings.</li>
             <li>Performance: Slightly slower than Docker's bridge, but much more secure.</li>
         </ul>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -421,7 +421,7 @@ We will act as a "Virtual Switch" administrator. We want to connect two isolated
         <ul>
             <li>Unlike Docker, LXC networking is defined in a config file. By default, it connects to lxcbr0 and requests an IP via DHCP, just like a physical computer would.</li>
         </ul>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -441,12 +441,12 @@ We will act as a "Virtual Switch" administrator. We want to connect two isolated
         <ul>
             <li>Docker Networking Overview</li>
         </ul>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>5. Advanced Linux Operations</h2>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -458,7 +458,7 @@ We will act as a "Virtual Switch" administrator. We want to connect two isolated
             <li>Mode 4 (802.3ad LACP): The Gold Standard. The server and switch communicate to balance traffic across both cables simultaneously. You get double the speed and redundancy.</li>
         </ul>
         <p>Configuration:</p>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -466,7 +466,7 @@ We will act as a "Virtual Switch" administrator. We want to connect two isolated
         <p>A Linux server usually behaves like an End Host—it consumes packets sent to it and ignores the rest. However, in virtualization (specifically NAT Mode), the Linux host must act as a Router. It needs to accept packets from VMs and forward them to the Internet.</p>
         <p>To do this, we must toggle a specialized kernel parameter: ip_forward. We also need to manipulate the Routing Table to tell the kernel where networks live.</p>
         <p>Commands:</p>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -489,7 +489,7 @@ While iptables (and its successor nftables) is the low-level tool, managing thou
             <li>Debian/Ubuntu: Often use ufw (Uncomplicated Firewall).</li>
         </ul>
         <p>These tools write the underlying iptables/nftables rules for you.</p>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -499,7 +499,7 @@ While iptables (and its successor nftables) is the low-level tool, managing thou
 ss is the modern replacement for the deprecated netstat. It allows you to see which processes on your server are listening for connections.</p>
         <p>Network Mapper (nmap)
 nmap is the industry standard for network discovery. Unlike ss (which looks locally), nmap allows you to scan remote servers to see what they are exposing.</p>
-        <div class="slide-number">Slide 25</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -507,7 +507,7 @@ nmap is the industry standard for network discovery. Unlike ss (which looks loca
         <p>When networking breaks, it often fails silently. A firewall drops a packet without an error message. A route sends traffic into a black hole. To fix this, we need Packet Capture.</p>
         <p>tcpdump is the CLI version of Wireshark. It puts the network card into "Promiscuous Mode," allowing it to see every packet on the wire, not just those addressed to it.</p>
         <p>Commands:</p>
-        <div class="slide-number">Slide 26</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -530,12 +530,12 @@ nmap is the industry standard for network discovery. Unlike ss (which looks loca
             <li>Tcpdump 101</li>
         </ul>
         <p>Now that we have dismantled the Linux kernel concepts, we can look at how Proxmox Virtual Environment (PVE) uses them to manage VM networking. Proxmox does not invent its own networking stack; it "orchestrates" standard Linux tools (Bridges, OVS, IPTables) via a web interface.</p>
-        <div class="slide-number">Slide 27</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>6. Open vSwitch (OVS): The Cloud Switch</h2>
-        <div class="slide-number">Slide 28</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -548,13 +548,13 @@ nmap is the industry standard for network discovery. Unlike ss (which looks loca
             <li>2.</li>
             <li>Kernel Module (Data Plane): This handles the actual packet switching at wire speed.</li>
         </ul>
-        <div class="slide-number">Slide 29</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>6.2 Installing OVS</h3>
         <p>Unlike the standard bridge, OVS is not always installed by default.</p>
-        <div class="slide-number">Slide 30</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -566,13 +566,13 @@ You want to block a specific "Bad Neighbor" VM (IP 10.0.0.66) from sending traff
             <li>Linux Bridge: Cannot do this natively (needs complex iptables).</li>
             <li>OVS: One simple command.</li>
         </ul>
-        <div class="slide-number">Slide 31</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>6.4 SDN Controller Integration</h3>
         <p>OVS is designed to be controlled remotely by an SDN Controller (like OpenDaylight or ONOS). This allows a central brain to program the switches across the entire datacenter.</p>
-        <div class="slide-number">Slide 32</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -592,12 +592,12 @@ You want to block a specific "Bad Neighbor" VM (IP 10.0.0.66) from sending traff
         <ul>
             <li>Open vSwitch Crash Course</li>
         </ul>
-        <div class="slide-number">Slide 33</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>7. Proxmox Networking</h2>
-        <div class="slide-number">Slide 34</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -624,7 +624,7 @@ This mode requires Masquerading (Source NAT) in iptables.</p>
         <p>Egress (Host -> Switch): The packet leaves eno1 with the tag attached. The physical switch reads "20" and puts it in the correct broadcast domain.</p>
         <p>VLAN Aware Bridge:
 Modern Proxmox uses "VLAN Aware" bridges. Instead of creating vmbr0.10, vmbr0.20, etc., you toggle bridge-vlan-aware yes. The bridge then acts like a "Trunk Port", capable of carrying all VLANs simultaneously.</p>
-        <div class="slide-number">Slide 35</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -645,24 +645,24 @@ Modern Proxmox uses "VLAN Aware" bridges. Instead of creating vmbr0.10, vmbr0.20
         <ul>
             <li>Proxmox Network Model</li>
         </ul>
-        <div class="slide-number">Slide 36</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>8. Additional Resources</h2>
-        <div class="slide-number">Slide 37</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>9. Lab Exercises</h2>
-        <div class="slide-number">Slide 38</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 39</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

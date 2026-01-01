@@ -285,13 +285,13 @@ def generate_slides_html(title, week_num, objectives, sections, output_path):
             margin: 20px 0;
         }}
         
-        .slide-number {{
+        .vut-logo {{
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }}
         
         @media print {{
@@ -312,7 +312,7 @@ def generate_slides_html(title, week_num, objectives, sections, output_path):
         <div class="week-number">Week {week_num}</div>
         <h1>{title}</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide {slide_num}</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 """
     slide_num += 1
@@ -327,7 +327,7 @@ def generate_slides_html(title, week_num, objectives, sections, output_path):
         for obj in objectives:
             html_template += f"            <li>{obj}</li>\n"
         html_template += f"""        </ul>
-        <div class="slide-number">Slide {slide_num}</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 """
         slide_num += 1
@@ -338,7 +338,7 @@ def generate_slides_html(title, week_num, objectives, sections, output_path):
         html_template += f"""
     <div class="slide">
         <h2>{section['title']}</h2>
-        <div class="slide-number">Slide {slide_num}</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 """
         slide_num += 1
@@ -384,7 +384,7 @@ def generate_slides_html(title, week_num, objectives, sections, output_path):
                 elif content_item['type'] == 'quote':
                     html_template += f"""        <div class="quote">{content_item['value']}</div>\n"""
             
-            html_template += f"""        <div class="slide-number">Slide {slide_num}</div>
+            html_template += f"""        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 """
             slide_num += 1
@@ -395,7 +395,7 @@ def generate_slides_html(title, week_num, objectives, sections, output_path):
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide {slide_num}</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 """
     

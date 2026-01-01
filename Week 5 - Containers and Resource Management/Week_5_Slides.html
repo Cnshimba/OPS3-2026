@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,22 +187,22 @@
         <div class="week-number">Week 5</div>
         <h1>Containers and Resource Management</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>Welcome to Week 5!</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>What You'll Learn This Week</h2>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. The Container Paradigm</h2>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -226,7 +226,7 @@
             <li>Control Groups (cgroups) solve this problem by providing resource limiting, accounting, and prioritization.</li>
             <li>Understanding cgroups is essential because they form the foundation of resource management in all modern container platforms, from Docker to Kubernetes.</li>
         </ul>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -240,7 +240,7 @@
             <li>The container runtime creates a cgroup for that container and configures the appropriate resource controllers.</li>
             <li>If the containerized application tries to exceed these limits, the kernel's cgroup subsystem intervenes to enforce the constraints.</li>
         </ul>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -251,7 +251,7 @@
             <li>This hierarchical structure enables sophisticated resource allocation strategies.</li>
             <li>For example, you might create a parent cgroup allocating 50% of CPU to "production workloads" and 50% to "development workloads," then subdivide those allocations further among individual containers.</li>
         </ul>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -278,14 +278,14 @@
    - Throttling: Sets absolute limits on read/write operations per second (IOPS) or bytes per second.</p>
         <p>While technically separate from the primary cgroup implementation, network bandwidth can also be controlled through Traffic Control (tc) in conjunction with cgroups, allowing administrators to limit network throughput per container.</p>
         <p>Limits the number of processes (PIDs) that can be created within a cgroup, preventing fork bombs and runaway process creation.</p>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>1.5. Practical cgroup Management</h3>
         <p>On modern Linux systems, cgroups are typically managed through the systemd init system, which uses cgroups extensively for service management. However, understanding direct cgroup manipulation is valuable for troubleshooting and advanced container configurations.</p>
         <p>The cgroup filesystem is typically mounted at /sys/fs/cgroup/. Each controller has its own subdirectory, and creating a new cgroup is as simple as creating a directory within that hierarchy.</p>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -296,13 +296,13 @@
             <li>cgroups v2 (the modern unified hierarchy) consolidates all controllers into a single tree structure, simplifying management and improving consistency.</li>
         </ul>
         <p>Most modern Linux distributions (such as Ubuntu 22.04+ and Debian 11+) have transitioned to cgroups v2 by default. Docker and other container runtimes now support both versions, though v2 offers improved performance and a cleaner API.</p>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>1.7. How Container Runtimes Use cgroups</h3>
         <p>When you run a container with resource limits, the container runtime (Docker, containerd, Podman, or LXC) performs these operations behind the scenes:</p>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -311,7 +311,7 @@
         <p>Docker creates a cgroup and configures it approximately like this:</p>
         <p>You can inspect these settings directly:</p>
         <p>Figure 2: Linux Namespaces and Cgroups - Namespaces provide isolation (PID, Network, Mount) while cgroups enforce resource limits (CPU, Memory)</p>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -324,12 +324,12 @@ Containers share the Hot Kernel; VMs use their own Kernel.</p>
    If a container crashes the kernel, does the host crash? Why can't you run a Windows Container on a Linux Host (natively)?</p>
         <p>Resources:
 Red Hat: What are Linux Namespaces?</p>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. The Container Technologies Landscape</h2>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -340,7 +340,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>An LXC container boots a full init system (like systemd), runs multiple services (SSH, Cron, Syslog), and persists data like a traditional server.</li>
             <li>It is ideal for infrastructure consolidation where you require long-running servers but want the density and efficiency of containers.</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -352,7 +352,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>Data is stored in external volumes, and the container itself can be destroyed and recreated easily.</li>
             <li>Docker is the standard for microservices and modern software delivery.</li>
         </ul>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -364,7 +364,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>Instead, it starts containers directly as child processes of the user.</li>
             <li>This architecture enhances security and natively supports "rootless" containers, allowing unprivileged users to run containers safely.</li>
         </ul>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -375,7 +375,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>Apptainer accommodates this by encapsulating the entire environment into a single file (.sif) and running it with the user's existing privileges.</li>
             <li>It prioritizes mobility of compute and integration with batch schedulers like Slurm.</li>
         </ul>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -450,7 +450,7 @@ Red Hat: What are Linux Namespaces?</p>
 </tr>
 </tbody>
 </table>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -470,12 +470,12 @@ Red Hat: What are Linux Namespaces?</p>
         <ul>
             <li>Open Container Initiative (OCI)</li>
         </ul>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. Working with System Containers (LXC CLI)</h2>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -487,19 +487,19 @@ Red Hat: What are Linux Namespaces?</p>
             <li>The lxc-create command handles this process, downloading the necessary files to a directory on the host (typically /var/lib/lxc).</li>
         </ul>
         <p>Figure 4: LXC Container Lifecycle - From template download through creation, start, attach, stop, to destroy</p>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>3.2. Listing and Monitoring</h3>
         <p>To view the status of containers, the lxc-ls command is used. The --fancy flag provides a formatted table showing the state (RUNNING or STOPPED), IP addresses (if running), and autostart configuration.</p>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>3.3. Starting a Container</h3>
         <p>Booting an LXC container is significantly faster than booting a virtual machine because there is no kernel initialization. The lxc-start command simply initiates the init system within the isolated namespace environment.</p>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -509,13 +509,13 @@ Red Hat: What are Linux Namespaces?</p>
             <li>This works similarly to jumping into a chroot environment but respects the namespace boundaries.</li>
             <li>Once attached, you are the root user inside the container and can manage packages and services normally.</li>
         </ul>
-        <div class="slide-number">Slide 25</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>3.5. Stopping and Destroying</h3>
         <p>Containers should be stopped gracefully to allow services to terminate correctly. The lxc-stop command sends the appropriate signals. When a container is no longer needed, lxc-destroy removes its configuration and deletes the root filesystem directory.</p>
-        <div class="slide-number">Slide 26</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -535,12 +535,12 @@ Red Hat: What are Linux Namespaces?</p>
         <ul>
             <li>Linux Containers (LXC) Project</li>
         </ul>
-        <div class="slide-number">Slide 27</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. LXC in Proxmox VE (GUI Workflow)</h2>
-        <div class="slide-number">Slide 28</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -550,7 +550,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>In the Proxmox GUI, navigate to the storage view (such as local or local-lvm).</li>
             <li>The CT Templates section provides a built-in browser for downloading official templates for various distributions like Ubuntu, Debian, Alpine, and CentOS, as well as TurnKey Linux appliances which come pre-configured with software stacks.</li>
         </ul>
-        <div class="slide-number">Slide 29</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -561,7 +561,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>Unprivileged containers are the default and recommended choice; they use user namespaces to map the container's root user to a non-privileged user on the host, significantly reducing the impact of a potential container escape.</li>
             <li>During Disk and CPU/Memory configuration, you set the resource limits that cgroups will enforce.</li>
         </ul>
-        <div class="slide-number">Slide 30</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -572,7 +572,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>The change is applied instantly to the running container's cgroup.</li>
             <li>This elasticity allows for highly efficient resource management compared to the static allocation often required for virtual machines.</li>
         </ul>
-        <div class="slide-number">Slide 31</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -592,12 +592,12 @@ Red Hat: What are Linux Namespaces?</p>
         <ul>
             <li>Proxmox VE: Linux Container (LXC)</li>
         </ul>
-        <div class="slide-number">Slide 32</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>5. Working with Application Containers (Docker CLI)</h2>
-        <div class="slide-number">Slide 33</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -616,7 +616,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>Registries are repositories that store and serve these images.</li>
             <li>Docker Hub is the public registry hosting millions of images, while organizations may operate private registries for proprietary applications.</li>
         </ul>
-        <div class="slide-number">Slide 34</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -628,20 +628,20 @@ Red Hat: What are Linux Namespaces?</p>
             <li>-p 8080:80 maps host port 8080 to container port 80, making the web server accessible at http://localhost:8080.</li>
             <li>The argument nginx specifies the image name; Docker pulls nginx:latest from Docker Hub by default.</li>
         </ul>
-        <div class="slide-number">Slide 35</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>5.3. Managing Container Lifecycle</h3>
         <p>Managing running containers involves a set of essential commands for inspection and control.</p>
-        <div class="slide-number">Slide 36</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>5.4. Inspecting and Debugging</h3>
         <p>The docker exec command is particularly useful for troubleshooting. It allows you to execute commands inside a running container. The -it flags allocate an interactive pseudo-TTY, giving you a shell prompt inside the container to inspect processes or check configurations.</p>
         <p>Resource usage can be monitored using docker stats, which provides real-time information on CPU, memory, and network usage for running containers.</p>
-        <div class="slide-number">Slide 37</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -658,7 +658,7 @@ Red Hat: What are Linux Namespaces?</p>
         <p>Figure 6: Dockerfile Image Layers - Each instruction creates a new layer; cached layers speed up rebuilds when only code changes</p>
         <p>Building the image from this Dockerfile is done with the docker build command:</p>
         <p>This reads the Dockerfile in the current directory (.) and builds an image tagged as myapp:1.0.</p>
-        <div class="slide-number">Slide 38</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -678,24 +678,24 @@ Red Hat: What are Linux Namespaces?</p>
         <ul>
             <li>Docker Curriculum</li>
         </ul>
-        <div class="slide-number">Slide 39</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>6. Working with Podman (Daemonless CLI)</h2>
-        <div class="slide-number">Slide 40</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>6.1. Running a Container (Rootless)</h3>
         <p>By default, Podman runs containers as the user who invoked the command, mapping the user's UID to root inside the container. This is a significant security advantage.</p>
-        <div class="slide-number">Slide 41</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>6.2. Pods</h3>
         <p>Podman allows you to manage "Pods" locally. A Pod is a group of containers that share the same network namespace (localhost), a concept directly compatible with Kubernetes.</p>
-        <div class="slide-number">Slide 42</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -715,12 +715,12 @@ Red Hat: What are Linux Namespaces?</p>
         <ul>
             <li>Podman: Getting Started</li>
         </ul>
-        <div class="slide-number">Slide 43</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>7. Future Preview: Kubernetes and kubectl</h2>
-        <div class="slide-number">Slide 44</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -757,7 +757,7 @@ Red Hat: What are Linux Namespaces?</p>
 </tr>
 </tbody>
 </table>
-        <div class="slide-number">Slide 45</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -771,7 +771,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>(3 Pods)
 2.</li>
         </ul>
-        <div class="slide-number">Slide 46</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -796,7 +796,7 @@ Red Hat: What are Linux Namespaces?</p>
 *   expose: Creates a Service that fronts the Deployment.
 *   --type=NodePort: Opens a specific port (e.g., 32000) on every node in the cluster. This allows external traffic to reach your internal Pods.
 *   --port=80: The internal port the container is listening on.</div>
-        <div class="slide-number">Slide 47</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -806,17 +806,17 @@ Red Hat: What are Linux Namespaces?</p>
             <li>Service: Without a Service, you cannot reliably talk to a Pod because its IP changes every time it restarts.</li>
             <li>Magnum: We will use OpenStack Magnum to build the cluster, so we don't have to manage the Master Nodes ourselves.</li>
         </ul>
-        <div class="slide-number">Slide 48</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>8. Summary</h2>
-        <div class="slide-number">Slide 49</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>9. Additional Resources</h2>
-        <div class="slide-number">Slide 50</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -826,7 +826,7 @@ Red Hat: What are Linux Namespaces?</p>
             <li>Docker vs. Podman: YouTube (Explains differences, cloud use cases).</li>
             <li>Docker Basics: YouTube (Beginner guide to Docker containers).</li>
         </ul>
-        <div class="slide-number">Slide 51</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -837,19 +837,19 @@ Red Hat: What are Linux Namespaces?</p>
             <li>Podman Documentation</li>
             <li>OpenStack Zun</li>
         </ul>
-        <div class="slide-number">Slide 52</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>10. Lab Exercises</h2>
-        <div class="slide-number">Slide 53</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 54</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

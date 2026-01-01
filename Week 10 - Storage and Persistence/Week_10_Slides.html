@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,12 +187,12 @@
         <div class="week-number">Week 10</div>
         <h1>Storage and Persistence (Cinder)</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. The Hierarchy of Cloud Storage</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -204,7 +204,7 @@
             <li>However, if the instance is terminated or the underlying hypervisor fails, this data is irrevocably lost.</li>
             <li>In contrast, Persistent Storage (Cinder) operates as an independent capability.</li>
         </ul>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -220,12 +220,12 @@
             <li>Why shouldn't you store your customer MySQL database on the Nova Ephemeral disk?</li>
             <li>If you delete a Cinder Volume, is the data recoverable? (Hint: Only if you have a Backup).</li>
         </ul>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. Block Storage Architecture (Cinder)</h2>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -237,20 +237,20 @@
             <li>Enterprise: Customized drivers for Dell EMC, NetApp, or HPE arrays translate API calls into proprietary storage commands.</li>
             <li>Scale-Out: The Ceph Driver allows Cinder to provision resources from a distributed, software-defined storage cluster. When a user executes a creation command, Cinder identifies the correct driver and signals the backend hardware to provision the requested Logical Unit Number (LUN).</li>
         </ul>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>2.2 The Attachment Process (iSCSI/RBD)</h3>
         <p>The mechanism for attaching a volume to an instance involves a coordinated handshake between services.</p>
         <p>Figure 2: The Attachment Handshake - How Nova and Cinder coordinate to plug a remote disk into a running VM</p>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>2.3 Deep Dive: Storage Backends</h3>
         <p>Cinder operates as an abstraction layer, capable of interfacing with a diverse array of storage backends. In private cloud environments, the two most prevalent technologies serve as excellent examples of this flexibility: the Network File System (NFS) and the Ceph distributed storage cluster.</p>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -262,7 +262,7 @@
             <li>While this approach is notably easy to implement—requiring only a standard Linux server or a commercial NAS like Synology—it suffers from scalability limitations.</li>
             <li>The performance of the entire cloud storage pool is often constrained by the throughput of the single network link connecting the Controller to the NAS, creating a significant bottleneck and a single point of failure.</li>
         </ul>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -280,7 +280,7 @@
             <li>This allows administrators to generate thousands of recovery points without incurring the performance penalties associated with traditional storage arrays.</li>
         </ul>
         <p>Implementation Note: In production, Ceph is the preferred backend because it decouples storage from compute hardware entirely, allowing indefinite scaling.</p>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -293,7 +293,7 @@ The Cinder service requires the python libraries to communicate with the Ceph pu
 OpenStack acts as a client "user" to the Ceph cluster. You must copy the authentication keyring from the Ceph Monitor node to the Cinder node.</p>
         <p>3. Driver Configuration (/etc/cinder/cinder.conf):
 Define a new backend section (e.g., [ceph]) and reference it in the enabled_backends list.</p>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -304,7 +304,7 @@ Create a text file (e.g., /etc/cinder/nfs_shares) and list your NFS exports, one
         <p>2. Set Permissions:
 Ensure the Cinder user can read this file.</p>
         <p>3. Driver Configuration (/etc/cinder/cinder.conf):</p>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -320,12 +320,12 @@ Ensure the Cinder user can read this file.</p>
             <li>Why is Ceph preferred over NFS for large clouds? (Hint: Single Point of Failure).</li>
             <li>What happens to a generic "File" on an NFS share when Cinder creates a volume? (It becomes a .qcow2 or .raw disk image).</li>
         </ul>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. Data Safety Strategies</h2>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -337,7 +337,7 @@ Ensure the Cinder user can read this file.</p>
             <li>However, it is critical to note that snapshots typically reside on the same physical hardware as the source volume.</li>
             <li>Therefore, if the underlying storage array experiences a catastrophic failure, both the active volume and its snapshots will be lost.</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -349,7 +349,7 @@ Ensure the Cinder user can read this file.</p>
             <li>Although this process is slower due to network transfer requirements, it ensures data survivability.</li>
             <li>If the primary SAN or Ceph cluster were to be destroyed by fire or malfunction, the data could still be restored from the backup repository located in a different rack or data center.</li>
         </ul>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -382,7 +382,7 @@ The highest level of protection is Geo Redundancy (GRS), which ensures survival 
             <li>By configuring Cinder to send volume backups to a remote Swift Object Storage cluster located in a different city, you guarantee that critical data can be restored even if the primary datacenter is lost.</li>
             <li>More advanced (and expensive) setups can also utilize driver-level volume replication for real-time Active/Passive disaster recovery.</li>
         </ul>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -398,18 +398,18 @@ The highest level of protection is Geo Redundancy (GRS), which ensures survival 
             <li>Why isn't a Snapshot considered a true Backup?</li>
             <li>Which Cinder feature would you use to protect against a data center power outage? (Cinder Backup / Replication).</li>
         </ul>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. Operations Cookbook (Nebula Inc.)</h2>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>4.1 Creating a Volume</h3>
         <p>We begin by provisioning a specific persistent volume for our database. This is analogous to purchasing a physical hard drive; initially, it exists as an unattached operational resource within the storage inventory.</p>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -421,19 +421,19 @@ The highest level of protection is Geo Redundancy (GRS), which ensures survival 
     openstack volume list
     # Status should be "in-use"</li>
         </ul>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>4.3 Formatting and Mounting (Guest OS)</h3>
         <p>It is important to remember that Cinder delivers a raw block device (e.g., /dev/vdb) without any file system. The administrator must log into the Guest OS to format the disk and mount it for use effectively transferring responsibility from the "Cloud Provider" to the "OS Administrator".</p>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>4.4 Snapshotting</h3>
         <p>Before executing any destructive changes or updates to the database, standard procedure dictates creating a snapshot to preserve the current state.</p>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -449,17 +449,17 @@ The highest level of protection is Geo Redundancy (GRS), which ensures survival 
             <li>Why doesn't the volume show up automatically in /mnt when you attach it?</li>
             <li>What Linux command lists all block devices? (lsblk).</li>
         </ul>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>5. Industry Comparison: Storage</h2>
-        <div class="slide-number">Slide 25</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>7. Summary and Next Steps</h2>
-        <div class="slide-number">Slide 26</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -471,24 +471,24 @@ The highest level of protection is Geo Redundancy (GRS), which ensures survival 
             <li>Do you understand why we need to format a volume after attaching it?</li>
             <li>Review your Linux command line skills (loops and variables) for next week.</li>
         </ul>
-        <div class="slide-number">Slide 27</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>8. Additional Resources</h2>
-        <div class="slide-number">Slide 28</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>9. Lab Exercises</h2>
-        <div class="slide-number">Slide 29</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 30</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>

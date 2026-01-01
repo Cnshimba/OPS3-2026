@@ -165,13 +165,13 @@
             margin: 20px 0;
         }
         
-        .slide-number {
+        .vut-logo {
             position: fixed;
             bottom: 20px;
             right: 30px;
-            font-size: 1em;
-            color: #a8dadc;
-            opacity: 0.7;
+            height: 60px;
+           width: auto;
+            opacity: 0.8;
         }
         
         @media print {
@@ -187,12 +187,12 @@
         <div class="week-number">Week 9</div>
         <h1>Compute Operations (Nova)</h1>
         <div class="course-code">OPS3 - Virtualization and Cloud Infrastructure</div>
-        <div class="slide-number">Slide 1</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>1. Introduction to OpenStack Compute (Nova)</h2>
-        <div class="slide-number">Slide 2</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -208,12 +208,12 @@
             <li>Why does Nova need a "Cellular Architecture" for large-scale clouds?</li>
             <li>What is the difference between Nova and KVM?</li>
         </ul>
-        <div class="slide-number">Slide 3</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>2. Nova Component Anatomy</h2>
-        <div class="slide-number">Slide 4</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -237,7 +237,7 @@
             <li>Therefore, compute nodes are not allowed to write to the database directly.</li>
             <li>Instead, they send a message to the Conductor requesting an update, and the Conductor performs the write operation only after validating the request.</li>
         </ul>
-        <div class="slide-number">Slide 5</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -262,7 +262,7 @@ Beyond creating VMs, nova-compute is responsible for auditing the physical serve
             <li>It then reports this "Inventory" back to the central database.</li>
             <li>This ensures that the Scheduler always possesses an accurate, up-to-date map of the cloud's capacity, preventing it from sending a VM to a host that is already full.</li>
         </ul>
-        <div class="slide-number">Slide 6</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -278,12 +278,12 @@ Beyond creating VMs, nova-compute is responsible for auditing the physical serve
             <li>Why is nova-api considered "stateless"?</li>
             <li>Why do we need a "Conductor" to protect the database?</li>
         </ul>
-        <div class="slide-number">Slide 7</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>3. The Scheduling Algorithm (The Decision Process)</h2>
-        <div class="slide-number">Slide 8</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -295,7 +295,7 @@ Beyond creating VMs, nova-compute is responsible for auditing the physical serve
             <li>AvailabilityZoneFilter: Ensures the VM lands in the requested physical location.</li>
             <li>ImagePropertiesFilter: Checks for specific hardware requirements like GPUs or Secure Boot support.</li>
         </ul>
-        <div class="slide-number">Slide 9</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -305,7 +305,7 @@ Beyond creating VMs, nova-compute is responsible for auditing the physical serve
             <li>Stacking Strategy: Fills up one server completely before moving to the next. This saves power but creates hotspots.</li>
             <li>Spreading Strategy (Default): Places the VM on the emptiest possible server to maximize performance and minimize the "noisy neighbor" effect.</li>
         </ul>
-        <div class="slide-number">Slide 10</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -321,12 +321,12 @@ Beyond creating VMs, nova-compute is responsible for auditing the physical serve
             <li>What is the difference between "Stacking" and "Spreading" strategies?</li>
             <li>Which filter ensures a VM lands on a host with a GPU?</li>
         </ul>
-        <div class="slide-number">Slide 11</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>4. The Instance Lifecycle (State Machine)</h2>
-        <div class="slide-number">Slide 12</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -343,7 +343,7 @@ Beyond creating VMs, nova-compute is responsible for auditing the physical serve
             <li>What happens during the "Spawning" phase?</li>
             <li>How does SHELVED differ from a simple Shutdown?</li>
         </ul>
-        <div class="slide-number">Slide 13</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -355,7 +355,7 @@ Beyond creating VMs, nova-compute is responsible for auditing the physical serve
             <li>To bring the company online, we must now define the virtual hardware standards (Flavors), issue security credentials (Keys & Groups), and finally press the "Power On" button for their first Web Server.</li>
         </ul>
         <p>Below are the commands to execute this activation.</p>
-        <div class="slide-number">Slide 14</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -379,13 +379,13 @@ For "Nebula Inc.", we need a custom "Micro" size for cheap testing. We will name
         <ul>
             <li>Result: We have added a new item to the menu. Users can now select m1.nebula_micro when launching instances.</li>
         </ul>
-        <div class="slide-number">Slide 15</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h3>5.2 Securing Access (Keys & Groups)</h3>
         <p>Security in the cloud is a two-layered approach. First, we must secure Identity (proving who you are) using Keypairs. Second, we must secure the Network (controlling traffic flow) using Security Groups. You cannot access a VM unless both of these layers are correctly configured.</p>
-        <div class="slide-number">Slide 16</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -401,7 +401,7 @@ For "Nebula Inc.", we need a custom "Micro" size for cheap testing. We will name
         <ul>
             <li>Explanation: This command generates the pair. It stores the Public Key in the Nova Database and writes the Private Key to nebula_key.pem on your disk. The chmod is critical; SSH will refuse to use a key if the file permissions are too open.</li>
         </ul>
-        <div class="slide-number">Slide 17</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -426,7 +426,7 @@ We must explicitly open ports for SSH and Web access.</p>
         <ul>
             <li>Result: The OVS Agent on the compute node intercepts traffic to nebula_web_01 and filters it against these rules.</li>
         </ul>
-        <div class="slide-number">Slide 18</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -440,7 +440,7 @@ We must explicitly open ports for SSH and Web access.</p>
 --network: Defines the wiring.
 Result: Triggers the entire scheduling and build process seen in Section 4.</li>
         </ul>
-        <div class="slide-number">Slide 19</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -452,7 +452,7 @@ If a VM fails to become reachable (e.g., no network), check the boot logs.</p>
         <ul>
             <li>Explanation: Retrieves the kernel ring buffer (dmesg) and cloud-init output directly from the hypervisor. Use this to find kernel panics or DHCP failures.</li>
         </ul>
-        <div class="slide-number">Slide 20</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -469,12 +469,12 @@ If a VM fails to become reachable (e.g., no network), check the boot logs.</p>
             <li>Why must we use chmod 600 on the private key?</li>
             <li>How does an "Allow-List" firewall differ from a traditional "Block-List"?</li>
         </ul>
-        <div class="slide-number">Slide 21</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>6. Industry Comparison: The "Polyglot" Cloud Engineer</h2>
-        <div class="slide-number">Slide 22</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -550,7 +550,7 @@ Notice how similar the flags are across all three platforms.</p>
         <p>OpenStack (Nova)</p>
         <p>AWS (EC2)</p>
         <p>Azure (Compute)</p>
-        <div class="slide-number">Slide 23</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -566,12 +566,12 @@ Notice how similar the flags are across all three platforms.</p>
             <li>Why is it valuable to learn the underlying concept rather than just the tool command?</li>
             <li>How does "Infrastructure as Code" rely on these standardized CLI commands?</li>
         </ul>
-        <div class="slide-number">Slide 24</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>7. Summary and Next Steps</h2>
-        <div class="slide-number">Slide 25</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
@@ -583,24 +583,24 @@ Notice how similar the flags are across all three platforms.</p>
             <li>Verify you can SSH into your instance using your keypair.</li>
             <li>Review the "Instance Lifecycle" states (Build -> Active).</li>
         </ul>
-        <div class="slide-number">Slide 26</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>8. Additional Resources</h2>
-        <div class="slide-number">Slide 27</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide">
         <h2>9. Lab Exercises</h2>
-        <div class="slide-number">Slide 28</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
     <div class="slide title-slide">
         <h2>Summary</h2>
         <p style="font-size: 1.5em; margin-top: 30px;">Review the key concepts covered in this week's material</p>
         <p style="font-size: 1.2em; margin-top: 20px; color: #ffd700;">Questions?</p>
-        <div class="slide-number">Slide 29</div>
+        <img src="../ops3_logo.png" alt="VUT Logo" class="vut-logo">
     </div>
 
 </body>
