@@ -64,8 +64,8 @@
  fontWeight: '600',
  border: '1px solid var(--border-code)',
  },
- 'code::before': { content: '""' },
- 'code::after': { content: '""' },
+ 'code::before': { content: '' },
+ 'code::after': { content: '' },
  // Code Blocks (Pre)
  pre: {
  backgroundColor: 'var(--bg-pre) !important',
@@ -433,11 +433,10 @@
 <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation &amp; Cloud Technologies
 <span class="font-bold text-lg tracking-tight sm:hidden">OPS3
 </span></span></span></div>
-</a>
 <div class="flex items-center space-x-6">
 <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
  Course Home
- </a>
+ 
 <!-- Theme Toggle Button -->
 <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
 <!-- Sun Icon -->
@@ -445,8 +444,8 @@
 <!-- Moon Icon -->
 <svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor" viewbox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 </button>
-</div>
-</div>
+</a></div>
+</a></div>
 </nav>
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
@@ -484,8 +483,8 @@ Understand the critical difference between ephemeral and persistent storage—VM
 <h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Ephemeral Storage</strong> (Nova platform compute service for VMs ): Temporary, fast, dies with the VM - A software-based emulation of a physical computer . Use for OS / Cache.</li>
-<li><strong>Persistent Storage</strong> (Cinder platform block storage service ): Durable, independent, survives VM - A software-based emulation of a physical computer deletion. Use for Databases / Critical Data.</li>
+<li><strong>Ephemeral Storage</strong> (Nova platform compute service for VMs ): Temporary, fast, dies with the VM - . Use for OS / Cache.</li>
+<li><strong>Persistent Storage</strong> (Cinder platform block storage service ): Durable, independent, survives VM - deletion. Use for Databases / Critical Data.</li>
 <li><strong>Analogy</strong>: Ephemeral is RAM/Swap; Persistent is the Hard Drive.</li>
 </ul>
 <p><strong>Reflection</strong>:</p>
@@ -508,7 +507,7 @@ Understand the critical difference between ephemeral and persistent storage—VM
 <h3 id="22-the-attachment-process-iscsirbd">2.2 The Attachment Process (iSCSI/RBD)</h3>
 <p>The mechanism for attaching a volume to an instance involves a coordinated handshake between services.</p>
 <p><img alt="Volume Attachment Workflow" src="images/volume_attachment_flow.png"/>
-<em>Figure 2: The Attachment Handshake - How Nova platform compute service for VMs and Cinder platform block storage service coordinate to plug a remote disk into a running VM - A software-based emulation of a physical computer </em></p>
+<em>Figure 2: The Attachment Handshake - How Nova platform compute service for VMs and Cinder platform block storage service coordinate to plug a remote disk into a running VM - </em></p>
 <ol>
 <li><strong>Provision</strong>: Cinder platform block storage service provisions the logical volume on the specific storage array.</li>
 <li><strong>Request</strong>: Nova platform compute service for VMs requests the connection parameters—typically the Target IQN (iSCSI) or Monitor IP (Ceph)—from Cinder platform block storage service .</li>
@@ -525,7 +524,7 @@ Understand the critical difference between ephemeral and persistent storage—VM
 <p><strong>Implementation Note</strong>: In production, Ceph is the preferred backend because it decouples storage from compute hardware entirely, allowing indefinite scaling.</p>
 <h3 id="233-configuring-cinder-with-ceph">2.3.3 Configuring Cinder platform block storage service with Ceph</h3>
 <blockquote>
-<p><strong>Note</strong>: This assumes a Ceph cluster is already running. To learn how to build one from scratch, see the <a href="Week_10_Guide_Ceph_Cluster_Setup.html">Optional Ceph Setup Guide</a>.</p>
+<p><strong>Note</strong>: This assumes a Ceph cluster is already running. To learn how to build one from scratch, see the <a href="Week_10_Guide_Ceph_Cluster_Setup.html">Optional Ceph Setup Guide.</a></p>
 </blockquote>
 <p>To configure OpenStack platform Cinder platform block storage service to use a Ceph cluster as its backend, the administrator must edit the <code>cinder.conf</code> file on the Controller node. The process involves three key steps: installing the client libraries, authenticating, and defining the driver.</p>
 <p><strong>1. Install Ceph Client:</strong>
@@ -589,7 +588,7 @@ chmod<span class="w"> <span class="m">0640<span class="w"> /etc/cinder/nfs_share
 <h2 id="3-data-safety-strategies">3. Data Safety Strategies</h2>
 <p>In enterprise cloud environments, ensuring data durability and availability against hardware failure is a critical architectural requirement. While Cinder platform block storage service provides robust block storage, the physical media underlying these volumes remains susceptible to corruption or catastrophic failure. To mitigate these risks and ensure business continuity, OpenStack platform implements two distinct data protection mechanisms: Snapshotting for point-in-time operational recovery, and Backups for comprehensive disaster recovery.</p>
 <h3 id="31-snapshots-the-time-machine">3.1 Snapshots (The Time Machine)</h3>
-<p>A <strong>Snapshot - A software-based emulation of a physical computer state for rollback </strong> represents a point-in-time copy of a specific volume using a "Copy-on-Write" (Redirect on Write) mechanism. This technique ensures that the snapshot - A software-based emulation of a physical computer state for rollback is created nearly instantly, as it relies on the existing data blocks rather than duplicating the entire drive volume. Snapshots are invaluable for functional recovery scenarios, such as capturing the state of a database before a major upgrade; if the upgrade fails, the administrator can rollback instantly. However, it is critical to note that snapshots typically reside on the same physical hardware as the source volume. Therefore, if the underlying storage array experiences a catastrophic failure, both the active volume and its snapshots will be lost.</p>
+<p>A <strong>Snapshot - </strong> represents a point-in-time copy of a specific volume using a "Copy-on-Write" (Redirect on Write) mechanism. This technique ensures that the snapshot - is created nearly instantly, as it relies on the existing data blocks rather than duplicating the entire drive volume. Snapshots are invaluable for functional recovery scenarios, such as capturing the state of a database before a major upgrade; if the upgrade fails, the administrator can rollback instantly. However, it is critical to note that snapshots typically reside on the same physical hardware as the source volume. Therefore, if the underlying storage array experiences a catastrophic failure, both the active volume and its snapshots will be lost.</p>
 <h3 id="32-backups-the-disaster-plan">3.2 Backups (The Disaster Plan)</h3>
 <p>To mitigate the risk of physical hardware failure, <strong>Backups</strong> provide a complete disaster recovery solution.</p>
 <p><img alt="Block vs Object Storage" src="images/block_vs_object_storage.png"/>
@@ -606,13 +605,13 @@ The highest level of protection is Geo Redundancy (GRS), which ensures survival 
 <h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Snapshot - A software-based emulation of a physical computer state for rollback </strong>: Quick, local, dependent on source. Use for "Undo" before changes.</li>
+<li><strong>Snapshot - </strong>: Quick, local, dependent on source. Use for "Undo" before changes.</li>
 <li><strong>Backup</strong>: Slow, remote, independent. Use for Disaster Recovery (Fire/Flood).</li>
 <li><strong>Redundancy</strong>: LRS (Disk Fail), ZRS (Rack/Building Fail), GRS (City Fail).</li>
 </ul>
 <p><strong>Reflection</strong>:</p>
 <ul>
-<li>Why isn't a Snapshot - A software-based emulation of a physical computer state for rollback considered a true Backup?</li>
+<li>Why isn't a Snapshot - considered a true Backup?</li>
 <li>Which Cinder platform block storage service feature would you use to protect against a data center power outage? (Cinder platform block storage service Backup / Replication).</li>
 </ul>
 <hr/>
@@ -634,7 +633,7 @@ The highest level of protection is Geo Redundancy (GRS), which ensures survival 
 </ul>
 <h3 id="43-formatting-and-mounting-guest-os">4.3 Formatting and Mounting (Guest OS )</h3>
 <p>It is important to remember that Cinder platform block storage service delivers a raw block device (e.g., <code>/dev/vdb</code>) without any file system. The administrator must log into the Guest OS to format the disk and mount it for use effectively transferring responsibility from the "Cloud Provider" to the "OS Administrator".</p>
-<div class="codehilite"><pre><span><code><span class="c1"># SSH into the VM - A software-based emulation of a physical computer 
+<div class="codehilite"><pre><span><code><span class="c1"># SSH into the VM - 
 ssh<span class="w"> cirros@&lt;FLOATING_IP&gt;
 
 <span class="c1"># Check for new disk (usually /dev/vdb)
@@ -645,15 +644,15 @@ lsblk
 sudo<span class="w"> sh<span class="w"> -c<span class="w"> <span class="s1">'echo "Customer Data 123" &gt; /dev/vdb'
 </span></span></span></span></span></span></span></span></span></code></span></pre></div>
 <h3 id="44-snapshotting">4.4 Snapshotting</h3>
-<p>Before executing any destructive changes or updates to the database, standard procedure dictates creating a snapshot - A software-based emulation of a physical computer state for rollback to preserve the current state.</p>
+<p>Before executing any destructive changes or updates to the database, standard procedure dictates creating a snapshot - to preserve the current state.</p>
 <div class="codehilite"><pre><span><code>openstack<span class="w"> volume<span class="w"> snapshot<span class="w"> create<span class="w"> --volume<span class="w"> nebula_db_vol<span class="w"> nebula_db_snap_v1
 </span></span></span></span></span></span></code></span></pre></div>
 <h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Process</strong>: Create Volume -&gt; Attach to VM - A software-based emulation of a physical computer -&gt; Format (mkfs) -&gt; Mount.</li>
+<li><strong>Process</strong>: Create Volume -&gt; Attach to VM - -&gt; Format (mkfs) -&gt; Mount.</li>
 <li><strong>Guest Responsibility</strong>: The Cloud Provider connects the wire; YOU must format the disk.</li>
-<li><strong>Persistence</strong>: Data survives detach/reattach and VM - A software-based emulation of a physical computer deletion.</li>
+<li><strong>Persistence</strong>: Data survives detach/reattach and VM - deletion.</li>
 </ul>
 <p><strong>Reflection</strong>:</p>
 <ul>
@@ -697,7 +696,7 @@ sudo<span class="w"> sh<span class="w"> -c<span class="w"> <span class="s1">'ech
 <td style="text-align: left;">VHD / Blob</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Snapshot - A software-based emulation of a physical computer state for rollback Type</strong></td>
+<td style="text-align: left;"><strong>Snapshot - Type</strong></td>
 <td style="text-align: left;">Copy-on-Write</td>
 <td style="text-align: left;">Incremental</td>
 <td style="text-align: left;">Incremental</td>
@@ -711,7 +710,7 @@ sudo<span class="w"> sh<span class="w"> -c<span class="w"> <span class="s1">'ech
 </tbody>
 </table>
 <h2 id="7-summary-and-next-steps">7. Summary and Next Steps</h2>
-<p>This week we ensured that <strong>Nebula Inc.</strong> doesn't lose data. By implementing <strong>Cinder platform block storage service </strong> backed by <strong>Ceph</strong>, we provided a robust, persistent storage layer for our instances. We learned the difference between the "Scratchpad" (Ephemeral) and the "Vault" (Persistent). We also explored the critical difference between a convenience Snapshot - A software-based emulation of a physical computer state for rollback and a disaster-proof Backup.</p>
+<p>This week we ensured that <strong>Nebula Inc.</strong> doesn't lose data. By implementing <strong>Cinder platform block storage service </strong> backed by <strong>Ceph</strong>, we provided a robust, persistent storage layer for our instances. We learned the difference between the "Scratchpad" (Ephemeral) and the "Vault" (Persistent). We also explored the critical difference between a convenience Snapshot - and a disaster-proof Backup.</p>
 <h3 id="preparing-for-week-11">Preparing for Week 11</h3>
 <p>Next week, we stop clicking buttons manually. We will introduce <strong>Automation and APIs</strong>. We will learn how to deploy this entire infrastructure using code (Bash/Python) and configuration scripts (Cloud-Init), moving from "Pets" to "Cattle" effectively.</p>
 <p><strong>Checklist:</strong></p>
@@ -742,9 +741,22 @@ sudo<span class="w"> sh<span class="w"> -c<span class="w"> <span class="s1">'ech
 <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
 <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_10_Quiz.html" id="start-quiz-btn">
  Start Quiz
- </a>
-</div>
-</article>
+ 
+</a></div>
+<div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 9 - Compute Operations/Week_9_Student_Notes.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Previous: Week 9: Compute Ops</span>
+</a>
+<a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Course Index
+    </a>
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 11 - Automation and Cloud API/Week_11_Student_Notes.html">
+<span>Next: Week 11: Automation</span>
+<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+</div></article>
 </main>
 <!-- Footer -->
 <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">

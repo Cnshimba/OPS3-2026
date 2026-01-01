@@ -64,8 +64,8 @@
  fontWeight: '600',
  border: '1px solid var(--border-code)',
  },
- 'code::before': { content: '""' },
- 'code::after': { content: '""' },
+ 'code::before': { content: '' },
+ 'code::after': { content: '' },
  // Code Blocks (Pre)
  pre: {
  backgroundColor: 'var(--bg-pre) !important',
@@ -433,11 +433,10 @@
 <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation &amp; Cloud Technologies
 <span class="font-bold text-lg tracking-tight sm:hidden">OPS3
 </span></span></span></div>
-</a>
 <div class="flex items-center space-x-6">
 <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
  Course Home
- </a>
+ 
 <!-- Theme Toggle Button -->
 <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
 <!-- Sun Icon -->
@@ -445,8 +444,8 @@
 <!-- Moon Icon -->
 <svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor" viewbox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 </button>
-</div>
-</div>
+</a></div>
+</a></div>
 </nav>
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
@@ -472,24 +471,24 @@ Clustering is a complex topic where "split-brain" and "<a class="glossary-term" 
 </blockquote>
 <hr/>
 <h2 id="welcome-to-week-6">Welcome to Week 6!</h2>
-<p>Up until now, our journey has focused on singular, standalone "pet" servers. We have treated each Proxmox platform combining KVM - Type 1 hypervisor and LXC node as an individual entity: if it fails, the virtual machines hosted on it fail with it, requiring manual intervention to restore service. This model is acceptable for home labs but insufficient for enterprise environments where uptime is critical. In a true Cloud Environment, servers are treated as "cattle"—interchangeable resources where the failure of one unit does not disrupt the overall system.</p>
-<p>This week, we transition from standalone virtualization to <strong>Clustering</strong>. We will link multiple Proxmox platform combining KVM - Type 1 hypervisor and LXC nodes together to form a unified datacenter. We will explore the mechanics of the <strong>Quorum to function </strong> (the decision-making algorithm that maintains cluster integrity) and implement <strong>High Availability (HA - System design for minimal downtime )</strong>, ensuring that our workloads become resilient to physical hardware failure.</p>
+<p>Up until now, our journey has focused on singular, standalone "pet" servers. We have treated each <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> node as an individual entity: if it fails, the virtual machines hosted on it fail with it, requiring manual intervention to restore service. This model is acceptable for home labs but insufficient for enterprise environments where uptime is critical. In a true Cloud Environment, servers are treated as "cattle"—interchangeable resources where the failure of one unit does not disrupt the overall system.</p>
+<p>This week, we transition from standalone <a class="glossary-term" href="glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> to <strong>Clustering</strong>. We will link multiple <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> nodes together to form a unified datacenter. We will explore the mechanics of the <strong><a class="glossary-term" href="glossary.html#Quorum">Quorum<span class="glossary-tooltip">Minimum nodes needed for cluster to function</span></a> to function </strong> (the decision-making algorithm that maintains <a class="glossary-term" href="glossary.html#Cluster">cluster<span class="glossary-tooltip">Group of servers working together</span></a> integrity) and implement <strong><a class="glossary-term" href="glossary.html#High-Availability">High Availability<span class="glossary-tooltip">System design for minimal downtime (99.9%+ uptime)</span></a> (<a class="glossary-term" href="glossary.html#HA">HA<span class="glossary-tooltip">High Availability - System design for minimal downtime</span></a> - System design for minimal downtime )</strong>, ensuring that our workloads become resilient to physical hardware failure.</p>
 <hr/>
 <h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
 <ul>
-<li><strong>Cluster Management:</strong> We will master <code>pvecm</code>, the command-line tool for creating, joining, and managing cluster nodes.</li>
-<li><strong>The Voting Algorithm:</strong> We will deconstruct the mathematical logic behind Quorum to function and how it prevents the catastrophic "Split Brain" scenario.</li>
-<li><strong>Corosync engine for group communication Engine:</strong> We will examine the low-latency communication protocol that acts as the cluster's heartbeat.</li>
-<li><strong>High Availability (HA - System design for minimal downtime ):</strong> We will configure Watchdogs and Fencing nodes to automate the recovery of VMs during node failures.</li>
-<li><strong>Live Migration - A software-based emulation of a physical computer between hosts without downtime :</strong> We will perform the magic of moving running workloads between servers without dropping a single network packet.</li>
+<li><strong><a class="glossary-term" href="glossary.html#Cluster">Cluster<span class="glossary-tooltip">Group of servers working together</span></a> Management:</strong> We will master <code>pvecm</code>, the command-line tool for creating, joining, and managing <a class="glossary-term" href="glossary.html#Cluster">cluster<span class="glossary-tooltip">Group of servers working together</span></a> nodes.</li>
+<li><strong>The Voting Algorithm:</strong> We will deconstruct the mathematical logic behind <a class="glossary-term" href="glossary.html#Quorum">Quorum<span class="glossary-tooltip">Minimum nodes needed for cluster to function</span></a> to function and how it prevents the catastrophic "Split Brain" scenario.</li>
+<li><strong><a class="glossary-term" href="glossary.html#Corosync">Corosync<span class="glossary-tooltip">Cluster engine for group communication</span></a> engine for group communication engine for group communication engine for group communication Engine:</strong> We will examine the low-latency communication protocol that acts as the <a class="glossary-term" href="glossary.html#Cluster">cluster<span class="glossary-tooltip">Group of servers working together</span></a>'s heartbeat.</li>
+<li><strong><a class="glossary-term" href="glossary.html#High-Availability">High Availability<span class="glossary-tooltip">System design for minimal downtime (99.9%+ uptime)</span></a> (<a class="glossary-term" href="glossary.html#HA">HA<span class="glossary-tooltip">High Availability - System design for minimal downtime</span></a> - System design for minimal downtime ):</strong> We will configure Watchdogs and <a class="glossary-term" href="glossary.html#Fencing">Fencing<span class="glossary-tooltip">Safety mechanism to isolate failed cluster nodes</span></a> nodes to automate the recovery of VMs during node failures.</li>
+<li><strong><a class="glossary-term" href="glossary.html#Live-Migration">Live Migration<span class="glossary-tooltip">Moving a running VM between hosts without downtime</span></a> between hosts without downtime between hosts without downtime - between hosts without downtime :</strong> We will perform the magic of moving running workloads between servers without dropping a single network packet.</li>
 </ul>
 <hr/>
 <h1 id="part-1-the-cluster-stack">Part 1: The Cluster Stack</h1>
-<p>At the heart of Proxmox platform combining KVM - Type 1 hypervisor and LXC VE's clustering capability lies the <strong>Corosync engine for group communication Cluster Engine</strong>. This crucial component provides the reliable, low-latency communication layer that allows nodes to share state. Proxmox platform combining KVM - Type 1 hypervisor and LXC Cluster Manager (<code>pvecm</code>) wraps this complex engine into a user-friendly toolset.</p>
+<p>At the heart of <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> VE's clustering capability lies the <strong><a class="glossary-term" href="glossary.html#Corosync">Corosync<span class="glossary-tooltip">Cluster engine for group communication</span></a> engine for group communication engine for group communication engine for group communication <a class="glossary-term" href="glossary.html#Cluster">Cluster<span class="glossary-tooltip">Group of servers working together</span></a> Engine</strong>. This crucial component provides the reliable, low-latency communication layer that allows nodes to share state. <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> <a class="glossary-term" href="glossary.html#Cluster">Cluster<span class="glossary-tooltip">Group of servers working together</span></a> Manager (<code>pvecm</code>) wraps this complex engine into a user-friendly toolset.</p>
 <p><img alt="Proxmox Cluster Architecture" src="images/promox_cluster_architecture.png"/>
-<em>Figure 1: Proxmox platform combining KVM - Type 1 hypervisor and LXC Cluster Architecture - Nodes communicating via Corosync engine for group communication Ring X on a dedicated low-latency network to maintain shared state</em></p>
+<em>Figure 1: <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> <a class="glossary-term" href="glossary.html#Cluster">Cluster<span class="glossary-tooltip">Group of servers working together</span></a> Architecture - Nodes communicating via <a class="glossary-term" href="glossary.html#Corosync">Corosync<span class="glossary-tooltip">Cluster engine for group communication</span></a> engine for group communication engine for group communication engine for group communication Ring X on a dedicated low-latency network to maintain shared state</em></p>
 <h2 id="1-creating-a-cluster">1. Creating a Cluster</h2>
-<p>While the web interface provides a convenient way to create clusters, understanding the Command Line Interface (CLI) is essential for troubleshooting and automation. The CLI exposes the underlying steps of key generation and configuration distribution.</p>
+<p>While the web interface provides a convenient way to create clusters, understanding the (CLI) is essential for troubleshooting and automation. The CLI exposes the underlying steps of key generation and configuration distribution.</p>
 <h3 id="11-initialization">1.1 Initialization</h3>
 <p>When you initialize a cluster, Proxmox platform combining KVM - Type 1 hypervisor and LXC performs several critical actions. It generates a cryptographic key (<code>/etc/corosync/authkey</code>) appearing to secure communication and creates the central configuration database (<code>/etc/pve/corosync.conf</code>). This database is essentially the "source of truth" for the entire cluster.</p>
 <div class="codehilite"><pre><span><code><span class="c1"># Create a cluster named 'Education-Cloud'
@@ -530,7 +529,7 @@ pvecm<span class="w"> add<span class="w"> <span class="m">192.168.1.10<span clas
 <p>Consider a two-node cluster (Node A and Node B) where the heartbeat connection fails:</p>
 <ul>
 <li><strong>The Divergence</strong>: Node A cannot see Node B and assumes Node B has failed. Simultaneously, Node B assumes Node A has failed.</li>
-<li><strong>The Conflict</strong>: Both nodes promote themselves to "Master" status and attempt to take ownership of the same resources (e.g., VM - A software-based emulation of a physical computer ID 100).</li>
+<li><strong>The Conflict</strong>: Both nodes promote themselves to "Master" status and attempt to take ownership of the same resources (e.g., VM - ID 100).</li>
 <li><strong>The Consequence</strong>: Both nodes mount the same shared storage volume and attempt to write data concurrently.</li>
 <li><strong>The Result</strong>: Since they are unaware of each other's write operations, they overwrite each other's filesystem journals, leading to irreversible data corruption within milliseconds.</li>
 </ul>
@@ -594,7 +593,7 @@ pvecm<span class="w"> add<span class="w"> <span class="m">192.168.1.10<span clas
 <hr/>
 <h1 id="part-2-cli-operations">Part 2: CLI Operations</h1>
 <h2 id="4-troubleshooting-the-cluster">4. Troubleshooting the Cluster</h2>
-<p>When cluster issues arise—typically indicated by red or gray nodes in the GUI—the web interface often lacks sufficient detail to diagnose the root cause. In these scenarios, the Command Line Interface becomes the primary diagnostic tool.</p>
+<p>When cluster issues arise—typically indicated by red or gray nodes in the GUI—the web interface often lacks sufficient detail to diagnose the root cause. In these scenarios, the becomes the primary diagnostic tool.</p>
 <p><img alt="Cluster Troubleshooting Flow" src="images/cluster_troubleshooting_flow.png"/>
 <em>Figure 6: Cluster Troubleshooting Flowchart - Decision tree for diagnosing Quorum to function , Corosync engine for group communication , and Network issues</em></p>
 <h3 id="41-check-quorum">4.1 Check Quorum to function </h3>
@@ -627,28 +626,28 @@ pvecm<span class="w"> add<span class="w"> <span class="m">192.168.1.10<span clas
 <li><a href="https://clusterlabs.org/">Clusterlabs Troubleshooting</a></li>
 </ul>
 <hr/>
-<h2 id="5-live-migration-cli">5. Live Migration - A software-based emulation of a physical computer between hosts without downtime CLI</h2>
-<p><strong>Live Migration - A software-based emulation of a physical computer between hosts without downtime </strong> is the ability to move a running Virtual Machine from one physical node to another with <strong>zero downtime</strong>. It works by copying the VM - A software-based emulation of a physical computer 's active RAM state over the network to the destination node. Once the memory is synchronized, the hypervisor pauses the VM - A software-based emulation of a physical computer on the source node for a fraction of a second, transfers the final CPU state, and resumes execution on the destination node. To the user, this transition is seamless—network connections remain active, and applications continue running without interruption.</p>
+<h2 id="5-live-migration-cli">5. Live Migration - between hosts without downtime CLI</h2>
+<p><strong>Live Migration - between hosts without downtime </strong> is the ability to move a running Virtual Machine from one physical node to another with <strong>zero downtime</strong>. It works by copying the VM - 's active RAM state over the network to the destination node. Once the memory is synchronized, the hypervisor pauses the VM - on the source node for a fraction of a second, transfers the final CPU state, and resumes execution on the destination node. To the user, this transition is seamless—network connections remain active, and applications continue running without interruption.</p>
 <p><img alt="Live Migration Workflow" src="images/live_migration_workflow.png"/>
-<em>Figure 7: Live Migration - A software-based emulation of a physical computer between hosts without downtime Workflow - Iterative RAM copy followed by atomic switchover for zero-downtime maintenance</em></p>
+<em>Figure 7: Live Migration - between hosts without downtime Workflow - Iterative RAM copy followed by atomic switchover for zero-downtime maintenance</em></p>
 <div class="codehilite"><pre><span><code><span class="c1"># General Syntax: qm migrate &lt;VMID&gt; &lt;TargetNode&gt; [OPTIONS]
 </span></code></span></pre></div>
 <p>To perform this manually via the CLI:</p>
-<div class="codehilite"><pre><span><code><span class="c1"># Migrate VM - A software-based emulation of a physical computer 100 to Node named 'pve2'
-<span class="c1"># --online: Keep it running (True Live Migration - A software-based emulation of a physical computer between hosts without downtime )
+<div class="codehilite"><pre><span><code><span class="c1"># Migrate VM - 100 to Node named 'pve2'
+<span class="c1"># --online: Keep it running (True Live Migration - between hosts without downtime )
 <span class="c1"># --with-local-disks: Move the storage (disk image) too using storage migration
 qm<span class="w"> migrate<span class="w"> <span class="m">100<span class="w"> pve2<span class="w"> --online<span class="w"> --with-local-disks
 </span></span></span></span></span></span></span></span></span></code></span></pre></div>
 <h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Live Migration - A software-based emulation of a physical computer between hosts without downtime </strong> moves active RAM state between nodes, allowing hardware maintenance without service interruption.</li>
-<li><strong>--online</strong> ensures the VM - A software-based emulation of a physical computer remains responsive during the transfer; without it, the VM - A software-based emulation of a physical computer would hibernate and resume (offline migration).</li>
+<li><strong>Live Migration - between hosts without downtime </strong> moves active RAM state between nodes, allowing hardware maintenance without service interruption.</li>
+<li><strong>--online</strong> ensures the VM - remains responsive during the transfer; without it, the VM - would hibernate and resume (offline migration).</li>
 <li><strong>--with-local-disks</strong> enables migrations even without shared storage by copying the disk image alongside the RAM, though this takes significantly longer.</li>
 </ul>
 <p><strong>Reflection</strong>:</p>
 <ul>
-<li>What happens to the VM - A software-based emulation of a physical computer if the network cable is unplugged <em>during</em> the RAM copy phase of a migration?</li>
+<li>What happens to the VM - if the network cable is unplugged <em>during</em> the RAM copy phase of a migration?</li>
 <li>Why must the CPU Type often be set to <code>kvm64</code> or <code>host</code> model carefully in heterogeneous clusters?</li>
 </ul>
 <p><strong>Resources</strong>:</p>
@@ -705,20 +704,20 @@ Proxmox platform combining KVM - Type 1 hypervisor and LXC VE is unique because 
 </ul>
 <hr/>
 <h2 id="7-proxmox-backups-vzdump">7. Proxmox platform combining KVM - Type 1 hypervisor and LXC Backups (VZDump)</h2>
-<p>One of the most persistent dangerous misconceptions in cloud infrastructure is equating a <strong>Snapshot - A software-based emulation of a physical computer state for rollback </strong> with a <strong>Backup</strong>.</p>
+<p>One of the most persistent dangerous misconceptions in cloud infrastructure is equating a <strong>Snapshot - </strong> with a <strong>Backup</strong>.</p>
 <h3 id="71-backups-vzdump-vs-snapshots">7.1 Backups (VZDump) vs Snapshots</h3>
 <ul>
-<li><strong>Snapshot - A software-based emulation of a physical computer state for rollback </strong>: A point-in-time "difference file" linked to the original disk. Dependent.</li>
+<li><strong>Snapshot - </strong>: A point-in-time "difference file" linked to the original disk. Dependent.</li>
 <li><strong>Backup (VZDump)</strong>: A comprehensive, independent archive (config + compressed disk data, e.g., <code>.vma.zst</code>). It can be moved offsite for disaster recovery.</li>
 </ul>
 <p><img alt="Snapshot vs. Backup - Understanding the Difference" src="../Week%204%20-%20Storage%20and%20Backup/images/snapshot_backup.png"/>
-<em>Figure 9: Snapshot - A software-based emulation of a physical computer state for rollback vs. Backup - Snapshots are dependent save points for testing; Backups are independent archives for disaster recovery</em></p>
+<em>Figure 9: Snapshot - vs. Backup - Snapshots are dependent save points for testing; Backups are independent archives for disaster recovery</em></p>
 <h3 id="72-proxmox-backup-modes">7.2 Proxmox platform combining KVM - Type 1 hypervisor and LXC Backup Modes</h3>
-<p>When performing a backup, the state of the VM - A software-based emulation of a physical computer determines the consistency of the data.</p>
+<p>When performing a backup, the state of the VM - determines the consistency of the data.</p>
 <p><img alt="Proxmox Backup Modes - Trade-offs and Use Cases" src="../Week%204%20-%20Storage%20and%20Backup/images/backup_modes.png"/>
-<em>Figure 10: Proxmox platform combining KVM - Type 1 hypervisor and LXC Backup Modes - Live (Snapshot - A software-based emulation of a physical computer state for rollback ), Suspend (Frozen), and Stop (Consistent) modes balance uptime vs. data consistency</em></p>
+<em>Figure 10: Proxmox platform combining KVM - Type 1 hypervisor and LXC Backup Modes - Live (Snapshot - ), Suspend (Frozen), and Stop (Consistent) modes balance uptime vs. data consistency</em></p>
 <ol>
-<li><strong>Snapshot - A software-based emulation of a physical computer state for rollback Mode (Live)</strong>: No downtime. Uses QEMU - Type 1 hypervisor for virtualization to pause writes for a microsecond. Ideal for production.</li>
+<li><strong>Snapshot - Mode (Live)</strong>: No downtime. Uses QEMU - Type 1 hypervisor for virtualization to pause writes for a microsecond. Ideal for production.</li>
 <li><strong>Suspend Mode</strong>: Brief pause. Good for consistency but disrupts services.</li>
 <li><strong>Stop Mode</strong>: Full power off. 100% consistent, maximum downtime.</li>
 </ol>
@@ -726,7 +725,7 @@ Proxmox platform combining KVM - Type 1 hypervisor and LXC VE is unique because 
 <p><strong>Summary</strong>:</p>
 <ul>
 <li><strong>Backup</strong>: Independent Archive, essential for DR.</li>
-<li><strong>Modes</strong>: Snapshot - A software-based emulation of a physical computer state for rollback (Live), Suspend (Frozen), Stop (Consistent).</li>
+<li><strong>Modes</strong>: Snapshot - (Live), Suspend (Frozen), Stop (Consistent).</li>
 </ul>
 <hr/>
 <h2 id="8-managing-storage-via-cli-pvesm">8. Managing Storage via CLI (<code>pvesm</code>)</h2>
@@ -756,10 +755,10 @@ pvesm<span class="w"> alloc<span class="w"> local-lvm<span class="w"> <span clas
 <hr/>
 <h2 id="10-lab-exercises">10. Lab Exercises</h2>
 <ul>
-<li><a href="Week_6_Lab_Cluster_and_HA.html">Lab: Cluster &amp; HA</a><ul>
-<li><strong>Goal</strong>: Building a Multi-Node Cluster, configuring HA - System design for minimal downtime , and Live Migration - A software-based emulation of a physical computer between hosts without downtime .</li>
+<li><a href="Week_6_Lab_Cluster_and_HA.html">Lab: Cluster &amp; HA<ul>
+<li><strong>Goal</strong>: Building a Multi-Node Cluster, configuring HA - System design for minimal downtime , and Live Migration - between hosts without downtime .</li>
 </ul>
-</li>
+</a></li>
 </ul>
 <p><a href="../index.html">← Back to Course Index</a></p>
 <div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
@@ -767,9 +766,22 @@ pvesm<span class="w"> alloc<span class="w"> local-lvm<span class="w"> <span clas
 <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
 <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_6_Quiz.html" id="start-quiz-btn">
  Start Quiz
- </a>
-</div>
-</article>
+ 
+</a></div>
+<div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 5 - Containers and Resource Management/Week_5_Student_Notes.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Previous: Week 5: Containers</span>
+</a>
+<a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Course Index
+    </a>
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 7 - Transition to Cloud Computing Concepts/Week_7_Student_Notes.html">
+<span>Next: Week 7: Cloud Concepts</span>
+<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+</div></article>
 </main>
 <!-- Footer -->
 <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">

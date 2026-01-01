@@ -64,8 +64,8 @@
  fontWeight: '600',
  border: '1px solid var(--border-code)',
  },
- 'code::before': { content: '""' },
- 'code::after': { content: '""' },
+ 'code::before': { content: '' },
+ 'code::after': { content: '' },
  // Code Blocks (Pre)
  pre: {
  backgroundColor: 'var(--bg-pre) !important',
@@ -433,11 +433,10 @@
 <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation &amp; Cloud Technologies
 <span class="font-bold text-lg tracking-tight sm:hidden">OPS3
 </span></span></span></div>
-</a>
 <div class="flex items-center space-x-6">
 <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
  Course Home
- </a>
+ 
 <!-- Theme Toggle Button -->
 <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
 <!-- Sun Icon -->
@@ -445,8 +444,8 @@
 <!-- Moon Icon -->
 <svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor" viewbox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 </button>
-</div>
-</div>
+</a></div>
+</a></div>
 </nav>
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
@@ -473,19 +472,19 @@ Storage decisions have long-term consequences. Understand the tradeoffs between 
 <hr/>
 <h2 id="welcome-to-week-4">Welcome to Week 4!</h2>
 <p>You have learned how to create virtual machines (Compute) and how to connect them (Networking). Now, it is time to tackle the third and perhaps most critical pillar of the cloud: <strong>Storage</strong>.</p>
-<p>In the physical world, if a hard drive fails, you lose data. In the virtual world, we have technologies like ZFS, Ceph, and Snapshots that make data resilient, portable, and practically immortal. This week, we move beyond simply "installing to a disk" and learn how the Linux kernel manages block devices, volume groups, and file systems.</p>
+<p>In the physical world, if a hard drive fails, you lose data. In the virtual world, we have technologies like <a class="glossary-term" href="glossary.html#ZFS">ZFS<span class="glossary-tooltip">Advanced file system with volume management</span></a>, <a class="glossary-term" href="glossary.html#Ceph">Ceph<span class="glossary-tooltip">Distributed storage system for object/block/file storage</span></a>, and Snapshots that make data resilient, portable, and practically immortal. This week, we move beyond simply "installing to a disk" and learn how the Linux kernel manages block devices, volume groups, and file systems.</p>
 <hr/>
 <h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
 <ul>
 <li><strong>Linux Storage primitives:</strong> Partitions, Block Devices, and Filesystems.</li>
-<li><strong>Volume Management:</strong> Using <strong>LVM</strong> to resize disks on the fly.</li>
-<li><strong>Next-Gen Storage:</strong> Using <strong>ZFS</strong> for instant snapshots and self-healing data.</li>
-<li><strong>Proxmox platform combining KVM - Type 1 hypervisor and LXC Storage Architecture:</strong> How PVE manages Local vs. Shared storage.</li>
-<li><strong>Disaster Recovery:</strong> The critical difference between a Snapshot - A software-based emulation of a physical computer state for rollback and a Backup.</li>
+<li><strong>Volume Management:</strong> Using <strong><a class="glossary-term" href="glossary.html#LVM">LVM<span class="glossary-tooltip">Logical Volume Manager - Flexible disk management</span></a></strong> to resize disks on the fly.</li>
+<li><strong>Next-Gen Storage:</strong> Using <strong><a class="glossary-term" href="glossary.html#ZFS">ZFS<span class="glossary-tooltip">Advanced file system with volume management</span></a></strong> for instant snapshots and self-healing data.</li>
+<li><strong><a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> Storage Architecture:</strong> How PVE manages Local vs. Shared storage.</li>
+<li><strong>Disaster Recovery:</strong> The critical difference between a <a class="glossary-term" href="glossary.html#Snapshot">Snapshot<span class="glossary-tooltip">Point-in-time copy of VM state for rollback</span></a> - and a Backup.</li>
 </ul>
 <hr/>
 <h1 id="part-1-linux-storage-fundamentals-revision-new-concepts">Part 1: Linux Storage Fundamentals (Revision + New Concepts)</h1>
-<p>In Operating Systems 2, you gained hands-on experience with Linux storage management, including <strong>fdisk</strong> for partitioning, <strong>LVM</strong> for flexible volume management, and <strong>NFS</strong> for network-attached storage. This section begins with a focused revision of those familiar tools—reconnecting you with concepts like <code>/dev/sda</code>, <code>lsblk</code>, and <code>pvcreate</code>—but now viewed through the lens of virtualization. However, we will also introduce an entirely new storage technology: <strong>ZFS</strong>, the enterprise-grade filesystem that Proxmox platform combining KVM - Type 1 hypervisor and LXC relies on for advanced features like instant snapshots, self-healing data, and copy-on-write operations. While LVM and fdisk are foundational, ZFS represents the cutting edge of storage management in modern virtualized environments. Think of this as bridging your foundational Linux knowledge with enterprise virtualization infrastructure.</p>
+<p>In Operating Systems 2, you gained hands-on experience with Linux storage management, including <strong>fdisk</strong> for partitioning, <strong><a class="glossary-term" href="glossary.html#LVM">LVM<span class="glossary-tooltip">Logical Volume Manager - Flexible disk management</span></a></strong> for flexible volume management, and <strong><a class="glossary-term" href="glossary.html#NFS">NFS<span class="glossary-tooltip">Network File System - Remote file access protocol</span></a></strong> for network-attached storage. This section begins with a focused revision of those familiar tools—reconnecting you with concepts like <code>/dev/sda</code>, <code>lsblk</code>, and <code>pvcreate</code>—but now viewed through the lens of <a class="glossary-term" href="glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a>. However, we will also introduce an entirely new storage technology: <strong><a class="glossary-term" href="glossary.html#ZFS">ZFS<span class="glossary-tooltip">Advanced file system with volume management</span></a></strong>, the enterprise-grade filesystem that <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> relies on for advanced features like instant snapshots, self-healing data, and copy-on-write operations. While <a class="glossary-term" href="glossary.html#LVM">LVM<span class="glossary-tooltip">Logical Volume Manager - Flexible disk management</span></a> and fdisk are foundational, <a class="glossary-term" href="glossary.html#ZFS">ZFS<span class="glossary-tooltip">Advanced file system with volume management</span></a> represents the cutting edge of storage management in modern virtualized environments. Think of this as bridging your foundational Linux knowledge with enterprise <a class="glossary-term" href="glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> infrastructure.</p>
 <h2 id="1-block-devices-and-partitions">1. Block Devices and Partitions</h2>
 <p>In Linux, everything is a file. A hard drive is a special type of file called a <strong>Block Device</strong>. The Linux kernel assigns specific naming conventions to different storage technologies. Traditional SATA and SCSI drives are represented as <code>/dev/sda</code>, <code>/dev/sdb</code>, and so on, while modern NVMe drives use a different naming scheme such as <code>/dev/nvme0n1</code> and <code>/dev/nvme1n1</code>. When a disk is divided into sections, these divisions are called partitions, and they are accessed through additional numerical suffixes—for example, <code>/dev/sda1</code> refers to the first partition on the first drive.</p>
 <h3 id="11-examining-storage">1.1 Examining Storage</h3>
@@ -567,8 +566,8 @@ sudo<span class="w"> zfs<span class="w"> list
 sudo<span class="w"> zfs<span class="w"> create<span class="w"> rpool/isos
 </span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
 <h3 id="33-the-power-of-instant-snapshots">3.3 The Power of Instant Snapshots</h3>
-<p>The Copy-on-Write architecture unlocks one of ZFS's most remarkable capabilities: instantaneous snapshots. Unlike traditional backup systems that must copy gigabytes or terabytes of data (a process that can take hours), a ZFS snapshot - A software-based emulation of a physical computer state for rollback is merely a metadata operation—a lightweight bookmark that marks the current state of the filesystem. When you create a snapshot - A software-based emulation of a physical computer state for rollback , ZFS doesn't duplicate any data blocks; it simply freezes a reference point in time. The snapshot - A software-based emulation of a physical computer state for rollback consumes zero disk space initially because it shares all its data blocks with the current filesystem. Only when data begins to change does the snapshot - A software-based emulation of a physical computer state for rollback start consuming space, as ZFS preserves the old blocks that the snapshot - A software-based emulation of a physical computer state for rollback references while writing new data to fresh locations. This means you can take a snapshot - A software-based emulation of a physical computer state for rollback of a 1TB virtual machine in less than a second, with no performance impact and no initial storage overhead.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Take a snapshot - A software-based emulation of a physical computer state for rollback of a dataset
+<p>The Copy-on-Write architecture unlocks one of ZFS's most remarkable capabilities: instantaneous snapshots. Unlike traditional backup systems that must copy gigabytes or terabytes of data (a process that can take hours), a ZFS snapshot - is merely a metadata operation—a lightweight bookmark that marks the current state of the filesystem. When you create a snapshot - , ZFS doesn't duplicate any data blocks; it simply freezes a reference point in time. The snapshot - consumes zero disk space initially because it shares all its data blocks with the current filesystem. Only when data begins to change does the snapshot - start consuming space, as ZFS preserves the old blocks that the snapshot - references while writing new data to fresh locations. This means you can take a snapshot - of a 1TB virtual machine in less than a second, with no performance impact and no initial storage overhead.</p>
+<div class="codehilite"><pre><span><code><span class="c1"># 1. Take a snapshot - of a dataset
 sudo<span class="w"> zfs<span class="w"> snapshot<span class="w"> rpool/data/vm-100-disk-0@before_update
 
 <span class="c1"># 2. Rollback (Undo changes)
@@ -582,16 +581,16 @@ sudo<span class="w"> zfs<span class="w"> rollback<span class="w"> rpool/data/vm-
 <li><a href="https://openzfs.org/wiki/Main_Page">OpenZFS Documentation</a></li>
 </ul>
 <hr/>
-<h2 id="4-virtual-disk-formats">4. Virtual Disk - A software-based emulation of a physical computer Formats</h2>
-<p>When you create a VM - A software-based emulation of a physical computer , its hard drive is just a file on the host.</p>
+<h2 id="4-virtual-disk-formats">4. Virtual Disk - Formats</h2>
+<p>When you create a VM - , its hard drive is just a file on the host.</p>
 <h3 id="41-raw-raw">4.1 Raw (<code>.raw</code>)</h3>
-<p>The Raw disk format is effectively a bit-for-bit representation of a hard drive without any additional metadata or container structure. Because it lacks a translation layer, the file is read and written directly to the underlying block device, making it the most performant option available. However, this simplicity comes at a cost; creating a 100GB Raw disk immediately consumes 100GB of physical space (unless sparse provisioning is strictly enforced), and it does not support advanced features like internal snapshots. If you require snapshot - A software-based emulation of a physical computer state for rollback capabilities with Raw disks, you must rely on the underlying storage system, such as LVM-Thin or ZFS, to handle them.</p>
+<p>The Raw disk format is effectively a bit-for-bit representation of a hard drive without any additional metadata or container structure. Because it lacks a translation layer, the file is read and written directly to the underlying block device, making it the most performant option available. However, this simplicity comes at a cost; creating a 100GB Raw disk immediately consumes 100GB of physical space (unless sparse provisioning is strictly enforced), and it does not support advanced features like internal snapshots. If you require snapshot - capabilities with Raw disks, you must rely on the underlying storage system, such as LVM-Thin or ZFS, to handle them.</p>
 <h3 id="42-qcow2-qemu-copy-on-write">4.2 QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format (QEMU - Type 1 hypervisor for virtualization Copy On Write)</h3>
-<p>QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format is a functional, feature-rich format designed specifically for the QEMU - Type 1 hypervisor for virtualization emulator. Unlike Raw, it acts as an intelligent container that creates a layer of abstraction between the VM - A software-based emulation of a physical computer and the physical disk. This allows for powerful features such as internal snapshots, transparent compression, and encryption directly within the file itself. While this abstraction layer introduces a minor performance overhead compared to Raw, the flexibility it offers—particularly the ability to grow the disk file dynamically as data is added—makes it the standard choice for file-based storage backends like NFS or local directories.</p>
+<p>QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format is a functional, feature-rich format designed specifically for the QEMU - Type 1 hypervisor for virtualization emulator. Unlike Raw, it acts as an intelligent container that creates a layer of abstraction between the VM - and the physical disk. This allows for powerful features such as internal snapshots, transparent compression, and encryption directly within the file itself. While this abstraction layer introduces a minor performance overhead compared to Raw, the flexibility it offers—particularly the ability to grow the disk file dynamically as data is added—makes it the standard choice for file-based storage backends like NFS or local directories.</p>
 <h3 id="43-summary-comparison">4.3 Summary Comparison</h3>
 <p>The visual comparison below highlights the key differences between Raw and QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format disk formats:</p>
 <p><img alt="Virtual Disk Format Comparison" src="images/disk_formats.png"/>
-<em>Figure 5: Virtual Disk - A software-based emulation of a physical computer Formats - Raw disks offer maximum performance while QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format provides flexibility with snapshots and thin provisioning</em></p>
+<em>Figure 5: Virtual Disk - Formats - Raw disks offer maximum performance while QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format provides flexibility with snapshots and thin provisioning</em></p>
 <table>
 <thead>
 <tr>
@@ -640,7 +639,7 @@ sudo<span class="w"> zfs<span class="w"> rollback<span class="w"> rpool/data/vm-
 </ul>
 <p><strong>Reflection</strong>:</p>
 <ul>
-<li>Why can't you take an internal snapshot - A software-based emulation of a physical computer state for rollback on a Raw disk?</li>
+<li>Why can't you take an internal snapshot - on a Raw disk?</li>
 <li>How does "sparse provisioning" differ from "thin provisioning"?</li>
 </ul>
 <p><strong>Resources</strong>:</p>
@@ -672,9 +671,22 @@ sudo<span class="w"> zfs<span class="w"> rollback<span class="w"> rpool/data/vm-
 <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
 <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_4_Quiz.html" id="start-quiz-btn">
  Start Quiz
- </a>
-</div>
-</article>
+ 
+</a></div>
+<div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 3 - Virtual Networking and Linux Networking Fundamentals/Week_3_Student_Notes.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Previous: Week 3: Networking</span>
+</a>
+<a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Course Index
+    </a>
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 5 - Containers and Resource Management/Week_5_Student_Notes.html">
+<span>Next: Week 5: Containers</span>
+<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+</div></article>
 </main>
 <!-- Footer -->
 <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">

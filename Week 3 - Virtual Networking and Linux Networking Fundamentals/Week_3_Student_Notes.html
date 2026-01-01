@@ -64,8 +64,8 @@
  fontWeight: '600',
  border: '1px solid var(--border-code)',
  },
- 'code::before': { content: '""' },
- 'code::after': { content: '""' },
+ 'code::before': { content: '' },
+ 'code::after': { content: '' },
  // Code Blocks (Pre)
  pre: {
  backgroundColor: 'var(--bg-pre) !important',
@@ -433,11 +433,10 @@
 <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation &amp; Cloud Technologies
 <span class="font-bold text-lg tracking-tight sm:hidden">OPS3
 </span></span></span></div>
-</a>
 <div class="flex items-center space-x-6">
 <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
  Course Home
- </a>
+ 
 <!-- Theme Toggle Button -->
 <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
 <!-- Sun Icon -->
@@ -445,8 +444,8 @@
 <!-- Moon Icon -->
 <svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor" viewbox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 </button>
-</div>
-</div>
+</a></div>
+</a></div>
 </nav>
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
@@ -473,22 +472,22 @@ Networking is where VMs become useful. The concepts of bridges, <a class="glossa
 <hr/>
 <h2 id="welcome-to-week-3">Welcome to Week 3!</h2>
 <p>Networking is the nervous system of any virtualized infrastructure. In a traditional data center, network engineers run physical cables, configure hardware switches, and plug in routers. In a Virtualized or Cloud environment, all of this hardware is replaced by <strong>software</strong>.</p>
-<p>As a Cloud Engineer, you are not just managing servers; you are managing the <em>wires</em> between them. When a Proxmox platform combining KVM - Type 1 hypervisor and LXC VM - A software-based emulation of a physical computer cannot reach the internet, or when a Kubernetes orchestration platform pod orchestration platform often fails to talk to a database, the problem rarely lies in the physical switch. It lies in the complex web of virtual interfaces, bridges, and namespaces <em>inside</em> the Linux kernel.</p>
-<p>This week is designed to bridge the gap between "clicking a button in Proxmox platform combining KVM - Type 1 hypervisor and LXC " and understanding the kernel-level mechanics that make that click possible. We will dismantle the underlying abstraction and rebuild it command by command.</p>
+<p>As a Cloud Engineer, you are not just managing servers; you are managing the <em>wires</em> between them. When a <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer</span></a> - cannot reach the internet, or when a <a class="glossary-term" href="glossary.html#Kubernetes">Kubernetes<span class="glossary-tooltip">Container orchestration platform</span></a> <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="glossary.html#Pod">pod<span class="glossary-tooltip">Smallest deployable unit in Kubernetes</span></a> <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform often fails to talk to a database, the problem rarely lies in the physical switch. It lies in the complex web of virtual interfaces, bridges, and namespaces <em>inside</em> the Linux kernel.</p>
+<p>This week is designed to <a class="glossary-term" href="glossary.html#Bridge">bridge<span class="glossary-tooltip">Network device connecting network segments</span></a> the gap between "clicking a button in <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> " and understanding the kernel-level mechanics that make that click possible. We will dismantle the underlying abstraction and rebuild it command by command.</p>
 <hr/>
 <h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
 <ul>
 <li><strong>Linux Networking Core:</strong> Understanding the distinction between ephemeral runtime configurations (<code>ip</code>) and persistent system configurations (<code>nmcli</code>).</li>
 <li><strong>Virtual Wiring:</strong> How <code>veth</code> pairs replace physical patch cables.</li>
 <li><strong>Virtual Switching:</strong> How Linux Bridges simulate Layer 2 switches and manage MAC address tables.</li>
-<li><strong>Network Isolation:</strong> Using Namespaces to solve the "Multi-Tenant" problem.</li>
+<li><strong>Network Isolation:</strong> Using Namespaces to solve the "Multi-<a class="glossary-term" href="glossary.html#Tenant">Tenant<span class="glossary-tooltip">Grouping of users and resources (also called Project)</span></a>" problem.</li>
 <li><strong>Advanced Operations:</strong> Implementing redundancy (Bonding), Routing, and Security (Firewalls).</li>
 <li><strong>Software Defined Networking:</strong> An introduction to Open vSwitch (OVS).</li>
-<li><strong>Proxmox platform combining KVM - Type 1 hypervisor and LXC Implementation:</strong> Applying these concepts to real-world VM - A software-based emulation of a physical computer networking modes.</li>
+<li><strong><a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> Implementation:</strong> Applying these concepts to real-world <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer</span></a> - networking modes.</li>
 </ul>
 <hr/>
 <h1 id="part-1-linux-networking-fundamentals">Part 1: Linux Networking Fundamentals</h1>
-<p>Proxmox platform combining KVM - Type 1 hypervisor and LXC is, at its core, a Debian Linux operating system. To troubleshoot or configure it effectively, you must master Linux networking.</p>
+<p><a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> is, at its core, a Debian Linux operating system. To troubleshoot or configure it effectively, you must master Linux networking.</p>
 <h2 id="1-runtime-vs-persistent-networking-ip-vs-nmcli">1. Runtime vs. Persistent Networking (<code>ip</code> vs <code>nmcli</code>)</h2>
 <p>In the early days of Unix, network interfaces were configured using <code>ifconfig</code>. This tool has been deprecated for over a decade because it cannot handle modern complexities like multiple IP addresses per interface or policy-based routing. Today, we rely on two distinct layers of configuration.</p>
 <h3 id="11-the-kernel-layer-ip-runtime">1.1 The Kernel Layer: <code>ip</code> (Runtime)</h3>
@@ -633,7 +632,7 @@ A <strong>Linux Bridge</strong> is a software implementation of a standard Ether
 <p><strong>How devices plug in:</strong></p>
 <ul>
 <li><strong>Containers</strong>: Use <code>veth</code> pairs (as discussed in 3.1).</li>
-<li><strong>Virtual Machines</strong>: Use <strong>TAP Interfaces</strong>. A <code>tap</code> device simulates an Ethernet device at Layer 2. QEMU - Type 1 hypervisor for virtualization /KVM - Type 1 hypervisor creates a <code>tap</code> interface (e.g., <code>tap100i0</code>) for the VM - A software-based emulation of a physical computer , and the other end connects to the Bridge. This allows the VM - A software-based emulation of a physical computer to send raw Ethernet frames onto the switch.</li>
+<li><strong>Virtual Machines</strong>: Use <strong>TAP Interfaces</strong>. A <code>tap</code> device simulates an Ethernet device at Layer 2. QEMU - Type 1 hypervisor for virtualization /KVM - Type 1 hypervisor creates a <code>tap</code> interface (e.g., <code>tap100i0</code>) for the VM - , and the other end connects to the Bridge. This allows the VM - to send raw Ethernet frames onto the switch.</li>
 </ul>
 <p><strong>Example: Manually creating a TAP interface (What Proxmox platform combining KVM - Type 1 hypervisor and LXC does behind the scenes)</strong></p>
 <div class="codehilite"><pre><span><code><span class="c1"># 1. Create the TAP interface
@@ -839,7 +838,7 @@ sudo<span class="w"> ip<span class="w"> route<span class="w"> add<span class="w"
 <p>Security in the cloud isn't just about an external firewall appliance. Every Linux kernel has a built-in firewall called <strong>Netfilter</strong>. We manipulate it using <code>iptables</code>. It processes packets in "Chains":
 1. <strong>INPUT</strong>: Filters traffic destined for the localhost.
 2. <strong>OUTPUT</strong>: Filters traffic created by the localhost.
-3. <strong>FORWARD</strong>: Filters traffic passing <em>through</em> the localhost (e.g., VM - A software-based emulation of a physical computer to Internet traffic).</p>
+3. <strong>FORWARD</strong>: Filters traffic passing <em>through</em> the localhost (e.g., VM - to Internet traffic).</p>
 <p><strong>Hands-On Example:</strong> securing a host.</p>
 <div class="codehilite"><pre><span><code><span class="c1"># 1. Allow "Established" traffic
 <span class="c1"># If we sent a request out, allow the reply back in. Essential!
@@ -931,7 +930,7 @@ sudo<span class="w"> tcpdump<span class="w"> -i<span class="w"> vmbr0<span class
 </ul>
 <hr/>
 <h1 id="part-2-virtual-networking-in-proxmox">Part 2: Virtual Networking in Proxmox platform combining KVM - Type 1 hypervisor and LXC </h1>
-<p>Now that we have dismantled the Linux kernel concepts, we can look at how <strong>Proxmox platform combining KVM - Type 1 hypervisor and LXC Virtual Environment (PVE)</strong> uses them to manage VM - A software-based emulation of a physical computer networking. Proxmox platform combining KVM - Type 1 hypervisor and LXC does not invent its own networking stack; it "orchestrates" standard Linux tools (Bridges, OVS, IPTables) via a web interface.</p>
+<p>Now that we have dismantled the Linux kernel concepts, we can look at how <strong>Proxmox platform combining KVM - Type 1 hypervisor and LXC Virtual Environment (PVE)</strong> uses them to manage VM - networking. Proxmox platform combining KVM - Type 1 hypervisor and LXC does not invent its own networking stack; it "orchestrates" standard Linux tools (Bridges, OVS, IPTables) via a web interface.</p>
 <h2 id="6-open-vswitch-ovs-the-cloud-switch">6. Open vSwitch (OVS): The Cloud Switch</h2>
 <p>While the standard Linux Bridge is reliable and simple, it was designed for a single server. It lacks the intelligence required for massive, multi-tenant clouds. <strong>Open vSwitch (OVS)</strong> is an industrial-grade, programmable virtual switch used by giants like OpenStack platform , Red Hat, and Citrix.</p>
 <h3 id="61-architecture-control-plane-vs-data-plane">6.1 Architecture: Control Plane vs. Data Plane</h3>
@@ -953,7 +952,7 @@ sudo<span class="w"> ovs-vsctl<span class="w"> show
 <h3 id="63-the-power-of-flows">6.3 The Power of Flows</h3>
 <p>Standard bridges forward based on MAC addresses. OVS forwards based on <strong>Flow Rules</strong>. A flow rule matches a packet's header fields and performs an action.</p>
 <p><strong>Example Scenario:</strong>
-You want to block a specific "Bad Neighbor" VM - A software-based emulation of a physical computer (IP 10.0.0.66) from sending traffic, but allow everything else.</p>
+You want to block a specific "Bad Neighbor" VM - (IP 10.0.0.66) from sending traffic, but allow everything else.</p>
 <ul>
 <li><strong>Linux Bridge:</strong> Cannot do this natively (needs complex iptables).</li>
 <li><strong>OVS:</strong> One simple command.</li>
@@ -1021,13 +1020,13 @@ ovs-vsctl<span class="w"> set-controller<span class="w"> ovsbr0<span class="w"> 
 </tbody>
 </table>
 <!-- End of table -->
-<p>When you start a VM - A software-based emulation of a physical computer , Proxmox platform combining KVM - Type 1 hypervisor and LXC creates a dynamic <code>tap</code> interface (e.g., <code>tap100i0</code>) and plugs it into the bridge (<code>vmbr0</code>), exactly like we plugged in <code>veth</code> pairs in the Lab.</p>
+<p>When you start a VM - , Proxmox platform combining KVM - Type 1 hypervisor and LXC creates a dynamic <code>tap</code> interface (e.g., <code>tap100i0</code>) and plugs it into the bridge (<code>vmbr0</code>), exactly like we plugged in <code>veth</code> pairs in the Lab.</p>
 <h3 id="71-networking-modes">7.1 Networking Modes</h3>
-<p>When configuring a VM - A software-based emulation of a physical computer 's hardware, you choose how it connects to the bridge. We primarily see three patterns.</p>
+<p>When configuring a VM - 's hardware, you choose how it connects to the bridge. We primarily see three patterns.</p>
  ![Proxmox platform combining KVM - Type 1 hypervisor and LXC Networking Modes](images/proxmox_networking_modes.png) 
  *Figure 7.1: Comparison of Bridged vs. NAT vs. VLAN Modes.* 
 <h4 id="1-bridged-mode-default">1. Bridged Mode (Default)</h4>
-<p>This is the standard configuration for 90% of deployments. The VM - A software-based emulation of a physical computer becomes a full peer on the physical network.</p>
+<p>This is the standard configuration for 90% of deployments. The VM - becomes a full peer on the physical network.</p>
 <p><strong>Packet Flow:</strong>
 <code>[VM eth0] -&gt; [Host tap100i0] -&gt; [Linux Bridge vmbr0] -&gt; [Physical NIC eno1] -&gt; [Physical Switch]</code></p>
 <p><strong>Detailed Configuration:</strong>
@@ -1042,8 +1041,8 @@ iface<span class="w"> vmbr0<span class="w"> inet<span class="w"> static
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
 <p><strong>Implication:</strong></p>
 <ul>
-<li><strong>DHCP</strong>: The VM - A software-based emulation of a physical computer sends a broadcast <code>DISCOVER</code> packet. It traverses the bridge, hits the physical wire, and reaches your office router. The router assigns an IP directly to the VM - A software-based emulation of a physical computer .</li>
-<li><strong>Visibility</strong>: Every device on your LAN can ping the VM - A software-based emulation of a physical computer .</li>
+<li><strong>DHCP</strong>: The VM - sends a broadcast <code>DISCOVER</code> packet. It traverses the bridge, hits the physical wire, and reaches your office router. The router assigns an IP directly to the VM - .</li>
+<li><strong>Visibility</strong>: Every device on your LAN can ping the VM - .</li>
 </ul>
 <h4 id="2-nat-mode-network-address-translation">2. NAT Mode (Network Address Translation)</h4>
 <p>Sometimes you cannot get extra public IPs (e.g., in a data center giving you only 1 IP). You need to create a private network inside the host and share the single public IP.</p>
@@ -1073,8 +1072,8 @@ iface<span class="w"> vmbr1<span class="w"> inet<span class="w"> static
 <p><strong>Processing Flow:</strong></p>
 <ol>
 <li>
-<p><strong>Ingress (VM - A software-based emulation of a physical computer -&gt; Host):</strong><br/>
- The VM - A software-based emulation of a physical computer sends a standard "untagged" packet.</p>
+<p><strong>Ingress (VM - -&gt; Host):</strong><br/>
+ The VM - sends a standard "untagged" packet.</p>
 </li>
 <li>
 <p><strong>Tagging:</strong><br/>
@@ -1100,8 +1099,8 @@ Modern Proxmox platform combining KVM - Type 1 hypervisor and LXC uses "VLAN Awa
 <p><strong>Summary</strong>:</p>
 <ul>
 <li>Proxmox platform combining KVM - Type 1 hypervisor and LXC uses standard Linux Bridges and IPTables underneath the GUI.</li>
-<li><strong>Bridged Mode</strong>: VM - A software-based emulation of a physical computer is on the LAN. Simplest.</li>
-<li><strong>NAT Mode</strong>: VM - A software-based emulation of a physical computer is hidden behind the Host. Requires Masquerading.</li>
+<li><strong>Bridged Mode</strong>: VM - is on the LAN. Simplest.</li>
+<li><strong>NAT Mode</strong>: VM - is hidden behind the Host. Requires Masquerading.</li>
 <li><strong>VLANs</strong>: Isolate traffic on the same physical wire using Tags.</li>
 </ul>
 <p><strong>Reflection</strong>:</p>
@@ -1138,9 +1137,22 @@ Modern Proxmox platform combining KVM - Type 1 hypervisor and LXC uses "VLAN Awa
 <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
 <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_3_Quiz.html" id="start-quiz-btn">
  Start Quiz
- </a>
-</div>
-</article>
+ 
+</a></div>
+<div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 2 - Virtual Machines/Week_2_Student_Notes.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Previous: Week 2: Virtual Machines</span>
+</a>
+<a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Course Index
+    </a>
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 4 - Storage and Backup/Week_4_Student_Notes.html">
+<span>Next: Week 4: Storage</span>
+<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+</div></article>
 </main>
 <!-- Footer -->
 <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">

@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 """
 Add Interactive Glossary Tooltips to Course Materials
-Scans HTML files and wraps glossary terms with tooltips and links
+Scans HTML files and wraps glossary terms with tooltips and links.
+Targeting Strategy: "Introductory Sections Only"
+- Enables tooltips for top content, "Welcome" sections, and "Learning Objectives".
+- Disables tooltips once the first Numbered Chapter (e.g., "1. Introduction") is reached.
+Recursion Prevention: "Placeholder Strategy"
+- Replaces matches with unique tokens first.
+- Replaces tokens with HTML at the very end.
+- Impossible to generate nested tooltips.
 """
 
 from bs4 import BeautifulSoup
 from pathlib import Path
 import re
-import json
+import uuid
 
-# Import glossary terms from create_glossary.py
-# For now, we'll define the key terms here
+# Import glossary terms 
 GLOSSARY_TERMS = {
     "Virtualization": "The creation of virtual versions of physical computing resources",
     "Hypervisor": "Software that creates and manages virtual machines",
@@ -86,10 +92,9 @@ def add_glossary_tooltips(html_content, output_path):
     
     soup = BeautifulSoup(html_content, 'html.parser')
     
-    # Add glossary CSS and JavaScript to head
+    # Add glossary CSS to head
     head = soup.find('head')
-    if head:
-        # Add tooltip styles
+    if head and not head.find('style', string=re.compile("Glossary Tooltip Styles")):
         style_tag = soup.new_tag('style')
         style_tag.string = """
         /* Glossary Tooltip Styles */
@@ -152,45 +157,66 @@ def add_glossary_tooltips(html_content, output_path):
         # Sort terms by length (longest first) to match longer phrases first
         sorted_terms = sorted(GLOSSARY_TERMS.items(), key=lambda x: len(x[0]), reverse=True)
         
-        # Identify "Objective" or "Intro" section elements
+        # Strategy: "Introductory Sections Only"
+        # We process elements by default (metadata, tips).
+        # If we hit an <h2> that starts with a number (e.g. "1. Introduction"), DISABLE tooltips.
+        # If we hit an <h2> that is NOT numbered (e.g. "Welcome", "What you'll learn"), ENABLE tooltips.
+        
+        enable_tooltips = True
         elements_to_process = []
         
         # Iterate through direct children of article
         for child in article.children:
-            # Stop if we hit a major section header or horizontal rule
-            if child.name in ['h2', 'hr']:
-                break
-                
-            # If it's a content block (p, blockquote, ul, ol, div), add to list
-            if child.name in ['p', 'blockquote', 'ul', 'ol', 'div']:
-                elements_to_process.append(child)
+            if child.name == 'h2':
+                header_text = child.get_text().strip()
+                # Check if header starts with a number (e.g., "1. ", "10. ")
+                if re.match(r'^\d+\.', header_text):
+                    enable_tooltips = False
+                else:
+                    # e.g. "Welcome to Week X", "What You'll Learn", "Objectives"
+                    enable_tooltips = True
+            
+            # If enabled and it's a content block, add to processing list
+            if enable_tooltips:
+                if child.name in ['p', 'blockquote', 'ul', 'ol', 'div']:
+                    elements_to_process.append(child)
                 
         # Process text content in selected elements
         for parent_element in elements_to_process:
-            for element in parent_element.find_all(text=True):
+            for element in parent_element.find_all(string=True):
                 # Skip headings/scripts/style/etc
                 if element.parent.name in ['script', 'style', 'code', 'pre', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
                     continue  # Skip these elements
                 
                 text = str(element)
                 modified_text = text
+                local_replacements = {}
+                
+                # Phase 1: Identify all matches and replace with unique Tokens
+                # This prevents recursion because the token text won't match subsequent terms
                 
                 for term, definition in sorted_terms:
-                    # Use word boundary regex to match whole words/phrases
+                    # Use word boundary regex
                     pattern = r'\b' + re.escape(term) + r'\b'
-                    matches = list(re.finditer(pattern, modified_text, re.IGNORECASE))
                     
-                    # Replace matches (in reverse to maintain positions)
-                    for match in reversed(matches):
+                    # Custom replacement function to generate tokens
+                    def start_token(match):
+                        token = f"__GLOSSARY_TOKEN_{uuid.uuid4().hex}__"
                         matched_text = match.group()
-                        # Create clean tooltip HTML without icons
-                        tooltip_html = f'<a href="glossary.html#{term.replace(" ", "-")}" class="glossary-term">{matched_text}<span class="glossary-tooltip">{definition}</span></a>'
                         
-                        # Replace in text
-                        modified_text = modified_text[:match.start()] + tooltip_html + modified_text[match.end():]
+                        # Generate the HTML but DO NOT insert it yet. Store it.
+                        clean_html = f'<a href="glossary.html#{term.replace(" ", "-")}" class="glossary-term">{matched_text}<span class="glossary-tooltip">{definition}</span></a>'
+                        local_replacements[token] = clean_html
+                        return token
+                    
+                    modified_text = re.sub(pattern, start_token, modified_text, flags=re.IGNORECASE)
                 
-                # Replace the text node with modified HTML if changed
+                # Phase 2: Swap Tokens for HTML
                 if modified_text != text:
+                    # Replace tokens with their mapped HTML
+                    for token, html in local_replacements.items():
+                        modified_text = modified_text.replace(token, html)
+                        
                     new_soup = BeautifulSoup(modified_text, 'html.parser')
                     element.replace_with(new_soup)
     
@@ -219,7 +245,7 @@ def process_html_files(base_dir):
                     f.write(modified_content)
                 
                 processed += 1
-                print(f"  ✅ Added glossary tooltips (Header section only)")
+                print(f"  ✅ Tooltips applied (Robust Placeholder Mode)")
     
     return processed
 
@@ -228,7 +254,7 @@ def main():
     base_dir = Path(__file__).parent.parent
     
     print("=" * 70)
-    print("Adding Interactive Glossary Tooltips to Course Materials")
+    print("Adding Glossary Tooltips (Placeholder Strategy)")
     print("=" * 70)
     print()
     
@@ -237,8 +263,6 @@ def main():
     print()
     print("=" * 70)
     print(f"✅ Processed {processed} HTML files")
-    print(f"   Terms will now show tooltips on hover")
-    print(f"   Click terms to jump to glossary")
     print("=" * 70)
 
 if __name__ == "__main__":

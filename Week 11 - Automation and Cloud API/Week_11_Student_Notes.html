@@ -64,8 +64,8 @@
  fontWeight: '600',
  border: '1px solid var(--border-code)',
  },
- 'code::before': { content: '""' },
- 'code::after': { content: '""' },
+ 'code::before': { content: '' },
+ 'code::after': { content: '' },
  // Code Blocks (Pre)
  pre: {
  backgroundColor: 'var(--bg-pre) !important',
@@ -433,11 +433,10 @@
 <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation &amp; Cloud Technologies
 <span class="font-bold text-lg tracking-tight sm:hidden">OPS3
 </span></span></span></div>
-</a>
 <div class="flex items-center space-x-6">
 <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
  Course Home
- </a>
+ 
 <!-- Theme Toggle Button -->
 <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
 <!-- Sun Icon -->
@@ -445,8 +444,8 @@
 <!-- Moon Icon -->
 <svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor" viewbox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 </button>
-</div>
-</div>
+</a></div>
+</a></div>
 </nav>
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
@@ -468,13 +467,13 @@
 <blockquote>
 <p>[!TIP]
 <strong>How to succeed in this week</strong>:
-Automation is what separates a cloud engineer from a sysadmin. Focus on understanding APIs and <a class="glossary-term" href="glossary.html#Infrastructure-as-Code">Infrastructure as Code<span class="glossary-tooltip">Managing infrastructure through code</span></a>—clicking buttons doesn't scale, but code does.</p>
+Automation is what separates a cloud engineer from a sysadmin. Focus on understanding APIs and —clicking buttons doesn't scale, but code does.</p>
 </blockquote>
 <hr/>
 <h2 id="welcome-to-devops">Welcome to DevOps</h2>
 <p>Clicking GUI buttons is fine for 1 server. It fails for 100 servers. This creates a scalability bottleneck that manual administration simply cannot overcome.</p>
-<p>This challenge gave birth to <strong>DevOps</strong>, a methodology that unifies software development (Dev) and IT operations (Ops). At its core, DevOps is about automation, collaboration, and speed. It shifts the focus from manually configuring servers to writing code that defines them—a concept known as <strong>Infrastructure as Code (IaC )</strong>. In a DevOps model, infrastructure is versioned, tested, and deployed just like software applications, eliminating the "it works on my machine" problem.</p>
-<p>This week, we learn to control the cloud using code. By mastering tools like the OpenStack platform CLI, Cloud-Init, Heat, and Ansible, you are learning the foundational skills required for a modern DevOps or Site Reliability Engineering (SRE) role. You will transition from clicking buttons in a dashboard to designing self-healing, automated systems that can scale to thousands of instances with a single command.</p>
+<p>This challenge gave birth to <strong>DevOps</strong>, a methodology that unifies software development (Dev) and IT operations (Ops). At its core, DevOps is about automation, collaboration, and speed. It shifts the focus from manually configuring servers to writing code that defines them—a concept known as <strong> (<a class="glossary-term" href="glossary.html#IaC">IaC<span class="glossary-tooltip">Infrastructure as Code</span></a> )</strong>. In a DevOps model, infrastructure is versioned, tested, and deployed just like software applications, eliminating the "it works on my machine" problem.</p>
+<p>This week, we learn to control the cloud using code. By mastering tools like the <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform</span></a> platform <a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface</span></a>, Cloud-Init, Heat, and <a class="glossary-term" href="glossary.html#Ansible">Ansible<span class="glossary-tooltip">Automation tool for configuration management</span></a>, you are learning the foundational skills required for a modern DevOps or Site Reliability Engineering (SRE) role. You will transition from clicking buttons in a dashboard to designing self-healing, automated systems that can scale to thousands of instances with a single command.</p>
 <hr/>
 <h2 id="1-advanced-cli-techniques">1. Advanced CLI Techniques</h2>
 <p>The <code>openstack</code> command is powerful, but by default, it formats output as ASCII tables designed for human readability. While this is helpful for interactive use, it poses a significant challenge for automation scripts, which struggle to parse table borders and varying whitespace. To build robust tools, we must use machine-readable output formats.</p>
@@ -511,7 +510,7 @@ In the example above, the <code>-f json</code> flag forces OpenStack platform to
 <p>The <em>OpenStack platform for Architects</em> book details two competing strategies for deploying applications: <strong>Golden Images</strong> and <strong>Post-Boot Configuration</strong>.</p>
 <p><img alt="Pet vs Cattle Automation" src="images/pet_vs_cattle_automation.png"/>
 <em>Figure 1: Pet vs Cattle - Manual "Pet" servers require constant care, while Automated "Cattle" servers are replaceable and identical</em></p>
-<p><strong>Golden Images (Mutable/Baked)</strong> involve installing all application dependencies—such as Apache, PHP, and custom code—into the Virtual Machine image <em>before</em> it is ever launched. This is typically done using tools like Packer. The primary advantage is speed; since the software is pre-installed, the VM - A software-based emulation of a physical computer is ready almost instantly upon boot. However, this method suffers from "Image Sprawl," where every minor code change requires building and uploading a new multi-gigabyte image to Glance platform image service , consuming storage and bandwidth.</p>
+<p><strong>Golden Images (Mutable/Baked)</strong> involve installing all application dependencies—such as Apache, PHP, and custom code—into the Virtual Machine image <em>before</em> it is ever launched. This is typically done using tools like Packer. The primary advantage is speed; since the software is pre-installed, the VM - is ready almost instantly upon boot. However, this method suffers from "Image Sprawl," where every minor code change requires building and uploading a new multi-gigabyte image to Glance platform image service , consuming storage and bandwidth.</p>
 <p><strong>Post-Boot Configuration (Immutable/Runtime)</strong> takes a different approach. You launch a generic, "Vanilla" operating system image (like Ubuntu Cloud Image) and use automation tools to install software <em>after</em> the instance boots. While this results in a slower initial startup time as packages are downloaded and installed, it offers superior flexibility. A single small base image can serve thousands of different purposes. Modern cloud architecture typically favors a <strong>Hybrid Approach</strong>, using a base image for the OS and tools like Ansible for the final application configuration.</p>
 <h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
 <p><strong>Summary</strong>: JSON is the lingua franca of Cloud APIs, providing a structured format that is difficult for humans to read but trivial for machines to parse. To work effectively with this data in a shell environment, <code>jq</code> is an essential tool for extracting specific fields like resource IDs. Before writing any automation script, a cloud engineer must master the ability to retrieve clean, predictable data programmatically rather than relying on brittle text parsing methods like <code>grep</code>.</p>
@@ -611,8 +610,8 @@ This pattern instructs the system to upgrade all installed packages on boot. Use
 <li><strong><code>/var/log/cloud-init-output.log</code></strong>: The raw stdout/stderr of your scripts. If your <code>apt-get install</code> failed, the error message will be here.</li>
 </ul>
 <h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>: Cloud-Init is the bridge between a generic OS image and a functional server. It relies on a <strong>Datasource</strong> (Metadata Service) to fetch configuration. It executes in strict <strong>Stages</strong> (Init -&gt; Config -&gt; Final) to ensure the network is ready before attempting to install software. Debugging automation failures requires inspecting the logs inside the VM - A software-based emulation of a physical computer , as errors here rarely stop the instance from booting.</p>
-<p><strong>Reflection</strong>: Why is the "Magic IP" (<code>169.254.169.254</code>) accessible from inside the VM - A software-based emulation of a physical computer without any internet access? (Hint: It is a Link-Local address routed explicitly by the Hypervisor/Neutron platform networking service ).</p>
+<p><strong>Summary</strong>: Cloud-Init is the bridge between a generic OS image and a functional server. It relies on a <strong>Datasource</strong> (Metadata Service) to fetch configuration. It executes in strict <strong>Stages</strong> (Init -&gt; Config -&gt; Final) to ensure the network is ready before attempting to install software. Debugging automation failures requires inspecting the logs inside the VM - , as errors here rarely stop the instance from booting.</p>
+<p><strong>Reflection</strong>: Why is the "Magic IP" (<code>169.254.169.254</code>) accessible from inside the VM - without any internet access? (Hint: It is a Link-Local address routed explicitly by the Hypervisor/Neutron platform networking service ).</p>
 <p><strong>Resources</strong>:
 <a href="https://cloud-init.io/">Cloud-Init Documentation</a></p>
 <hr/>
@@ -712,8 +711,8 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 * <code>try/except</code>: If the cloud is full or the network ID is wrong, the script captures the error and prints a friendly message instead of crashing with a stack trace.</p>
 </blockquote>
 <hr/>
-<h2 id="4-infrastructure-as-code-heat-vs-terraform">4. Infrastructure as Code: Heat vs Terraform</h2>
-<p>The distinction between "Imperative" scripts (Bash) and "Declarative" Infrastructure as Code (IaC ) is fundamental. Imperative tools describe <em>how</em> to achieve a task step-by-step, whereas Declarative tools describe the desired <em>end state</em>, leaving the "how" to the engine.</p>
+<h2 id="4-infrastructure-as-code-heat-vs-terraform">4. : Heat vs Terraform</h2>
+<p>The distinction between "Imperative" scripts (Bash) and "Declarative" (IaC ) is fundamental. Imperative tools describe <em>how</em> to achieve a task step-by-step, whereas Declarative tools describe the desired <em>end state</em>, leaving the "how" to the engine.</p>
 <h3 id="41-the-two-giants">4.1 The Two Giants</h3>
 <p>Two primary tools dominate this landscape. <strong>Heat</strong> is the OpenStack platform Native orchestration engine. It is built directly into the platform, requires no external installation, and uses YAML templates. It is the ideal choice for pure OpenStack platform environments where external tool dependencies are undesirable. <strong>Terraform</strong>, created by HashiCorp, is the Industry Standard for multi-cloud provisioning. It uses the HashiCorp Configuration Language (HCL) and supports AWS, Azure, Google Cloud, and OpenStack platform simultaneously, making it the dominant skill in the broader job market.</p>
 <h3 id="42-syntax-comparison-creating-a-server">4.2 Syntax Comparison (Creating a Server)</h3>
@@ -723,7 +722,7 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="w"> <span class="nt">type<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">OS::Nova platform compute service for VMs ::Server
 <span class="w"> <span class="nt">properties<span class="p">:
 <span class="w"> <span class="nt">image<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">ubuntu
-<span class="w"> <span class="nt">flavor - A software-based emulation of a physical computer template - A software-based emulation of a physical computer image for quick deployment defining vCPUs, RAM, and disk <span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">m1.small
+<span class="w"> <span class="nt">flavor - template - image for quick deployment defining vCPUs, RAM, and disk <span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">m1.small
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
 <p><strong>Option B: Terraform (HCL)</strong></p>
 <div class="codehilite"><pre><span><code><span class="w"> <span class="na">image_name<span class="w"> <span class="o">=<span class="w"> <span class="s2">"ubuntu"
@@ -738,20 +737,20 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 </blockquote>
 <h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
 <p><strong>Summary</strong>: We have moved from <strong>Imperative</strong> scripts, where we define strict procedural steps, to <strong>Declarative</strong> IaC , where we define the target architecture. A critical property of these modern tools is <strong>Idempotency</strong>—the ability to execute the same script multiple times without causing errors or duplicating resources. If the resource already exists in the desired state, the tool simply does nothing.</p>
-<p><strong>Reflection</strong>: Consider why a company using multiple cloud providers (e.g., AWS and on-prem OpenStack platform ) would prefer Terraform over Heat. Also, think about the consequences of removing a resource definition from a Terraform file or Heat template - A software-based emulation of a physical computer image for quick deployment ; unlike a script which simply stops running, IaC tools will actively destroy the resource to ensure the real world matches your definition.</p>
+<p><strong>Reflection</strong>: Consider why a company using multiple cloud providers (e.g., AWS and on-prem OpenStack platform ) would prefer Terraform over Heat. Also, think about the consequences of removing a resource definition from a Terraform file or Heat template - image for quick deployment ; unlike a script which simply stops running, IaC tools will actively destroy the resource to ensure the real world matches your definition.</p>
 <hr/>
-<h2 id="5-orchestration-with-heat-the-template-engine">5. Orchestration with Heat (The Template - A software-based emulation of a physical computer image for quick deployment Engine)</h2>
+<h2 id="5-orchestration-with-heat-the-template-engine">5. Orchestration with Heat (The Template - image for quick deployment Engine)</h2>
 <p>Orchestration goes beyond simple resource creation; it manages the dependencies and lifecycle of complex applications. In OpenStack platform , the native Orchestration engine is <strong>Heat</strong>.</p>
-<h3 id="51-anatomy-of-a-template">5.1 Anatomy of a Template - A software-based emulation of a physical computer image for quick deployment </h3>
-<p>Heat uses YAML templates known as <strong>HOT</strong> (Heat Orchestration Templates). Every template - A software-based emulation of a physical computer image for quick deployment follows a standard skeleton:</p>
+<h3 id="51-anatomy-of-a-template">5.1 Anatomy of a Template - image for quick deployment </h3>
+<p>Heat uses YAML templates known as <strong>HOT</strong> (Heat Orchestration Templates). Every template - image for quick deployment follows a standard skeleton:</p>
 <ol>
 <li><strong>Version</strong>: <code>heat_template_version: 2018-08-31</code> tells Heat which features are available.</li>
-<li><strong>Parameters</strong>: Inputs provided by the user at runtime (e.g., SSH Key Name, Server Flavor - A software-based emulation of a physical computer template - A software-based emulation of a physical computer image for quick deployment defining vCPUs, RAM, and disk ).</li>
+<li><strong>Parameters</strong>: Inputs provided by the user at runtime (e.g., SSH Key Name, Server Flavor - template - image for quick deployment defining vCPUs, RAM, and disk ).</li>
 <li><strong>Resources</strong>: The actual infrastructure to build (VMs, Networks, Volumes).</li>
 <li><strong>Outputs</strong>: Information returned to the user after deployment (e.g., The Website URL).</li>
 </ol>
 <div class="codehilite"><pre><span><code><span class="nt">heat_template_version<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">2018-08-31
-<span class="nt">description<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">A skeleton template - A software-based emulation of a physical computer image for quick deployment 
+<span class="nt">description<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">A skeleton template - image for quick deployment 
 
 <span class="nt">parameters<span class="p">:
 <span class="w"> <span class="c1"># Inputs defined here
@@ -780,7 +779,7 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <blockquote>
 <p><strong>Resource Analysis</strong>:
 * <code>resources</code>: The top-level keyword indicating the start of the infrastructure definition block.
-* <code>my_private_net</code>: The <strong>Logical ID</strong> (Variable Name) used to reference this resource elsewhere in the template - A software-based emulation of a physical computer image for quick deployment .
+* <code>my_private_net</code>: The <strong>Logical ID</strong> (Variable Name) used to reference this resource elsewhere in the template - image for quick deployment .
 * <code>type</code>: The specific OpenStack platform resource class (e.g., <code>OS::Neutron::Net</code>).
 * <code>properties</code>: Configuration specific to that resource (like the network name).</p>
 </blockquote>
@@ -823,7 +822,7 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="w"> <span class="nt">type<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">OS::Nova platform compute service for VMs ::Server
 <span class="w"> <span class="nt">properties<span class="p">:
 <span class="w"> <span class="nt">image<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">ubuntu
-<span class="w"> <span class="nt">flavor - A software-based emulation of a physical computer template - A software-based emulation of a physical computer image for quick deployment defining vCPUs, RAM, and disk <span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">m1.small
+<span class="w"> <span class="nt">flavor - template - image for quick deployment defining vCPUs, RAM, and disk <span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">m1.small
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
 <blockquote>
 <p><strong>Resource Analysis</strong>:
@@ -879,7 +878,7 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="w"> <span class="nt">type<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">OS::Nova platform compute service for VMs ::Server
 <span class="w"> <span class="nt">properties<span class="p">:
 <span class="w"> <span class="nt">image<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">ubuntu_focal
-<span class="w"> <span class="nt">flavor - A software-based emulation of a physical computer template - A software-based emulation of a physical computer image for quick deployment defining vCPUs, RAM, and disk <span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">m1.small
+<span class="w"> <span class="nt">flavor - template - image for quick deployment defining vCPUs, RAM, and disk <span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">m1.small
 <span class="w"> <span class="nt">key_name<span class="p">:<span class="w"> <span class="p p-Indicator">{<span class="nt"> get_param<span class="p">:<span class="w"> <span class="nv">key_name<span class="w"> <span class="p p-Indicator">}
 <span class="w"> <span class="nt">networks<span class="p">:
 <span class="w"> <span class="p p-Indicator">-<span class="w"> <span class="nt">network<span class="p">:<span class="w"> <span class="p p-Indicator">{<span class="nt"> get_resource<span class="p">:<span class="w"> <span class="nv">app_net<span class="w"> <span class="p p-Indicator">}
@@ -992,15 +991,15 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 * <strong>Structure</strong>: Both tools define resources, properties, and dependencies. The syntax changes (YAML vs HCL), but the <em>concepts</em> are universal. By learning Heat, you are effectively learning the logic needed for Terraform.</p>
 </blockquote>
 <h3 id="55-beyond-single-vms-magnum-kubernetes">5.5 Beyond Single VMs: Magnum (Kubernetes orchestration platform )</h3>
-<p>In Section 5.3, we installed Docker on a <strong>single VM - A software-based emulation of a physical computer </strong>. While fine for development, production requires clusters. </p>
+<p>In Section 5.3, we installed Docker on a <strong>single VM - </strong>. While fine for development, production requires clusters. </p>
 <p><strong>OpenStack platform Magnum</strong> is the service that bridges Heat and Containers.</p>
 <ul>
 <li><strong>Orchestration</strong>: Magnum uses <strong>Heat</strong> under the hood to deploy a stack.</li>
 <li><strong>Resources</strong>: It automatically creates the <strong>Master Nodes</strong>, <strong>Worker Nodes</strong>, <strong>Load Balancers</strong>, and <strong>Private Networks</strong>.</li>
-<li><strong>Result</strong>: Instead of a VM - A software-based emulation of a physical computer with Docker, you get a fully manageable <strong>Kubernetes orchestration platform Cluster</strong>.</li>
+<li><strong>Result</strong>: Instead of a VM - with Docker, you get a fully manageable <strong>Kubernetes orchestration platform Cluster</strong>.</li>
 </ul>
 <p>To deploy a production-grade Kubernetes orchestration platform cluster on OpenStack platform , we use the <strong>Magnum CLI</strong>. This happens in 3 phases:</p>
-<p><strong>Phase 1: Create the Cluster Template - A software-based emulation of a physical computer image for quick deployment </strong>
+<p><strong>Phase 1: Create the Cluster Template - image for quick deployment </strong>
 This defines the "Shape" of the cluster (OS Image, Keypair, Network Driver).</p>
 <div class="codehilite"><pre><span><code>openstack<span class="w"> coe<span class="w"> cluster<span class="w"> template<span class="w"> create<span class="w"> k8s-template<span class="w"> <span class="se">\
 <span class="w"> --image<span class="w"> fedora-coreos-35<span class="w"> <span class="se">\
@@ -1054,7 +1053,7 @@ kubectl<span class="w"> get<span class="w"> nodes
 <span class="w"> <span class="nt">selector<span class="p">:
 <span class="w"> <span class="nt">matchLabels<span class="p">:
 <span class="w"> <span class="nt">app<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">web
-<span class="w"> <span class="nt">template - A software-based emulation of a physical computer image for quick deployment <span class="p">:
+<span class="w"> <span class="nt">template - image for quick deployment <span class="p">:
 <span class="w"> <span class="nt">metadata<span class="p">:
 <span class="w"> <span class="nt">labels<span class="p">:
 <span class="w"> <span class="nt">app<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">web
@@ -1084,10 +1083,10 @@ kubectl<span class="w"> get<span class="w"> nodes
 </blockquote>
 <h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
 <p><strong>Summary</strong>: Heat templates allow us to define an entire infrastructure stack in a single file. By understanding the core structure (Parameters, Resources, Outputs) and the Building Blocks (Cinder platform block storage service , Nova platform compute service for VMs , Neutron platform networking service resources), we can assemble complex environments that are consistently reproducible.</p>
-<p><strong>Reflection</strong>: Why is it better to define the Security Group inside the template - A software-based emulation of a physical computer image for quick deployment rather than assuming it already exists? (Hint: It makes the template - A software-based emulation of a physical computer image for quick deployment "self-contained" and easier to deploy in a fresh project).</p>
+<p><strong>Reflection</strong>: Why is it better to define the Security Group inside the template - image for quick deployment rather than assuming it already exists? (Hint: It makes the template - image for quick deployment "self-contained" and easier to deploy in a fresh project).</p>
 <hr/>
 <h2 id="6-configuration-management-with-ansible">6. Configuration Management with Ansible</h2>
-<p>We have now learned how to create servers using Heat (Infrastructure as Code) and how to bootstrap them using Cloud-Init. But what happens on <strong>Day 2</strong>? How do you patch 50 servers? How do you update a config file on all of them? Rebuilding the entire stack with Heat every time you need to change a comma in a config file is inefficient.</p>
+<p>We have now learned how to create servers using Heat () and how to bootstrap them using Cloud-Init. But what happens on <strong>Day 2</strong>? How do you patch 50 servers? How do you update a config file on all of them? Rebuilding the entire stack with Heat every time you need to change a comma in a config file is inefficient.</p>
 <p><strong>Ansible</strong> is the industry-standard tool for this phase. It is an agentless automation engine that connects to your servers via SSH and enforces a desired state.</p>
 <h3 id="61-the-inventory">6.1 The Inventory</h3>
 <p>Ansible needs to know <em>what</em> it is managing. This is defined in an <strong>Inventory</strong> file. While it supports a simple INI format, YAML is preferred for clarity.</p>
@@ -1192,11 +1191,11 @@ ansible-playbook<span class="w"> -i<span class="w"> hosts.ini<span class="w"> si
 <hr/>
 <hr/>
 <h2 id="7-version-control-managing-your-templates">7. Version Control: Managing your Templates</h2>
-<p>Treating Infrastructure as Code means your templates (<code>deployment.yaml</code>) and playbooks (<code>site.yaml</code>) are valuable assets. They should not live in a folder on your laptop; they should be managed in a <strong>Version Control System</strong> like <strong>Git</strong>.</p>
+<p>Treating means your templates (<code>deployment.yaml</code>) and playbooks (<code>site.yaml</code>) are valuable assets. They should not live in a folder on your laptop; they should be managed in a <strong>Version Control System</strong> like <strong>Git</strong>.</p>
 <h3 id="71-why-git">7.1 Why Git?</h3>
 <ul>
 <li><strong>History</strong>: "Who changed the firewall rule last Tuesday?" Git tells you exactly who and why.</li>
-<li><strong>Rollback</strong>: If a new template - A software-based emulation of a physical computer image for quick deployment breaks production, <code>git revert</code> allows you to instantly return to the working version.</li>
+<li><strong>Rollback</strong>: If a new template - image for quick deployment breaks production, <code>git revert</code> allows you to instantly return to the working version.</li>
 <li><strong>Collaboration</strong>: Multiple engineers can work on the same stack without overwriting each other's files.</li>
 </ul>
 <h3 id="72-the-basic-workflow">7.2 The Basic Workflow</h3>
@@ -1207,15 +1206,15 @@ git<span class="w"> init
 <span class="c1"># Add your templates
 git<span class="w"> add<span class="w"> deployment.yaml<span class="w"> site.yaml
 
-<span class="c1"># Save a snapshot - A software-based emulation of a physical computer state for rollback (Checkpoint)
-git<span class="w"> commit<span class="w"> -m<span class="w"> <span class="s2">"Added Nginx installation to Heat template - A software-based emulation of a physical computer image for quick deployment "
+<span class="c1"># Save a snapshot - (Checkpoint)
+git<span class="w"> commit<span class="w"> -m<span class="w"> <span class="s2">"Added Nginx installation to Heat template - image for quick deployment "
 
 <span class="c1"># View History
 git<span class="w"> log
 </span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
 <blockquote>
 <p><strong>Git Analysis</strong>:
-* <code>commit</code>: This is your "Save Game" button. Make a commit every time you reach a stable state (e.g., "Heat template - A software-based emulation of a physical computer image for quick deployment works", "Ansible connects").
+* <code>commit</code>: This is your "Save Game" button. Make a commit every time you reach a stable state (e.g., "Heat template - image for quick deployment works", "Ansible connects").
 * <strong>GitOps</strong>: In advanced environments, applying a commit to a Git repository automatically triggers the <code>deploy.sh</code> pipeline we wrote above. This is known as <strong>GitOps</strong>.</p>
 </blockquote>
 <h3 id="73-strategic-summary">7.3 Strategic Summary</h3>
@@ -1232,7 +1231,7 @@ git<span class="w"> log
 <tr>
 <td style="text-align: left;"><strong>Cloud-Init</strong></td>
 <td style="text-align: left;">Boot time</td>
-<td style="text-align: left;">Single VM - A software-based emulation of a physical computer </td>
+<td style="text-align: left;">Single VM - </td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Bash</strong></td>
@@ -1284,27 +1283,40 @@ git<span class="w"> log
 </ul>
 <hr/>
 <h2 id="9-additional-resources">9. Additional Resources</h2>
-<p><a href="https://jqplay.org/">jq Playground</a>
-<a href="https://cloudinit.readthedocs.io/en/latest/topics/examples.html">Cloud-Init Examples</a></p>
+<p><a href="https://jqplay.org/">jq Playground
+<a href="https://cloudinit.readthedocs.io/en/latest/topics/examples.html">Cloud-Init Examples</a></a></p>
 <hr/>
 <h2 id="10-lab-exercises">10. Lab Exercises</h2>
-<p><a href="Week_11_Lab_1_Automation.html">Lab 1: Automation with Scripts</a>
-<strong>Goal</strong>: Scripting cloud deployments with Bash, Python, and Heat.</p>
-<p><a href="Week_11_Lab_2_Ansible.html">Lab 2: Configuration with Ansible</a>
-<strong>Goal</strong>: Using Ansible Playbooks to configure a web server fleet.</p>
-<p><a href="Week_11_Lab_3_Heat.html">Lab 3: heat Infrastructure</a>
-<strong>Goal</strong>: Declarative deployment of Network, Security Groups, and Servers.</p>
-<p><a href="Week_11_Lab_4_Kubernetes.html">Lab 4: Kubernetes with Magnum</a>
-<strong>Goal</strong>: Provisioning a K8s cluster and deploying containers.</p>
+<p><a href="Week_11_Lab_1_Automation.html">Lab 1: Automation with Scripts
+<strong>Goal</strong>: Scripting cloud deployments with Bash, Python, and Heat.</a></p>
+<p><a href="Week_11_Lab_2_Ansible.html">Lab 2: Configuration with Ansible
+<strong>Goal</strong>: Using Ansible Playbooks to configure a web server fleet.</a></p>
+<p><a href="Week_11_Lab_3_Heat.html">Lab 3: heat Infrastructure
+<strong>Goal</strong>: Declarative deployment of Network, Security Groups, and Servers.</a></p>
+<p><a href="Week_11_Lab_4_Kubernetes.html">Lab 4: Kubernetes with Magnum
+<strong>Goal</strong>: Provisioning a K8s cluster and deploying containers.</a></p>
 <p><a href="../index.html">← Back to Course Index</a></p>
 <div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
 <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
 <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
 <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_11_Quiz.html" id="start-quiz-btn">
  Start Quiz
- </a>
-</div>
-</article>
+ 
+</a></div>
+<div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 10 - Storage and Persistence/Week_10_Student_Notes.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Previous: Week 10: Persistence</span>
+</a>
+<a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Course Index
+    </a>
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 12 - Final Project and Review/Week_12_Student_Notes.html">
+<span>Next: Week 12: Final Review</span>
+<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+</div></article>
 </main>
 <!-- Footer -->
 <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">

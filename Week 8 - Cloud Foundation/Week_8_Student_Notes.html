@@ -63,8 +63,8 @@
  fontWeight: '600',
  border: '1px solid var(--border-code)',
  },
- 'code::before': { content: '""' },
- 'code::after': { content: '""' },
+ 'code::before': { content: '' },
+ 'code::after': { content: '' },
  // Code Blocks (Pre)
  pre: {
  backgroundColor: 'var(--bg-pre) !important',
@@ -950,11 +950,10 @@
  &amp; Cloud Technologies
 <span class="font-bold text-lg tracking-tight sm:hidden">OPS3
 </span></span></span></div>
-</a>
 <div class="flex items-center space-x-6">
 <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
  Course Home
- </a>
+ 
 <!-- Theme Toggle Button -->
 <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
 <!-- Sun Icon -->
@@ -968,8 +967,8 @@
 </path>
 </svg>
 </button>
-</div>
-</div>
+</a></div>
+</a></div>
 </nav>
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
@@ -1004,13 +1003,13 @@
 <p>To understand how a cloud is built, we will follow a continuous scenario for the next three weeks. You
  have been hired as the Lead Cloud Engineer for a new software startup called <strong>"Nebula
  Inc."</strong> Currently, they have no infrastructure—just a credit card and a dream. Your job is to
- build their Virtual Data Center (VDC) from scratch using OpenStack platform . This is not a theoretical exercise;
+ build their Virtual Data Center (VDC) from scratch using <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform</span></a> platform . This is not a theoretical exercise;
  you will be typing the actual commands that cloud administrators use daily to construct the digital
  fabric of the modern internet.</p>
 <p><strong>The Roadmap</strong>:</p>
 <ul>
 <li><strong>Week 8 (Foundation)</strong>: You must create the secure environment. This involves setting
- up the company's "Tenant" (Project), hiring the staff (Users), purchasing the software licenses
+ up the company's "<a class="glossary-term" href="glossary.html#Tenant">Tenant<span class="glossary-tooltip">Grouping of users and resources (also called Project)</span></a>" (Project), hiring the staff (Users), purchasing the software licenses
  (Images), and cabling the office (Networking).</li>
 <li><strong>Week 9 (Compute)</strong>: You will deploy their first web servers and secure them with
  firewalls.</li>
@@ -1022,7 +1021,7 @@
 <hr/>
 <h2 id="2-deep-dive-identity-management-keystone">2. Deep Dive: Identity Management (Keystone platform identity/authentication service )</h2>
 <p>Keystone platform identity/authentication service is the central nervous system of OpenStack platform . If Keystone platform identity/authentication service is down, <strong>nothing</strong> works.
- It is responsible for Authentication (AuthN - "Who are you?") and Authorization (AuthZ - "What can you
+ It is responsible for Authentication (AuthNWho are you?") and Authorization (AuthZWhat can you
  do?"). In a physical building, Keystone platform identity/authentication service is the security guard at the front desk who checks your ID badge
  and decides which floors you are allowed to visit.</p>
 <h3 id="21-the-authentication-workflow-the-token-dance">2.1 The Authentication Workflow (The "Token Dance")
@@ -1180,15 +1179,15 @@
 <ul>
 <li><a href="https://docs.openstack.org/keystone/latest/">OpenStack Keystone Guide</a></li>
 <li><a href="https://docs.aws.amazon.com/iam/">AWS Identity and Access Management (IAM)</a></li>
-<li><a href="https://learn.microsoft.com/en-us/entra/fundamentals/">Microsoft Entra ID (Azure AD)</a>
-</li>
+<li><a href="https://learn.microsoft.com/en-us/entra/fundamentals/">Microsoft Entra ID (Azure AD)
+</a></li>
 </ul>
 <hr/>
 <h2 id="3-deep-dive-image-management-glance">3. Deep Dive: Image Management (Glance platform image service )</h2>
 <p>Every Virtual Machine needs a hard drive to boot from. In the physical world, you might walk around with
  a USB stick containing a Windows or Linux ISO installer. In the cloud, this is inefficient. Instead, we
  use <strong>Glance platform image service </strong>, the OpenStack platform Image Service. Glance platform image service acts as a central library where
- validated, pre-installed operating system templates are stored. When you launch a VM - A software-based emulation of a physical computer , Nova platform compute service for VMs contacts
+ validated, pre-installed operating system templates are stored. When you launch a VM - , Nova platform compute service for VMs contacts
  Glance platform image service to request a copy of the "Master Image" to be streamed to the hypervisor.</p>
 <h3 id="31-understanding-disk-formats">3.1 Understanding Disk Formats</h3>
 <p>Not all virtual disks are created equal. You must choose the right format for your cloud workload:</p>
@@ -1197,7 +1196,7 @@
  empty, making it slow to copy over the network.</p>
 <p><strong>QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format (QEMU - Type 1 hypervisor for virtualization Copy On Write)</strong> is the standard format for OpenStack platform . It supports compression
  and "Thin Provisioning," meaning a 10GB drive with only 100MB of data takes up only 100MB of physical
- space. Crucially, it logic enables snapshot - A software-based emulation of a physical computer state for rollback capabilities, allowing you to save the state of a VM - A software-based emulation of a physical computer 
+ space. Crucially, it logic enables snapshot - capabilities, allowing you to save the state of a VM - 
  instantly.</p>
 <p><strong>ISO</strong> is a read-only archive used for installation media. While essential for building
  images, it is rarely used in cloud "boot-from-image" scenarios because we prefer pre-installed operating
@@ -1223,7 +1222,7 @@
 <p>For any software company, consistency is key. We cannot have one developer running Ubuntu 20.04 and
  another running Fedora 35, as this leads to the infamous "it works on my machine" problem. To solve
  this, Nebula Inc. enforces a <strong>Standard Operating Environment (SOE)</strong>. We will upload a
- "Golden Image"—a pre-approved, security-hardened operating system template - A software-based emulation of a physical computer image for quick deployment that all staff must use. For
+ "Golden Image"—a pre-approved, security-hardened operating system template - image for quick deployment that all staff must use. For
  our initial testing phase, we will utilize <strong>CirrOS</strong>, a lightweight (15MB) Linux
  distribution designed specifically for validating OpenStack platform clouds, before graduating to full-sized
  Ubuntu Server images in production.</p>
@@ -1256,7 +1255,7 @@
  uploader). This flag makes it visible to <em>all</em> projects in the cloud (Nebula, Admin,
  Testing, etc.).</li>
 <li><code>--min-ram 64</code>: A metadata tag. Nova platform compute service for VMs checks this before booting. If a user tries
- to launch this on a Flavor - A software-based emulation of a physical computer template - A software-based emulation of a physical computer image for quick deployment defining vCPUs, RAM, and disk with 32MB RAM, Nova platform compute service for VMs will block the request to prevent a crash.
+ to launch this on a Flavor - template - image for quick deployment defining vCPUs, RAM, and disk with 32MB RAM, Nova platform compute service for VMs will block the request to prevent a crash.
  </li>
 <li><strong>Result</strong>: The file is streamed into the Glance platform image service Backend Store, and a UUID is
  generated.</li>
@@ -1284,7 +1283,7 @@
 </div>
 <ul>
 <li><strong>Explanation</strong>: Adds a custom key-value pair to the image metadata. The Scheduler use
- this to ensure the VM - A software-based emulation of a physical computer lands on Intel hardware, not ARM.</li>
+ this to ensure the VM - lands on Intel hardware, not ARM.</li>
 <li><strong>Result</strong>: The Glance platform image service Registry is updated; the actual file is untouched.</li>
 </ul>
 <p><strong>Deleting Images</strong></p>
@@ -1301,7 +1300,7 @@
 <p><strong>Summary</strong>:</p>
 <ul>
 <li><strong>Glance platform image service </strong>: The image repository that provides boot disks to Nova platform compute service for VMs .</li>
-<li><strong>QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format </strong>: The preferred format for cloud images due to thin provisioning and snapshot - A software-based emulation of a physical computer state for rollback 
+<li><strong>QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format </strong>: The preferred format for cloud images due to thin provisioning and snapshot - 
  support.</li>
 <li><strong>SOE</strong>: Standard Operating Environment ensuring consistency across all machines.</li>
 </ul>
@@ -1341,7 +1340,7 @@
 <p><strong>The Data Plane (OVS Agent/L2 Agent)</strong> sits on every compute node and acts as the muscle.
  It receives instructions from the Control Plane via a message bus (RabbitMQ) and implements them by
  programming the local virtual switch. It is the actual software responsible for moving packets from your
- VM - A software-based emulation of a physical computer to the physical network card.</p>
+ VM - to the physical network card.</p>
 <h3 id="42-the-virtual-switch-open-vswitch-ovs">4.2 The Virtual Switch: Open vSwitch (OVS)</h3>
 <p>In a physical rack, servers plug into a top-of-rack switch. In OpenStack platform , VMs plug into a virtual switch
  called <strong>Open vSwitch (OVS)</strong>. Unlike a standard unmanaged switch that simply learns MAC
@@ -1358,8 +1357,8 @@
  a <strong>Linux Network Namespace</strong> (<code>ip netns</code>). This allows Project A and
  Project B to both use "192.168.0.1" without conflict; they live in parallel, isolated universes.
  </li>
-<li><strong>Cabling = Veth Pairs</strong>: When a VM - A software-based emulation of a physical computer "plugs in" to the OVS Bridge, Neutron platform networking service creates a
- <strong>Virtual Ethernet (veth) pair</strong>. One end connects to the VM - A software-based emulation of a physical computer 's interface (inside KVM - Type 1 hypervisor ),
+<li><strong>Cabling = Veth Pairs</strong>: When a VMplugs in" to the OVS Bridge, Neutron platform networking service creates a
+ <strong>Virtual Ethernet (veth) pair</strong>. One end connects to the VM - 's interface (inside KVM - Type 1 hypervisor ),
  and the other connects to the OVS Bridge.</li>
 </ul>
 <h3 id="44-flow-of-traffic-north-south-vs-east-west">4.4 Flow of Traffic (North-South vs East-West)</h3>
@@ -1371,7 +1370,7 @@
 </p>
 <p><strong>East-West Traffic</strong> refers to communication between VMs inside the <em>same</em> cloud
  environment (e.g., Web Server A talking to Database Server B). Ideally, this traffic should never leave
- the virtual infrastructure. It flows from the source VM - A software-based emulation of a physical computer , through the local OVS Bridge, and is typically
+ the virtual infrastructure. It flows from the source VM - , through the local OVS Bridge, and is typically
  encapsulated in a tunnel protocol like <strong>VXLAN</strong> to cross the physical network before
  arriving at the destination compute node.</p>
 <p><strong>North-South Traffic</strong> refers to communication entering or leaving the cloud (e.g., a User
@@ -1505,7 +1504,7 @@
 <td style="text-align: left;"><strong>Network Service</strong></td>
 <td style="text-align: left;">Neutron platform networking service </td>
 <td style="text-align: left;">VPC (Virtual Private Cloud)</td>
-<td style="text-align: left;">VNet (Virtual Network - A software-based emulation of a physical computer communication )</td>
+<td style="text-align: left;">VNet (Virtual Network - communication )</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Routing</strong></td>
@@ -1532,7 +1531,7 @@
 <h2 id="7-summary">7. Summary</h2>
 <p>We have built the <strong>Foundation</strong> for Nebula Inc.:
  1. <strong>Identity</strong>: A secure Project and User with assigned Roles.
- 2. <strong>Image</strong>: A validated OS template - A software-based emulation of a physical computer image for quick deployment in Glance platform image service .
+ 2. <strong>Image</strong>: A validated OS template - image for quick deployment in Glance platform image service .
  3. <strong>Network</strong>: A fully routed Layer 3 topology.</p>
 <p>Next week, we Launch.</p>
 <hr/>
@@ -1551,9 +1550,22 @@
  the interactive quiz now!</p>
 <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_8_Quiz.html" id="start-quiz-btn">
  Start Quiz
- </a>
-</div>
-</article>
+ 
+</a></div>
+<div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 7 - Transition to Cloud Computing Concepts/Week_7_Student_Notes.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Previous: Week 7: Cloud Concepts</span>
+</a>
+<a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Course Index
+    </a>
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 9 - Compute Operations/Week_9_Student_Notes.html">
+<span>Next: Week 9: Compute Ops</span>
+<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+</div></article>
 </main>
 <!-- Footer -->
 <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">

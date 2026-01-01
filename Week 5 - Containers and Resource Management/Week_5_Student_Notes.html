@@ -64,8 +64,8 @@
  fontWeight: '600',
  border: '1px solid var(--border-code)',
  },
- 'code::before': { content: '""' },
- 'code::after': { content: '""' },
+ 'code::before': { content: '' },
+ 'code::after': { content: '' },
  // Code Blocks (Pre)
  pre: {
  backgroundColor: 'var(--bg-pre) !important',
@@ -433,11 +433,10 @@
 <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation &amp; Cloud Technologies
 <span class="font-bold text-lg tracking-tight sm:hidden">OPS3
 </span></span></span></div>
-</a>
 <div class="flex items-center space-x-6">
 <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
  Course Home
- </a>
+ 
 <!-- Theme Toggle Button -->
 <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
 <!-- Sun Icon -->
@@ -445,8 +444,8 @@
 <!-- Moon Icon -->
 <svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor" viewbox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 </button>
-</div>
-</div>
+</a></div>
+</a></div>
 </nav>
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
@@ -468,24 +467,24 @@
 <blockquote>
 <p>[!TIP]
 <strong>How to succeed in this week</strong>:
-Containers are NOT lightweight VMs—they're a different paradigm. Focus on understanding namespaces and cgroups. The <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> section (<a class="glossary-term" href="glossary.html#Kubernetes">Kubernetes<span class="glossary-tooltip"><a class="glossary-term" href="glossary.html#Container">Container<span class="glossary-tooltip">Lightweight package with application code and dependencies</span></a> orchestration platform</span></a> <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform ) builds on everything you've learned so far.</p>
+Containers are NOT lightweight VMs—they're a different paradigm. Focus on understanding namespaces and cgroups. The <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> section (<a class="glossary-term" href="glossary.html#Kubernetes">Kubernetes<span class="glossary-tooltip">Container orchestration platform</span></a> <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform ) builds on everything you've learned so far.</p>
 </blockquote>
 <hr/>
 <h2 id="welcome-to-week-5">Welcome to Week 5!</h2>
-<p>This week represents a significant shift in our exploration of virtualization technology. While the previous weeks focused on virtual machines that virtualize complete hardware stacks, this week introduces containers, a fundamentally different approach to virtualization that operates at the operating system level. Understanding containers is no longer optional for IT professionals. Container technology has become pervasive across cloud computing, application development, and modern infrastructure management. Major technology companies deploy millions of containers daily, and cloud platforms like OpenStack platform integrate container services as core offerings.</p>
-<p>The conceptual leap from virtual machines to containers requires adjusting your mental model of what virtualization means. Virtual machines create the illusion of complete computers with virtual hardware, allowing each VM - A software-based emulation of a physical computer to run its own operating system kernel. Containers create the illusion of separate systems while sharing the host operating system's kernel. This distinction, while seemingly subtle, has profound implications for performance, resource utilization, deployment speed, and appropriate use cases. By the end of this week, you will not only understand these differences conceptually but also have hands-on experience creating and managing containers in Proxmox platform combining KVM - Type 1 hypervisor and LXC VE using LXC , and familiarity with Docker and Podman, the dominant container technologies in cloud environments.</p>
+<p>This week represents a significant shift in our exploration of <a class="glossary-term" href="glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> technology. While the previous weeks focused on virtual machines that virtualize complete hardware stacks, this week introduces containers, a fundamentally different approach to <a class="glossary-term" href="glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> that operates at the operating system level. Understanding containers is no longer optional for IT professionals. <a class="glossary-term" href="glossary.html#Container">Container<span class="glossary-tooltip">Lightweight package with application code and dependencies</span></a> technology has become pervasive across <a class="glossary-term" href="glossary.html#Cloud-Computing">cloud computing<span class="glossary-tooltip">Computing services delivered over the internet</span></a>, application development, and modern infrastructure management. Major technology companies deploy millions of containers daily, and cloud platforms like <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform</span></a> platform integrate <a class="glossary-term" href="glossary.html#Container">container<span class="glossary-tooltip">Lightweight package with application code and dependencies</span></a> services as core offerings.</p>
+<p>The conceptual leap from virtual machines to containers requires adjusting your mental model of what <a class="glossary-term" href="glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> means. Virtual machines create the illusion of complete computers with virtual hardware, allowing each <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer</span></a> - to run its own operating system kernel. Containers create the illusion of separate systems while sharing the host operating system's kernel. This distinction, while seemingly subtle, has profound implications for performance, resource utilization, deployment speed, and appropriate use cases. By the end of this week, you will not only understand these differences conceptually but also have hands-on experience creating and managing containers in <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> VE using <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> , and familiarity with <a class="glossary-term" href="glossary.html#Docker">Docker<span class="glossary-tooltip">Platform for developing and running containers</span></a> and Podman, the dominant <a class="glossary-term" href="glossary.html#Container">container<span class="glossary-tooltip">Lightweight package with application code and dependencies</span></a> technologies in cloud environments.</p>
 <hr/>
 <h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
 <ul>
 <li>Articulate the architectural differences between containers and virtual machines</li>
 <li>Explain the roles of Namespaces and Control Groups (cgroups) in Linux</li>
-<li>Compare different container technologies: LXC , Docker, Podman, and Apptainer</li>
-<li>Master the command-line workflows for standard LXC and Docker</li>
-<li>Deploy and manage LXC containers using the Proxmox platform combining KVM - Type 1 hypervisor and LXC VE GUI</li>
+<li>Compare different <a class="glossary-term" href="glossary.html#Container">container<span class="glossary-tooltip">Lightweight package with application code and dependencies</span></a> technologies: <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> , <a class="glossary-term" href="glossary.html#Docker">Docker<span class="glossary-tooltip">Platform for developing and running containers</span></a>, Podman, and Apptainer</li>
+<li>Master the command-line workflows for standard <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#Docker">Docker<span class="glossary-tooltip">Platform for developing and running containers</span></a></li>
+<li>Deploy and manage <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> containers using the <a class="glossary-term" href="glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> VE GUI</li>
 </ul>
 <hr/>
 <h2 id="1-the-container-paradigm">1. The Container Paradigm</h2>
-<p>To truly grasp how containers differ from virtual machines, we must examine what happens at the kernel level during creation and operation. When you boot a virtual machine on Proxmox platform combining KVM - Type 1 hypervisor and LXC VE, a complex sequence occurs. The hypervisor creates a virtualized hardware environment including virtual CPU, memory, storage controllers, and network adapters. The VM - A software-based emulation of a physical computer 's virtual BIOS initializes, the bootloader loads from the virtual disk - A software-based emulation of a physical computer , and the kernel initializes. From the kernel's perspective, it is running on a physical computer with exclusive control of hardware resources.</p>
+<p>To truly grasp how containers differ from virtual machines, we must examine what happens at the kernel level during creation and operation. When you boot a virtual machine on Proxmox platform combining KVM - Type 1 hypervisor and LXC VE, a complex sequence occurs. The hypervisor creates a virtualized hardware environment including virtual CPU, memory, storage controllers, and network adapters. The VM - 's virtual BIOS initializes, the bootloader loads from the virtual disk - , and the kernel initializes. From the kernel's perspective, it is running on a physical computer with exclusive control of hardware resources.</p>
 <p>Containers operate on entirely different principles. When you create a container, no new kernel boots. The Proxmox platform combining KVM - Type 1 hypervisor and LXC host's kernel—which is itself a Linux kernel—remains the only kernel running. What changes is that the kernel creates isolation boundaries using features built into Linux itself. These features, primarily namespaces and control groups, allow the kernel to present different views of system resources to different groups of processes.</p>
 <p><img alt="Virtual Machines vs Containers Architecture" src="images/vm_vs_container.png"/>
 <em>Figure 1: VMs vs Containers Architecture - VMs include full guest OS with separate kernel; containers share the host kernel with isolation via namespaces</em></p>
@@ -623,7 +622,7 @@ Containers share the Hot Kernel; VMs use their own Kernel.</p>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Philosophy</strong></td>
-<td style="text-align: left;">"Lightweight VM - A software-based emulation of a physical computer "</td>
+<td style="text-align: left;">"Lightweight VM</td>
 <td style="text-align: left;">"Single Service"</td>
 <td style="text-align: left;">"Single Service"</td>
 <td style="text-align: left;">"Portable Application"</td>
@@ -693,9 +692,9 @@ Containers share the Hot Kernel; VMs use their own Kernel.</p>
 <h2 id="3-working-with-system-containers-lxc-cli">3. Working with System Containers (LXC CLI)</h2>
 <p>Before utilizing the graphical interface of Proxmox platform combining KVM - Type 1 hypervisor and LXC VE, it is important to understand the underlying mechanics of LXC using standard command-line tools. This knowledge is applicable to any Linux system running LXC .</p>
 <h3 id="31-creating-a-container">3.1. Creating a Container</h3>
-<p>In the Docker ecosystem, users typically "pull" an image from a registry. In the LXC ecosystem, the process involves "creating" a container from a template - A software-based emulation of a physical computer image for quick deployment . A template - A software-based emulation of a physical computer image for quick deployment is a script or tarball that constructs the root filesystem for a specific Linux distribution. The <code>lxc-create</code> command handles this process, downloading the necessary files to a directory on the host (typically <code>/var/lib/lxc</code>).</p>
+<p>In the Docker ecosystem, users typically "pull" an image from a registry. In the LXC ecosystem, the process involves "creating" a container from a template - image for quick deployment . A template - image for quick deployment is a script or tarball that constructs the root filesystem for a specific Linux distribution. The <code>lxc-create</code> command handles this process, downloading the necessary files to a directory on the host (typically <code>/var/lib/lxc</code>).</p>
 <p><img alt="LXC Container Lifecycle Workflow" src="images/lxc_workflow.png"/>
-<em>Figure 4: LXC Container Lifecycle - From template - A software-based emulation of a physical computer image for quick deployment download through creation, start, attach, stop, to destroy</em></p>
+<em>Figure 4: LXC Container Lifecycle - From template - image for quick deployment download through creation, start, attach, stop, to destroy</em></p>
 <div class="codehilite"><pre><span><code><span class="c1"># Syntax: lxc -create -n <name> -t <template_script></template_script></name>
 sudo<span class="w"> lxc-create<span class="w"> -n<span class="w"> my-web-server<span class="w"> -t<span class="w"> download<span class="w"> --<span class="w"> --dist<span class="w"> ubuntu<span class="w"> --release<span class="w"> jammy<span class="w"> --arch<span class="w"> amd64
 </span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
@@ -724,7 +723,7 @@ sudo<span class="w"> lxc-destroy<span class="w"> -n<span class="w"> my-web-serve
 <h3 id="36-section-3-checkpoint">3.6. Section 3 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Create</strong>: Builds a rootfs from a Template - A software-based emulation of a physical computer image for quick deployment (<code>lxc-create</code>).</li>
+<li><strong>Create</strong>: Builds a rootfs from a Template - image for quick deployment (<code>lxc-create</code>).</li>
 <li><strong>Start</strong>: Boots the init system inside the namespace (<code>lxc-start</code>).</li>
 <li><strong>Attach</strong>: Enters the namespace directly (<code>lxc-attach</code>).</li>
 </ul>
@@ -741,9 +740,9 @@ sudo<span class="w"> lxc-destroy<span class="w"> -n<span class="w"> my-web-serve
 <h2 id="4-lxc-in-proxmox-ve-gui-workflow">4. LXC in Proxmox platform combining KVM - Type 1 hypervisor and LXC VE (GUI Workflow)</h2>
 <p>Proxmox platform combining KVM - Type 1 hypervisor and LXC VE integrates LXC natively, wrapping the underlying LXC technologies in a sophisticated management interface. This abstracts the complexity of command-line management while providing powerful features like backup, replication, and high availability.</p>
 <p><img alt="Proxmox LXC Management Interface" src="images/proxmox_lxc_gui.png"/>
-<em>Figure 8: Proxmox platform combining KVM - Type 1 hypervisor and LXC VE Container Management - GUI workflow from template - A software-based emulation of a physical computer image for quick deployment download to container creation with dynamic resource management</em></p>
+<em>Figure 8: Proxmox platform combining KVM - Type 1 hypervisor and LXC VE Container Management - GUI workflow from template - image for quick deployment download to container creation with dynamic resource management</em></p>
 <h3 id="41-step-1-downloading-templates">4.1. Step 1: Downloading Templates</h3>
-<p>Before a container can be created, a template - A software-based emulation of a physical computer image for quick deployment must be available on the configured storage. In the Proxmox platform combining KVM - Type 1 hypervisor and LXC GUI, navigate to the storage view (such as <code>local</code> or <code>local-lvm</code>). The <strong>CT Templates</strong> section provides a built-in browser for downloading official templates for various distributions like Ubuntu, Debian, Alpine, and CentOS, as well as TurnKey Linux appliances which come pre-configured with software stacks.</p>
+<p>Before a container can be created, a template - image for quick deployment must be available on the configured storage. In the Proxmox platform combining KVM - Type 1 hypervisor and LXC GUI, navigate to the storage view (such as <code>local</code> or <code>local-lvm</code>). The <strong>CT Templates</strong> section provides a built-in browser for downloading official templates for various distributions like Ubuntu, Debian, Alpine, and CentOS, as well as TurnKey Linux appliances which come pre-configured with software stacks.</p>
 <h3 id="42-step-2-creating-a-container">4.2. Step 2: Creating a Container</h3>
 <p>The creation wizard guides you through the configuration. Important settings include the <strong>Hostname</strong>, which sets the container's internal identity, and the <strong>Unprivileged</strong> option. Unprivileged containers are the default and recommended choice; they use user namespaces to map the container's root user to a non-privileged user on the host, significantly reducing the impact of a potential container escape. During <strong>Disk</strong> and <strong>CPU/Memory</strong> configuration, you set the resource limits that cgroups will enforce.</p>
 <h3 id="43-step-3-managing-resources-dynamically">4.3. Step 3: Managing Resources Dynamically</h3>
@@ -997,9 +996,9 @@ kubectl<span class="w"> expose<span class="w"> deployment<span class="w"> web-ap
 <h2 id="9-additional-resources">9. Additional Resources</h2>
 <h3 id="91-video-tutorials">9.1. Video Tutorials</h3>
 <ul>
-<li><strong>LXC in Proxmox platform combining KVM - Type 1 hypervisor and LXC </strong>: <a href="https://www.youtube.com/watch?v=xKhWRMj5Nrc">YouTube</a> (Compares to VMs, setup guide).</li>
-<li><strong>Docker vs. Podman</strong>: <a href="https://www.youtube.com/watch?v=lc7p4ANkQ3U">YouTube</a> (Explains differences, cloud use cases).</li>
-<li><strong>Docker Basics</strong>: <a href="https://www.youtube.com/watch?v=rOt3f0G4Sr4">YouTube</a> (Beginner guide to Docker containers).</li>
+<li><strong>LXC in Proxmox platform combining KVM - Type 1 hypervisor and LXC </strong>: <a href="https://www.youtube.com/watch?v=xKhWRMj5Nrc">YouTube (Compares to VMs, setup guide).</a></li>
+<li><strong>Docker vs. Podman</strong>: <a href="https://www.youtube.com/watch?v=lc7p4ANkQ3U">YouTube (Explains differences, cloud use cases).</a></li>
+<li><strong>Docker Basics</strong>: <a href="https://www.youtube.com/watch?v=rOt3f0G4Sr4">YouTube (Beginner guide to Docker containers).</a></li>
 </ul>
 <h3 id="92-documentation-further-reading">9.2. Documentation &amp; Further Reading</h3>
 <ul>
@@ -1011,14 +1010,14 @@ kubectl<span class="w"> expose<span class="w"> deployment<span class="w"> web-ap
 <hr/>
 <h2 id="10-lab-exercises">10. Lab Exercises</h2>
 <ul>
-<li><a href="Week_5_Lab_1_LXC_System_Containers.html">Lab 1: System Containers (LXC)</a><ul>
+<li><a href="Week_5_Lab_1_LXC_System_Containers.html">Lab 1: System Containers (LXC)<ul>
 <li><strong>Goal</strong>: Introduction to System Containers on Proxmox platform combining KVM - Type 1 hypervisor and LXC .</li>
 </ul>
-</li>
-<li><a href="Week_5_Lab_2_Docker_and_Orchestration.html">Lab 2: Docker Ecosystem &amp; Orchestration</a><ul>
+</a></li>
+<li><a href="Week_5_Lab_2_Docker_and_Orchestration.html">Lab 2: Docker Ecosystem &amp; Orchestration<ul>
 <li><strong>Goal</strong>: Docker Fundamentals, Networking, Compose, and Portainer.</li>
 </ul>
-</li>
+</a></li>
 </ul>
 <p><a href="../index.html">← Back to Course Index</a></p>
 <div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
@@ -1026,9 +1025,22 @@ kubectl<span class="w"> expose<span class="w"> deployment<span class="w"> web-ap
 <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
 <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_5_Quiz.html" id="start-quiz-btn">
  Start Quiz
- </a>
-</div>
-</article>
+ 
+</a></div>
+<div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 4 - Storage and Backup/Week_4_Student_Notes.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Previous: Week 4: Storage</span>
+</a>
+<a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Course Index
+    </a>
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 6 - Proxmox Cluster and High Availability/Week_6_Student_Notes.html">
+<span>Next: Week 6: Clustering</span>
+<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+</div></article>
 </main>
 <!-- Footer -->
 <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">

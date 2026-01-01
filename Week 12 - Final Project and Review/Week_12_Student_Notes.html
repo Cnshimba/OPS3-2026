@@ -63,8 +63,8 @@
  fontWeight: '600',
  border: '1px solid var(--border-code)',
  },
- 'code::before': { content: '""' },
- 'code::after': { content: '""' },
+ 'code::before': { content: '' },
+ 'code::after': { content: '' },
  // Code Blocks (Pre)
  pre: {
  backgroundColor: 'var(--bg-pre) !important',
@@ -950,11 +950,10 @@
  &amp; Cloud Technologies
 <span class="font-bold text-lg tracking-tight sm:hidden">OPS3
 </span></span></span></div>
-</a>
 <div class="flex items-center space-x-6">
 <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
  Course Home
- </a>
+ 
 <!-- Theme Toggle Button -->
 <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
 <!-- Sun Icon -->
@@ -968,8 +967,8 @@
 </path>
 </svg>
 </button>
-</div>
-</div>
+</a></div>
+</a></div>
 </nav>
 <!-- Main Content -->
 <main class="container mx-auto px-4 max-w-5xl mb-12">
@@ -1036,7 +1035,7 @@
 <li><strong>Frontend Server</strong>:
  <ul>
 <li>Name: <code>web-01</code>.</li>
-<li>Flavor - A software-based emulation of a physical computer template - A software-based emulation of a physical computer image for quick deployment defining vCPUs, RAM, and disk : <code>m1.tiny</code>.</li>
+<li>Flavor - template - image for quick deployment defining vCPUs, RAM, and disk : <code>m1.tiny</code>.</li>
 <li>Image: <code>ubuntu</code> (or <code>cirros</code>).</li>
 <li><strong>Automation</strong>: Must use <code>User-Data</code> (Cloud-Init) to install a web
  server (<code>apache2</code> or <code>nginx</code>) and create a customized
@@ -1084,8 +1083,8 @@
 <ol>
 <li><strong>Golden Image Strategy</strong>:
  <ul>
-<li>Create a <strong>Snapshot - A software-based emulation of a physical computer state for rollback </strong> of your configured <code>web-01</code> server.</li>
-<li>Launch a new instance <code>web-02</code> from this Snapshot - A software-based emulation of a physical computer state for rollback .</li>
+<li>Create a <strong>Snapshot - </strong> of your configured <code>web-01</code> server.</li>
+<li>Launch a new instance <code>web-02</code> from this Snapshot - .</li>
 <li><strong>Requirement</strong>: <code>web-02</code> must serve the website
  <em>immediately</em> upon boot without needing <code>User-Data</code>.</li>
 <li><strong>Theory</strong>: In your report, explain why this "Golden Image" approach boots
@@ -1148,7 +1147,16 @@
 </tbody>
 </table>
 <p><a href="../index.html">← Back to Course Index</a></p>
-</article>
+<div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 11 - Automation and Cloud API/Week_11_Student_Notes.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Previous: Week 11: Automation</span>
+</a>
+<a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Course Index
+    </a>
+<div></div></div></article>
 </main>
 <!-- Footer -->
 <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
