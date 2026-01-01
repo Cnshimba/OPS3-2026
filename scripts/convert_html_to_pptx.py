@@ -271,6 +271,52 @@ def parse_html_slides(html_path):
         week_num = '1'
         title = 'Presentation'
     
+    # Try to find and extract learning objectives from student notes
+    objectives = []
+    # Look for student notes file in the same directory
+    student_notes_path = html_path.parent / f"Week_{week_num}_Student_Notes.html"
+    if student_notes_path.exists():
+        with open(student_notes_path, 'r', encoding='utf-8') as f:
+            notes_content = f.read()
+        notes_soup = BeautifulSoup(notes_content, 'html.parser')
+        
+        # Look for learning objectives section
+        for header in notes_soup.find_all(['h2', 'h3']):
+            text = header.get_text().lower()
+            if any(keyword in text for keyword in ['learning objective', 'objectives', 'learning outcome', 'what you will learn', 'goals']):
+                # Get the next sibling content
+                next_elem = header.find_next_sibling()
+                if next_elem and next_elem.name == 'ul':
+                    for li in next_elem.find_all('li', recursive=False):
+                        obj_text = li.get_text().strip()
+                        if obj_text and len(obj_text) < 300:
+                            objectives.append(obj_text)
+                elif next_elem and next_elem.name == 'ol':
+                    for li in next_elem.find_all('li', recursive=False):
+                        obj_text = li.get_text().strip()
+                        if obj_text and len(obj_text) < 300:
+                            objectives.append(obj_text)
+                break
+    
+    # If no objectives found, create generic ones from main headings
+    if not objectives:
+        all_slides = soup.find_all('div', class_='slide')
+        h2_headers = []
+        for slide_div in all_slides:
+            if 'title-slide' not in slide_div.get('class', []):
+                h2 = slide_div.find('h2')
+                if h2:
+                    header_text = h2.get_text().strip()
+                    if header_text and header_text.lower() not in ['summary', 'conclusion', 'review']:
+                        h2_headers.append(header_text)
+        
+        # Create objectives from unique headers
+        seen = set()
+        for header in h2_headers[:6]:
+            if header not in seen:
+                objectives.append(f"Understand {header.lower()}")
+                seen.add(header)
+    
     # Extract all slides
     slides_data = []
     all_slides = soup.find_all('div', class_='slide')
@@ -328,12 +374,12 @@ def parse_html_slides(html_path):
         if slide_info['title'] or slide_info['content']:
             slides_data.append(slide_info)
     
-    return week_num, title, slides_data
+    return week_num, title, objectives, slides_data
 
 
 def create_powerpoint(html_path, output_path, logo_path=None):
     """Create PowerPoint presentation from HTML slides"""
-    week_num, title, slides_data = parse_html_slides(html_path)
+    week_num, title, objectives, slides_data = parse_html_slides(html_path)
     
     # Create presentation
     prs = Presentation()
@@ -342,6 +388,10 @@ def create_powerpoint(html_path, output_path, logo_path=None):
     
     # Add title slide
     add_title_slide(prs, title, week_num, logo_path)
+    
+    # Add learning objectives slide
+    if objectives:
+        add_objectives_slide(prs, objectives, logo_path)
     
     # Content slides
     for section in slides_data:
