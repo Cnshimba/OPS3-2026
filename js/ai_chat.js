@@ -16,7 +16,6 @@ Your Goal: Answer student questions accurately using ONLY the provided Course Co
 2. If the answer is found in the context, explain it clearly.
 3. If the answer is NOT in the context, politely say: "I can only answer questions related to the OPS3 course notes."
 4. Do NOT hallucinate information not present in the notes.
-5. Format answers with Markdown(bold, lists, etc.) for readability.
 6. Keep answers concise unless a detailed explanation is requested.
 `;
 
@@ -35,8 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function setupUI() {
     const header = document.querySelector('.chat-header');
 
-    // Only show Settings Button if NO embedded key is present
-    if (!EMBEDDED_KEY) {
+    // Only show Settings Button if NO embedded key is present OR it's the placeholder
+    if (!EMBEDDED_KEY || EMBEDDED_KEY === "__GEMINI_API_KEY__") {
         const settingsBtn = document.createElement('button');
         settingsBtn.innerHTML = '⚙️';
         settingsBtn.className = 'chat-settings-btn';
