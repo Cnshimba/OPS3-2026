@@ -1,4 +1,3 @@
-```javascript
 // AI Chat Logic (Gemini API Integration)
 
 // Globals
@@ -117,38 +116,38 @@ window.sendMessage = async function () {
     // Simple "Full Context" approach: Text + Question
     // For 180k tokens, we send it all. Gemini 1.5 Flash handles 1M.
 
-    const fullPrompt = `${ SYSTEM_PROMPT } \n\nCOURSE CONTEXT: \n${ COURSE_CONTEXT } \n\nSTUDENT QUESTION: ${ question } `;
+    const fullPrompt = `${SYSTEM_PROMPT} \n\nCOURSE CONTEXT: \n${COURSE_CONTEXT} \n\nSTUDENT QUESTION: ${question} `;
 
     try {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({
-    contents: [{
-        parts: [{ text: fullPrompt }]
-    }]
-})
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: fullPrompt }]
+                }]
+            })
         });
 
-const data = await response.json();
+        const data = await response.json();
 
-hideTyping();
+        hideTyping();
 
-if (data.error) {
-    console.error("Gemini Error:", data.error);
-    addMessage(`❌ API Error: ${data.error.message}`, false);
-} else if (data.candidates && data.candidates[0].content) {
-    const aiText = data.candidates[0].content.parts[0].text;
-    addMessage(renderMarkdown(aiText), false);
-} else {
-    addMessage("❌ Sorry, I couldn't generate a response. Try again.", false);
-}
+        if (data.error) {
+            console.error("Gemini Error:", data.error);
+            addMessage(`❌ API Error: ${data.error.message}`, false);
+        } else if (data.candidates && data.candidates[0].content) {
+            const aiText = data.candidates[0].content.parts[0].text;
+            addMessage(renderMarkdown(aiText), false);
+        } else {
+            addMessage("❌ Sorry, I couldn't generate a response. Try again.", false);
+        }
 
     } catch (error) {
-    hideTyping();
-    console.error("Fetch Error:", error);
-    addMessage(`❌ Connection Error: ${error.message}`, false);
-}
+        hideTyping();
+        console.error("Fetch Error:", error);
+        addMessage(`❌ Connection Error: ${error.message}`, false);
+    }
 };
 
 // Simple Markdown Parser for responses
