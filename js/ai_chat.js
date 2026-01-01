@@ -64,7 +64,7 @@ function toggleSettings() {
         settingsDiv.id = 'chatSettings';
         settingsDiv.className = 'chat-settings-panel';
         settingsDiv.innerHTML = `
-    < h4 >⚙️ AI Settings</h4 >
+            <h4>⚙️ AI Settings</h4>
             <div class="input-group">
                 <label>Google Gemini API Key:</label>
                 <input type="password" id="apiKeyInput" placeholder="Paste your API Key here" value="${GEMINI_API_KEY}">
@@ -119,7 +119,7 @@ window.sendMessage = async function () {
     const fullPrompt = `${SYSTEM_PROMPT} \n\nCOURSE CONTEXT: \n${COURSE_CONTEXT} \n\nSTUDENT QUESTION: ${question} `;
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
