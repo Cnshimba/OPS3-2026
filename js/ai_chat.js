@@ -1,17 +1,22 @@
+```javascript
 // AI Chat Logic (Gemini API Integration)
 
 // Globals
-let GEMINI_API_KEY = localStorage.getItem("GEMINI_API_KEY") || "";
+// ⚠️ SECURITY WARNING: Embedding your key here makes it visible to anyone who extracts this file.
+// For a classroom setting, this is often acceptable, but restricted your key's usage in Google Cloud Console if possible.
+const EMBEDDED_KEY = "__GEMINI_API_KEY__"; // 🟢 GITHUB ACTIONS WILL REPLACE THIS AUTOMATICALLY
+
+let GEMINI_API_KEY = (EMBEDDED_KEY && EMBEDDED_KEY !== "__GEMINI_API_KEY__") ? EMBEDDED_KEY : (localStorage.getItem("GEMINI_API_KEY") || "");
 let chatHistory = [];
 const SYSTEM_PROMPT = `
-You are the AI Tutor for the OPS3 (Virtualization and Cloud Infrastructure) course.
+You are the AI Tutor for the OPS3(Virtualization and Cloud Infrastructure) course.
 Your Goal: Answer student questions accurately using ONLY the provided Course Context.
-Rules:
-1. Use a friendly, encouraging professional tone.
+    Rules:
+        1. Use a friendly, encouraging professional tone.
 2. If the answer is found in the context, explain it clearly.
 3. If the answer is NOT in the context, politely say: "I can only answer questions related to the OPS3 course notes."
 4. Do NOT hallucinate information not present in the notes.
-5. Format answers with Markdown (bold, lists, etc.) for readability.
+5. Format answers with Markdown(bold, lists, etc.) for readability.
 6. Keep answers concise unless a detailed explanation is requested.
 `;
 
@@ -30,19 +35,25 @@ document.addEventListener("DOMContentLoaded", () => {
 function setupUI() {
     const header = document.querySelector('.chat-header');
 
-    // Add Settings Button
-    const settingsBtn = document.createElement('button');
-    settingsBtn.innerHTML = '⚙️';
-    settingsBtn.className = 'chat-settings-btn';
-    settingsBtn.onclick = (e) => {
-        e.stopPropagation();
-        toggleSettings();
-    };
-    header.appendChild(settingsBtn);
+    // Only show Settings Button if NO embedded key is present
+    if (!EMBEDDED_KEY) {
+        const settingsBtn = document.createElement('button');
+        settingsBtn.innerHTML = '⚙️';
+        settingsBtn.className = 'chat-settings-btn';
+        settingsBtn.title = "Configure API Key";
+        settingsBtn.onclick = (e) => {
+            e.stopPropagation();
+            toggleSettings();
+        };
+        header.appendChild(settingsBtn);
 
-    // Initial Greeting
-    if (!localStorage.getItem("GEMINI_API_KEY")) {
-        addMessage("👋 Hi! To use the AI Tutor, please click the ⚙️ icon above and add your Google Gemini API Key. It's free and private!", false);
+        // Initial Greeting for Setup
+        if (!localStorage.getItem("GEMINI_API_KEY")) {
+            addMessage("👋 Hi! To use the AI Tutor, please configure the API Key in settings.", false);
+        }
+    } else {
+        // Ready to go immediately
+        console.log("AI Chat: Using Embedded Key");
     }
 }
 
@@ -55,7 +66,7 @@ function toggleSettings() {
         settingsDiv.id = 'chatSettings';
         settingsDiv.className = 'chat-settings-panel';
         settingsDiv.innerHTML = `
-            <h4>⚙️ AI Settings</h4>
+    < h4 >⚙️ AI Settings</h4 >
             <div class="input-group">
                 <label>Google Gemini API Key:</label>
                 <input type="password" id="apiKeyInput" placeholder="Paste your API Key here" value="${GEMINI_API_KEY}">
@@ -63,7 +74,7 @@ function toggleSettings() {
             <p class="small-text">Key is stored locally in your browser. <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#c9984a">Get a Free Key</a></p>
             <button onclick="saveApiKey()">Save Key</button>
             <button class="close-btn" onclick="toggleSettings()">Close</button>
-        `;
+`;
         document.getElementById('chatContainer').appendChild(settingsDiv);
     }
 
@@ -107,38 +118,38 @@ window.sendMessage = async function () {
     // Simple "Full Context" approach: Text + Question
     // For 180k tokens, we send it all. Gemini 1.5 Flash handles 1M.
 
-    const fullPrompt = `${SYSTEM_PROMPT}\n\nCOURSE CONTEXT:\n${COURSE_CONTEXT}\n\nSTUDENT QUESTION: ${question}`;
+    const fullPrompt = `${ SYSTEM_PROMPT } \n\nCOURSE CONTEXT: \n${ COURSE_CONTEXT } \n\nSTUDENT QUESTION: ${ question } `;
 
     try {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: fullPrompt }]
-                }]
-            })
+method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+    contents: [{
+        parts: [{ text: fullPrompt }]
+    }]
+})
         });
 
-        const data = await response.json();
+const data = await response.json();
 
-        hideTyping();
+hideTyping();
 
-        if (data.error) {
-            console.error("Gemini Error:", data.error);
-            addMessage(`❌ API Error: ${data.error.message}`, false);
-        } else if (data.candidates && data.candidates[0].content) {
-            const aiText = data.candidates[0].content.parts[0].text;
-            addMessage(renderMarkdown(aiText), false);
-        } else {
-            addMessage("❌ Sorry, I couldn't generate a response. Try again.", false);
-        }
+if (data.error) {
+    console.error("Gemini Error:", data.error);
+    addMessage(`❌ API Error: ${data.error.message}`, false);
+} else if (data.candidates && data.candidates[0].content) {
+    const aiText = data.candidates[0].content.parts[0].text;
+    addMessage(renderMarkdown(aiText), false);
+} else {
+    addMessage("❌ Sorry, I couldn't generate a response. Try again.", false);
+}
 
     } catch (error) {
-        hideTyping();
-        console.error("Fetch Error:", error);
-        addMessage(`❌ Connection Error: ${error.message}`, false);
-    }
+    hideTyping();
+    console.error("Fetch Error:", error);
+    addMessage(`❌ Connection Error: ${error.message}`, false);
+}
 };
 
 // Simple Markdown Parser for responses
