@@ -1,375 +1,892 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Week 3 Student Notes</title>
-<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<script>
- tailwind.config = {
- darkMode: 'class',
- theme: {
- extend: {
- fontFamily: {
- sans: ['Inter', 'sans-serif'],
- },
- colors: {
- primary: '#002F6E', // VUT Midnight Blue
- secondary: '#6c757d',
- codebg: 'var(--bg-code)', 
- },
- typography: {
- DEFAULT: {
- css: {
- maxWidth: '100%',
- fontFamily: 'Inter, sans-serif',
- color: 'var(--text-body)',
- '--tw-prose-body': 'var(--text-body)',
- '--tw-prose-headings': 'var(--text-headings)',
- '--tw-prose-links': 'var(--text-link)',
- '--tw-prose-bold': 'var(--text-headings)',
- '--tw-prose-counters': 'var(--text-body)',
- '--tw-prose-bullets': 'var(--text-body)',
- '--tw-prose-hr': 'var(--border-color)',
- '--tw-prose-quotes': 'var(--text-body)',
- '--tw-prose-code': 'var(--text-code)',
- '--tw-prose-pre-code': 'var(--text-pre)',
- '--tw-prose-pre-bg': 'var(--bg-pre)',
- 
- // Image Sizing Control
- img: {
- display: 'block',
- marginLeft: 'auto',
- marginRight: 'auto',
- maxHeight: '500px',
- width: 'auto',
- height: 'auto',
- borderRadius: '0.5rem',
- boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
- },
- // Links
- a: {
- color: 'var(--text-link)',
- '&:hover': { opacity: '0.8' },
- },
- // Inline Code
- code: {
- color: 'var(--text-code)',
- backgroundColor: 'var(--bg-code)',
- padding: '0.2rem 0.4rem',
- borderRadius: '0.25rem',
- fontWeight: '600',
- border: '1px solid var(--border-code)',
- },
- 'code::before': { content: '' },
- 'code::after': { content: '' },
- // Code Blocks (Pre)
- pre: {
- backgroundColor: 'var(--bg-pre) !important',
- color: 'var(--text-pre)',
- padding: '1rem',
- borderRadius: '0.5rem',
- border: '1px solid var(--border-pre)',
- },
- // Notes/Alerts (Blockquotes)
- blockquote: {
- borderLeftColor: '#002F6E',
- borderLeftWidth: '4px',
- backgroundColor: 'var(--bg-note)',
- padding: '1rem',
- color: 'var(--text-body)',
- fontSize: '0.9rem', // Smaller text for notes
- fontStyle: 'italic',
- quotes: 'none',
- borderRadius: '0 0.5rem 0.5rem 0',
- },
- 'blockquote p:first-of-type::before': { content: 'none' },
- 'blockquote p:last-of-type::after': { content: 'none' },
- // Tables (Restored from First Attempt)
- table: {
- width: '100%',
- marginTop: '2em',
- marginBottom: '2em',
- borderCollapse: 'collapse',
- fontSize: '0.9rem',
- },
- 'thead th': {
- backgroundColor: '#f3f4f6', 
- color: '#1f2937', 
- fontWeight: '600',
- padding: '0.75rem',
- borderBottom: '2px solid #e5e7eb',
- textAlign: 'left',
- },
- 'tbody td': {
- padding: '0.75rem',
- borderBottom: '1px solid #e5e7eb',
- verticalAlign: 'top',
- },
- 'tbody tr:hover': {
- backgroundColor: '#f9fafb',
- },
- 
- // Task Lists (Checkboxes)
- '.task-list-item': {
- listStyleType: 'none',
- },
- '.task-list-item input[type="checkbox"]': {
- marginRight: '0.5rem',
- },
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Week 3 Student Notes</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#002F6E', // VUT Midnight Blue
+                        secondary: '#6c757d',
+                        codebg: 'var(--bg-code)',
+                    },
+                    typography: {
+                        DEFAULT: {
+                            css: {
+                                maxWidth: '100%',
+                                fontFamily: 'Inter, sans-serif',
+                                color: 'var(--text-body)',
+                                '--tw-prose-body': 'var(--text-body)',
+                                '--tw-prose-headings': 'var(--text-headings)',
+                                '--tw-prose-links': 'var(--text-link)',
+                                '--tw-prose-bold': 'var(--text-headings)',
+                                '--tw-prose-counters': 'var(--text-body)',
+                                '--tw-prose-bullets': 'var(--text-body)',
+                                '--tw-prose-hr': 'var(--border-color)',
+                                '--tw-prose-quotes': 'var(--text-body)',
+                                '--tw-prose-code': 'var(--text-code)',
+                                '--tw-prose-pre-code': 'var(--text-pre)',
+                                '--tw-prose-pre-bg': 'var(--bg-pre)',
 
- thead: {
- borderBottomWidth: '2px',
- borderBottomColor: 'var(--border-color)',
- },
- 'thead th': {
- color: 'var(--text-headings)',
- fontWeight: '600',
- verticalAlign: 'bottom',
- paddingRight: '0.75em',
- paddingBottom: '0.75em',
- paddingLeft: '0.75em',
- textAlign: 'left',
- },
- 'tbody tr': {
- borderBottomWidth: '1px',
- borderBottomColor: 'var(--border-color)',
- },
- 'tbody tr:last-child': {
- borderBottomWidth: '0',
- },
- 'tbody td': {
- verticalAlign: 'top',
- padding: '0.75em',
- },
- },
- },
- },
- },
- },
- }
-</script>
-<script>
- // Theme Toggle Logic
- document.addEventListener('DOMContentLoaded', () => {
- const themeToggle = document.getElementById('theme-toggle');
- const html = document.documentElement;
- const iconSun = document.getElementById('icon-sun');
- const iconMoon = document.getElementById('icon-moon');
+                                // Image Sizing Control
+                                img: {
+                                    display: 'block',
+                                    marginLeft: 'auto',
+                                    marginRight: 'auto',
+                                    maxHeight: '500px',
+                                    width: 'auto',
+                                    height: 'auto',
+                                    borderRadius: '0.5rem',
+                                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                                },
+                                // Links
+                                a: {
+                                    color: 'var(--text-link)',
+                                    '&:hover': { opacity: '0.8' },
+                                },
+                                // Inline Code
+                                code: {
+                                    color: 'var(--text-code)',
+                                    backgroundColor: 'var(--bg-code)',
+                                    padding: '0.2rem 0.4rem',
+                                    borderRadius: '0.25rem',
+                                    fontWeight: '600',
+                                    border: '1px solid var(--border-code)',
+                                },
+                                'code::before': { content: '' },
+                                'code::after': { content: '' },
+                                // Code Blocks (Pre)
+                                pre: {
+                                    backgroundColor: 'var(--bg-pre) !important',
+                                    color: 'var(--text-pre)',
+                                    padding: '1rem',
+                                    borderRadius: '0.5rem',
+                                    border: '1px solid var(--border-pre)',
+                                },
+                                // Notes/Alerts (Blockquotes)
+                                blockquote: {
+                                    borderLeftColor: '#002F6E',
+                                    borderLeftWidth: '4px',
+                                    backgroundColor: 'var(--bg-note)',
+                                    padding: '1rem',
+                                    color: 'var(--text-body)',
+                                    fontSize: '0.9rem', // Smaller text for notes
+                                    fontStyle: 'italic',
+                                    quotes: 'none',
+                                    borderRadius: '0 0.5rem 0.5rem 0',
+                                },
+                                'blockquote p:first-of-type::before': { content: 'none' },
+                                'blockquote p:last-of-type::after': { content: 'none' },
+                                // Tables (Restored from First Attempt)
+                                table: {
+                                    width: '100%',
+                                    marginTop: '2em',
+                                    marginBottom: '2em',
+                                    borderCollapse: 'collapse',
+                                    fontSize: '0.9rem',
+                                },
+                                'thead th': {
+                                    backgroundColor: '#f3f4f6',
+                                    color: '#1f2937',
+                                    fontWeight: '600',
+                                    padding: '0.75rem',
+                                    borderBottom: '2px solid #e5e7eb',
+                                    textAlign: 'left',
+                                },
+                                'tbody td': {
+                                    padding: '0.75rem',
+                                    borderBottom: '1px solid #e5e7eb',
+                                    verticalAlign: 'top',
+                                },
+                                'tbody tr:hover': {
+                                    backgroundColor: '#f9fafb',
+                                },
 
- // Check local storage or preference
- if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
- html.classList.add('dark');
- iconSun.classList.remove('hidden');
- iconMoon.classList.add('hidden');
- } else {
- html.classList.remove('dark');
- iconSun.classList.add('hidden');
- iconMoon.classList.remove('hidden');
- }
+                                // Task Lists (Checkboxes)
+                                '.task-list-item': {
+                                    listStyleType: 'none',
+                                },
+                                '.task-list-item input[type="checkbox"]': {
+                                    marginRight: '0.5rem',
+                                },
 
- themeToggle.addEventListener('click', () => {
- if (html.classList.contains('dark')) {
- html.classList.remove('dark');
- localStorage.theme = 'light';
- iconSun.classList.add('hidden');
- iconMoon.classList.remove('hidden');
- } else {
- html.classList.add('dark');
- localStorage.theme = 'dark';
- iconSun.classList.remove('hidden');
- iconMoon.classList.add('hidden');
- }
- });
- });
-</script>
-<style>
- /* CSS Variables for Theming */
- :root {
- --bg-body: #f8fafc;
- --bg-card: #ffffff;
- --text-body: #334155;
- --text-headings: #0f172a;
- --text-link: #002F6E; /* VUT Blue */
- --border-color: #e2e8f0;
- 
- /* Code - Light Mode */
- --bg-code: #f1f5f9;
- --text-code: #d63384;
- --border-code: #e2e8f0;
- 
- /* Pre - Light Mode (Github Light) */
- --bg-pre: #f6f8fa;
- --text-pre: #24292e;
- --border-pre: #d0d7de;
- 
- /* Note - Light Mode */
- --bg-note: #f8f9fa;
- 
- /* Scrollbar */
- --scroll-track: #f1f1f1;
- --scroll-thumb: #888;
- }
+                                thead: {
+                                    borderBottomWidth: '2px',
+                                    borderBottomColor: 'var(--border-color)',
+                                },
+                                'thead th': {
+                                    color: 'var(--text-headings)',
+                                    fontWeight: '600',
+                                    verticalAlign: 'bottom',
+                                    paddingRight: '0.75em',
+                                    paddingBottom: '0.75em',
+                                    paddingLeft: '0.75em',
+                                    textAlign: 'left',
+                                },
+                                'tbody tr': {
+                                    borderBottomWidth: '1px',
+                                    borderBottomColor: 'var(--border-color)',
+                                },
+                                'tbody tr:last-child': {
+                                    borderBottomWidth: '0',
+                                },
+                                'tbody td': {
+                                    verticalAlign: 'top',
+                                    padding: '0.75em',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <script>
+        // Theme Toggle Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const html = document.documentElement;
+            const iconSun = document.getElementById('icon-sun');
+            const iconMoon = document.getElementById('icon-moon');
 
- html.dark {
- --bg-body: #0f172a;
- --bg-card: #1e293b;
- --text-body: #cbd5e1;
- --text-headings: #f8fafc;
- --text-link: #60a5fa; /* Blue 400 - Brighter for better contrast */
- --border-color: #334155;
- 
- /* Code - Dark Mode */
- --bg-code: #334155;
- --text-code: #f472b6; 
- --border-code: #475569;
- 
- /* Pre - Dark Mode (Monokai) */
- --bg-pre: #272822;
- --text-pre: #f8f8f2;
- --border-pre: #464539;
- 
- /* Note - Dark Mode */
- --bg-note: #1e293b;
- --scroll-track: #1e293b;
- --scroll-thumb: #475569;
- }
+            // Check local storage or preference
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+            } else {
+                html.classList.remove('dark');
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+            }
 
- /* Transition */
- body, article, code, pre, blockquote {
- transition: background-color 0.3s, color 0.3s, border-color 0.3s;
- }
+            themeToggle.addEventListener('click', () => {
+                if (html.classList.contains('dark')) {
+                    html.classList.remove('dark');
+                    localStorage.theme = 'light';
+                    iconSun.classList.add('hidden');
+                    iconMoon.classList.remove('hidden');
+                } else {
+                    html.classList.add('dark');
+                    localStorage.theme = 'dark';
+                    iconSun.classList.remove('hidden');
+                    iconMoon.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-body: #334155;
+            --text-headings: #0f172a;
+            --text-link: #002F6E;
+            /* VUT Blue */
+            --border-color: #e2e8f0;
 
- /* Custom Scrollbar */
- ::-webkit-scrollbar { width: 8px; height: 8px; }
- ::-webkit-scrollbar-track { background: var(--scroll-track); }
- ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
- ::-webkit-scrollbar-thumb:hover { background: #555; }
- 
- /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
- .codehilite .hll { background-color: #ffffcc }
- .codehilite .c { color: #6a737d; font-style: italic } /* Comment */
- .codehilite .err { color: #f05240; background-color: #ffeaea } /* Error */
- .codehilite .k { color: #d73a49; font-weight: bold } /* Keyword */
- .codehilite .o { color: #d73a49; font-weight: bold } /* Operator */
- .codehilite .cm { color: #6a737d; font-style: italic } /* Comment.Multiline */
- .codehilite .cp { color: #6a737d; font-weight: bold } /* Comment.Preproc */
- .codehilite .c1 { color: #6a737d; font-style: italic } /* Comment.Single */
- .codehilite .cs { color: #6a737d; font-style: italic } /* Comment.Special */
- .codehilite .gd { color: #d73a49; background-color: #fdd } /* Generic.Deleted */
- .codehilite .ge { font-style: italic } /* Generic.Emph */
- .codehilite .gr { color: #aa0000 } /* Generic.Error */
- .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .codehilite .gi { color: #00a000; background-color: #dfd } /* Generic.Inserted */
- .codehilite .go { color: #888888 } /* Generic.Output */
- .codehilite .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
- .codehilite .gs { font-weight: bold } /* Generic.Strong */
- .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
- .codehilite .gt { color: #aa0000 } /* Generic.Traceback */
- .codehilite .kc { color: #005cc5; font-weight: bold } /* Keyword.Constant */
- .codehilite .kd { color: #d73a49; font-weight: bold } /* Keyword.Declaration */
- .codehilite .kn { color: #d73a49; font-weight: bold } /* Keyword.Namespace */
- .codehilite .kp { color: #d73a49 } /* Keyword.Pseudo */
- .codehilite .kr { color: #d73a49; font-weight: bold } /* Keyword.Reserved */
- .codehilite .kt { color: #445588; font-weight: bold } /* Keyword.Type */
- .codehilite .m { color: #005cc5 } /* Literal.Number */
- .codehilite .s { color: #032f62 } /* Literal.String */
- .codehilite .na { color: #22863a } /* Name.Attribute */
- .codehilite .nb { color: #005cc5 } /* Name.Builtin */
- .codehilite .nc { color: #6f42c1; font-weight: bold } /* Name.Class */
- .codehilite .no { color: #005cc5 } /* Name.Constant */
- .codehilite .nd { color: #6f42c1; font-weight: bold } /* Name.Decorator */
- .codehilite .ni { color: #800080 } /* Name.Entity */
- .codehilite .ne { color: #990000; font-weight: bold } /* Name.Exception */
- .codehilite .nf { color: #6f42c1; font-weight: bold } /* Name.Function */
- .codehilite .nl { color: #990000; font-weight: bold } /* Name.Label */
- .codehilite .nn { color: #6f42c1; font-weight: bold } /* Name.Namespace */
- .codehilite .nt { color: #22863a } /* Name.Tag */
- .codehilite .nv { color: #e36209 } /* Name.Variable */
- .codehilite .ow { color: #d73a49; font-weight: bold } /* Operator.Word */
- .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
- .codehilite .mf { color: #005cc5 } /* Literal.Number.Float */
- .codehilite .mh { color: #005cc5 } /* Literal.Number.Hex */
- .codehilite .mi { color: #005cc5 } /* Literal.Number.Integer */
- .codehilite .mo { color: #005cc5 } /* Literal.Number.Oct */
- .codehilite .sb { color: #032f62 } /* Literal.String.Backtick */
- .codehilite .sc { color: #032f62 } /* Literal.String.Char */
- .codehilite .sd { color: #032f62 } /* Literal.String.Doc */
- .codehilite .s2 { color: #032f62 } /* Literal.String.Double */
- .codehilite .se { color: #005cc5 } /* Literal.String.Escape */
- .codehilite .sh { color: #032f62 } /* Literal.String.Heredoc */
- .codehilite .si { color: #032f62 } /* Literal.String.Interpol */
- .codehilite .sx { color: #032f62 } /* Literal.String.Other */
- .codehilite .sr { color: #032f62 } /* Literal.String.Regex */
- .codehilite .s1 { color: #032f62 } /* Literal.String.Single */
- .codehilite .ss { color: #005cc5 } /* Literal.String.Symbol */
- .codehilite .bp { color: #005cc5 } /* Name.Builtin.Pseudo */
- .codehilite .vc { color: #e36209 } /* Name.Variable.Class */
- .codehilite .vg { color: #e36209 } /* Name.Variable.Global */
- .codehilite .vi { color: #e36209 } /* Name.Variable.Instance */
- .codehilite .il { color: #005cc5 } /* Literal.Number.Integer.Long */
- 
- /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
- html.dark .codehilite .hll { background-color: #49483e }
- html.dark .codehilite .c { color: #75715e } /* Comment */
- html.dark .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
- html.dark .codehilite .k { color: #66d9ef; font-weight: normal } /* Keyword */
- html.dark .codehilite .l { color: #ae81ff } /* Literal */
- html.dark .codehilite .n { color: #f8f8f2 } /* Name */
- html.dark .codehilite .o { color: #f92672; font-weight: normal } /* Operator */
- html.dark .codehilite .p { color: #f8f8f2 } /* Punctuation */
- html.dark .codehilite .cm { color: #75715e } /* Comment.Multiline */
- html.dark .codehilite .cp { color: #75715e } /* Comment.Preproc */
- html.dark .codehilite .c1 { color: #75715e } /* Comment.Single */
- html.dark .codehilite .cs { color: #75715e } /* Comment.Special */
- html.dark .codehilite .ge { font-style: italic } /* Generic.Emph */
- html.dark .codehilite .gs { font-weight: bold } /* Generic.Strong */
- html.dark .codehilite .kc { color: #66d9ef; font-weight: normal } /* Keyword.Constant */
- html.dark .codehilite .kd { color: #66d9ef; font-weight: normal } /* Keyword.Declaration */
- html.dark .codehilite .kn { color: #f92672; font-weight: normal } /* Keyword.Namespace */
- html.dark .codehilite .kp { color: #66d9ef; font-weight: normal } /* Keyword.Pseudo */
- html.dark .codehilite .kr { color: #66d9ef; font-weight: normal } /* Keyword.Reserved */
- html.dark .codehilite .kt { color: #66d9ef; font-weight: normal } /* Keyword.Type */
- html.dark .codehilite .ld { color: #e6db74 } /* Literal.Date */
- html.dark .codehilite .m { color: #ae81ff } /* Literal.Number */
- html.dark .codehilite .s { color: #e6db74 } /* Literal.String */
- html.dark .codehilite .na { color: #a6e22e } /* Name.Attribute */
- html.dark .codehilite .nb { color: #f8f8f2 } /* Name.Builtin */
- html.dark .codehilite .nc { color: #a6e22e } /* Name.Class */
- html.dark .codehilite .no { color: #66d9ef } /* Name.Constant */
- html.dark .codehilite .nd { color: #a6e22e } /* Name.Decorator */
- html.dark .codehilite .ni { color: #f8f8f2 } /* Name.Entity */
- html.dark .codehilite .ne { color: #a6e22e } /* Name.Exception */
- html.dark .codehilite .nf { color: #a6e22e } /* Name.Function */
- html.dark .codehilite .nl { color: #f8f8f2 } /* Name.Label */
- html.dark .codehilite .nn { color: #f8f8f2 } /* Name.Namespace */
- html.dark .codehilite .nx { color: #a6e22e } /* Name.Other */
- html.dark .codehilite .py { color: #f8f8f2 } /* Name.Property */
- html.dark .codehilite .nt { color: #f92672 } /* Name.Tag */
- html.dark .codehilite .nv { color: #f8f8f2 } /* Name.Variable */
- html.dark .codehilite .ow { color: #f92672; font-weight: normal } /* Operator.Word */
- html.dark .codehilite .w { color: #f8f8f2 } /* Text.Whitespace */
- html.dark .codehilite .mb { color: #ae81ff } /* Literal.Number.Bin */
- html.dark .codehilite .mf { color: #ae81ff } /* Literal.Number.Float */
- html.dark .codehilite .mh { color: #ae81ff } /* Literal.Number.Hex */
- html.dark .codehilite .mi { color: #ae81ff } /* Literal.Number.Integer */
- html.dark .codehilite .mo { color: #ae81ff } /* Literal.Number.Oct */
- html.dark .codehilite .sb { color: #e6db74 } /* Literal.String.Backtick */
- html.dark .codehilite .sc { color: #e6db74 } /* Literal.String.Char */
- html.dark .codehilite .sd { color: #e6db74 } /* Literal.String.Doc */
- html.dark .codehilite .s2 { color: #e6db74 } /* Literal.String.Double */
- html.dark .codehilite .se { color: #ae81ff } /* Literal.String.Escape */
- html.dark .codehilite .sh { color: #e6db74 } /* Literal.String.Heredoc */
- html.dark .codehilite .si { color: #e6db74 } /* Literal.String.Interpol */
- html.dark .codehilite .sx { color: #e6db74 } /* Literal.String.Other */
- html.dark .codehilite .sr { color: #e6db74 } /* Literal.String.Regex */
- html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
- html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
-</style>
-<style>
+            /* Code - Light Mode */
+            --bg-code: #f1f5f9;
+            --text-code: #d63384;
+            --border-code: #e2e8f0;
+
+            /* Pre - Light Mode (Github Light) */
+            --bg-pre: #f6f8fa;
+            --text-pre: #24292e;
+            --border-pre: #d0d7de;
+
+            /* Note - Light Mode */
+            --bg-note: #f8f9fa;
+
+            /* Scrollbar */
+            --scroll-track: #f1f1f1;
+            --scroll-thumb: #888;
+        }
+
+        html.dark {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-body: #cbd5e1;
+            --text-headings: #f8fafc;
+            --text-link: #60a5fa;
+            /* Blue 400 - Brighter for better contrast */
+            --border-color: #334155;
+
+            /* Code - Dark Mode */
+            --bg-code: #334155;
+            --text-code: #f472b6;
+            --border-code: #475569;
+
+            /* Pre - Dark Mode (Monokai) */
+            --bg-pre: #272822;
+            --text-pre: #f8f8f2;
+            --border-pre: #464539;
+
+            /* Note - Dark Mode */
+            --bg-note: #1e293b;
+            --scroll-track: #1e293b;
+            --scroll-thumb: #475569;
+        }
+
+        /* Transition */
+        body,
+        article,
+        code,
+        pre,
+        blockquote {
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--scroll-track);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scroll-thumb);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
+        .codehilite .hll {
+            background-color: #ffffcc
+        }
+
+        .codehilite .c {
+            color: #6a737d;
+            font-style: italic
+        }
+
+        /* Comment */
+        .codehilite .err {
+            color: #f05240;
+            background-color: #ffeaea
+        }
+
+        /* Error */
+        .codehilite .k {
+            color: #d73a49;
+            font-weight: bold
+        }
+
+        /* Keyword */
+        .codehilite .o {
+            color: #d73a49;
+            font-weight: bold
+        }
+
+        /* Operator */
+        .codehilite .cm {
+            color: #6a737d;
+            font-style: italic
+        }
+
+        /* Comment.Multiline */
+        .codehilite .cp {
+            color: #6a737d;
+            font-weight: bold
+        }
+
+        /* Comment.Preproc */
+        .codehilite .c1 {
+            color: #6a737d;
+            font-style: italic
+        }
+
+        /* Comment.Single */
+        .codehilite .cs {
+            color: #6a737d;
+            font-style: italic
+        }
+
+        /* Comment.Special */
+        .codehilite .gd {
+            color: #d73a49;
+            background-color: #fdd
+        }
+
+        /* Generic.Deleted */
+        .codehilite .ge {
+            font-style: italic
+        }
+
+        /* Generic.Emph */
+        .codehilite .gr {
+            color: #aa0000
+        }
+
+        /* Generic.Error */
+        .codehilite .gh {
+            color: #000080;
+            font-weight: bold
+        }
+
+        /* Generic.Heading */
+        .codehilite .gi {
+            color: #00a000;
+            background-color: #dfd
+        }
+
+        /* Generic.Inserted */
+        .codehilite .go {
+            color: #888888
+        }
+
+        /* Generic.Output */
+        .codehilite .gp {
+            color: #c65d09;
+            font-weight: bold
+        }
+
+        /* Generic.Prompt */
+        .codehilite .gs {
+            font-weight: bold
+        }
+
+        /* Generic.Strong */
+        .codehilite .gu {
+            color: #800080;
+            font-weight: bold
+        }
+
+        /* Generic.Subheading */
+        .codehilite .gt {
+            color: #aa0000
+        }
+
+        /* Generic.Traceback */
+        .codehilite .kc {
+            color: #005cc5;
+            font-weight: bold
+        }
+
+        /* Keyword.Constant */
+        .codehilite .kd {
+            color: #d73a49;
+            font-weight: bold
+        }
+
+        /* Keyword.Declaration */
+        .codehilite .kn {
+            color: #d73a49;
+            font-weight: bold
+        }
+
+        /* Keyword.Namespace */
+        .codehilite .kp {
+            color: #d73a49
+        }
+
+        /* Keyword.Pseudo */
+        .codehilite .kr {
+            color: #d73a49;
+            font-weight: bold
+        }
+
+        /* Keyword.Reserved */
+        .codehilite .kt {
+            color: #445588;
+            font-weight: bold
+        }
+
+        /* Keyword.Type */
+        .codehilite .m {
+            color: #005cc5
+        }
+
+        /* Literal.Number */
+        .codehilite .s {
+            color: #032f62
+        }
+
+        /* Literal.String */
+        .codehilite .na {
+            color: #22863a
+        }
+
+        /* Name.Attribute */
+        .codehilite .nb {
+            color: #005cc5
+        }
+
+        /* Name.Builtin */
+        .codehilite .nc {
+            color: #6f42c1;
+            font-weight: bold
+        }
+
+        /* Name.Class */
+        .codehilite .no {
+            color: #005cc5
+        }
+
+        /* Name.Constant */
+        .codehilite .nd {
+            color: #6f42c1;
+            font-weight: bold
+        }
+
+        /* Name.Decorator */
+        .codehilite .ni {
+            color: #800080
+        }
+
+        /* Name.Entity */
+        .codehilite .ne {
+            color: #990000;
+            font-weight: bold
+        }
+
+        /* Name.Exception */
+        .codehilite .nf {
+            color: #6f42c1;
+            font-weight: bold
+        }
+
+        /* Name.Function */
+        .codehilite .nl {
+            color: #990000;
+            font-weight: bold
+        }
+
+        /* Name.Label */
+        .codehilite .nn {
+            color: #6f42c1;
+            font-weight: bold
+        }
+
+        /* Name.Namespace */
+        .codehilite .nt {
+            color: #22863a
+        }
+
+        /* Name.Tag */
+        .codehilite .nv {
+            color: #e36209
+        }
+
+        /* Name.Variable */
+        .codehilite .ow {
+            color: #d73a49;
+            font-weight: bold
+        }
+
+        /* Operator.Word */
+        .codehilite .w {
+            color: #bbbbbb
+        }
+
+        /* Text.Whitespace */
+        .codehilite .mf {
+            color: #005cc5
+        }
+
+        /* Literal.Number.Float */
+        .codehilite .mh {
+            color: #005cc5
+        }
+
+        /* Literal.Number.Hex */
+        .codehilite .mi {
+            color: #005cc5
+        }
+
+        /* Literal.Number.Integer */
+        .codehilite .mo {
+            color: #005cc5
+        }
+
+        /* Literal.Number.Oct */
+        .codehilite .sb {
+            color: #032f62
+        }
+
+        /* Literal.String.Backtick */
+        .codehilite .sc {
+            color: #032f62
+        }
+
+        /* Literal.String.Char */
+        .codehilite .sd {
+            color: #032f62
+        }
+
+        /* Literal.String.Doc */
+        .codehilite .s2 {
+            color: #032f62
+        }
+
+        /* Literal.String.Double */
+        .codehilite .se {
+            color: #005cc5
+        }
+
+        /* Literal.String.Escape */
+        .codehilite .sh {
+            color: #032f62
+        }
+
+        /* Literal.String.Heredoc */
+        .codehilite .si {
+            color: #032f62
+        }
+
+        /* Literal.String.Interpol */
+        .codehilite .sx {
+            color: #032f62
+        }
+
+        /* Literal.String.Other */
+        .codehilite .sr {
+            color: #032f62
+        }
+
+        /* Literal.String.Regex */
+        .codehilite .s1 {
+            color: #032f62
+        }
+
+        /* Literal.String.Single */
+        .codehilite .ss {
+            color: #005cc5
+        }
+
+        /* Literal.String.Symbol */
+        .codehilite .bp {
+            color: #005cc5
+        }
+
+        /* Name.Builtin.Pseudo */
+        .codehilite .vc {
+            color: #e36209
+        }
+
+        /* Name.Variable.Class */
+        .codehilite .vg {
+            color: #e36209
+        }
+
+        /* Name.Variable.Global */
+        .codehilite .vi {
+            color: #e36209
+        }
+
+        /* Name.Variable.Instance */
+        .codehilite .il {
+            color: #005cc5
+        }
+
+        /* Literal.Number.Integer.Long */
+
+        /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
+        html.dark .codehilite .hll {
+            background-color: #49483e
+        }
+
+        html.dark .codehilite .c {
+            color: #75715e
+        }
+
+        /* Comment */
+        html.dark .codehilite .err {
+            color: #960050;
+            background-color: #1e0010
+        }
+
+        /* Error */
+        html.dark .codehilite .k {
+            color: #66d9ef;
+            font-weight: normal
+        }
+
+        /* Keyword */
+        html.dark .codehilite .l {
+            color: #ae81ff
+        }
+
+        /* Literal */
+        html.dark .codehilite .n {
+            color: #f8f8f2
+        }
+
+        /* Name */
+        html.dark .codehilite .o {
+            color: #f92672;
+            font-weight: normal
+        }
+
+        /* Operator */
+        html.dark .codehilite .p {
+            color: #f8f8f2
+        }
+
+        /* Punctuation */
+        html.dark .codehilite .cm {
+            color: #75715e
+        }
+
+        /* Comment.Multiline */
+        html.dark .codehilite .cp {
+            color: #75715e
+        }
+
+        /* Comment.Preproc */
+        html.dark .codehilite .c1 {
+            color: #75715e
+        }
+
+        /* Comment.Single */
+        html.dark .codehilite .cs {
+            color: #75715e
+        }
+
+        /* Comment.Special */
+        html.dark .codehilite .ge {
+            font-style: italic
+        }
+
+        /* Generic.Emph */
+        html.dark .codehilite .gs {
+            font-weight: bold
+        }
+
+        /* Generic.Strong */
+        html.dark .codehilite .kc {
+            color: #66d9ef;
+            font-weight: normal
+        }
+
+        /* Keyword.Constant */
+        html.dark .codehilite .kd {
+            color: #66d9ef;
+            font-weight: normal
+        }
+
+        /* Keyword.Declaration */
+        html.dark .codehilite .kn {
+            color: #f92672;
+            font-weight: normal
+        }
+
+        /* Keyword.Namespace */
+        html.dark .codehilite .kp {
+            color: #66d9ef;
+            font-weight: normal
+        }
+
+        /* Keyword.Pseudo */
+        html.dark .codehilite .kr {
+            color: #66d9ef;
+            font-weight: normal
+        }
+
+        /* Keyword.Reserved */
+        html.dark .codehilite .kt {
+            color: #66d9ef;
+            font-weight: normal
+        }
+
+        /* Keyword.Type */
+        html.dark .codehilite .ld {
+            color: #e6db74
+        }
+
+        /* Literal.Date */
+        html.dark .codehilite .m {
+            color: #ae81ff
+        }
+
+        /* Literal.Number */
+        html.dark .codehilite .s {
+            color: #e6db74
+        }
+
+        /* Literal.String */
+        html.dark .codehilite .na {
+            color: #a6e22e
+        }
+
+        /* Name.Attribute */
+        html.dark .codehilite .nb {
+            color: #f8f8f2
+        }
+
+        /* Name.Builtin */
+        html.dark .codehilite .nc {
+            color: #a6e22e
+        }
+
+        /* Name.Class */
+        html.dark .codehilite .no {
+            color: #66d9ef
+        }
+
+        /* Name.Constant */
+        html.dark .codehilite .nd {
+            color: #a6e22e
+        }
+
+        /* Name.Decorator */
+        html.dark .codehilite .ni {
+            color: #f8f8f2
+        }
+
+        /* Name.Entity */
+        html.dark .codehilite .ne {
+            color: #a6e22e
+        }
+
+        /* Name.Exception */
+        html.dark .codehilite .nf {
+            color: #a6e22e
+        }
+
+        /* Name.Function */
+        html.dark .codehilite .nl {
+            color: #f8f8f2
+        }
+
+        /* Name.Label */
+        html.dark .codehilite .nn {
+            color: #f8f8f2
+        }
+
+        /* Name.Namespace */
+        html.dark .codehilite .nx {
+            color: #a6e22e
+        }
+
+        /* Name.Other */
+        html.dark .codehilite .py {
+            color: #f8f8f2
+        }
+
+        /* Name.Property */
+        html.dark .codehilite .nt {
+            color: #f92672
+        }
+
+        /* Name.Tag */
+        html.dark .codehilite .nv {
+            color: #f8f8f2
+        }
+
+        /* Name.Variable */
+        html.dark .codehilite .ow {
+            color: #f92672;
+            font-weight: normal
+        }
+
+        /* Operator.Word */
+        html.dark .codehilite .w {
+            color: #f8f8f2
+        }
+
+        /* Text.Whitespace */
+        html.dark .codehilite .mb {
+            color: #ae81ff
+        }
+
+        /* Literal.Number.Bin */
+        html.dark .codehilite .mf {
+            color: #ae81ff
+        }
+
+        /* Literal.Number.Float */
+        html.dark .codehilite .mh {
+            color: #ae81ff
+        }
+
+        /* Literal.Number.Hex */
+        html.dark .codehilite .mi {
+            color: #ae81ff
+        }
+
+        /* Literal.Number.Integer */
+        html.dark .codehilite .mo {
+            color: #ae81ff
+        }
+
+        /* Literal.Number.Oct */
+        html.dark .codehilite .sb {
+            color: #e6db74
+        }
+
+        /* Literal.String.Backtick */
+        html.dark .codehilite .sc {
+            color: #e6db74
+        }
+
+        /* Literal.String.Char */
+        html.dark .codehilite .sd {
+            color: #e6db74
+        }
+
+        /* Literal.String.Doc */
+        html.dark .codehilite .s2 {
+            color: #e6db74
+        }
+
+        /* Literal.String.Double */
+        html.dark .codehilite .se {
+            color: #ae81ff
+        }
+
+        /* Literal.String.Escape */
+        html.dark .codehilite .sh {
+            color: #e6db74
+        }
+
+        /* Literal.String.Heredoc */
+        html.dark .codehilite .si {
+            color: #e6db74
+        }
+
+        /* Literal.String.Interpol */
+        html.dark .codehilite .sx {
+            color: #e6db74
+        }
+
+        /* Literal.String.Other */
+        html.dark .codehilite .sr {
+            color: #e6db74
+        }
+
+        /* Literal.String.Regex */
+        html.dark .codehilite .s1 {
+            color: #e6db74
+        }
+
+        /* Literal.String.Single */
+        html.dark .codehilite .ss {
+            color: #ae81ff
+        }
+
+        /* Literal.String.Symbol */
+    </style>
+    <style>
         /* Glossary Tooltip Styles */
         .glossary-term {
             color: #c9984a;
@@ -379,12 +896,12 @@
             text-decoration: none;
             transition: all 0.3s;
         }
-        
+
         .glossary-term:hover {
             color: #ffffff;
             border-bottom-color: #ffffff;
         }
-        
+
         .glossary-tooltip {
             visibility: hidden;
             opacity: 0;
@@ -405,7 +922,7 @@
             transition: opacity 0.3s, visibility 0.3s;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        
+
         .glossary-tooltip::after {
             content: "";
             position: absolute;
@@ -416,103 +933,234 @@
             border-style: solid;
             border-color: #c9984a transparent transparent transparent;
         }
-        
+
         .glossary-term:hover .glossary-tooltip {
             visibility: visible;
             opacity: 1;
         }
-        </style></head>
-<body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
-<!-- Navigation -->
-<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
-<div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
-<a class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline" href="../index.html">
-<img alt="VUT Logo" class="h-12 w-auto object-contain" src="../ops3_logo.png"/>
-<div class="flex flex-col">
-<span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3
-<span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation &amp; Cloud Technologies
-<span class="font-bold text-lg tracking-tight sm:hidden">OPS3
-</span></span></span></div>
-<div class="flex items-center space-x-6">
-<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
- Course Home
- 
-<!-- Theme Toggle Button -->
-<button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
-<!-- Sun Icon -->
-<svg class="w-5 h-5 text-yellow-500 hidden" fill="none" id="icon-sun" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<!-- Moon Icon -->
-<svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor" viewbox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</a></div>
-</a></div>
-</nav>
-<!-- Main Content -->
-<main class="container mx-auto px-4 max-w-5xl mb-12">
-<article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
+    </style>
+</head>
 
-<div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
-<div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
-<img alt="Networking Icon" class="h-full w-full object-cover" src="images/week_3_icon.png"/>
-</div>
-<div class="flex-1 flex flex-col items-center justify-center p-6">
-<h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Virtual Networking and Linux Networking Fundamentals</h1>
-<span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
-</span></div>
-</div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Virtual Networking and Linux Networking Fundamentals
-<strong>Estimated Reading Time</strong>: 35 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-Networking is where VMs become useful. The concepts of bridges, <a class="glossary-term" href="../glossary.html#NAT">NAT<span class="glossary-tooltip">Network Address Translation - Maps private to public IPs</span></a>, and routing apply universally. Draw diagrams as you read—visualizing packet flow makes troubleshooting much easier later.</p>
-</blockquote>
-<hr/>
-<h2 id="welcome-to-week-3">Welcome to Week 3!</h2>
-<p>Networking is the nervous system of any virtualized infrastructure. In a traditional data center, network engineers run physical cables, configure hardware switches, and plug in routers. In a Virtualized or Cloud environment, all of this hardware is replaced by <strong>software</strong>.</p>
-<p>As a Cloud Engineer, you are not just managing servers; you are managing the <em>wires</em> between them. When a <a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> <a class="glossary-term" href="../glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer</span></a> - cannot reach the internet, or when a <a class="glossary-term" href="../glossary.html#Kubernetes">Kubernetes<span class="glossary-tooltip">Container orchestration platform</span></a> <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="../glossary.html#Pod">pod<span class="glossary-tooltip">Smallest deployable unit in Kubernetes</span></a> <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform often fails to talk to a database, the problem rarely lies in the physical switch. It lies in the complex web of virtual interfaces, bridges, and namespaces <em>inside</em> the Linux kernel.</p>
-<p>This week is designed to <a class="glossary-term" href="../glossary.html#Bridge">bridge<span class="glossary-tooltip">Network device connecting network segments</span></a> the gap between "clicking a button in <a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> " and understanding the kernel-level mechanics that make that click possible. We will dismantle the underlying abstraction and rebuild it command by command.</p>
-<hr/>
-<h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
-<ul>
-<li><strong>Linux Networking Core:</strong> Understanding the distinction between ephemeral runtime configurations (<code>ip</code>) and persistent system configurations (<code>nmcli</code>).</li>
-<li><strong>Virtual Wiring:</strong> How <code>veth</code> pairs replace physical patch cables.</li>
-<li><strong>Virtual Switching:</strong> How Linux Bridges simulate Layer 2 switches and manage MAC address tables.</li>
-<li><strong>Network Isolation:</strong> Using Namespaces to solve the "Multi-<a class="glossary-term" href="../glossary.html#Tenant">Tenant<span class="glossary-tooltip">Grouping of users and resources (also called Project)</span></a>" problem.</li>
-<li><strong>Advanced Operations:</strong> Implementing redundancy (Bonding), Routing, and Security (Firewalls).</li>
-<li><strong>Software Defined Networking:</strong> An introduction to Open vSwitch (OVS).</li>
-<li><strong><a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> Implementation:</strong> Applying these concepts to real-world <a class="glossary-term" href="../glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer</span></a> - networking modes.</li>
-</ul>
-<hr/>
-<h1 id="part-1-linux-networking-fundamentals">Part 1: Linux Networking Fundamentals</h1>
-<p><a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> is, at its core, a Debian Linux operating system. To troubleshoot or configure it effectively, you must master Linux networking.</p>
-<h2 id="1-runtime-vs-persistent-networking-ip-vs-nmcli">1. Runtime vs. Persistent Networking (<code>ip</code> vs <code>nmcli</code>)</h2>
-<p>In the early days of Unix, network interfaces were configured using <code>ifconfig</code>. This tool has been deprecated for over a decade because it cannot handle modern complexities like multiple IP addresses per interface or policy-based routing. Today, we rely on two distinct layers of configuration.</p>
-<h3 id="11-the-kernel-layer-ip-runtime">1.1 The Kernel Layer: <code>ip</code> (Runtime)</h3>
-<p>The <code>ip</code> command is part of the <code>iproute2</code> suite. It communicates directly with the Linux Kernel via <strong>Netlink sockets</strong>. When you run an <code>ip</code> command, you are modifying the direct, in-memory state of the network stack.</p>
-<ul>
-<li><strong>Speed</strong>: Changes happen instantly (microseconds).</li>
-<li><strong>Scope</strong>: Changes affect the running system only.</li>
-<li><strong>Risk</strong>: <strong>Changes are lost on reboot.</strong> If you restart the server, the kernel reloads, and your manual <code>ip</code> changes disappear.</li>
-</ul>
-<p><strong>Key Commands:</strong></p>
-<ul>
-<li><strong>Link Status</strong>: <code>ip link show</code> (Displays MTU, MAC addresses, and UP/DOWN state).</li>
-<li><strong>IP Addresses</strong>: <code>ip addr show</code> (Displays IPv4/IPv6 addresses attached to links).</li>
-<li><strong>Routing Table</strong>: <code>ip route get 8.8.8.8</code> (Simulates a packet to 8.8.8.8 and tells you which interface and gateway would be used).</li>
-</ul>
-<h3 id="12-the-configuration-layer-nmcli-persistent">1.2 The Configuration Layer: <code>nmcli</code> (Persistent)</h3>
-<p>To make settings permanent, we need a daemon that reads config files and applies them at boot. In modern Linux (including RHEL/CentOS and many Debian setups), this is <strong>NetworkManager</strong>. The command-line tool for this is <code>nmcli</code>.</p>
-<ul>
-<li><strong>Profiles</strong>: NetworkManager saves settings as "Connection Profiles" (saved in <code>/etc/NetworkManager/system-connections/</code>).</li>
-<li><strong>Logic</strong>: It handles complex logic, like "connect to Wi-Fi X when available, otherwise fall back to Ethernet Y."</li>
-<li><strong>Persistence</strong>: Changes made here are written to disk and survive reboots.</li>
-</ul>
-<p><strong>Hands-On Example:</strong>
-Use <code>nmcli</code> to set a static IP, ensuring the server always boots with the same address.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Modify the connection profile for interface 'eno1'
+<body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav
+        class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
+        <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+            <a class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline"
+                href="../index.html">
+                <img alt="VUT Logo" class="h-12 w-auto object-contain" src="../ops3_logo.png" />
+                <div class="flex flex-col">
+                    <span
+                        class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating
+                        Systems 3
+                        <span
+                            class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation
+                            &amp; Cloud Technologies
+                            <span class="font-bold text-lg tracking-tight sm:hidden">OPS3
+                            </span></span></span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline"
+                        href="../index.html">
+                        Course Home
+
+                        <!-- Theme Toggle Button -->
+                        <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                            id="theme-toggle">
+                            <!-- Sun Icon -->
+                            <svg class="w-5 h-5 text-yellow-500 hidden" fill="none" id="icon-sun" stroke="currentColor"
+                                viewbox="0 0 24 24">
+                                <path
+                                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                            <!-- Moon Icon -->
+                            <svg class="w-5 h-5 text-slate-500" fill="none" id="icon-moon" stroke="currentColor"
+                                viewbox="0 0 24 24">
+                                <path
+                                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                        </button>
+                    </a>
+                </div>
+            </a>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 max-w-5xl mb-12">
+        <article
+            class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
+
+            <div
+                class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+                <div class="w-40 flex-shrink-0 flex items-center justify-center bg-white dark:bg-gray-900">
+                    <img alt="Networking Icon" class="h-full w-full object-cover" src="images/week_3_icon.png" />
+                </div>
+                <div class="flex-1 flex flex-col items-center justify-center p-6">
+                    <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Virtual Networking and
+                        Linux Networking Fundamentals</h1>
+                    <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
+                    </span>
+                </div>
+            </div>
+            <p><strong>Course</strong>: Computer Systems Engineering
+                <strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
+                <strong>Topic</strong>: Virtual Networking and Linux Networking Fundamentals
+                <strong>Estimated Reading Time</strong>: 35 Minutes
+            </p>
+            <blockquote>
+                <p>[!TIP]
+                    <strong>How to succeed in this week</strong>:
+                    Networking is where VMs become useful. The concepts of bridges, <a class="glossary-term"
+                        href="../glossary.html#NAT">NAT<span class="glossary-tooltip">Network Address Translation - Maps
+                            private to public IPs</span></a>, and routing apply universally. Draw diagrams as you
+                    read—visualizing packet flow makes troubleshooting much easier later.
+                </p>
+            </blockquote>
+            <hr />
+            <h2 id="welcome-to-week-3">Welcome to Week 3!</h2>
+            <p>Networking is the nervous system of any virtualized infrastructure. In a traditional data center, network
+                engineers run physical cables, configure hardware switches, and plug in routers. In a Virtualized or
+                Cloud environment, all of this hardware is replaced by <strong>software</strong>.</p>
+            <p>As a Cloud Engineer, you are not just managing servers; you are managing the <em>wires</em> between them.
+                When a <a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span
+                        class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a>
+                and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux
+                        Containers - OS-level virtualization</span></a> and <a class="glossary-term"
+                    href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level
+                        virtualization</span></a> platform combining <a class="glossary-term"
+                    href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type
+                        1 hypervisor</span></a> <a class="glossary-term"
+                    href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates
+                        and manages virtual machines</span></a>" <a class="glossary-term"
+                    href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A
+                        bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term"
+                    href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level
+                        virtualization</span></a> <a class="glossary-term" href="../glossary.html#VM">VM<span
+                        class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical
+                        computer</span></a> - cannot reach the internet, or when a <a class="glossary-term"
+                    href="../glossary.html#Kubernetes">Kubernetes<span class="glossary-tooltip">Container orchestration
+                        platform</span></a> <a class="glossary-term"
+                    href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated
+                        coordination of systems</span></a> platform <a class="glossary-term"
+                    href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated
+                        coordination of systems</span></a> platform <a class="glossary-term"
+                    href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated
+                        coordination of systems</span></a> platform <a class="glossary-term"
+                    href="../glossary.html#Pod">pod<span class="glossary-tooltip">Smallest deployable unit in
+                        Kubernetes</span></a> <a class="glossary-term"
+                    href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated
+                        coordination of systems</span></a> platform often fails to talk to a database, the problem
+                rarely lies in the physical switch. It lies in the complex web of virtual interfaces, bridges, and
+                namespaces <em>inside</em> the Linux kernel.</p>
+            <p>This week is designed to <a class="glossary-term" href="../glossary.html#Bridge">bridge<span
+                        class="glossary-tooltip">Network device connecting network segments</span></a> the gap between
+                "clicking a button in <a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span
+                        class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a>
+                and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux
+                        Containers - OS-level virtualization</span></a> and <a class="glossary-term"
+                    href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level
+                        virtualization</span></a> platform combining <a class="glossary-term"
+                    href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type
+                        1 hypervisor</span></a> <a class="glossary-term"
+                    href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates
+                        and manages virtual machines</span></a>" <a class="glossary-term"
+                    href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A
+                        bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term"
+                    href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level
+                        virtualization</span></a> " and understanding the kernel-level mechanics that make that click
+                possible. We will dismantle the underlying abstraction and rebuild it command by command.</p>
+            <hr />
+            <h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
+            <ul>
+                <li><strong>Linux Networking Core:</strong> Understanding the distinction between ephemeral runtime
+                    configurations (<code>ip</code>) and persistent system configurations (<code>nmcli</code>).</li>
+                <li><strong>Virtual Wiring:</strong> How <code>veth</code> pairs replace physical patch cables.</li>
+                <li><strong>Virtual Switching:</strong> How Linux Bridges simulate Layer 2 switches and manage MAC
+                    address tables.</li>
+                <li><strong>Network Isolation:</strong> Using Namespaces to solve the "Multi-<a class="glossary-term"
+                        href="../glossary.html#Tenant">Tenant<span class="glossary-tooltip">Grouping of users and
+                            resources (also called Project)</span></a>" problem.</li>
+                <li><strong>Advanced Operations:</strong> Implementing redundancy (Bonding), Routing, and Security
+                    (Firewalls).</li>
+                <li><strong>Software Defined Networking:</strong> An introduction to Open vSwitch (OVS).</li>
+                <li><strong><a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span
+                                class="glossary-tooltip">Open-source virtualization platform combining KVM and
+                                LXC</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span
+                                class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a
+                            class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux
+                                Containers - OS-level virtualization</span></a> platform combining <a
+                            class="glossary-term" href="../glossary.html#KVM">KVM<span
+                                class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a>
+                        <a class="glossary-term" href="../glossary.html#Hypervisor">Hypervisor<span
+                                class="glossary-tooltip">Software that creates and manages virtual machines</span></a>"
+                        <a class="glossary-term" href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span
+                                class="glossary-tooltip">A bare-metal hypervisor that runs directly on
+                                hardware</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span
+                                class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a>
+                        Implementation:</strong> Applying these concepts to real-world <a class="glossary-term"
+                        href="../glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based
+                            emulation of a physical computer</span></a> - networking modes.</li>
+            </ul>
+            <hr />
+            <h1 id="part-1-linux-networking-fundamentals" class="!text-3xl">Part 1: Linux Networking Fundamentals</h1>
+            <p><a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span
+                        class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a>
+                and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux
+                        Containers - OS-level virtualization</span></a> and <a class="glossary-term"
+                    href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level
+                        virtualization</span></a> platform combining <a class="glossary-term"
+                    href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type
+                        1 hypervisor</span></a> <a class="glossary-term"
+                    href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates
+                        and manages virtual machines</span></a>" <a class="glossary-term"
+                    href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A
+                        bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term"
+                    href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level
+                        virtualization</span></a> is, at its core, a Debian Linux operating system. To troubleshoot or
+                configure it effectively, you must master Linux networking.</p>
+            <h2 id="1-runtime-vs-persistent-networking-ip-vs-nmcli">1. Runtime vs. Persistent Networking
+                (<code>ip</code> vs <code>nmcli</code>)</h2>
+            <p>In the early days of Unix, network interfaces were configured using <code>ifconfig</code>. This tool has
+                been deprecated for over a decade because it cannot handle modern complexities like multiple IP
+                addresses per interface or policy-based routing. Today, we rely on two distinct layers of configuration.
+            </p>
+            <h3 id="11-the-kernel-layer-ip-runtime">1.1 The Kernel Layer: <code>ip</code> (Runtime)</h3>
+            <p>The <code>ip</code> command is part of the <code>iproute2</code> suite. It communicates directly with the
+                Linux Kernel via <strong>Netlink sockets</strong>. When you run an <code>ip</code> command, you are
+                modifying the direct, in-memory state of the network stack.</p>
+            <ul>
+                <li><strong>Speed</strong>: Changes happen instantly (microseconds).</li>
+                <li><strong>Scope</strong>: Changes affect the running system only.</li>
+                <li><strong>Risk</strong>: <strong>Changes are lost on reboot.</strong> If you restart the server, the
+                    kernel reloads, and your manual <code>ip</code> changes disappear.</li>
+            </ul>
+            <p><strong>Key Commands:</strong></p>
+            <ul>
+                <li><strong>Link Status</strong>: <code>ip link show</code> (Displays MTU, MAC addresses, and UP/DOWN
+                    state).</li>
+                <li><strong>IP Addresses</strong>: <code>ip addr show</code> (Displays IPv4/IPv6 addresses attached to
+                    links).</li>
+                <li><strong>Routing Table</strong>: <code>ip route get 8.8.8.8</code> (Simulates a packet to 8.8.8.8 and
+                    tells you which interface and gateway would be used).</li>
+            </ul>
+            <h3 id="12-the-configuration-layer-nmcli-persistent">1.2 The Configuration Layer: <code>nmcli</code>
+                (Persistent)</h3>
+            <p>To make settings permanent, we need a daemon that reads config files and applies them at boot. In modern
+                Linux (including RHEL/CentOS and many Debian setups), this is <strong>NetworkManager</strong>. The
+                command-line tool for this is <code>nmcli</code>.</p>
+            <ul>
+                <li><strong>Profiles</strong>: NetworkManager saves settings as "Connection Profiles" (saved in
+                    <code>/etc/NetworkManager/system-connections/</code>).</li>
+                <li><strong>Logic</strong>: It handles complex logic, like "connect to Wi-Fi X when available, otherwise
+                    fall back to Ethernet Y."</li>
+                <li><strong>Persistence</strong>: Changes made here are written to disk and survive reboots.</li>
+            </ul>
+            <p><strong>Hands-On Example:</strong>
+                Use <code>nmcli</code> to set a static IP, ensuring the server always boots with the same address.</p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Modify the connection profile for interface 'eno1'
 <span class="c1"># Set the IP address and Subnet Mask
 nmcli<span class="w"> con<span class="w"> mod<span class="w"> eno1<span class="w"> ipv4.addresses<span class="w"> <span class="m">192.168.1.50/24
 
@@ -524,45 +1172,65 @@ nmcli<span class="w"> con<span class="w"> mod<span class="w"> eno1<span class="w
 
 <span class="c1"># 4. Apply the changes (Bounce the interface)
 nmcli<span class="w"> con<span class="w"> up<span class="w"> eno1
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><code>ip</code> commands are runtime only (lost on reboot).</li>
-<li><code>nmcli</code> commands are persistent (saved to disk).</li>
-<li>Correct networking requires understanding both layers.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why did Linux move away from <code>ifconfig</code>?</li>
-<li>If you set an IP with <code>ip addr add</code> and then reboot, what happens?</li>
-</ul>
-<p><strong>Resources</strong>:</p>
-<ul>
-<li><a href="https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf">Red Hat: ip Command Cheat Sheet</a></li>
-</ul>
-<hr/>
-<h2 id="2-network-namespaces-the-containers-of-networking">2. Network Namespaces (The "Containers" of Networking)</h2>
-<p>In a standard Linux server, there is one global network stack. There is one routing table, one firewall, and one list of interfaces. This creates a problem for Cloud Providers: <strong>The Multi-Tenant Problem</strong>.</p>
-<p><strong>Understanding Linux Namespaces</strong>
-A namespace is a fundamental Linux kernel feature that allows the kernel to provide a process with its own isolated view of global system resources. While there are several types of namespaces—such as <strong>pid</strong> (Process IDs), <strong>mnt</strong> (Mount Points), and <strong>user</strong> (User IDs)—our primary focus here is on the <strong>Network Namespace (<code>net</code>)</strong>.</p>
-<p><strong>The Network Namespace</strong>
-A Network Namespace provides a completely encapsulated network stack. When a process is placed inside a network namespace, it sees a unique set of:</p>
-<ul>
-<li><strong>Network Interfaces</strong> (e.g., its own <code>eth0</code> and <code>lo</code>).</li>
-<li><strong>IP Addresses</strong> (which can overlap with other namespaces).</li>
-<li><strong>Routing Tables</strong> (its own default gateway).</li>
-<li><strong>Firewall Rules</strong> (its own independent <code>iptables</code> chains).</li>
-</ul>
-<p>Even though multiple containers share the same underlying Linux Kernel, this isolation ensures they cannot see or interfere with each other's traffic.</p>
-<h3 id="21-the-tenant-problem">2.1 The "Tenant Problem"</h3>
-<p>Imagine you are hosting Amazon Web Services. Customer A wants a private network using the IP range <code>192.168.1.0/24</code>. Customer B <em>also</em> wants to use <code>192.168.1.0/24</code>. On a normal OS, you cannot have the same IP address twice. It would cause an IP conflict.</p>
-<p>To solve this, we use <strong>Namespaces</strong>. A Network Namespace is like a parallel universe for networking. It partitions the kernel's network structures. Inside a namespace, you have a completely independent set of interfaces, routes, and firewall rules. Customer A lives in Namespace A, and Customer B lives in Namespace B. They can use identical IP addresses without ever conflicting. This is the fundamental technology behind <strong>Docker</strong>, <strong>Kubernetes orchestration platform </strong>, and <strong>LXC </strong>.</p>
-<p><img alt="Linux Network Namespaces" src="images/linux_namespaces.png"/>
-<em>Figure 2.1: Visualizing Isolation of Network Resources within a Single Linux Kernel.</em></p>
-<h3 id="22-hands-on-example">2.2 Hands-On Example</h3>
-<p>We will create a "sandbox" namespace to demonstrate this total isolation.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Create a new namespace called "sandbox"
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li><code>ip</code> commands are runtime only (lost on reboot).</li>
+                <li><code>nmcli</code> commands are persistent (saved to disk).</li>
+                <li>Correct networking requires understanding both layers.</li>
+            </ul>
+            <p><strong>Reflection</strong>:</p>
+            <ul>
+                <li>Why did Linux move away from <code>ifconfig</code>?</li>
+                <li>If you set an IP with <code>ip addr add</code> and then reboot, what happens?</li>
+            </ul>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a
+                        href="https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf">Red
+                        Hat: ip Command Cheat Sheet</a></li>
+            </ul>
+            <hr />
+            <h2 id="2-network-namespaces-the-containers-of-networking">2. Network Namespaces (The "Containers" of
+                Networking)</h2>
+            <p>In a standard Linux server, there is one global network stack. There is one routing table, one firewall,
+                and one list of interfaces. This creates a problem for Cloud Providers: <strong>The Multi-Tenant
+                    Problem</strong>.</p>
+            <p><strong>Understanding Linux Namespaces</strong>
+                A namespace is a fundamental Linux kernel feature that allows the kernel to provide a process with its
+                own isolated view of global system resources. While there are several types of namespaces—such as
+                <strong>pid</strong> (Process IDs), <strong>mnt</strong> (Mount Points), and <strong>user</strong> (User
+                IDs)—our primary focus here is on the <strong>Network Namespace (<code>net</code>)</strong>.</p>
+            <p><strong>The Network Namespace</strong>
+                A Network Namespace provides a completely encapsulated network stack. When a process is placed inside a
+                network namespace, it sees a unique set of:</p>
+            <ul>
+                <li><strong>Network Interfaces</strong> (e.g., its own <code>eth0</code> and <code>lo</code>).</li>
+                <li><strong>IP Addresses</strong> (which can overlap with other namespaces).</li>
+                <li><strong>Routing Tables</strong> (its own default gateway).</li>
+                <li><strong>Firewall Rules</strong> (its own independent <code>iptables</code> chains).</li>
+            </ul>
+            <p>Even though multiple containers share the same underlying Linux Kernel, this isolation ensures they
+                cannot see or interfere with each other's traffic.</p>
+            <h3 id="21-the-tenant-problem">2.1 The "Tenant Problem"</h3>
+            <p>Imagine you are hosting Amazon Web Services. Customer A wants a private network using the IP range
+                <code>192.168.1.0/24</code>. Customer B <em>also</em> wants to use <code>192.168.1.0/24</code>. On a
+                normal OS, you cannot have the same IP address twice. It would cause an IP conflict.</p>
+            <p>To solve this, we use <strong>Namespaces</strong>. A Network Namespace is like a parallel universe for
+                networking. It partitions the kernel's network structures. Inside a namespace, you have a completely
+                independent set of interfaces, routes, and firewall rules. Customer A lives in Namespace A, and Customer
+                B lives in Namespace B. They can use identical IP addresses without ever conflicting. This is the
+                fundamental technology behind <strong>Docker</strong>, <strong>Kubernetes orchestration platform
+                </strong>, and <strong>LXC </strong>.</p>
+            <p><img alt="Linux Network Namespaces" src="images/linux_namespaces.png" />
+                <em>Figure 2.1: Visualizing Isolation of Network Resources within a Single Linux Kernel.</em>
+            </p>
+            <h3 id="22-hands-on-example">2.2 Hands-On Example</h3>
+            <p>We will create a "sandbox" namespace to demonstrate this total isolation.</p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Create a new namespace called "sandbox"
 sudo<span class="w"> ip<span class="w"> netns<span class="w"> add<span class="w"> sandbox
 
 <span class="c1"># 2. Verify Isolation
@@ -576,32 +1244,39 @@ sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">e
 <span class="c1"># 3. Activate the Loopback
 <span class="c1"># Ideally, every network stack needs a standard localhost (127.0.0.1)
 sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">exec<span class="w"> sandbox<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> lo<span class="w"> up
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li>Namespaces isolate network stacks (interfaces, routes, firewalls).</li>
-<li>They solve the "Multi-Tenant" problem (overlapping IPs).</li>
-<li>They are the foundation of all Container technology.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Can a process in Namespace A see the network traffic of Namespace B?</li>
-<li>How does this isolation improve security in a cloud environment?</li>
-</ul>
-<p><strong>Resources</strong>:</p>
-<ul>
-<li><a href="https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/">Introduction to Linux Namespaces</a></li>
-</ul>
-<hr/>
-<h2 id="3-connecting-the-dots-veth-pairs-and-bridges">3. Connecting the Dots: Veth Pairs and Bridges</h2>
-<p>Isolation is excellent for security, but now our namespace is a digital islands. It helps no one if it cannot communicate. We need two things to fix this: a cable and a switch.</p>
-<h3 id="31-the-virtual-cable-veth">3.1 The Virtual Cable (<code>veth</code>)</h3>
-<p>You cannot plug a physical Ethernet cable into a software namespace. Instead, Linux provides the <strong>Virtual Ethernet (veth)</strong> device.
-A <code>veth</code> pair is always created as two connected interfaces—a "pipe." Packets sent into Interface A instantly arrive at Interface B, and vice versa. This allows us to tunnel traffic from the Global Host namespace into the isolated "sandbox" namespace.</p>
-<p><strong>Hands-On Example:</strong>
-Connecting the Sandbox to the Host.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Create the pair. We name the ends specifically to avoid confusion.
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li>Namespaces isolate network stacks (interfaces, routes, firewalls).</li>
+                <li>They solve the "Multi-Tenant" problem (overlapping IPs).</li>
+                <li>They are the foundation of all Container technology.</li>
+            </ul>
+            <p><strong>Reflection</strong>:</p>
+            <ul>
+                <li>Can a process in Namespace A see the network traffic of Namespace B?</li>
+                <li>How does this isolation improve security in a cloud environment?</li>
+            </ul>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a href="https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/">Introduction
+                        to Linux Namespaces</a></li>
+            </ul>
+            <hr />
+            <h2 id="3-connecting-the-dots-veth-pairs-and-bridges">3. Connecting the Dots: Veth Pairs and Bridges</h2>
+            <p>Isolation is excellent for security, but now our namespace is a digital islands. It helps no one if it
+                cannot communicate. We need two things to fix this: a cable and a switch.</p>
+            <h3 id="31-the-virtual-cable-veth">3.1 The Virtual Cable (<code>veth</code>)</h3>
+            <p>You cannot plug a physical Ethernet cable into a software namespace. Instead, Linux provides the
+                <strong>Virtual Ethernet (veth)</strong> device.
+                A <code>veth</code> pair is always created as two connected interfaces—a "pipe." Packets sent into
+                Interface A instantly arrive at Interface B, and vice versa. This allows us to tunnel traffic from the
+                Global Host namespace into the isolated "sandbox" namespace.</p>
+            <p><strong>Hands-On Example:</strong>
+                Connecting the Sandbox to the Host.</p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Create the pair. We name the ends specifically to avoid confusion.
 <span class="c1"># 'veth-host' will stay on the outside. 'veth-sandbox' will go inside.
 sudo<span class="w"> ip<span class="w"> link<span class="w"> add<span class="w"> veth-host<span class="w"> <span class="nb">type<span class="w"> veth<span class="w"> peer<span class="w"> name<span class="w"> veth-sandbox
 
@@ -619,64 +1294,85 @@ sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">e
 
 <span class="c1"># 4. Test Connectivity
 sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">exec<span class="w"> sandbox<span class="w"> ping<span class="w"> <span class="m">10.0.0.1
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="32-the-virtual-switch-bridge">3.2 The Virtual Switch (<code>bridge</code>)</h3>
-<p>Connecting two points with a <code>veth</code> is easy. But what if you have 50 Containers? You cannot create a mesh of cables between every single one. You need a device to connect them all to a central point.
-A <strong>Linux Bridge</strong> is a software implementation of a standard Ethernet Switch. It operates at <strong>Layer 2 (Data Link Layer)</strong>.</p>
-<!-- ![Virtual Ethernet & Bridging](images/veth_bridge_architecture.png) -->
- *Figure 3.1: Veth pairs connecting Namespaces to a Linux Bridge.* 
-<ul>
-<li><strong>MAC Learning</strong>: The bridge listens to incoming frames. If it sees a packet from MAC <code>AA:BB:CC</code> coming from Port 1, it records this in a table.</li>
-<li><strong>Forwarding</strong>: If it later receives a packet destined for <code>AA:BB:CC</code>, it looks up the table and sends it <em>only</em> to Port 1. This reduces traffic congestion compared to a "Hub" which broadcasts everything.</li>
-</ul>
-<p><strong>How devices plug in:</strong></p>
-<ul>
-<li><strong>Containers</strong>: Use <code>veth</code> pairs (as discussed in 3.1).</li>
-<li><strong>Virtual Machines</strong>: Use <strong>TAP Interfaces</strong>. A <code>tap</code> device simulates an Ethernet device at Layer 2. QEMU - Type 1 hypervisor for virtualization /KVM - Type 1 hypervisor creates a <code>tap</code> interface (e.g., <code>tap100i0</code>) for the VM - , and the other end connects to the Bridge. This allows the VM - to send raw Ethernet frames onto the switch.</li>
-</ul>
-<p><strong>Example: Manually creating a TAP interface (What Proxmox platform combining KVM - Type 1 hypervisor and LXC does behind the scenes)</strong></p>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Create the TAP interface
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="32-the-virtual-switch-bridge">3.2 The Virtual Switch (<code>bridge</code>)</h3>
+            <p>Connecting two points with a <code>veth</code> is easy. But what if you have 50 Containers? You cannot
+                create a mesh of cables between every single one. You need a device to connect them all to a central
+                point.
+                A <strong>Linux Bridge</strong> is a software implementation of a standard Ethernet Switch. It operates
+                at <strong>Layer 2 (Data Link Layer)</strong>.</p>
+            <!-- ![Virtual Ethernet & Bridging](images/veth_bridge_architecture.png) -->
+            *Figure 3.1: Veth pairs connecting Namespaces to a Linux Bridge.*
+            <ul>
+                <li><strong>MAC Learning</strong>: The bridge listens to incoming frames. If it sees a packet from MAC
+                    <code>AA:BB:CC</code> coming from Port 1, it records this in a table.</li>
+                <li><strong>Forwarding</strong>: If it later receives a packet destined for <code>AA:BB:CC</code>, it
+                    looks up the table and sends it <em>only</em> to Port 1. This reduces traffic congestion compared to
+                    a "Hub" which broadcasts everything.</li>
+            </ul>
+            <p><strong>How devices plug in:</strong></p>
+            <ul>
+                <li><strong>Containers</strong>: Use <code>veth</code> pairs (as discussed in 3.1).</li>
+                <li><strong>Virtual Machines</strong>: Use <strong>TAP Interfaces</strong>. A <code>tap</code> device
+                    simulates an Ethernet device at Layer 2. QEMU - Type 1 hypervisor for virtualization /KVM - Type 1
+                    hypervisor creates a <code>tap</code> interface (e.g., <code>tap100i0</code>) for the VM - , and the
+                    other end connects to the Bridge. This allows the VM - to send raw Ethernet frames onto the switch.
+                </li>
+            </ul>
+            <p><strong>Example: Manually creating a TAP interface (What Proxmox platform combining KVM - Type 1
+                    hypervisor and LXC does behind the scenes)</strong></p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Create the TAP interface
 sudo<span class="w"> ip<span class="w"> tuntap<span class="w"> add<span class="w"> dev<span class="w"> tap0<span class="w"> mode<span class="w"> tap
 
 <span class="c1"># 2. Plug it into the Bridge
 sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> tap0<span class="w"> master<span class="w"> br0
 sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> tap0<span class="w"> up
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<p><strong>Hands-On Example: Connecting Two Namespaces (Red &amp; Blue)</strong>
-We will act as a "Virtual Switch" administrator. We want to connect two isolated namespaces so they can talk to each other.</p>
-<ol>
-<li>
-<p><strong>Create the Bridge (The Switch)</strong>:
- <code>bash
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <p><strong>Hands-On Example: Connecting Two Namespaces (Red &amp; Blue)</strong>
+                We will act as a "Virtual Switch" administrator. We want to connect two isolated namespaces so they can
+                talk to each other.</p>
+            <ol>
+                <li>
+                    <p><strong>Create the Bridge (The Switch)</strong>:
+                        <code>bash
  sudo ip link add name br0 type bridge
- sudo ip link set br0 up</code></p>
-</li>
-<li>
-<p><strong>Create the "Computers" (Namespaces)</strong>:
- <code>bash
+ sudo ip link set br0 up</code>
+                    </p>
+                </li>
+                <li>
+                    <p><strong>Create the "Computers" (Namespaces)</strong>:
+                        <code>bash
  sudo ip netns add red
- sudo ip netns add blue</code></p>
-</li>
-<li>
-<p><strong>Create the Cables (Veth Pairs)</strong>:
- We need two cables. One for Red, one for Blue.</p>
-<ul>
-<li>Cable 1: <code>veth-red</code> (Switch side) &lt;-&gt; <code>veth-red-ns</code> (Computer side)</li>
-<li>Cable 2: <code>veth-blue</code> (Switch side) &lt;-&gt; <code>veth-blue-ns</code> (Computer side)
-<code>bash
+ sudo ip netns add blue</code>
+                    </p>
+                </li>
+                <li>
+                    <p><strong>Create the Cables (Veth Pairs)</strong>:
+                        We need two cables. One for Red, one for Blue.</p>
+                    <ul>
+                        <li>Cable 1: <code>veth-red</code> (Switch side) &lt;-&gt; <code>veth-red-ns</code> (Computer
+                            side)</li>
+                        <li>Cable 2: <code>veth-blue</code> (Switch side) &lt;-&gt; <code>veth-blue-ns</code> (Computer
+                            side)
+                            <code>bash
 sudo ip link add veth-red type veth peer name veth-red-ns
-sudo ip link add veth-blue type veth peer name veth-blue-ns</code></li>
-</ul>
-</li>
-<li>
-<p><strong>Plug them in (Wiring)</strong>:</p>
-<ul>
-<li>Plug the "NS" ends into the namespaces.</li>
-<li>Plug the other ends into the Bridge (<code>master br0</code>).</li>
-</ul>
-</li>
-</ol>
-<div class="codehilite"><pre><span><code><span class="c1"># Wiring Red
+sudo ip link add veth-blue type veth peer name veth-blue-ns</code>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Plug them in (Wiring)</strong>:</p>
+                    <ul>
+                        <li>Plug the "NS" ends into the namespaces.</li>
+                        <li>Plug the other ends into the Bridge (<code>master br0</code>).</li>
+                    </ul>
+                </li>
+            </ol>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># Wiring Red
 sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> veth-red-ns<span class="w"> netns<span class="w"> red
 sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> veth-red<span class="w"> master<span class="w"> br0
 sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> veth-red<span class="w"> up
@@ -685,91 +1381,108 @@ sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">se
 sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> veth-blue-ns<span class="w"> netns<span class="w"> blue
 sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> veth-blue<span class="w"> master<span class="w"> br0
 sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> veth-blue<span class="w"> up
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<ol>
-<li><strong>Configure IPs (Inside Namespaces)</strong>:</li>
-</ol>
-<div class="codehilite"><pre><span><code><span class="c1"># Red Computer: 192.168.50.1
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <ol>
+                <li><strong>Configure IPs (Inside Namespaces)</strong>:</li>
+            </ol>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># Red Computer: 192.168.50.1
 sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">exec<span class="w"> red<span class="w"> ip<span class="w"> addr<span class="w"> add<span class="w"> <span class="m">192.168.50.1/24<span class="w"> dev<span class="w"> veth-red-ns
 sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">exec<span class="w"> red<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> veth-red-ns<span class="w"> up
 
 <span class="c1"># Blue Computer: 192.168.50.2
 sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">exec<span class="w"> blue<span class="w"> ip<span class="w"> addr<span class="w"> add<span class="w"> <span class="m">192.168.50.2/24<span class="w"> dev<span class="w"> veth-blue-ns
 sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">exec<span class="w"> blue<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> veth-blue-ns<span class="w"> up
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<ol>
-<li><strong>Test Connectivity</strong>:
- Ping Blue from Red. The packet goes: <code>Red -&gt; veth -&gt; br0 -&gt; veth -&gt; Blue</code>.</li>
-</ol>
-<div class="codehilite"><pre><span><code>sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">exec<span class="w"> red<span class="w"> ping<span class="w"> -c<span class="w"> <span class="m">3<span class="w"> <span class="m">192.168.50.2
-</span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<hr/>
-<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><code>veth</code> pairs act as virtual cables connecting namespaces.</li>
-<li>Linux Bridges act as virtual switches, forwarding frames based on MAC addresses.</li>
-<li>We can build complex topologies entirely in software.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>If you forget to "plug" the veth into the bridge (<code>master br0</code>), what happens?</li>
-<li>Why do we need two ends to a veth pair?</li>
-</ul>
-<p><strong>Resources</strong>:</p>
-<ul>
-<li><a href="https://man7.org/linux/man-pages/man8/bridge.8.html">Linux Bridge Command Help</a></li>
-</ul>
-<hr/>
-<h2 id="4-container-networking-in-practice-docker-podman-lxc">4. Container Networking in Practice (Docker, Podman, LXC )</h2>
-<p>In Week 3, we discussed containers. Now we see how they use the Linux networking primitives we just learned.</p>
-<h3 id="41-docker-the-standard-bridge">4.1 Docker (The Standard Bridge)</h3>
-<p>When you install Docker, it creates a Linux Bridge named <code>docker0</code>.</p>
-<ul>
-<li><strong>The Bridge</strong>: <code>docker0</code> (Usually 172.17.0.1/16).</li>
-<li><strong>The Veth</strong>: Every time you run <code>docker run</code>, Docker creates a <code>veth</code> pair. One end sits on the host (plugged into <code>docker0</code>), the other sits inside the container.</li>
-<li><strong>The Namespace</strong>: The container <em>is</em> just a process running inside a network namespace.</li>
-</ul>
-<p><strong>CLI Comparison:</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Action</th>
-<th style="text-align: left;">Manual Linux Command</th>
-<th style="text-align: left;">Docker Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Create Net</td>
-<td style="text-align: left;"><code>ip link add br0 type bridge</code></td>
-<td style="text-align: left;"><code>docker network create mynet</code></td>
-</tr>
-<tr>
-<td style="text-align: left;">Create NS</td>
-<td style="text-align: left;"><code>ip netns add container1</code></td>
-<td style="text-align: left;"><code>docker run --name container1 ...</code></td>
-</tr>
-<tr>
-<td style="text-align: left;">Connect</td>
-<td style="text-align: left;"><code>ip link set veth master br0</code></td>
-<td style="text-align: left;">Auto-connected to <code>docker0</code> or custom net</td>
-</tr>
-</tbody>
-</table>
- End of CLI Comparison table 
-<h3 id="42-podman-rootless-networking">4.2 Podman (Rootless Networking)</h3>
-<p>Podman often manages containers without root privileges. Standard bridges require root. How does it work?</p>
-<ul>
-<li><strong>slirp4netns</strong>: Podman uses a User-Space networking stack. It "slurps" traffic from the host interface and pipes it into the container namespace without touching the kernel's actual bridge settings.</li>
-<li><strong>Performance</strong>: Slightly slower than Docker's bridge, but much more secure.</li>
-</ul>
-<h3 id="43-lxc-system-containers">4.3 LXC (System Containers)</h3>
-<p>LXC is closer to Proxmox platform combining KVM - Type 1 hypervisor and LXC 's approach. It typically uses <code>lxcbr0</code>.</p>
-<ul>
-<li>Unlike Docker, LXC networking is defined in a <strong>config file</strong>. By default, it connects to <code>lxcbr0</code> and requests an IP via DHCP, just like a physical computer would.</li>
-</ul>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Create a container
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <ol>
+                <li><strong>Test Connectivity</strong>:
+                    Ping Blue from Red. The packet goes: <code>Red -&gt; veth -&gt; br0 -&gt; veth -&gt; Blue</code>.
+                </li>
+            </ol>
+            <div class="codehilite">
+                <pre><span><code>sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">exec<span class="w"> red<span class="w"> ping<span class="w"> -c<span class="w"> <span class="m">3<span class="w"> <span class="m">192.168.50.2
+</span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <hr />
+            <h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li><code>veth</code> pairs act as virtual cables connecting namespaces.</li>
+                <li>Linux Bridges act as virtual switches, forwarding frames based on MAC addresses.</li>
+                <li>We can build complex topologies entirely in software.</li>
+            </ul>
+            <p><strong>Reflection</strong>:</p>
+            <ul>
+                <li>If you forget to "plug" the veth into the bridge (<code>master br0</code>), what happens?</li>
+                <li>Why do we need two ends to a veth pair?</li>
+            </ul>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a href="https://man7.org/linux/man-pages/man8/bridge.8.html">Linux Bridge Command Help</a></li>
+            </ul>
+            <hr />
+            <h2 id="4-container-networking-in-practice-docker-podman-lxc">4. Container Networking in Practice (Docker,
+                Podman, LXC )</h2>
+            <p>In Week 3, we discussed containers. Now we see how they use the Linux networking primitives we just
+                learned.</p>
+            <h3 id="41-docker-the-standard-bridge">4.1 Docker (The Standard Bridge)</h3>
+            <p>When you install Docker, it creates a Linux Bridge named <code>docker0</code>.</p>
+            <ul>
+                <li><strong>The Bridge</strong>: <code>docker0</code> (Usually 172.17.0.1/16).</li>
+                <li><strong>The Veth</strong>: Every time you run <code>docker run</code>, Docker creates a
+                    <code>veth</code> pair. One end sits on the host (plugged into <code>docker0</code>), the other sits
+                    inside the container.</li>
+                <li><strong>The Namespace</strong>: The container <em>is</em> just a process running inside a network
+                    namespace.</li>
+            </ul>
+            <p><strong>CLI Comparison:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Action</th>
+                        <th style="text-align: left;">Manual Linux Command</th>
+                        <th style="text-align: left;">Docker Command</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: left;">Create Net</td>
+                        <td style="text-align: left;"><code>ip link add br0 type bridge</code></td>
+                        <td style="text-align: left;"><code>docker network create mynet</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Create NS</td>
+                        <td style="text-align: left;"><code>ip netns add container1</code></td>
+                        <td style="text-align: left;"><code>docker run --name container1 ...</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Connect</td>
+                        <td style="text-align: left;"><code>ip link set veth master br0</code></td>
+                        <td style="text-align: left;">Auto-connected to <code>docker0</code> or custom net</td>
+                    </tr>
+                </tbody>
+            </table>
+            End of CLI Comparison table
+            <h3 id="42-podman-rootless-networking">4.2 Podman (Rootless Networking)</h3>
+            <p>Podman often manages containers without root privileges. Standard bridges require root. How does it work?
+            </p>
+            <ul>
+                <li><strong>slirp4netns</strong>: Podman uses a User-Space networking stack. It "slurps" traffic from
+                    the host interface and pipes it into the container namespace without touching the kernel's actual
+                    bridge settings.</li>
+                <li><strong>Performance</strong>: Slightly slower than Docker's bridge, but much more secure.</li>
+            </ul>
+            <h3 id="43-lxc-system-containers">4.3 LXC (System Containers)</h3>
+            <p>LXC is closer to Proxmox platform combining KVM - Type 1 hypervisor and LXC 's approach. It typically
+                uses <code>lxcbr0</code>.</p>
+            <ul>
+                <li>Unlike Docker, LXC networking is defined in a <strong>config file</strong>. By default, it connects
+                    to <code>lxcbr0</code> and requests an IP via DHCP, just like a physical computer would.</li>
+            </ul>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Create a container
 sudo<span class="w"> lxc-create<span class="w"> -n<span class="w"> my-container<span class="w"> -t<span class="w"> download<span class="w"> --<span class="w"> -d<span class="w"> ubuntu<span class="w"> -r<span class="w"> focal<span class="w"> -a<span class="w"> amd64
 
 <span class="c1"># 2. View the Network Config (How does it get an IP?)
@@ -782,35 +1495,43 @@ sudo<span class="w"> lxc-start<span class="w"> -n<span class="w"> my-container
 
 <span class="c1"># 4. Check the assigned IP
 sudo<span class="w"> lxc-info<span class="w"> -n<span class="w"> my-container
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li>Docker automates the creation of Bridges (<code>docker0</code>) and Veth pairs.</li>
-<li>Podman uses <code>slirp4netns</code> for rootless, secure networking.</li>
-<li>LXC behaves more like traditional VMs on the network.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why is "Rootless" networking considered more secure?</li>
-<li>How does <code>docker network create</code> simplify what we did in Section 3?</li>
-</ul>
-<p><strong>Resources</strong>:</p>
-<ul>
-<li><a href="https://docs.docker.com/network/">Docker Networking Overview</a></li>
-</ul>
-<hr/>
-<h2 id="5-advanced-linux-operations">5. Advanced Linux Operations</h2>
-<p>Mastering the basics is enough to build a lab, but production environments require robustness, redundancy, and security.</p>
-<h3 id="51-link-aggregation-bondinglacp">5.1 Link Aggregation (Bonding/LACP)</h3>
-<p>Hardware fails. Cables get cut, SFP modules burn out, and switch ports die. If your Hypervisor is connected via a single cable, you have a <strong>Single Point of Failure (SPOF)</strong>.</p>
-<p><strong>Bonding</strong> allows you to combine multiple physical interfaces (e.g., <code>eno1</code> and <code>eno2</code>) into a single virtual interface (<code>bond0</code>).</p>
-<ul>
-<li><strong>Mode 1 (Active-Backup)</strong>: Only one cable is used. If it fails, the traffic flips to the second cable. Simple, but wastes 50% bandwidth.</li>
-<li><strong>Mode 4 (802.3ad LACP)</strong>: The Gold Standard. The server and switch communicate to balance traffic across <em>both</em> cables simultaneously. You get double the speed and redundancy.</li>
-</ul>
-<p><strong>Configuration:</strong></p>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Create the Bond Interface
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li>Docker automates the creation of Bridges (<code>docker0</code>) and Veth pairs.</li>
+                <li>Podman uses <code>slirp4netns</code> for rootless, secure networking.</li>
+                <li>LXC behaves more like traditional VMs on the network.</li>
+            </ul>
+            <p><strong>Reflection</strong>:</p>
+            <ul>
+                <li>Why is "Rootless" networking considered more secure?</li>
+                <li>How does <code>docker network create</code> simplify what we did in Section 3?</li>
+            </ul>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a href="https://docs.docker.com/network/">Docker Networking Overview</a></li>
+            </ul>
+            <hr />
+            <h2 id="5-advanced-linux-operations">5. Advanced Linux Operations</h2>
+            <p>Mastering the basics is enough to build a lab, but production environments require robustness,
+                redundancy, and security.</p>
+            <h3 id="51-link-aggregation-bondinglacp">5.1 Link Aggregation (Bonding/LACP)</h3>
+            <p>Hardware fails. Cables get cut, SFP modules burn out, and switch ports die. If your Hypervisor is
+                connected via a single cable, you have a <strong>Single Point of Failure (SPOF)</strong>.</p>
+            <p><strong>Bonding</strong> allows you to combine multiple physical interfaces (e.g., <code>eno1</code> and
+                <code>eno2</code>) into a single virtual interface (<code>bond0</code>).</p>
+            <ul>
+                <li><strong>Mode 1 (Active-Backup)</strong>: Only one cable is used. If it fails, the traffic flips to
+                    the second cable. Simple, but wastes 50% bandwidth.</li>
+                <li><strong>Mode 4 (802.3ad LACP)</strong>: The Gold Standard. The server and switch communicate to
+                    balance traffic across <em>both</em> cables simultaneously. You get double the speed and redundancy.
+                </li>
+            </ul>
+            <p><strong>Configuration:</strong></p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Create the Bond Interface
 nmcli<span class="w"> con<span class="w"> add<span class="w"> <span class="nb">type<span class="w"> bond<span class="w"> con-name<span class="w"> bond0<span class="w"> ifname<span class="w"> bond0<span class="w"> mode<span class="w"> <span class="m">802.3ad
 
 <span class="c1"># 2. Enslave Physical NICs to the Bond
@@ -819,12 +1540,17 @@ nmcli<span class="w"> con<span class="w"> add<span class="w"> <span class="nb">t
 
 <span class="c1"># 3. Bring up the Bond
 nmcli<span class="w"> con<span class="w"> up<span class="w"> bond0
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="52-ip-forwarding-routing">5.2 IP Forwarding &amp; Routing</h3>
-<p>A Linux server usually behaves like an <strong>End Host</strong>—it consumes packets sent to it and ignores the rest. However, in virtualization (specifically NAT Mode), the Linux host must act as a <strong>Router</strong>. It needs to accept packets from VMs and forward them to the Internet.</p>
-<p>To do this, we must toggle a specialized kernel parameter: <code>ip_forward</code>. We also need to manipulate the <strong>Routing Table</strong> to tell the kernel where networks live.</p>
-<p><strong>Commands:</strong></p>
-<div class="codehilite"><pre><span><code><span class="c1"># Check status (0 = Disabled, 1 = Enabled)
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="52-ip-forwarding-routing">5.2 IP Forwarding &amp; Routing</h3>
+            <p>A Linux server usually behaves like an <strong>End Host</strong>—it consumes packets sent to it and
+                ignores the rest. However, in virtualization (specifically NAT Mode), the Linux host must act as a
+                <strong>Router</strong>. It needs to accept packets from VMs and forward them to the Internet.</p>
+            <p>To do this, we must toggle a specialized kernel parameter: <code>ip_forward</code>. We also need to
+                manipulate the <strong>Routing Table</strong> to tell the kernel where networks live.</p>
+            <p><strong>Commands:</strong></p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># Check status (0 = Disabled, 1 = Enabled)
 cat<span class="w"> /proc/sys/net/ipv4/ip_forward
 
 <span class="c1"># Enable Forwarding Temporarily
@@ -833,30 +1559,41 @@ sysctl<span class="w"> -w<span class="w"> net.ipv4.ip_forward<span class="o">=<s
 <span class="c1"># Add a Static Route
 <span class="c1"># "Traffic for 10.99.0.0/24 should be sent to the gateway at 192.168.1.254"
 sudo<span class="w"> ip<span class="w"> route<span class="w"> add<span class="w"> <span class="m">10.99.0.0/24<span class="w"> via<span class="w"> <span class="m">192.168.1.254
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="53-the-linux-firewall-iptables">5.3 The Linux Firewall (<code>iptables</code>)</h3>
-<p>Security in the cloud isn't just about an external firewall appliance. Every Linux kernel has a built-in firewall called <strong>Netfilter</strong>. We manipulate it using <code>iptables</code>. It processes packets in "Chains":
-1. <strong>INPUT</strong>: Filters traffic destined for the localhost.
-2. <strong>OUTPUT</strong>: Filters traffic created by the localhost.
-3. <strong>FORWARD</strong>: Filters traffic passing <em>through</em> the localhost (e.g., VM - to Internet traffic).</p>
-<p><strong>Hands-On Example:</strong> securing a host.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Allow "Established" traffic
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="53-the-linux-firewall-iptables">5.3 The Linux Firewall (<code>iptables</code>)</h3>
+            <p>Security in the cloud isn't just about an external firewall appliance. Every Linux kernel has a built-in
+                firewall called <strong>Netfilter</strong>. We manipulate it using <code>iptables</code>. It processes
+                packets in "Chains":
+                1. <strong>INPUT</strong>: Filters traffic destined for the localhost.
+                2. <strong>OUTPUT</strong>: Filters traffic created by the localhost.
+                3. <strong>FORWARD</strong>: Filters traffic passing <em>through</em> the localhost (e.g., VM - to
+                Internet traffic).</p>
+            <p><strong>Hands-On Example:</strong> securing a host.</p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Allow "Established" traffic
 <span class="c1"># If we sent a request out, allow the reply back in. Essential!
 sudo<span class="w"> iptables<span class="w"> -A<span class="w"> INPUT<span class="w"> -m<span class="w"> state<span class="w"> --state<span class="w"> ESTABLISHED,RELATED<span class="w"> -j<span class="w"> ACCEPT
 
 <span class="c1"># 2. Allow SSH (Port 22) so we can manage the server
 sudo<span class="w"> iptables<span class="w"> -A<span class="w"> INPUT<span class="w"> -p<span class="w"> tcp<span class="w"> --dport<span class="w"> <span class="m">22<span class="w"> -j<span class="w"> ACCEPT
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<div class="codehilite"><pre><span><code><span class="c1"># 3. Drop Everything Else
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 3. Drop Everything Else
 <span class="c1"># This is the "Default Deny" posture. If it's not explicitly allowed, kill it.
 sudo<span class="w"> iptables<span class="w"> -P<span class="w"> INPUT<span class="w"> DROP
-</span></span></span></span></span></span></code></span></pre></div>
-<p><strong>Modern Frontends: <code>firewalld</code> vs <code>iptables</code></strong>
-While <code>iptables</code> (and its successor <code>nftables</code>) is the low-level tool, managing thousands of rules manually is hard. Modern distros use "Frontend Controllers":</p>
-<ul>
-<li><strong>RHEL/CentOS/Fedora</strong>: Use <code>firewalld</code>. It organizes rules into "Zones" (Public, Home, Work).</li>
-</ul>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Check which zone is active
+</span></span></span></span></span></span></code></span></pre>
+            </div>
+            <p><strong>Modern Frontends: <code>firewalld</code> vs <code>iptables</code></strong>
+                While <code>iptables</code> (and its successor <code>nftables</code>) is the low-level tool, managing
+                thousands of rules manually is hard. Modern distros use "Frontend Controllers":</p>
+            <ul>
+                <li><strong>RHEL/CentOS/Fedora</strong>: Use <code>firewalld</code>. It organizes rules into "Zones"
+                    (Public, Home, Work).</li>
+            </ul>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Check which zone is active
 sudo<span class="w"> firewall-cmd<span class="w"> --get-active-zones
 
 <span class="c1"># 2. Allow HTTP traffic permanently
@@ -867,11 +1604,13 @@ sudo<span class="w"> firewall-cmd<span class="w"> --permanent<span class="w"> --
 
 <span class="c1"># 4. Reload to apply changes
 sudo<span class="w"> firewall-cmd<span class="w"> --reload
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<ul>
-<li><strong>Debian/Ubuntu</strong>: Often use <code>ufw</code> (Uncomplicated Firewall).</li>
-</ul>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Check status (Inactive by default)
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <ul>
+                <li><strong>Debian/Ubuntu</strong>: Often use <code>ufw</code> (Uncomplicated Firewall).</li>
+            </ul>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Check status (Inactive by default)
 sudo<span class="w"> ufw<span class="w"> status
 
 <span class="c1"># 2. Allow SSH first (Important!)
@@ -883,25 +1622,38 @@ sudo<span class="w"> ufw<span class="w"> allow<span class="w"> <span class="m">8
 
 <span class="c1"># 4. Enable the firewall
 sudo<span class="w"> ufw<span class="w"> <span class="nb">enable
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<p>These tools write the underlying <code>iptables</code>/<code>nftables</code> rules for you.</p>
-<h3 id="54-network-reconnaissance-ss-nmap">5.4 Network Reconnaissance (<code>ss</code> &amp; <code>nmap</code>)</h3>
-<p>Before you can analyze traffic, you often need to know what ports are open or who is listening.</p>
-<p><strong>Socket Statistics (<code>ss</code>)</strong>
-<code>ss</code> is the modern replacement for the deprecated <code>netstat</code>. It allows you to see which processes on <em>your</em> server are listening for connections.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># Show all Listening (l) TCP (t) and UDP (u) ports with Numeric (n) values and Process names (p)
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <p>These tools write the underlying <code>iptables</code>/<code>nftables</code> rules for you.</p>
+            <h3 id="54-network-reconnaissance-ss-nmap">5.4 Network Reconnaissance (<code>ss</code> &amp;
+                <code>nmap</code>)</h3>
+            <p>Before you can analyze traffic, you often need to know what ports are open or who is listening.</p>
+            <p><strong>Socket Statistics (<code>ss</code>)</strong>
+                <code>ss</code> is the modern replacement for the deprecated <code>netstat</code>. It allows you to see
+                which processes on <em>your</em> server are listening for connections.
+            </p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># Show all Listening (l) TCP (t) and UDP (u) ports with Numeric (n) values and Process names (p)
 sudo<span class="w"> ss<span class="w"> -tulpn
-</span></span></span></code></span></pre></div>
-<p><strong>Network Mapper (<code>nmap</code>)</strong>
-<code>nmap</code> is the industry standard for network discovery. Unlike <code>ss</code> (which looks locally), <code>nmap</code> allows you to scan <em>remote</em> servers to see what they are exposing.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># Scan a target IP to see open ports
+</span></span></span></code></span></pre>
+            </div>
+            <p><strong>Network Mapper (<code>nmap</code>)</strong>
+                <code>nmap</code> is the industry standard for network discovery. Unlike <code>ss</code> (which looks
+                locally), <code>nmap</code> allows you to scan <em>remote</em> servers to see what they are exposing.
+            </p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># Scan a target IP to see open ports
 nmap<span class="w"> <span class="m">192.168.1.50
-</span></span></span></code></span></pre></div>
-<h3 id="55-traffic-analysis-tcpdump">5.5 Traffic Analysis (<code>tcpdump</code>)</h3>
-<p>When networking breaks, it often fails silently. A firewall drops a packet without an error message. A route sends traffic into a black hole. To fix this, we need <strong>Packet Capture</strong>.</p>
-<p><code>tcpdump</code> is the CLI version of Wireshark. It puts the network card into "Promiscuous Mode," allowing it to see every packet on the wire, not just those addressed to it.</p>
-<p><strong>Commands:</strong></p>
-<div class="codehilite"><pre><span><code><span class="c1"># Basic Capture: Listen on interface 'vmbr0' for Port 80 (HTTP)
+</span></span></span></code></span></pre>
+            </div>
+            <h3 id="55-traffic-analysis-tcpdump">5.5 Traffic Analysis (<code>tcpdump</code>)</h3>
+            <p>When networking breaks, it often fails silently. A firewall drops a packet without an error message. A
+                route sends traffic into a black hole. To fix this, we need <strong>Packet Capture</strong>.</p>
+            <p><code>tcpdump</code> is the CLI version of Wireshark. It puts the network card into "Promiscuous Mode,"
+                allowing it to see every packet on the wire, not just those addressed to it.</p>
+            <p><strong>Commands:</strong></p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># Basic Capture: Listen on interface 'vmbr0' for Port 80 (HTTP)
 sudo<span class="w"> tcpdump<span class="w"> -i<span class="w"> vmbr0<span class="w"> port<span class="w"> <span class="m">80
 
 <span class="c1"># Source Filtering: Show traffic only from a specific "Bad IP"
@@ -909,37 +1661,50 @@ sudo<span class="w"> tcpdump<span class="w"> -i<span class="w"> vmbr0<span class
 
 <span class="c1"># File Capture: Save packets to a file for detailed analysis in Wireshark later
 sudo<span class="w"> tcpdump<span class="w"> -i<span class="w"> vmbr0<span class="w"> -w<span class="w"> crash_report.pcap
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Bonding</strong> aggregates links for redundancy (Active/Backup) or speed (LACP).</li>
-<li><strong>Routing</strong> allows a Linux host to act as a Gateway.</li>
-<li><strong>IPTables</strong> controls traffic flow (Input, Output, Forward).</li>
-<li><strong>SS/Nmap</strong> allow you to discover open ports and listening services.</li>
-<li><strong>Tcpdump</strong> allows us to see the actual packets on the wire.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>If you have a Bond with 2 cables and one is cut, does the server go offline?</li>
-<li>Why do we need <code>ip_forward=1</code> for NAT?</li>
-</ul>
-<p><strong>Resources</strong>:</p>
-<ul>
-<li><a href="https://danielmiessler.com/study/tcpdump/">Tcpdump 101</a></li>
-</ul>
-<hr/>
-<h1 id="part-2-virtual-networking-in-proxmox">Part 2: Virtual Networking in Proxmox platform combining KVM - Type 1 hypervisor and LXC </h1>
-<p>Now that we have dismantled the Linux kernel concepts, we can look at how <strong>Proxmox platform combining KVM - Type 1 hypervisor and LXC Virtual Environment (PVE)</strong> uses them to manage VM - networking. Proxmox platform combining KVM - Type 1 hypervisor and LXC does not invent its own networking stack; it "orchestrates" standard Linux tools (Bridges, OVS, IPTables) via a web interface.</p>
-<h2 id="6-open-vswitch-ovs-the-cloud-switch">6. Open vSwitch (OVS): The Cloud Switch</h2>
-<p>While the standard Linux Bridge is reliable and simple, it was designed for a single server. It lacks the intelligence required for massive, multi-tenant clouds. <strong>Open vSwitch (OVS)</strong> is an industrial-grade, programmable virtual switch used by giants like OpenStack platform , Red Hat, and Citrix.</p>
-<h3 id="61-architecture-control-plane-vs-data-plane">6.1 Architecture: Control Plane vs. Data Plane</h3>
-<p>Unlike a physical dumb switch, OVS is split into two parts:
-1. <strong>Userspace (Control Plane)</strong>: <code>ovs-vswitchd</code> and <code>ovsdb-server</code> handle the database and logic. This is where you configure "Flows" and "Ports".
-2. <strong>Kernel Module (Data Plane)</strong>: This handles the actual packet switching at wire speed. It caches decisions made by the Control Plane so that future matching packets don't need to check the database again.</p>
-<h3 id="62-installing-ovs">6.2 Installing OVS</h3>
-<p>Unlike the standard bridge, OVS is not always installed by default.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># Ubuntu/Debian
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li><strong>Bonding</strong> aggregates links for redundancy (Active/Backup) or speed (LACP).</li>
+                <li><strong>Routing</strong> allows a Linux host to act as a Gateway.</li>
+                <li><strong>IPTables</strong> controls traffic flow (Input, Output, Forward).</li>
+                <li><strong>SS/Nmap</strong> allow you to discover open ports and listening services.</li>
+                <li><strong>Tcpdump</strong> allows us to see the actual packets on the wire.</li>
+            </ul>
+            <p><strong>Reflection</strong>:</p>
+            <ul>
+                <li>If you have a Bond with 2 cables and one is cut, does the server go offline?</li>
+                <li>Why do we need <code>ip_forward=1</code> for NAT?</li>
+            </ul>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a href="https://danielmiessler.com/study/tcpdump/">Tcpdump 101</a></li>
+            </ul>
+            <hr />
+            <h1 id="part-2-virtual-networking-in-proxmox">Part 2: Virtual Networking in Proxmox platform combining KVM -
+                Type 1 hypervisor and LXC </h1>
+            <p>Now that we have dismantled the Linux kernel concepts, we can look at how <strong>Proxmox platform
+                    combining KVM - Type 1 hypervisor and LXC Virtual Environment (PVE)</strong> uses them to manage VM
+                - networking. Proxmox platform combining KVM - Type 1 hypervisor and LXC does not invent its own
+                networking stack; it "orchestrates" standard Linux tools (Bridges, OVS, IPTables) via a web interface.
+            </p>
+            <h2 id="6-open-vswitch-ovs-the-cloud-switch">6. Open vSwitch (OVS): The Cloud Switch</h2>
+            <p>While the standard Linux Bridge is reliable and simple, it was designed for a single server. It lacks the
+                intelligence required for massive, multi-tenant clouds. <strong>Open vSwitch (OVS)</strong> is an
+                industrial-grade, programmable virtual switch used by giants like OpenStack platform , Red Hat, and
+                Citrix.</p>
+            <h3 id="61-architecture-control-plane-vs-data-plane">6.1 Architecture: Control Plane vs. Data Plane</h3>
+            <p>Unlike a physical dumb switch, OVS is split into two parts:
+                1. <strong>Userspace (Control Plane)</strong>: <code>ovs-vswitchd</code> and <code>ovsdb-server</code>
+                handle the database and logic. This is where you configure "Flows" and "Ports".
+                2. <strong>Kernel Module (Data Plane)</strong>: This handles the actual packet switching at wire speed.
+                It caches decisions made by the Control Plane so that future matching packets don't need to check the
+                database again.</p>
+            <h3 id="62-installing-ovs">6.2 Installing OVS</h3>
+            <p>Unlike the standard bridge, OVS is not always installed by default.</p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># Ubuntu/Debian
 sudo<span class="w"> apt<span class="w"> update
 sudo<span class="w"> apt<span class="w"> install<span class="w"> openvswitch-switch
 
@@ -948,16 +1713,20 @@ sudo<span class="w"> systemctl<span class="w"> <span class="nb">enable<span clas
 
 <span class="c1"># Verify
 sudo<span class="w"> ovs-vsctl<span class="w"> show
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="63-the-power-of-flows">6.3 The Power of Flows</h3>
-<p>Standard bridges forward based on MAC addresses. OVS forwards based on <strong>Flow Rules</strong>. A flow rule matches a packet's header fields and performs an action.</p>
-<p><strong>Example Scenario:</strong>
-You want to block a specific "Bad Neighbor" VM - (IP 10.0.0.66) from sending traffic, but allow everything else.</p>
-<ul>
-<li><strong>Linux Bridge:</strong> Cannot do this natively (needs complex iptables).</li>
-<li><strong>OVS:</strong> One simple command.</li>
-</ul>
-<div class="codehilite"><pre><span><code><span class="c1"># 1. Create a programmable bridge
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="63-the-power-of-flows">6.3 The Power of Flows</h3>
+            <p>Standard bridges forward based on MAC addresses. OVS forwards based on <strong>Flow Rules</strong>. A
+                flow rule matches a packet's header fields and performs an action.</p>
+            <p><strong>Example Scenario:</strong>
+                You want to block a specific "Bad Neighbor" VM - (IP 10.0.0.66) from sending traffic, but allow
+                everything else.</p>
+            <ul>
+                <li><strong>Linux Bridge:</strong> Cannot do this natively (needs complex iptables).</li>
+                <li><strong>OVS:</strong> One simple command.</li>
+            </ul>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># 1. Create a programmable bridge
 <span class="c1"># This creates a virtual switch that listens for OpenFlow commands.
 ovs-vsctl<span class="w"> add-br<span class="w"> ovsbr0
 
@@ -968,89 +1737,111 @@ ovs-ofctl<span class="w"> add-flow<span class="w"> ovsbr0<span class="w"> <span 
 <span class="c1"># 3. Add a fallback rule (Normal Switching)
 <span class="c1"># "If no other rules match, behave like a normal L2 Switch."
 ovs-ofctl<span class="w"> add-flow<span class="w"> ovsbr0<span class="w"> <span class="s2">"priority=0 actions=NORMAL"
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="64-sdn-controller-integration">6.4 SDN Controller Integration</h3>
-<p>OVS is designed to be controlled remotely by an SDN Controller (like OpenDaylight or ONOS). This allows a central brain to program the switches across the entire datacenter.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># Point the switch to a Controller IP
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="64-sdn-controller-integration">6.4 SDN Controller Integration</h3>
+            <p>OVS is designed to be controlled remotely by an SDN Controller (like OpenDaylight or ONOS). This allows a
+                central brain to program the switches across the entire datacenter.</p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># Point the switch to a Controller IP
 ovs-vsctl<span class="w"> set-controller<span class="w"> ovsbr0<span class="w"> tcp:192.168.56.10:6653
-</span></span></span></span></code></span></pre></div>
-<h3 id="section-6-checkpoint">Section 6 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li>OVS is a programmable, carrier-grade virtual switch.</li>
-<li>It separates the Control Plane (Logic) from the Data Plane (Forwarding).</li>
-<li>It uses "Flows" instead of just MAC tables, allowing for complex logic (Drop IP X, Redirect Port Y).</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>How does OVS differ from a standard Linux Bridge?</li>
-<li>What is the role of an SDN Controller?</li>
-</ul>
-<p><strong>Resources</strong>:</p>
-<ul>
-<li><a href="https://www.openvswitch.org/">Open vSwitch Crash Course</a></li>
-</ul>
-<hr/>
-<h2 id="7-proxmox-networking">7. Proxmox platform combining KVM - Type 1 hypervisor and LXC Networking</h2>
-<p>Proxmox platform combining KVM - Type 1 hypervisor and LXC VE is not a "black box." It is simply a Debian Linux host with a nice web interface. Every networking button you click in the GUI corresponds directly to the Linux commands we learned in Part 1.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Proxmox platform combining KVM - Type 1 hypervisor and LXC GUI Term</th>
-<th style="text-align: left;">Underlying Linux Technology</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Linux Bridge (<code>vmbr0</code>)</td>
-<td style="text-align: left;">Standard <code>bridge</code> (Section 3.2)</td>
-</tr>
-<tr>
-<td style="text-align: left;">Bond (<code>bond0</code>)</td>
-<td style="text-align: left;">Linux Bonding (Section 5.1)</td>
-</tr>
-<tr>
-<td style="text-align: left;">VLAN Tag</td>
-<td style="text-align: left;"><code>vlan</code> interface or Bridge VLAN Filtering (Section 7.3)</td>
-</tr>
-<tr>
-<td style="text-align: left;">Firewall</td>
-<td style="text-align: left;"><code>iptables</code> / <code>nftables</code> (Section 5.3)</td>
-</tr>
-</tbody>
-</table>
-<!-- End of table -->
-<p>When you start a VM - , Proxmox platform combining KVM - Type 1 hypervisor and LXC creates a dynamic <code>tap</code> interface (e.g., <code>tap100i0</code>) and plugs it into the bridge (<code>vmbr0</code>), exactly like we plugged in <code>veth</code> pairs in the Lab.</p>
-<h3 id="71-networking-modes">7.1 Networking Modes</h3>
-<p>When configuring a VM - 's hardware, you choose how it connects to the bridge. We primarily see three patterns.</p>
- ![Proxmox platform combining KVM - Type 1 hypervisor and LXC Networking Modes](images/proxmox_networking_modes.png) 
- *Figure 7.1: Comparison of Bridged vs. NAT vs. VLAN Modes.* 
-<h4 id="1-bridged-mode-default">1. Bridged Mode (Default)</h4>
-<p>This is the standard configuration for 90% of deployments. The VM - becomes a full peer on the physical network.</p>
-<p><strong>Packet Flow:</strong>
-<code>[VM eth0] -&gt; [Host tap100i0] -&gt; [Linux Bridge vmbr0] -&gt; [Physical NIC eno1] -&gt; [Physical Switch]</code></p>
-<p><strong>Detailed Configuration:</strong>
-In <code>/etc/network/interfaces</code>, a Bridge looks like this:</p>
-<div class="codehilite"><pre><span><code>auto<span class="w"> vmbr0
+</span></span></span></span></code></span></pre>
+            </div>
+            <h3 id="section-6-checkpoint">Section 6 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li>OVS is a programmable, carrier-grade virtual switch.</li>
+                <li>It separates the Control Plane (Logic) from the Data Plane (Forwarding).</li>
+                <li>It uses "Flows" instead of just MAC tables, allowing for complex logic (Drop IP X, Redirect Port Y).
+                </li>
+            </ul>
+            <p><strong>Reflection</strong>:</p>
+            <ul>
+                <li>How does OVS differ from a standard Linux Bridge?</li>
+                <li>What is the role of an SDN Controller?</li>
+            </ul>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a href="https://www.openvswitch.org/">Open vSwitch Crash Course</a></li>
+            </ul>
+            <hr />
+            <h2 id="7-proxmox-networking">7. Proxmox platform combining KVM - Type 1 hypervisor and LXC Networking</h2>
+            <p>Proxmox platform combining KVM - Type 1 hypervisor and LXC VE is not a "black box." It is simply a Debian
+                Linux host with a nice web interface. Every networking button you click in the GUI corresponds directly
+                to the Linux commands we learned in Part 1.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Proxmox platform combining KVM - Type 1 hypervisor and LXC GUI
+                            Term</th>
+                        <th style="text-align: left;">Underlying Linux Technology</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: left;">Linux Bridge (<code>vmbr0</code>)</td>
+                        <td style="text-align: left;">Standard <code>bridge</code> (Section 3.2)</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Bond (<code>bond0</code>)</td>
+                        <td style="text-align: left;">Linux Bonding (Section 5.1)</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">VLAN Tag</td>
+                        <td style="text-align: left;"><code>vlan</code> interface or Bridge VLAN Filtering (Section 7.3)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Firewall</td>
+                        <td style="text-align: left;"><code>iptables</code> / <code>nftables</code> (Section 5.3)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- End of table -->
+            <p>When you start a VM - , Proxmox platform combining KVM - Type 1 hypervisor and LXC creates a dynamic
+                <code>tap</code> interface (e.g., <code>tap100i0</code>) and plugs it into the bridge
+                (<code>vmbr0</code>), exactly like we plugged in <code>veth</code> pairs in the Lab.</p>
+            <h3 id="71-networking-modes">7.1 Networking Modes</h3>
+            <p>When configuring a VM - 's hardware, you choose how it connects to the bridge. We primarily see three
+                patterns.</p>
+            ![Proxmox platform combining KVM - Type 1 hypervisor and LXC Networking
+            Modes](images/proxmox_networking_modes.png)
+            *Figure 7.1: Comparison of Bridged vs. NAT vs. VLAN Modes.*
+            <h4 id="1-bridged-mode-default">1. Bridged Mode (Default)</h4>
+            <p>This is the standard configuration for 90% of deployments. The VM - becomes a full peer on the physical
+                network.</p>
+            <p><strong>Packet Flow:</strong>
+                <code>[VM eth0] -&gt; [Host tap100i0] -&gt; [Linux Bridge vmbr0] -&gt; [Physical NIC eno1] -&gt; [Physical Switch]</code>
+            </p>
+            <p><strong>Detailed Configuration:</strong>
+                In <code>/etc/network/interfaces</code>, a Bridge looks like this:</p>
+            <div class="codehilite">
+                <pre><span><code>auto<span class="w"> vmbr0
 iface<span class="w"> vmbr0<span class="w"> inet<span class="w"> static
 <span class="w"> address<span class="w"> <span class="m">192.168.1.10/24
 <span class="w"> gateway<span class="w"> <span class="m">192.168.1.1
 <span class="w"> bridge-ports<span class="w"> eno1<span class="w"> <span class="c1"># This links the bridge to the physical cable
 <span class="w"> bridge-stp<span class="w"> off
 <span class="w"> bridge-fd<span class="w"> <span class="m">0
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<p><strong>Implication:</strong></p>
-<ul>
-<li><strong>DHCP</strong>: The VM - sends a broadcast <code>DISCOVER</code> packet. It traverses the bridge, hits the physical wire, and reaches your office router. The router assigns an IP directly to the VM - .</li>
-<li><strong>Visibility</strong>: Every device on your LAN can ping the VM - .</li>
-</ul>
-<h4 id="2-nat-mode-network-address-translation">2. NAT Mode (Network Address Translation)</h4>
-<p>Sometimes you cannot get extra public IPs (e.g., in a data center giving you only 1 IP). You need to create a private network inside the host and share the single public IP.</p>
-<p><strong>Packet Flow:</strong>
-<code>[VM eth0] -&gt; [Host tap100i0] -&gt; [Private Bridge vmbr1] -&gt; [Host Routing/NAT] -&gt; [Physical NIC eno1] -&gt; Internet</code></p>
-<p><strong>Detailed Configuration:</strong>
-This mode requires <strong>Masquerading</strong> (Source NAT) in <code>iptables</code>.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># In /etc/network/interfaces
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <p><strong>Implication:</strong></p>
+            <ul>
+                <li><strong>DHCP</strong>: The VM - sends a broadcast <code>DISCOVER</code> packet. It traverses the
+                    bridge, hits the physical wire, and reaches your office router. The router assigns an IP directly to
+                    the VM - .</li>
+                <li><strong>Visibility</strong>: Every device on your LAN can ping the VM - .</li>
+            </ul>
+            <h4 id="2-nat-mode-network-address-translation">2. NAT Mode (Network Address Translation)</h4>
+            <p>Sometimes you cannot get extra public IPs (e.g., in a data center giving you only 1 IP). You need to
+                create a private network inside the host and share the single public IP.</p>
+            <p><strong>Packet Flow:</strong>
+                <code>[VM eth0] -&gt; [Host tap100i0] -&gt; [Private Bridge vmbr1] -&gt; [Host Routing/NAT] -&gt; [Physical NIC eno1] -&gt; Internet</code>
+            </p>
+            <p><strong>Detailed Configuration:</strong>
+                This mode requires <strong>Masquerading</strong> (Source NAT) in <code>iptables</code>.</p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># In /etc/network/interfaces
 
 auto<span class="w"> vmbr1
 iface<span class="w"> vmbr1<span class="w"> inet<span class="w"> static
@@ -1066,98 +1857,136 @@ iface<span class="w"> vmbr1<span class="w"> inet<span class="w"> static
 <span class="w"> <span class="c1"># "If traffic comes from 10.10.10.0/24, replace Source IP with Host IP"
 <span class="w"> post-up<span class="w"> iptables<span class="w"> -t<span class="w"> nat<span class="w"> -A<span class="w"> POSTROUTING<span class="w"> -s<span class="w"> <span class="m">10.10.10.0/24<span class="w"> -o<span class="w"> eno1<span class="w"> -j<span class="w"> MASQUERADE
 <span class="w"> post-down<span class="w"> iptables<span class="w"> -t<span class="w"> nat<span class="w"> -D<span class="w"> POSTROUTING<span class="w"> -s<span class="w"> <span class="m">10.10.10.0/24<span class="w"> -o<span class="w"> eno1<span class="w"> -j<span class="w"> MASQUERADE
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h4 id="3-vlan-tagging-8021q">3. VLAN Tagging (802.1Q)</h4>
-<p>VLANs allow multiple logical networks to share one physical cable. To do this, we insert a 4-byte "Tag" into the Ethernet Frame Header.</p>
-<p><strong>Processing Flow:</strong></p>
-<ol>
-<li>
-<p><strong>Ingress (VM - -&gt; Host):</strong><br/>
- The VM - sends a standard "untagged" packet.</p>
-</li>
-<li>
-<p><strong>Tagging:</strong><br/>
- As the packet enters the bridge port (configured with <code>tag=20</code>), Proxmox platform combining KVM - Type 1 hypervisor and LXC inserts the VLAN ID 20.</p>
-</li>
-<li>
-<p><strong>Transit:</strong><br/>
- The bridge sees the packet belongs to VLAN 20 and forwards it <em>only</em> to ports that are members of VLAN 20 (including the uplink).</p>
-</li>
-</ol>
-<h4 id="31-configuring-vlans-manually-linux-cli">3.1 Configuring VLANs manually (Linux CLI):</h4>
-<p>You can create VLAN interfaces on standard Linux without a bridge using the <code>ip</code> command. This creates a virtual interface that automatically tags/untags packets.</p>
-<div class="codehilite"><pre><span><code><span class="c1"># Create a VLAN 10 interface on top of eno1
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <h4 id="3-vlan-tagging-8021q">3. VLAN Tagging (802.1Q)</h4>
+            <p>VLANs allow multiple logical networks to share one physical cable. To do this, we insert a 4-byte "Tag"
+                into the Ethernet Frame Header.</p>
+            <p><strong>Processing Flow:</strong></p>
+            <ol>
+                <li>
+                    <p><strong>Ingress (VM - -&gt; Host):</strong><br />
+                        The VM - sends a standard "untagged" packet.</p>
+                </li>
+                <li>
+                    <p><strong>Tagging:</strong><br />
+                        As the packet enters the bridge port (configured with <code>tag=20</code>), Proxmox platform
+                        combining KVM - Type 1 hypervisor and LXC inserts the VLAN ID 20.</p>
+                </li>
+                <li>
+                    <p><strong>Transit:</strong><br />
+                        The bridge sees the packet belongs to VLAN 20 and forwards it <em>only</em> to ports that are
+                        members of VLAN 20 (including the uplink).</p>
+                </li>
+            </ol>
+            <h4 id="31-configuring-vlans-manually-linux-cli">3.1 Configuring VLANs manually (Linux CLI):</h4>
+            <p>You can create VLAN interfaces on standard Linux without a bridge using the <code>ip</code> command. This
+                creates a virtual interface that automatically tags/untags packets.</p>
+            <div class="codehilite">
+                <pre><span><code><span class="c1"># Create a VLAN 10 interface on top of eno1
 <span class="c1"># Packets sent to 'eno1.10' will leave physical 'eno1' with Tag 10.
 sudo<span class="w"> ip<span class="w"> link<span class="w"> add<span class="w"> link<span class="w"> eno1<span class="w"> name<span class="w"> eno1.10<span class="w"> <span class="nb">type<span class="w"> vlan<span class="w"> id<span class="w"> <span class="m">10
 sudo<span class="w"> ip<span class="w"> addr<span class="w"> add<span class="w"> <span class="m">192.168.10.1/24<span class="w"> dev<span class="w"> eno1.10
 sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> eno1.10<span class="w"> up
-</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<p><strong>Egress (Host -&gt; Switch):</strong> The packet leaves <code>eno1</code> with the tag attached. The physical switch reads "20" and puts it in the correct broadcast domain.</p>
-<p><strong>VLAN Aware Bridge:</strong>
-Modern Proxmox platform combining KVM - Type 1 hypervisor and LXC uses "VLAN Aware" bridges. Instead of creating <code>vmbr0.10</code>, <code>vmbr0.20</code>, etc., you toggle <code>bridge-vlan-aware yes</code>. The bridge then acts like a "Trunk Port", capable of carrying all VLANs simultaneously.</p>
-<h3 id="section-7-checkpoint">Section 7 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li>Proxmox platform combining KVM - Type 1 hypervisor and LXC uses standard Linux Bridges and IPTables underneath the GUI.</li>
-<li><strong>Bridged Mode</strong>: VM - is on the LAN. Simplest.</li>
-<li><strong>NAT Mode</strong>: VM - is hidden behind the Host. Requires Masquerading.</li>
-<li><strong>VLANs</strong>: Isolate traffic on the same physical wire using Tags.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>If you are in a Data Center with only 1 Public IP, which mode MUST you use?</li>
-<li>How does a switch know which VLAN a packet belongs to?</li>
-</ul>
-<p><strong>Resources</strong>:</p>
-<ul>
-<li><a href="https://pve.proxmox.com/wiki/Network_Configuration">Proxmox Network Model</a></li>
-</ul>
-<hr/>
-<h2 id="8-additional-resources">8. Additional Resources</h2>
-<ul>
-<li><strong>Linux Bonding Guide</strong>: <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/ch-configure_network_bonding">Red Hat Documentation</a></li>
-<li><strong>Tcpdump Cheat Sheet</strong>: <a href="https://packetlife.net/media/library/12/tcpdump.pdf">PacketLife</a></li>
-<li><strong>Proxmox platform combining KVM - Type 1 hypervisor and LXC Networking</strong>: <a href="https://pve.proxmox.com/wiki/Network_Configuration">Official Wiki</a></li>
-</ul>
-<hr/>
-<h2 id="9-lab-exercises">9. Lab Exercises</h2>
-<ul>
-<li><strong><a href="Week_3_Lab_1_Linux_Networking.html">Lab 1: Linux Networking</a></strong><ul>
-<li><strong>Goal</strong>: Hands-on with ip commands, bridges, and routing.</li>
-</ul>
-</li>
-<li><strong><a href="Week_3_Lab_2_Proxmox_Networking.html">Lab 2: Proxmox Networking</a></strong><ul>
-<li><strong>Goal</strong>: Configuring Bridges, Bonds, and VLANs in Proxmox platform combining KVM - Type 1 hypervisor and LXC VE.</li>
-</ul>
-</li>
-</ul>
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
+            </div>
+            <p><strong>Egress (Host -&gt; Switch):</strong> The packet leaves <code>eno1</code> with the tag attached.
+                The physical switch reads "20" and puts it in the correct broadcast domain.</p>
+            <p><strong>VLAN Aware Bridge:</strong>
+                Modern Proxmox platform combining KVM - Type 1 hypervisor and LXC uses "VLAN Aware" bridges. Instead of
+                creating <code>vmbr0.10</code>, <code>vmbr0.20</code>, etc., you toggle
+                <code>bridge-vlan-aware yes</code>. The bridge then acts like a "Trunk Port", capable of carrying all
+                VLANs simultaneously.</p>
+            <h3 id="section-7-checkpoint">Section 7 Checkpoint</h3>
+            <p><strong>Summary</strong>:</p>
+            <ul>
+                <li>Proxmox platform combining KVM - Type 1 hypervisor and LXC uses standard Linux Bridges and IPTables
+                    underneath the GUI.</li>
+                <li><strong>Bridged Mode</strong>: VM - is on the LAN. Simplest.</li>
+                <li><strong>NAT Mode</strong>: VM - is hidden behind the Host. Requires Masquerading.</li>
+                <li><strong>VLANs</strong>: Isolate traffic on the same physical wire using Tags.</li>
+            </ul>
+            <p><strong>Reflection</strong>:</p>
+            <ul>
+                <li>If you are in a Data Center with only 1 Public IP, which mode MUST you use?</li>
+                <li>How does a switch know which VLAN a packet belongs to?</li>
+            </ul>
+            <p><strong>Resources</strong>:</p>
+            <ul>
+                <li><a href="https://pve.proxmox.com/wiki/Network_Configuration">Proxmox Network Model</a></li>
+            </ul>
+            <hr />
+            <h2 id="8-additional-resources">8. Additional Resources</h2>
+            <ul>
+                <li><strong>Linux Bonding Guide</strong>: <a
+                        href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/ch-configure_network_bonding">Red
+                        Hat Documentation</a></li>
+                <li><strong>Tcpdump Cheat Sheet</strong>: <a
+                        href="https://packetlife.net/media/library/12/tcpdump.pdf">PacketLife</a></li>
+                <li><strong>Proxmox platform combining KVM - Type 1 hypervisor and LXC Networking</strong>: <a
+                        href="https://pve.proxmox.com/wiki/Network_Configuration">Official Wiki</a></li>
+            </ul>
+            <hr />
+            <h2 id="9-lab-exercises">9. Lab Exercises</h2>
+            <ul>
+                <li><strong><a href="Week_3_Lab_1_Linux_Networking.html">Lab 1: Linux Networking</a></strong>
+                    <ul>
+                        <li><strong>Goal</strong>: Hands-on with ip commands, bridges, and routing.</li>
+                    </ul>
+                </li>
+                <li><strong><a href="Week_3_Lab_2_Proxmox_Networking.html">Lab 2: Proxmox Networking</a></strong>
+                    <ul>
+                        <li><strong>Goal</strong>: Configuring Bridges, Bonds, and VLANs in Proxmox platform combining
+                            KVM - Type 1 hypervisor and LXC VE.</li>
+                    </ul>
+                </li>
+            </ul>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_3_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
-<div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 2 - Virtual Machines/Week_2_Student_Notes.html">
-<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>Previous: Week 2: Virtual Machines</span>
-</a>
-<a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
-<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Course Index
-    </a>
-<a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 4 - Storage and Backup/Week_4_Student_Notes.html">
-<span>Next: Week 4: Storage</span>
-<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</a>
-</div></article>
-</main>
-<!-- Footer -->
-<footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
-</footer>
-<!-- Progress Tracking -->
-<script src="../js/course_logic.js"></script>
+            <div
+                class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
+                <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
+                <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take
+                    the interactive quiz now!</p>
+                <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline"
+                    href="Week_3_Quiz.html" id="start-quiz-btn">
+                    Start Quiz
+
+                </a>
+            </div>
+            <div
+                class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline"
+                    href="../Week 2 - Virtual Machines/Week_2_Student_Notes.html">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        </path>
+                    </svg>
+                    <span>Previous: Week 2: Virtual Machines</span>
+                </a>
+                <a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline"
+                    href="../index.html">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                    Course Index
+                </a>
+                <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline"
+                    href="../Week 4 - Storage and Backup/Week_4_Student_Notes.html">
+                    <span>Next: Week 4: Storage</span>
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </a>
+            </div>
+        </article>
+    </main>
+    <!-- Footer -->
+    <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-8">
+    </footer>
+    <!-- Progress Tracking -->
+    <script src="../js/course_logic.js"></script>
 </body>
+
 </html>

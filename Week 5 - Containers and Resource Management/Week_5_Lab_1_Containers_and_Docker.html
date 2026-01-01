@@ -46,7 +46,7 @@
                                     marginRight: 'auto',
                                     maxHeight: '500px',
                                     width: 'auto',
-                                height: 'auto',
+                                    height: 'auto',
                                     borderRadius: '0.5rem',
                                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                                 },
@@ -913,7 +913,8 @@
         <article
             class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
             <p><a href="../index.html">← Back to Course Index</a></p>
-            <h1 id="week-5-lab-1-linux-containers-lxc-and-proxmox" class="!text-3xl">Week 5 - Lab 1: Linux Containers
+            <h1 id="week-5-lab-1-linux-containers-lxc-and-proxmox" class="flex items-center gap-4 !text-3xl"><img
+                    src="../images/week_5_icon.png" alt="Week 5 Icon" class="w-12 h-12">Week 5 - Lab 1: Linux Containers
                 (LXC) and Proxmox
             </h1>
             <p><strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)<br />
@@ -954,10 +955,12 @@
             </ol>
             <h3 id="step-2-create-a-container">Step 2: Create a Container</h3>
             <p>We will create a small Alpine Linux container.</p>
-<ol>
-<li>Run the creation command: <code>bash # Syntax: lxc-create -n &lt;name&gt; -t &lt;template&gt; -- &lt;template-options&gt; sudo lxc-create -n test-cnt -t download -- --dist alpine --release 3.19 --arch amd64</code></li>
-<li>The system will download the image and create the root filesystem.</li>
-</ol>
+            <ol>
+                <li>Run the creation command:
+                    <code>bash # Syntax: lxc-create -n &lt;name&gt; -t &lt;template&gt; -- &lt;template-options&gt; sudo lxc-create -n test-cnt -t download -- --dist alpine --release 3.19 --arch amd64</code>
+                </li>
+                <li>The system will download the image and create the root filesystem.</li>
+            </ol>
             <h3 id="step-3-start-and-inspect">Step 3: Start and Inspect</h3>
             <ol>
                 <li>Start the container:

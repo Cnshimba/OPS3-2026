@@ -41,7 +41,7 @@
                                     marginRight: 'auto',
                                     maxHeight: '500px',
                                     width: 'auto',
-                                height: 'auto',
+                                    height: 'auto',
                                     borderRadius: '0.5rem',
                                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                                 },
@@ -908,7 +908,9 @@
         <article
             class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)] transition-colors duration-300">
             <p><a href="../index.html">← Back to Course Index</a></p>
-            <h1 id="week-6-lab-4-shared-storage-nfs" class="!text-3xl">Week 6 - Lab 4: Shared Storage (NFS)</h1>
+            <h1 id="week-6-lab-4-shared-storage-nfs" class="flex items-center gap-4 !text-3xl"><img
+                    src="../images/week_6_icon.png" alt="Week 6 Icon" class="w-12 h-12">Week 6 - Lab 4: Shared Storage
+                (NFS)</h1>
             <p><strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)<br />
                 <strong>Topic</strong>: Network Attached Storage (NFS) and Proxmox Backends<br />
                 <strong>Estimated Time</strong>: 60 Minutes<br />
@@ -979,37 +981,38 @@
                 <li><strong>Form Details</strong>:<ul>
                         <li><strong>ID</strong>: <code>lab-nfs</code> (The name Proxmox will use).</li>
                         <li><strong>Server</strong>: <code>&lt;IP_OF_YOUR_UBUNTU_VM&gt;</code> (e.g., 192.168.</p>
-<ol>
+                            <ol>
 
-</ol>
-                    <ul>
-                        <li>Click on <strong>lab-nfs</strong> in the left tree.</li>
-                        <li>Select <strong>ISO Images</strong>.</li>
-                        <li>Upload a small file (e.g., the Alpine Linux ISO from Week 1).</li>
-                    </ul>
-                </li>
-                <li>
-                    <p><strong>Verify on the Server</strong>:</p>
-                    <ul>
-                        <li>Go back to the Ubuntu VM terminal.</li>
-                        <li>Check the folder:
-                            <code>bash
-    ls -lh /srv/nfs/iso/template/iso/</code>
+                            </ol>
+                            <ul>
+                                <li>Click on <strong>lab-nfs</strong> in the left tree.</li>
+                                <li>Select <strong>ISO Images</strong>.</li>
+                                <li>Upload a small file (e.g., the Alpine Linux ISO from Week 1).</li>
+                            </ul>
                         </li>
-                        <li><em>Observation</em>: You should see the file you just uploaded from Proxmox!</li>
-                    </ul>
-                </li>
-                <li>
-                    <p><strong>Backups</strong>:</p>
-                    <ul>
-                        <li>Go to <strong>Datacenter</strong> -&gt; <strong>Backup</strong>.</li>
-                        <li>Create a backup job.</li>
-                        <li>Select Storage: <code>lab-nfs</code>.</li>
-                        <li>Run it.</li>
-                        <li><em>Result</em>: Your VM backup is now physically located inside the other VM. (In reality,
-                            this would be a separate physical server).</li>
-                    </ul>
-                </li>
+                        <li>
+                            <p><strong>Verify on the Server</strong>:</p>
+                            <ul>
+                                <li>Go back to the Ubuntu VM terminal.</li>
+                                <li>Check the folder:
+                                    <code>bash
+    ls -lh /srv/nfs/iso/template/iso/</code>
+                                </li>
+                                <li><em>Observation</em>: You should see the file you just uploaded from Proxmox!</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p><strong>Backups</strong>:</p>
+                            <ul>
+                                <li>Go to <strong>Datacenter</strong> -&gt; <strong>Backup</strong>.</li>
+                                <li>Create a backup job.</li>
+                                <li>Select Storage: <code>lab-nfs</code>.</li>
+                                <li>Run it.</li>
+                                <li><em>Result</em>: Your VM backup is now physically located inside the other VM. (In
+                                    reality,
+                                    this would be a separate physical server).</li>
+                            </ul>
+                        </li>
             </ol>
             <hr />
             <h2 id="part-4-critical-simulation-the-crash">Part 4: Critical Simulation (The Crash)</h2>
