@@ -187,8 +187,17 @@ function getRelevantContext(question) {
         return weeks[0] ? "WEEK" + weeks[0] : COURSE_CONTEXT.slice(0, 5000);
     }
 
-    // Combine top chunks
-    return relevantChunks.slice(0, 2).map(c => c.content).join("\n\n ... [Context Truncated] ... \n\n");
+    // STAGE 2 DECISION: Enforce strict character limit (approx 4000 tokens)
+    // Even if we found relevant chunks, we must not exceed the prompt quota.
+    const MAX_CHARS = 15000;
+    let finalContext = relevantChunks.slice(0, 2).map(c => c.content).join("\n\n ... [Context Truncated] ... \n\n");
+
+    if (finalContext.length > MAX_CHARS) {
+        console.warn(`Context too large (${finalContext.length}), truncating to ${MAX_CHARS}`);
+        finalContext = finalContext.substring(0, MAX_CHARS) + "\n... [Strict Limit Truncated]";
+    }
+
+    return finalContext;
 }
 
 // Recursive function to handle sending with retries
@@ -197,10 +206,17 @@ async function sendToGemini(question, retryCount = 0) {
 
     // INTELLIGENT CONTEXT: Only send relevant parts to save tokens/quota
     const slimContext = getRelevantContext(question);
+
+    // Debug info for User in Console
+    console.log(`Sending Query to Gemini. Context Size: ${slimContext.length} chars`);
+
     const fullPrompt = `${SYSTEM_PROMPT} \n\nCOURSE CONTEXT (Filtered): \n${slimContext} \n\nSTUDENT QUESTION: ${question} `;
 
+    // Use the "Lite" model which often has better throughput/quota on free tier
+    const MODEL_NAME = "gemini-2.0-flash-lite-preview-02-05";
+
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
