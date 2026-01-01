@@ -369,7 +369,59 @@
     html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
     html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
 </style>
-</head>
+<style>
+        /* Glossary Tooltip Styles */
+        .glossary-term {
+            color: #c9984a;
+            border-bottom: 2px dotted #c9984a;
+            cursor: help;
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .glossary-term:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+        
+        .glossary-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            z-index: 1000;
+            background: linear-gradient(135deg, #1e3a5f 0%, #142a46 100%);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #c9984a;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 300px;
+            width: max-content;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glossary-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #c9984a transparent transparent transparent;
+        }
+        
+        .glossary-term:hover .glossary-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        </style></head>
 <body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
 <!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
@@ -428,16 +480,16 @@ Storage decisions have long-term consequences. Understand the tradeoffs between 
 <li><strong>Linux Storage primitives:</strong> Partitions, Block Devices, and Filesystems.</li>
 <li><strong>Volume Management:</strong> Using <strong>LVM</strong> to resize disks on the fly.</li>
 <li><strong>Next-Gen Storage:</strong> Using <strong>ZFS</strong> for instant snapshots and self-healing data.</li>
-<li><strong>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> Storage Architecture:</strong> How PVE manages Local vs. Shared storage.</li>
-<li><strong>Disaster Recovery:</strong> The critical difference between a Snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> and a Backup.</li>
+<li><strong>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> Storage Architecture:</strong> How PVE manages Local vs. Shared storage.</li>
+<li><strong>Disaster Recovery:</strong> The critical difference between a Snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> and a Backup.</li>
 </ul>
 <hr/>
 <h1 id="part-1-linux-storage-fundamentals-revision-new-concepts">Part 1: Linux Storage Fundamentals (Revision + New Concepts)</h1>
-<p>In Operating Systems 2, you gained hands-on experience with Linux storage management, including <strong>fdisk</strong> for partitioning, <strong>LVM</strong> for flexible volume management, and <strong>NFS</strong> for network-attached storage. This section begins with a focused revision of those familiar tools—reconnecting you with concepts like <code>/dev/sda</code>, <code>lsblk</code>, and <code>pvcreate</code>—but now viewed through the lens of virtualization. However, we will also introduce an entirely new storage technology: <strong>ZFS</strong>, the enterprise-grade filesystem that Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> relies on for advanced features like instant snapshots, self-healing data, and copy-on-write operations. While LVM and fdisk are foundational, ZFS represents the cutting edge of storage management in modern virtualized environments. Think of this as bridging your foundational Linux knowledge with enterprise virtualization infrastructure.</p>
+<p>In Operating Systems 2, you gained hands-on experience with Linux storage management, including <strong>fdisk</strong> for partitioning, <strong>LVM</strong> for flexible volume management, and <strong>NFS</strong> for network-attached storage. This section begins with a focused revision of those familiar tools—reconnecting you with concepts like <code>/dev/sda</code>, <code>lsblk</code>, and <code>pvcreate</code>—but now viewed through the lens of virtualization. However, we will also introduce an entirely new storage technology: <strong>ZFS</strong>, the enterprise-grade filesystem that Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> relies on for advanced features like instant snapshots, self-healing data, and copy-on-write operations. While LVM and fdisk are foundational, ZFS represents the cutting edge of storage management in modern virtualized environments. Think of this as bridging your foundational Linux knowledge with enterprise virtualization infrastructure.</p>
 <h2 id="1-block-devices-and-partitions">1. Block Devices and Partitions</h2>
 <p>In Linux, everything is a file. A hard drive is a special type of file called a <strong>Block Device</strong>. The Linux kernel assigns specific naming conventions to different storage technologies. Traditional SATA and SCSI drives are represented as <code>/dev/sda</code>, <code>/dev/sdb</code>, and so on, while modern NVMe drives use a different naming scheme such as <code>/dev/nvme0n1</code> and <code>/dev/nvme1n1</code>. When a disk is divided into sections, these divisions are called partitions, and they are accessed through additional numerical suffixes—for example, <code>/dev/sda1</code> refers to the first partition on the first drive.</p>
 <h3 id="11-examining-storage">1.1 Examining Storage</h3>
-<p>One of the most powerful diagnostic tools in Linux is <code>lsblk</code> (List Block Devices), which provides a visual tree representation of all connected storage devices. When you run this command in the terminal, it displays a hierarchical view that shows physical disks, their partitions, and any logical volumes built on top of them. This tree structure makes it immediately clear which partitions belong to which disks and how storage is organized across the system. For administrators managing Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> servers, <code>lsblk</code> is indispensable for quickly understanding storage topology without needing to parse complex configuration files. The diagram below illustrates how Linux represents different types of storage devices and their partition schemes:</p>
+<p>One of the most powerful diagnostic tools in Linux is <code>lsblk</code> (List Block Devices), which provides a visual tree representation of all connected storage devices. When you run this command in the terminal, it displays a hierarchical view that shows physical disks, their partitions, and any logical volumes built on top of them. This tree structure makes it immediately clear which partitions belong to which disks and how storage is organized across the system. For administrators managing Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> servers, <code>lsblk</code> is indispensable for quickly understanding storage topology without needing to parse complex configuration files. The diagram below illustrates how Linux represents different types of storage devices and their partition schemes:</p>
 <p><img alt="Linux Block Devices and Partitions" src="images/linux_block_devices.png"/>
 <em>Figure 1: Linux Block Devices and Partitions - How the kernel represents different storage types (SATA, NVMe, and their partitions)</em></p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Tree view of all disks</span>
@@ -455,7 +507,7 @@ sudo<span class="w"> </span>fdisk<span class="w"> </span>/dev/sdb
 <span class="c1"># 'w' -&gt; Write Changes</span>
 </code></pre></div>
 <h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>: Linux treats disks as <strong>Block Devices</strong> (such as <code>/dev/sda</code>), and the <code>lsblk</code> command visualizes the storage hierarchy in a tree format while <code>fdisk</code> is used to create partitions. It is important to understand that Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> needs the underlying operating system to recognize and manage the disk before it can use it for virtual machine storage.</p>
+<p><strong>Summary</strong>: Linux treats disks as <strong>Block Devices</strong> (such as <code>/dev/sda</code>), and the <code>lsblk</code> command visualizes the storage hierarchy in a tree format while <code>fdisk</code> is used to create partitions. It is important to understand that Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> needs the underlying operating system to recognize and manage the disk before it can use it for virtual machine storage.</p>
 <p><strong>Reflection</strong>: Consider why NVMe drives have names like <code>nvme0n1</code> instead of <code>sda</code>. What happens if you attempt to partition a disk that is already mounted and actively in use?</p>
 <p><strong>Resources</strong>:</p>
 <ul>
@@ -470,7 +522,7 @@ sudo<span class="w"> </span>fdisk<span class="w"> </span>/dev/sdb
 <em>Figure 2: LVM Three-Tier Hierarchy - Physical Volumes (PV) combine into Volume Groups (VG), which are divided into Logical Volumes (LV)</em></p>
 <p>The hierarchy consists of three layers. At the foundation is the <strong>Physical Volume (PV)</strong>, which represents the actual disk or partition (for example, <code>/dev/sdb</code>). These physical volumes are then combined into a <strong>Volume Group (VG)</strong>, which acts as a unified storage pool—for instance, a <code>data_pool</code> might aggregate multiple drives to provide 500GB of total capacity. Finally, <strong>Logical Volumes (LV)</strong> are carved out from the volume group and allocated for specific uses, such as <code>vm-100-disk</code> for a virtual machine.</p>
 <h3 id="22-hands-on-lvm-commands">2.2 Hands-On LVM Commands</h3>
-<p>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> uses LVM extensively. Here is how you manage it manually.</p>
+<p>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> uses LVM extensively. Here is how you manage it manually.</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># 1. Initialize a disk for LVM</span>
 sudo<span class="w"> </span>pvcreate<span class="w"> </span>/dev/sdb
 
@@ -485,7 +537,7 @@ sudo<span class="w"> </span>vgs<span class="w">  </span><span class="c1"># View 
 sudo<span class="w"> </span>lvs<span class="w">  </span><span class="c1"># View Volumes</span>
 </code></pre></div>
 <h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>: <strong>LVM</strong> adds significant flexibility over static partitions, enabling dynamic resizing and storage pooling. The architectural flow moves from <strong>PV</strong> (Physical Volume) to <strong>VG</strong> (Volume Group) to <strong>LV</strong> (Logical Volume), and Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> installs to LVM by default to take advantage of these capabilities.</p>
+<p><strong>Summary</strong>: <strong>LVM</strong> adds significant flexibility over static partitions, enabling dynamic resizing and storage pooling. The architectural flow moves from <strong>PV</strong> (Physical Volume) to <strong>VG</strong> (Volume Group) to <strong>LV</strong> (Logical Volume), and Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> installs to LVM by default to take advantage of these capabilities.</p>
 <p><strong>Reflection</strong>: Can you shrink an LVM volume while it is online and actively in use? What is the difference between standard LVM and LVM-Thin provisioning?</p>
 <p><strong>Resources</strong>:</p>
 <ul>
@@ -504,7 +556,7 @@ sudo<span class="w"> </span>lvs<span class="w">  </span><span class="c1"># View 
 <p><img alt="ZFS Self-Healing Process" src="images/zfs_healing.png"/>
 <em>Figure 4: ZFS Self-Healing - Checksums detect corrupted blocks, which are automatically repaired from redundant copies</em></p>
 <h3 id="32-basic-zfs-commands">3.2 Basic ZFS Commands</h3>
-<p>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> installs ZFS tools by default.</p>
+<p>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> installs ZFS tools by default.</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># 1. Check the health of your storage pool</span>
 sudo<span class="w"> </span>zpool<span class="w"> </span>status
 
@@ -515,8 +567,8 @@ sudo<span class="w"> </span>zfs<span class="w"> </span>list
 sudo<span class="w"> </span>zfs<span class="w"> </span>create<span class="w"> </span>rpool/isos
 </code></pre></div>
 <h3 id="33-the-power-of-instant-snapshots">3.3 The Power of Instant Snapshots</h3>
-<p>The Copy-on-Write architecture unlocks one of ZFS's most remarkable capabilities: instantaneous snapshots. Unlike traditional backup systems that must copy gigabytes or terabytes of data (a process that can take hours), a ZFS snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> is merely a metadata operation—a lightweight bookmark that marks the current state of the filesystem. When you create a snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a>, ZFS doesn't duplicate any data blocks; it simply freezes a reference point in time. The snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> consumes zero disk space initially because it shares all its data blocks with the current filesystem. Only when data begins to change does the snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> start consuming space, as ZFS preserves the old blocks that the snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> references while writing new data to fresh locations. This means you can take a snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> of a 1TB virtual machine in less than a second, with no performance impact and no initial storage overhead.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Take a snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> of a dataset</span>
+<p>The Copy-on-Write architecture unlocks one of ZFS's most remarkable capabilities: instantaneous snapshots. Unlike traditional backup systems that must copy gigabytes or terabytes of data (a process that can take hours), a ZFS snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> is merely a metadata operation—a lightweight bookmark that marks the current state of the filesystem. When you create a snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span>, ZFS doesn't duplicate any data blocks; it simply freezes a reference point in time. The snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> consumes zero disk space initially because it shares all its data blocks with the current filesystem. Only when data begins to change does the snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> start consuming space, as ZFS preserves the old blocks that the snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> references while writing new data to fresh locations. This means you can take a snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> of a 1TB virtual machine in less than a second, with no performance impact and no initial storage overhead.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Take a snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> of a dataset
 sudo<span class="w"> </span>zfs<span class="w"> </span>snapshot<span class="w"> </span>rpool/data/vm-100-disk-0@before_update
 
 <span class="c1"># 2. Rollback (Undo changes)</span>
@@ -530,22 +582,22 @@ sudo<span class="w"> </span>zfs<span class="w"> </span>rollback<span class="w"> 
 <li><a href="https://openzfs.org/wiki/Main_Page">OpenZFS Documentation</a></li>
 </ul>
 <hr/>
-<h2 id="4-virtual-disk-formats">4. Virtual Disk - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> Formats</h2>
-<p>When you create a VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a>, its hard drive is just a file on the host.</p>
+<h2 id="4-virtual-disk-formats">4. Virtual Disk - A software-based emulation of a physical computer <span class="glossary-icon"></span> <span class="glossary-icon"></span> Formats</h2>
+<p>When you create a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>, its hard drive is just a file on the host.</p>
 <h3 id="41-raw-raw">4.1 Raw (<code>.raw</code>)</h3>
-<p>The Raw disk format is effectively a bit-for-bit representation of a hard drive without any additional metadata or container structure. Because it lacks a translation layer, the file is read and written directly to the underlying block device, making it the most performant option available. However, this simplicity comes at a cost; creating a 100GB Raw disk immediately consumes 100GB of physical space (unless sparse provisioning is strictly enforced), and it does not support advanced features like internal snapshots. If you require snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> capabilities with Raw disks, you must rely on the underlying storage system, such as LVM-Thin or ZFS, to handle them.</p>
-<h3 id="42-qcow2-qemu-copy-on-write">4.2 QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a> (QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy On Write)</h3>
-<p>QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a> is a functional, feature-rich format designed specifically for the QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> emulator. Unlike Raw, it acts as an intelligent container that creates a layer of abstraction between the VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> and the physical disk. This allows for powerful features such as internal snapshots, transparent compression, and encryption directly within the file itself. While this abstraction layer introduces a minor performance overhead compared to Raw, the flexibility it offers—particularly the ability to grow the disk file dynamically as data is added—makes it the standard choice for file-based storage backends like NFS or local directories.</p>
+<p>The Raw disk format is effectively a bit-for-bit representation of a hard drive without any additional metadata or container structure. Because it lacks a translation layer, the file is read and written directly to the underlying block device, making it the most performant option available. However, this simplicity comes at a cost; creating a 100GB Raw disk immediately consumes 100GB of physical space (unless sparse provisioning is strictly enforced), and it does not support advanced features like internal snapshots. If you require snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> capabilities with Raw disks, you must rely on the underlying storage system, such as LVM-Thin or ZFS, to handle them.</p>
+<h3 id="42-qcow2-qemu-copy-on-write">4.2 QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span> (QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy On Write)</h3>
+<p>QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span> is a functional, feature-rich format designed specifically for the QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> emulator. Unlike Raw, it acts as an intelligent container that creates a layer of abstraction between the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> and the physical disk. This allows for powerful features such as internal snapshots, transparent compression, and encryption directly within the file itself. While this abstraction layer introduces a minor performance overhead compared to Raw, the flexibility it offers—particularly the ability to grow the disk file dynamically as data is added—makes it the standard choice for file-based storage backends like NFS or local directories.</p>
 <h3 id="43-summary-comparison">4.3 Summary Comparison</h3>
-<p>The visual comparison below highlights the key differences between Raw and QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a> disk formats:</p>
+<p>The visual comparison below highlights the key differences between Raw and QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span> disk formats:</p>
 <p><img alt="Virtual Disk Format Comparison" src="images/disk_formats.png"/>
-<em>Figure 5: Virtual Disk - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> Formats - Raw disks offer maximum performance while QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a> provides flexibility with snapshots and thin provisioning</em></p>
+<em>Figure 5: Virtual Disk - A software-based emulation of a physical computer <span class="glossary-icon"></span> <span class="glossary-icon"></span> Formats - Raw disks offer maximum performance while QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span> provides flexibility with snapshots and thin provisioning</em></p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">Feature</th>
 <th style="text-align: left;">Raw (<code>.raw</code>)</th>
-<th style="text-align: left;">QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a></th>
+<th style="text-align: left;">QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span></th>
 </tr>
 </thead>
 <tbody>
@@ -567,7 +619,7 @@ sudo<span class="w"> </span>zfs<span class="w"> </span>rollback<span class="w"> 
 <tr>
 <td style="text-align: left;"><strong>Portability</strong></td>
 <td style="text-align: left;">Universal (Byte stream)</td>
-<td style="text-align: left;">QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Specific</td>
+<td style="text-align: left;">QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Specific</td>
 </tr>
 <tr>
 <td style="text-align: left;">### Section 4 Checkpoint</td>
@@ -583,12 +635,12 @@ sudo<span class="w"> </span>zfs<span class="w"> </span>rollback<span class="w"> 
 </table>
 <ul>
 <li><strong>Raw</strong>: Fast, pre-allocated, simple. Good for Ceph/LVM.</li>
-<li><strong>QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a></strong>: Flexible, thin-provisioned, internal snapshots. Good for Directory/NFS.</li>
+<li><strong>QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span></strong>: Flexible, thin-provisioned, internal snapshots. Good for Directory/NFS.</li>
 <li>Trade-off is usually Performance vs Flexibility.</li>
 </ul>
 <p><strong>Reflection</strong>:</p>
 <ul>
-<li>Why can't you take an internal snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> on a Raw disk?</li>
+<li>Why can't you take an internal snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> on a Raw disk?</li>
 <li>How does "sparse provisioning" differ from "thin provisioning"?</li>
 </ul>
 <p><strong>Resources</strong>:</p>
@@ -598,7 +650,7 @@ sudo<span class="w"> </span>zfs<span class="w"> </span>rollback<span class="w"> 
 <hr/>
 <h2 id="8-additional-resources">8. Additional Resources</h2>
 <ul>
-<li><strong>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> Storage Wiki</strong>: <a href="https://pve.proxmox.com/wiki/Storage">Official Docs</a></li>
+<li><strong>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> Storage Wiki</strong>: <a href="https://pve.proxmox.com/wiki/Storage">Official Docs</a></li>
 <li><strong>ZFS for Dummies</strong>: <a href="https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance/">ArsTechnica Guide</a></li>
 <li><strong>LVM Cheat Sheet</strong>: <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/logical_volume_manager_administration/index">Red Hat LVM</a></li>
 </ul>

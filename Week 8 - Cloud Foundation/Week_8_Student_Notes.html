@@ -884,7 +884,59 @@
 
         /* Literal.String.Symbol */
     </style>
-</head>
+<style>
+        /* Glossary Tooltip Styles */
+        .glossary-term {
+            color: #c9984a;
+            border-bottom: 2px dotted #c9984a;
+            cursor: help;
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .glossary-term:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+        
+        .glossary-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            z-index: 1000;
+            background: linear-gradient(135deg, #1e3a5f 0%, #142a46 100%);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #c9984a;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 300px;
+            width: max-content;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glossary-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #c9984a transparent transparent transparent;
+        }
+        
+        .glossary-term:hover .glossary-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        </style></head>
 <body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
 <!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
@@ -929,20 +981,20 @@
 </div>
 <div class="flex-1 flex flex-col items-center justify-center p-6">
 <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Cloud Foundation
-                        (OpenStack platform </span><span class="glossary-icon"></span></a>)</h1>
+                        (OpenStack platform <span class="glossary-icon"></span>)</h1>
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
 </div>
 </div>
 <p><strong>Course</strong>: Computer Systems Engineering
                 <strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-                <strong>Topic</strong>: Cloud Foundation (OpenStack platform </span><span class="glossary-icon"></span></a>)
+                <strong>Topic</strong>: Cloud Foundation (<a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform</span></a> platform <span class="glossary-icon"></span>)
                 <strong>Estimated Reading Time</strong>: 25 Minutes
             </p>
 <blockquote>
 <p>[!TIP]
                     <strong>How to succeed in this week</strong>:
-                    OpenStack platform </span><span class="glossary-icon"></span></a> is complex, but it's just virtualization at scale with an API. Map each OpenStack platform </span><span class="glossary-icon"></span></a> service
-                    to concepts you already know (Nova platform </span><span class="glossary-icon"></span></a> compute service for VMs </span><span class="glossary-icon"></span></a>=VMs, Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a>=Networking, etc.). The architecture diagram is your
+                    <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform</span></a> platform <span class="glossary-icon"></span> is complex, but it's just <a class="glossary-term" href="glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> at scale with an <a class="glossary-term" href="glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface</span></a>. Map each <a class="glossary-term" href="glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform</span></a> platform <span class="glossary-icon"></span> service
+                    to concepts you already know (<a class="glossary-term" href="glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs</span></a> platform <span class="glossary-icon"></span> compute service for VMs <span class="glossary-icon"></span>=VMs, <a class="glossary-term" href="glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service</span></a> platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span>=Networking, etc.). The architecture diagram is your
                     roadmap.
                 </p>
 </blockquote>
@@ -952,7 +1004,7 @@
 <p>To understand how a cloud is built, we will follow a continuous scenario for the next three weeks. You
                 have been hired as the Lead Cloud Engineer for a new software startup called <strong>"Nebula
                     Inc."</strong> Currently, they have no infrastructure—just a credit card and a dream. Your job is to
-                build their Virtual Data Center (VDC) from scratch using OpenStack platform </span><span class="glossary-icon"></span></a>. This is not a theoretical exercise;
+                build their Virtual Data Center (VDC) from scratch using OpenStack platform <span class="glossary-icon"></span>. This is not a theoretical exercise;
                 you will be typing the actual commands that cloud administrators use daily to construct the digital
                 fabric of the modern internet.</p>
 <p><strong>The Roadmap</strong>:</p>
@@ -968,57 +1020,57 @@
 <p>By the end of this module, you will have a fully functional, multi-tier cloud application environment
                 running on infrastructure you defined yourself.</p>
 <hr/>
-<h2 id="2-deep-dive-identity-management-keystone">2. Deep Dive: Identity Management (Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a>)</h2>
-<p>Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> is the central nervous system of OpenStack platform </span><span class="glossary-icon"></span></a>. If Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> is down, <strong>nothing</strong> works.
+<h2 id="2-deep-dive-identity-management-keystone">2. Deep Dive: Identity Management (Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span>)</h2>
+<p>Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> is the central nervous system of OpenStack platform <span class="glossary-icon"></span>. If Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> is down, <strong>nothing</strong> works.
                 It is responsible for Authentication (AuthN - "Who are you?") and Authorization (AuthZ - "What can you
-                do?"). In a physical building, Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> is the security guard at the front desk who checks your ID badge
+                do?"). In a physical building, Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> is the security guard at the front desk who checks your ID badge
                 and decides which floors you are allowed to visit.</p>
 <h3 id="21-the-authentication-workflow-the-token-dance">2.1 The Authentication Workflow (The "Token Dance")
             </h3>
 <p>When you run a command like <code>openstack server list</code>, a complex sequence of events, often
                 called the "Token Dance," occurs in the background before you see any output.</p>
 <p><img alt="Keystone Authentication Token Dance" src="images/keystone_token_dance.png"/>
-<em>Figure 1: The Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> "Token Dance" - Documenting the 7-step process of authentication and
+<em>Figure 1: The Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> "Token Dance" - Documenting the 7-step process of authentication and
                     authorization</em>
 </p>
 <ol>
-<li><strong>Credentials</strong>: Your client (CLI or Horizon platform </span><span class="glossary-icon"></span></a> web dashboard </span><span class="glossary-icon"></span></a>) sends your Username, Password, and Domain
-                    to the Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> API.</li>
-<li><strong>Validation</strong>: Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> validates these credentials against its
+<li><strong>Credentials</strong>: Your client (CLI or Horizon platform <span class="glossary-icon"></span> web dashboard <span class="glossary-icon"></span>) sends your Username, Password, and Domain
+                    to the Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> API.</li>
+<li><strong>Validation</strong>: Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> validates these credentials against its
                     <strong>Backend</strong> (SQL or LDAP).</li>
-<li><strong>Token Issue</strong>: If the credentials are valid, Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> generates a
+<li><strong>Token Issue</strong>: If the credentials are valid, Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> generates a
                     <strong>Token</strong> (a temporary digital ID card) and sends it back to you.</li>
-<li><strong>Service Request</strong>: The client then sends the actual request to Nova platform </span><span class="glossary-icon"></span></a> compute service for VMs </span><span class="glossary-icon"></span></a>
+<li><strong>Service Request</strong>: The client then sends the actual request to Nova platform <span class="glossary-icon"></span> compute service for VMs <span class="glossary-icon"></span>
                     (<code>GET /servers</code>), placing the Token in the HTTP Header (<code>X-Auth-Token</code>) as
                     proof of identity.</li>
-<li><strong>Token Validation</strong>: Nova platform </span><span class="glossary-icon"></span></a> compute service for VMs </span><span class="glossary-icon"></span></a> does not trust you or your token blindly. It authenticates
-                    the token by sending it <em>back</em> to Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> with the question: "Is this token valid?"</li>
-<li><strong>Confirmation</strong>: Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> validates the token's signature and expiry in its database.
-                    It replies to Nova platform </span><span class="glossary-icon"></span></a> compute service for VMs </span><span class="glossary-icon"></span></a>: "Yes, this is valid. The user is 'admin' and has the 'member' role."</li>
-<li><strong>Execution</strong>: Once confirmed, Nova platform </span><span class="glossary-icon"></span></a> compute service for VMs </span><span class="glossary-icon"></span></a> finally executes the command and returns the server
+<li><strong>Token Validation</strong>: Nova platform <span class="glossary-icon"></span> compute service for VMs <span class="glossary-icon"></span> does not trust you or your token blindly. It authenticates
+                    the token by sending it <em>back</em> to Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> with the question: "Is this token valid?"</li>
+<li><strong>Confirmation</strong>: Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> validates the token's signature and expiry in its database.
+                    It replies to Nova platform <span class="glossary-icon"></span> compute service for VMs <span class="glossary-icon"></span>: "Yes, this is valid. The user is 'admin' and has the 'member' role."</li>
+<li><strong>Execution</strong>: Once confirmed, Nova platform <span class="glossary-icon"></span> compute service for VMs <span class="glossary-icon"></span> finally executes the command and returns the server
                     list.</li>
 </ol>
 <h3 id="22-the-backend-where-are-users-stored">2.2 The Backend (Where are users stored?)</h3>
-<p>Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> is modular and capable of integrating with existing enterprise systems. It can store users
+<p>Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> is modular and capable of integrating with existing enterprise systems. It can store users
                 locally or talk to external systems:</p>
 <ul>
-<li><strong>SQL (Local)</strong>: Users are stored in the OpenStack platform </span><span class="glossary-icon"></span></a> database (MariaDB). This is the
+<li><strong>SQL (Local)</strong>: Users are stored in the OpenStack platform <span class="glossary-icon"></span> database (MariaDB). This is the
                     standard configuration for small deployments and our lab environment.</li>
 <li><strong>LDAP / Active Directory (Enterprise)</strong>: In large enterprises, you do not want to
-                    create separate accounts for every system. Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> can plug directly into the corporate Active
-                    Directory. When a user logs in, Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> forwards the password to the Domain Controller for
+                    create separate accounts for every system. Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> can plug directly into the corporate Active
+                    Directory. When a user logs in, Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> forwards the password to the Domain Controller for
                     validation, ensuring Single Sign-On (SSO).</li>
 </ul>
 <h3 id="23-token-providers-fernet-vs-uuid">2.3 Token Providers (Fernet vs UUID)</h3>
 <p>The format of the token itself determines the performance of the cloud.</p>
 <ul>
-<li><strong>UUID (Legacy)</strong>: A random string stored in the Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> Database. The problem with
+<li><strong>UUID (Legacy)</strong>: A random string stored in the Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> Database. The problem with
                     this method is that <em>every</em> validation requires a Database Lookup. In massive clouds handling
                     10,000 requests per second, this would crush the database.</li>
 <li><strong>Fernet (Modern)</strong>: A cryptographic token format. The token contains the User ID and
-                    Expiry Time, <em>encrypted</em> using a secret key held by the Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> server. The major benefit is
-                    that Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> does <em>not</em> need to store the token in a database. To validate it, it simply
-                    decrypts the token significantly reducing database load and allowing Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> to scale infinitely.
+                    Expiry Time, <em>encrypted</em> using a secret key held by the Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> server. The major benefit is
+                    that Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> does <em>not</em> need to store the token in a database. To validate it, it simply
+                    decrypts the token significantly reducing database load and allowing Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> to scale infinitely.
                 </li>
 </ul>
 <h3 id="24-the-hierarchy">2.4 The Hierarchy</h3>
@@ -1033,7 +1085,7 @@
 </ul>
 <h3 id="25-cli-implementation-case-study-nebula-inc">2.5 CLI Implementation (Case Study: Nebula Inc.)</h3>
 <p>Now we apply this theory to our startup. "Nebula Inc." requires a dedicated, isolated environment where
-                its developers can work without interfering with other departments. In OpenStack platform </span><span class="glossary-icon"></span></a>, we achieve this
+                its developers can work without interfering with other departments. In OpenStack platform <span class="glossary-icon"></span>, we achieve this
                 "Multi-Tenancy" by creating a specific <strong>Project</strong>. This project will act as the container
                 for all their future VMs, networks, and storage volumes. It also allows us to set quotas (e.g., "Maximum
                 10 CPUs") to control their budget.</p>
@@ -1112,7 +1164,7 @@
 <h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a></strong>: The core authentication and authorization service; without it, nothing
+<li><strong>Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span></strong>: The core authentication and authorization service; without it, nothing
                     works.</li>
 <li><strong>Fernet Tokens</strong>: Modern, stateless tokens that improve performance by removing
                     database lookups.</li>
@@ -1132,34 +1184,34 @@
 </li>
 </ul>
 <hr/>
-<h2 id="3-deep-dive-image-management-glance">3. Deep Dive: Image Management (Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a>)</h2>
+<h2 id="3-deep-dive-image-management-glance">3. Deep Dive: Image Management (Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span>)</h2>
 <p>Every Virtual Machine needs a hard drive to boot from. In the physical world, you might walk around with
                 a USB stick containing a Windows or Linux ISO installer. In the cloud, this is inefficient. Instead, we
-                use <strong>Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a></strong>, the OpenStack platform </span><span class="glossary-icon"></span></a> Image Service. Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> acts as a central library where
-                validated, pre-installed operating system templates are stored. When you launch a VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a>, Nova platform </span><span class="glossary-icon"></span></a> compute service for VMs </span><span class="glossary-icon"></span></a> contacts
-                Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> to request a copy of the "Master Image" to be streamed to the hypervisor.</p>
+                use <strong>Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span></strong>, the OpenStack platform <span class="glossary-icon"></span> Image Service. Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> acts as a central library where
+                validated, pre-installed operating system templates are stored. When you launch a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>, Nova platform <span class="glossary-icon"></span> compute service for VMs <span class="glossary-icon"></span> contacts
+                Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> to request a copy of the "Master Image" to be streamed to the hypervisor.</p>
 <h3 id="31-understanding-disk-formats">3.1 Understanding Disk Formats</h3>
 <p>Not all virtual disks are created equal. You must choose the right format for your cloud workload:</p>
 <p><strong>RAW</strong> is a bit-for-bit copy of the disk. It offers the fastest performance because there
                 is no overhead, but it is space-inefficient. A 10GB drive takes up 10GB of physical space, even if it is
                 empty, making it slow to copy over the network.</p>
-<p><strong>QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a> (QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy On Write)</strong> is the standard format for OpenStack platform </span><span class="glossary-icon"></span></a>. It supports compression
+<p><strong>QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span> (QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy On Write)</strong> is the standard format for OpenStack platform <span class="glossary-icon"></span>. It supports compression
                 and "Thin Provisioning," meaning a 10GB drive with only 100MB of data takes up only 100MB of physical
-                space. Crucially, it logic enables snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a> capabilities, allowing you to save the state of a VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a>
+                space. Crucially, it logic enables snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> capabilities, allowing you to save the state of a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>
                 instantly.</p>
 <p><strong>ISO</strong> is a read-only archive used for installation media. While essential for building
                 images, it is rarely used in cloud "boot-from-image" scenarios because we prefer pre-installed operating
                 systems.</p>
-<h3 id="32-glance-architecture">3.2 Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> Architecture</h3>
-<p>Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> is split into distinct components to separate the metadata from the actual data payload.</p>
+<h3 id="32-glance-architecture">3.2 Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> Architecture</h3>
+<p>Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> is split into distinct components to separate the metadata from the actual data payload.</p>
 <p><img alt="Glance Architecture" src="images/glance_architecture.png"/>
-<em>Figure 2: Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> Architecture - The separation of the API, Registry (Metadata), and Backend Store
+<em>Figure 2: Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> Architecture - The separation of the API, Registry (Metadata), and Backend Store
                     (Data)</em>
 </p>
 <ul>
-<li><strong>Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> API</strong>: The front-end service that accepts user requests (e.g., "Upload this
-                    image", "List images"). It verifies the user's token with Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> before proceeding.</li>
-<li><strong>Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> Registry</strong>: An internal service that stores the <em>metadata</em> about images
+<li><strong>Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> API</strong>: The front-end service that accepts user requests (e.g., "Upload this
+                    image", "List images"). It verifies the user's token with Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> before proceeding.</li>
+<li><strong>Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> Registry</strong>: An internal service that stores the <em>metadata</em> about images
                     (Name, Size, Format, Owner) in the SQL database.</li>
 <li><strong>Backend Store</strong>: The driver responsible for storing the <em>actual binary data</em>
                     (the heavy bits). While this can be a local file system (<code>/var/lib/glance</code>), production
@@ -1171,9 +1223,9 @@
 <p>For any software company, consistency is key. We cannot have one developer running Ubuntu 20.04 and
                 another running Fedora 35, as this leads to the infamous "it works on my machine" problem. To solve
                 this, Nebula Inc. enforces a <strong>Standard Operating Environment (SOE)</strong>. We will upload a
-                "Golden Image"—a pre-approved, security-hardened operating system template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a> that all staff must use. For
+                "Golden Image"—a pre-approved, security-hardened operating system template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span> that all staff must use. For
                 our initial testing phase, we will utilize <strong>CirrOS</strong>, a lightweight (15MB) Linux
-                distribution designed specifically for validating OpenStack platform </span><span class="glossary-icon"></span></a> clouds, before graduating to full-sized
+                distribution designed specifically for validating OpenStack platform <span class="glossary-icon"></span> clouds, before graduating to full-sized
                 Ubuntu Server images in production.</p>
 <p><strong>Step 1: Download the Source</strong></p>
 <div class="codehilite">
@@ -1182,9 +1234,9 @@
 </div>
 <ul>
 <li><strong>Explanation</strong>: We assume we are on the "Jumpbox" or Controller node. Browsers cannot
-                    upload directly to Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> CLI; the file must exist locally.</li>
+                    upload directly to Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> CLI; the file must exist locally.</li>
 </ul>
-<p><strong>Step 2: Upload to Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a></strong></p>
+<p><strong>Step 2: Upload to Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span></strong></p>
 <div class="codehilite">
 <pre><span></span><code>openstack<span class="w"> </span>image<span class="w"> </span>create<span class="w"> </span><span class="s2">"nebula_standard_os"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--file<span class="w"> </span>cirros-0.5.1-x86_64-disk.img<span class="w"> </span><span class="se">\</span>
@@ -1203,10 +1255,10 @@
 <li><code>--public</code>: IMPORTANT. By default, images are "Private" (only visible to the
                             uploader). This flag makes it visible to <em>all</em> projects in the cloud (Nebula, Admin,
                             Testing, etc.).</li>
-<li><code>--min-ram 64</code>: A metadata tag. Nova platform </span><span class="glossary-icon"></span></a> compute service for VMs </span><span class="glossary-icon"></span></a> checks this before booting. If a user tries
-                            to launch this on a Flavor - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a> defining vCPUs, RAM, and disk </span><span class="glossary-icon"></span></a> with 32MB RAM, Nova platform </span><span class="glossary-icon"></span></a> compute service for VMs </span><span class="glossary-icon"></span></a> will block the request to prevent a crash.
+<li><code>--min-ram 64</code>: A metadata tag. Nova platform <span class="glossary-icon"></span> compute service for VMs <span class="glossary-icon"></span> checks this before booting. If a user tries
+                            to launch this on a Flavor - A software-based emulation of a physical computer <span class="glossary-icon"></span> template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span> defining vCPUs, RAM, and disk <span class="glossary-icon"></span> with 32MB RAM, Nova platform <span class="glossary-icon"></span> compute service for VMs <span class="glossary-icon"></span> will block the request to prevent a crash.
                         </li>
-<li><strong>Result</strong>: The file is streamed into the Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> Backend Store, and a UUID is
+<li><strong>Result</strong>: The file is streamed into the Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> Backend Store, and a UUID is
                             generated.</li>
 </ul>
 </li>
@@ -1232,8 +1284,8 @@
 </div>
 <ul>
 <li><strong>Explanation</strong>: Adds a custom key-value pair to the image metadata. The Scheduler use
-                    this to ensure the VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> lands on Intel hardware, not ARM.</li>
-<li><strong>Result</strong>: The Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> Registry is updated; the actual file is untouched.</li>
+                    this to ensure the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> lands on Intel hardware, not ARM.</li>
+<li><strong>Result</strong>: The Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> Registry is updated; the actual file is untouched.</li>
 </ul>
 <p><strong>Deleting Images</strong></p>
 <div class="codehilite">
@@ -1248,13 +1300,13 @@
 <h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a></strong>: The image repository that provides boot disks to Nova platform </span><span class="glossary-icon"></span></a> compute service for VMs </span><span class="glossary-icon"></span></a>.</li>
-<li><strong>QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a></strong>: The preferred format for cloud images due to thin provisioning and snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a>
+<li><strong>Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span></strong>: The image repository that provides boot disks to Nova platform <span class="glossary-icon"></span> compute service for VMs <span class="glossary-icon"></span>.</li>
+<li><strong>QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span></strong>: The preferred format for cloud images due to thin provisioning and snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span>
                     support.</li>
 <li><strong>SOE</strong>: Standard Operating Environment ensuring consistency across all machines.</li>
 </ul>
 <p><strong>Reflection</strong>:
-                1. If you have a slow 1Gb link interconnecting your data centers, which image format (RAW or QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a>)
+                1. If you have a slow 1Gb link interconnecting your data centers, which image format (RAW or QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span>)
                 would be faster to replicate? Why?
                 2. Why is it dangerous to make every image <code>--public</code>? (Think about licensed software like
                 Windows Server).</p>
@@ -1267,10 +1319,10 @@
                         Compute Gallery</a></li>
 </ul>
 <hr/>
-<h2 id="4-deep-dive-networking-neutron">4. Deep Dive: Networking (Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a>)</h2>
-<p>Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> is the "Software Defined Networking" (SDN) component of OpenStack platform </span><span class="glossary-icon"></span></a>. In a traditional data center,
+<h2 id="4-deep-dive-networking-neutron">4. Deep Dive: Networking (Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span>)</h2>
+<p>Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> is the "Software Defined Networking" (SDN) component of OpenStack platform <span class="glossary-icon"></span>. In a traditional data center,
                 creating a new network segment means filing a ticket with the network team to configure VLANs on
-                physical Cisco/Juniper switches. In OpenStack platform </span><span class="glossary-icon"></span></a>, Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> gives this power to the user. A tenant can create
+                physical Cisco/Juniper switches. In OpenStack platform <span class="glossary-icon"></span>, Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> gives this power to the user. A tenant can create
                 their own private switching infrastructure, subnets, and routers via API, without ever touching a
                 physical cable.</p>
 <h3 id="41-what-is-sdn-software-defined-networking">4.1 What is SDN (Software Defined Networking)?</h3>
@@ -1279,35 +1331,35 @@
                 SDN is the separation of the <strong>Control Plane</strong> (The Brain) from the <strong>Data
                     Plane</strong> (The Muscle).</p>
 <p><img alt="Neutron SDN Layers" src="images/neutron_sdn_layers.png"/>
-<em>Figure 3: Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> SDN Architecture - The separation of the Logical Control Plane (API) from the
+<em>Figure 3: Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> SDN Architecture - The separation of the Logical Control Plane (API) from the
                     Physical Data Plane (Open vSwitch)</em>
 </p>
-<p><strong>The Control Plane (Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> API/Server)</strong> acts as the brain of the operation. When you
+<p><strong>The Control Plane (Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> API/Server)</strong> acts as the brain of the operation. When you
                 execute a command to create a network or open port 80, you are communicating with the Control Plane. It
                 calculates the necessary logic and updates the state of the cloud database, but it does not touch a
                 single network packet itself.</p>
 <p><strong>The Data Plane (OVS Agent/L2 Agent)</strong> sits on every compute node and acts as the muscle.
                 It receives instructions from the Control Plane via a message bus (RabbitMQ) and implements them by
                 programming the local virtual switch. It is the actual software responsible for moving packets from your
-                VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> to the physical network card.</p>
+                VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> to the physical network card.</p>
 <h3 id="42-the-virtual-switch-open-vswitch-ovs">4.2 The Virtual Switch: Open vSwitch (OVS)</h3>
-<p>In a physical rack, servers plug into a top-of-rack switch. In OpenStack platform </span><span class="glossary-icon"></span></a>, VMs plug into a virtual switch
+<p>In a physical rack, servers plug into a top-of-rack switch. In OpenStack platform <span class="glossary-icon"></span>, VMs plug into a virtual switch
                 called <strong>Open vSwitch (OVS)</strong>. Unlike a standard unmanaged switch that simply learns MAC
                 addresses, OVS is a production-quality, multilayer virtual switch that uses <strong>Flow
                     Tables</strong>. A Flow Table is a list of programmable rules that match specific packets (e.g., "If
                 source IP is A and dest IP is B...") and applies specific actions (e.g., "...drop packet" or "...tag
-                with VLAN 100"). Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> programs these flow tables dynamically to implement sophisticated features like
+                with VLAN 100"). Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> programs these flow tables dynamically to implement sophisticated features like
                 Security Groups (Distributed Firewalls) and Virtual Routing.</p>
 <h3 id="43-under-the-hood-the-linux-connection">4.3 Under the Hood: The Linux Connection</h3>
-<p>Everything you learned in Week 4 applies here. Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> uses standard Linux kernel features to build these
+<p>Everything you learned in Week 4 applies here. Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> uses standard Linux kernel features to build these
                 structures:</p>
 <ul>
-<li><strong>Isolation = Namespaces</strong>: When you create a Router or a DHCP server, Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> creates
+<li><strong>Isolation = Namespaces</strong>: When you create a Router or a DHCP server, Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> creates
                     a <strong>Linux Network Namespace</strong> (<code>ip netns</code>). This allows Project A and
                     Project B to both use "192.168.0.1" without conflict; they live in parallel, isolated universes.
                 </li>
-<li><strong>Cabling = Veth Pairs</strong>: When a VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> "plugs in" to the OVS Bridge, Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> creates a
-                    <strong>Virtual Ethernet (veth) pair</strong>. One end connects to the VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a>'s interface (inside KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a>),
+<li><strong>Cabling = Veth Pairs</strong>: When a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> "plugs in" to the OVS Bridge, Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> creates a
+                    <strong>Virtual Ethernet (veth) pair</strong>. One end connects to the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>'s interface (inside KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span>),
                     and the other connects to the OVS Bridge.</li>
 </ul>
 <h3 id="44-flow-of-traffic-north-south-vs-east-west">4.4 Flow of Traffic (North-South vs East-West)</h3>
@@ -1319,12 +1371,12 @@
 </p>
 <p><strong>East-West Traffic</strong> refers to communication between VMs inside the <em>same</em> cloud
                 environment (e.g., Web Server A talking to Database Server B). Ideally, this traffic should never leave
-                the virtual infrastructure. It flows from the source VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a>, through the local OVS Bridge, and is typically
+                the virtual infrastructure. It flows from the source VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>, through the local OVS Bridge, and is typically
                 encapsulated in a tunnel protocol like <strong>VXLAN</strong> to cross the physical network before
                 arriving at the destination compute node.</p>
 <p><strong>North-South Traffic</strong> refers to communication entering or leaving the cloud (e.g., a User
                 accessing your Web Server from the Internet). This traffic must leave the virtual overlay network. It
-                passes through the Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> Router (which lives inside a Network Namespace), undergoes
+                passes through the Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> Router (which lives inside a Network Namespace), undergoes
                 <strong>SNAT</strong> (Source NAT) to mask its private IP, and exits via the external provider network
                 gateway.</p>
 <h3 id="45-cli-implementation-case-study-nebula-inc">4.5 CLI Implementation (Case Study: Nebula Inc.)</h3>
@@ -1390,12 +1442,12 @@
                 </li>
 </ul>
 <h3 id="46-verification">4.6 Verification</h3>
-<p>Log in to <strong>Horizon platform </span><span class="glossary-icon"></span></a> web dashboard </span><span class="glossary-icon"></span></a> -&gt; Network -&gt; Network Topology</strong>. You should see the Nebula Router
+<p>Log in to <strong>Horizon platform <span class="glossary-icon"></span> web dashboard <span class="glossary-icon"></span> -&gt; Network -&gt; Network Topology</strong>. You should see the Nebula Router
                 creating a bridge between the Blue (Private) line and the Red (Public) line.</p>
 <h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>SDN</strong>: Separates the "Brain" (Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> API) from the "Muscle" (OVS/Agents).</li>
+<li><strong>SDN</strong>: Separates the "Brain" (Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> API) from the "Muscle" (OVS/Agents).</li>
 <li><strong>OVS</strong>: Uses Flow Tables to direct traffic and enforce security, replacing physical
                     switch logic.</li>
 <li><strong>Linux Foundations</strong>: Capabilities like Namespaces and Veth pairs are the building
@@ -1403,9 +1455,9 @@
 </ul>
 <p><strong>Reflection</strong>:
                 1. <strong>Recall</strong>: In Week 4, we used <code>ip netns exec</code>. How does that relate to a
-                Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> Router?
+                Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> Router?
                 2. <strong>Flows</strong>: If you add a Security Group rule to allow SSH, what actually changes on the
-                Compute Node? (Hint: Does Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> update the database or OVS flow tables?)</p>
+                Compute Node? (Hint: Does Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> update the database or OVS flow tables?)</p>
 <p><strong>Resources</strong>:</p>
 <ul>
 <li><a href="https://docs.openstack.org/neutron/latest/">OpenStack Neutron Guide</a></li>
@@ -1417,7 +1469,7 @@
 <hr/>
 <h2 id="6-industry-comparison-the-polyglot-cloud-engineer">6. Industry Comparison: The "Polyglot" Cloud
                 Engineer</h2>
-<p>While this course uses OpenStack platform </span><span class="glossary-icon"></span></a> because it allows us to see "under the hood," the concepts you learned
+<p>While this course uses OpenStack platform <span class="glossary-icon"></span> because it allows us to see "under the hood," the concepts you learned
                 this week—Tenants, Golden Images, and SDN—are the exact same primitives used by the public cloud giants.
             </p>
 <h3 id="61-concept-mapping">6.1 Concept Mapping</h3>
@@ -1425,7 +1477,7 @@
 <thead>
 <tr>
 <th style="text-align: left;">Concept</th>
-<th style="text-align: left;">OpenStack platform </span><span class="glossary-icon"></span></a> Term</th>
+<th style="text-align: left;">OpenStack platform <span class="glossary-icon"></span> Term</th>
 <th style="text-align: left;">AWS Term</th>
 <th style="text-align: left;">Azure Term</th>
 </tr>
@@ -1433,7 +1485,7 @@
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>Identity Service</strong></td>
-<td style="text-align: left;">Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a></td>
+<td style="text-align: left;">Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span></td>
 <td style="text-align: left;">IAM (Identity &amp; Access Mgmt)</td>
 <td style="text-align: left;">Microsoft Entra ID (Azure AD)</td>
 </tr>
@@ -1445,19 +1497,19 @@
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Image Service</strong></td>
-<td style="text-align: left;">Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a></td>
+<td style="text-align: left;">Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span></td>
 <td style="text-align: left;">AMI Registry</td>
 <td style="text-align: left;">Azure Compute Gallery</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Network Service</strong></td>
-<td style="text-align: left;">Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a></td>
+<td style="text-align: left;">Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span></td>
 <td style="text-align: left;">VPC (Virtual Private Cloud)</td>
-<td style="text-align: left;">VNet (Virtual Network - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> communication </span><span class="glossary-icon"></span></a>)</td>
+<td style="text-align: left;">VNet (Virtual Network - A software-based emulation of a physical computer <span class="glossary-icon"></span> communication <span class="glossary-icon"></span>)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Routing</strong></td>
-<td style="text-align: left;">Neutron platform </span><span class="glossary-icon"></span></a> networking service </span><span class="glossary-icon"></span></a> Router</td>
+<td style="text-align: left;">Neutron platform <span class="glossary-icon"></span> networking service <span class="glossary-icon"></span> Router</td>
 <td style="text-align: left;">Internet Gateway (IGW)</td>
 <td style="text-align: left;">VPN Gateway / VNet Peering</td>
 </tr>
@@ -1467,8 +1519,8 @@
                 Clouds</h3>
 <p>In Section 3, we discussed the "Golden Image." This strategy is universal.</p>
 <ul>
-<li><strong>OpenStack platform </span><span class="glossary-icon"></span></a></strong>: You use <strong>Packer</strong> to build a QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> for virtualization </span><span class="glossary-icon"></span></a> Copy-On-Write disk image format </span><span class="glossary-icon"></span></a> image and upload it to
-                    <strong>Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a></strong>.</li>
+<li><strong>OpenStack platform <span class="glossary-icon"></span></strong>: You use <strong>Packer</strong> to build a QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span> image and upload it to
+                    <strong>Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span></strong>.</li>
 <li><strong>AWS</strong>: You use <strong>Packer</strong> to build an AMI and upload it to
                     <strong>EC2</strong>.</li>
 <li><strong>Azure</strong>: You use <strong>Packer</strong> to build a VHD and upload it to
@@ -1480,7 +1532,7 @@
 <h2 id="7-summary">7. Summary</h2>
 <p>We have built the <strong>Foundation</strong> for Nebula Inc.:
                 1. <strong>Identity</strong>: A secure Project and User with assigned Roles.
-                2. <strong>Image</strong>: A validated OS template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a> in Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a>.
+                2. <strong>Image</strong>: A validated OS template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span> in Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span>.
                 3. <strong>Network</strong>: A fully routed Layer 3 topology.</p>
 <p>Next week, we Launch.</p>
 <hr/>
@@ -1488,7 +1540,7 @@
 <ul>
 <li><strong><a href="Week_8_Lab_1_Foundation.html">Lab 1: Cloud Foundation</a></strong>
 <ul>
-<li><strong>Goal</strong>: Introduction to Keystone platform </span><span class="glossary-icon"></span></a> identity/authentication service </span><span class="glossary-icon"></span></a> (Identity) and Glance platform </span><span class="glossary-icon"></span></a> image service </span><span class="glossary-icon"></span></a> (Image) services.</li>
+<li><strong>Goal</strong>: Introduction to Keystone platform <span class="glossary-icon"></span> identity/authentication service <span class="glossary-icon"></span> (Identity) and Glance platform <span class="glossary-icon"></span> image service <span class="glossary-icon"></span> (Image) services.</li>
 </ul>
 </li>
 </ul>

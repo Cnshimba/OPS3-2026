@@ -369,7 +369,59 @@
     html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
     html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
 </style>
-</head>
+<style>
+        /* Glossary Tooltip Styles */
+        .glossary-term {
+            color: #c9984a;
+            border-bottom: 2px dotted #c9984a;
+            cursor: help;
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .glossary-term:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+        
+        .glossary-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            z-index: 1000;
+            background: linear-gradient(135deg, #1e3a5f 0%, #142a46 100%);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #c9984a;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 300px;
+            width: max-content;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glossary-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #c9984a transparent transparent transparent;
+        }
+        
+        .glossary-term:hover .glossary-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        </style></head>
 <body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
 <!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
@@ -416,31 +468,31 @@
 <blockquote>
 <p>[!TIP]
 <strong>How to succeed in this week</strong>:
-Containers are NOT lightweight VMs—they're a different paradigm. Focus on understanding namespaces and cgroups. The orchestration section (Kubernetes orchestration platform </span><span class="glossary-icon"></span></a>) builds on everything you've learned so far.</p>
+Containers are NOT lightweight VMs—they're a different paradigm. Focus on understanding namespaces and cgroups. The <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> section (<a class="glossary-term" href="glossary.html#Kubernetes">Kubernetes<span class="glossary-tooltip"><a class="glossary-term" href="glossary.html#Container">Container<span class="glossary-tooltip">Lightweight package with application code and dependencies</span></a> orchestration platform</span></a> <a class="glossary-term" href="glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <span class="glossary-icon"></span>) builds on everything you've learned so far.</p>
 </blockquote>
 <hr/>
 <h2 id="welcome-to-week-5">Welcome to Week 5!</h2>
-<p>This week represents a significant shift in our exploration of virtualization technology. While the previous weeks focused on virtual machines that virtualize complete hardware stacks, this week introduces containers, a fundamentally different approach to virtualization that operates at the operating system level. Understanding containers is no longer optional for IT professionals. Container technology has become pervasive across cloud computing, application development, and modern infrastructure management. Major technology companies deploy millions of containers daily, and cloud platforms like OpenStack platform </span><span class="glossary-icon"></span></a> integrate container services as core offerings.</p>
-<p>The conceptual leap from virtual machines to containers requires adjusting your mental model of what virtualization means. Virtual machines create the illusion of complete computers with virtual hardware, allowing each VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> to run its own operating system kernel. Containers create the illusion of separate systems while sharing the host operating system's kernel. This distinction, while seemingly subtle, has profound implications for performance, resource utilization, deployment speed, and appropriate use cases. By the end of this week, you will not only understand these differences conceptually but also have hands-on experience creating and managing containers in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> VE using LXC </span><span class="glossary-icon"></span></a>, and familiarity with Docker and Podman, the dominant container technologies in cloud environments.</p>
+<p>This week represents a significant shift in our exploration of virtualization technology. While the previous weeks focused on virtual machines that virtualize complete hardware stacks, this week introduces containers, a fundamentally different approach to virtualization that operates at the operating system level. Understanding containers is no longer optional for IT professionals. Container technology has become pervasive across cloud computing, application development, and modern infrastructure management. Major technology companies deploy millions of containers daily, and cloud platforms like OpenStack platform <span class="glossary-icon"></span> integrate container services as core offerings.</p>
+<p>The conceptual leap from virtual machines to containers requires adjusting your mental model of what virtualization means. Virtual machines create the illusion of complete computers with virtual hardware, allowing each VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> to run its own operating system kernel. Containers create the illusion of separate systems while sharing the host operating system's kernel. This distinction, while seemingly subtle, has profound implications for performance, resource utilization, deployment speed, and appropriate use cases. By the end of this week, you will not only understand these differences conceptually but also have hands-on experience creating and managing containers in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE using LXC <span class="glossary-icon"></span>, and familiarity with Docker and Podman, the dominant container technologies in cloud environments.</p>
 <hr/>
 <h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
 <ul>
 <li>Articulate the architectural differences between containers and virtual machines</li>
 <li>Explain the roles of Namespaces and Control Groups (cgroups) in Linux</li>
-<li>Compare different container technologies: LXC </span><span class="glossary-icon"></span></a>, Docker, Podman, and Apptainer</li>
-<li>Master the command-line workflows for standard LXC </span><span class="glossary-icon"></span></a> and Docker</li>
-<li>Deploy and manage LXC </span><span class="glossary-icon"></span></a> containers using the Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> VE GUI</li>
+<li>Compare different container technologies: LXC <span class="glossary-icon"></span>, Docker, Podman, and Apptainer</li>
+<li>Master the command-line workflows for standard LXC <span class="glossary-icon"></span> and Docker</li>
+<li>Deploy and manage LXC <span class="glossary-icon"></span> containers using the Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE GUI</li>
 </ul>
 <hr/>
 <h2 id="1-the-container-paradigm">1. The Container Paradigm</h2>
-<p>To truly grasp how containers differ from virtual machines, we must examine what happens at the kernel level during creation and operation. When you boot a virtual machine on Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> VE, a complex sequence occurs. The hypervisor creates a virtualized hardware environment including virtual CPU, memory, storage controllers, and network adapters. The VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a>'s virtual BIOS initializes, the bootloader loads from the virtual disk - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a>, and the kernel initializes. From the kernel's perspective, it is running on a physical computer with exclusive control of hardware resources.</p>
-<p>Containers operate on entirely different principles. When you create a container, no new kernel boots. The Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> host's kernel—which is itself a Linux kernel—remains the only kernel running. What changes is that the kernel creates isolation boundaries using features built into Linux itself. These features, primarily namespaces and control groups, allow the kernel to present different views of system resources to different groups of processes.</p>
+<p>To truly grasp how containers differ from virtual machines, we must examine what happens at the kernel level during creation and operation. When you boot a virtual machine on Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE, a complex sequence occurs. The hypervisor creates a virtualized hardware environment including virtual CPU, memory, storage controllers, and network adapters. The VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>'s virtual BIOS initializes, the bootloader loads from the virtual disk - A software-based emulation of a physical computer <span class="glossary-icon"></span> <span class="glossary-icon"></span>, and the kernel initializes. From the kernel's perspective, it is running on a physical computer with exclusive control of hardware resources.</p>
+<p>Containers operate on entirely different principles. When you create a container, no new kernel boots. The Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> host's kernel—which is itself a Linux kernel—remains the only kernel running. What changes is that the kernel creates isolation boundaries using features built into Linux itself. These features, primarily namespaces and control groups, allow the kernel to present different views of system resources to different groups of processes.</p>
 <p><img alt="Virtual Machines vs Containers Architecture" src="images/vm_vs_container.png"/>
-<em>Figure 1: VMs vs Containers Architecture - VMs include full guest OS </span><span class="glossary-icon"></span></a> with separate kernel; containers share the host kernel with isolation via namespaces</em></p>
+<em>Figure 1: VMs vs Containers Architecture - VMs include full guest OS <span class="glossary-icon"></span> with separate kernel; containers share the host kernel with isolation via namespaces</em></p>
 <h3 id="11-the-foundation-namespaces-and-control-groups">1.1. The Foundation: Namespaces and Control Groups</h3>
 <p>Linux namespaces provide the fundamental isolation mechanism enabling containers. Each namespace type isolates a different aspect of the system. The <strong>PID (Process ID) Namespace</strong> isolates the process tree. On a normal Linux system, all processes share a single process ID space. With PID namespaces, each namespace has its own isolated process tree. The container's init process appears as PID 1 from the container's perspective, even if it is PID 2450 on the host. This prevents processes inside the container from seeing or signaling processes on the host.</p>
 <p>The <strong>Network Namespace</strong> isolates network configuration completely. Each network namespace has its own network interfaces, IP addresses, routing tables, and firewall rules. This enables functionality that would otherwise conflict, such as multiple containers binding to port 80 on the same physical host. The <strong>Mount Namespace</strong> controls filesystem visibility, giving each container its own root filesystem (rootfs) that appears as the top of the directory tree.</p>
-<p>While namespaces provide isolation, they do not inherently limit resource consumption. Without additional mechanisms, a process in a container could consume all available CPU time or memory. <strong>Control Groups (cgroups)</strong> solve this problem by providing resource limiting, accounting, and prioritization. Understanding cgroups is essential because they form the foundation of resource management in all modern container platforms, from Docker to Kubernetes orchestration platform </span><span class="glossary-icon"></span></a>.</p>
+<p>While namespaces provide isolation, they do not inherently limit resource consumption. Without additional mechanisms, a process in a container could consume all available CPU time or memory. <strong>Control Groups (cgroups)</strong> solve this problem by providing resource limiting, accounting, and prioritization. Understanding cgroups is essential because they form the foundation of resource management in all modern container platforms, from Docker to Kubernetes orchestration platform <span class="glossary-icon"></span>.</p>
 <h3 id="12-understanding-control-groups-in-depth">1.2. Understanding Control Groups in Depth</h3>
 <p>Control Groups, commonly abbreviated as <strong>cgroups</strong>, are a Linux kernel feature that organizes processes into hierarchical groups and applies resource constraints to those groups. Think of cgroups as the traffic police of the Linux system: while namespaces create separate lanes of traffic (isolation), cgroups enforce speed limits and allocate road capacity (resource limits).</p>
 <p>When you create a container and specify that it can use "2 CPU cores" and "1GB of RAM," these limits are enforced through cgroups. The container runtime creates a cgroup for that container and configures the appropriate resource controllers. If the containerized application tries to exceed these limits, the kernel's cgroup subsystem intervenes to enforce the constraints.</p>
@@ -498,7 +550,7 @@ cat<span class="w"> </span>/sys/fs/cgroup/limited_container/cpu.stat
 <p>The Linux kernel has two major versions of the cgroup implementation. <strong>cgroups v1</strong> (the original implementation) allowed each controller to operate independently with separate hierarchies. <strong>cgroups v2</strong> (the modern unified hierarchy) consolidates all controllers into a single tree structure, simplifying management and improving consistency.</p>
 <p>Most modern Linux distributions (such as Ubuntu 22.04+ and Debian 11+) have transitioned to cgroups v2 by default. Docker and other container runtimes now support both versions, though v2 offers improved performance and a cleaner API.</p>
 <h3 id="17-how-container-runtimes-use-cgroups">1.7. How Container Runtimes Use cgroups</h3>
-<p>When you run a container with resource limits, the container runtime (Docker, containerd, Podman, or LXC </span><span class="glossary-icon"></span></a>) performs these operations behind the scenes:</p>
+<p>When you run a container with resource limits, the container runtime (Docker, containerd, Podman, or LXC <span class="glossary-icon"></span>) performs these operations behind the scenes:</p>
 <ol>
 <li><strong>Create a cgroup</strong>: The runtime creates a new cgroup under its management hierarchy (e.g., <code>/sys/fs/cgroup/system.slice/docker-&lt;container-id&gt;.scope/</code>).</li>
 <li><strong>Set limits</strong>: Resource constraints specified in the container configuration are written to the appropriate controller files.</li>
@@ -540,22 +592,22 @@ Containers share the Hot Kernel; VMs use their own Kernel.</p>
 <hr/>
 <h2 id="2-the-container-technologies-landscape">2. The Container Technologies Landscape</h2>
 <p>The term "container" is often used broadly, but in practice, distinct technologies utilize these kernel features for different purposes. It is vital to distinguish between System Containers, which act like virtual machines, and Application Containers, which package individual applications.</p>
-<h3 id="21-lxc-linux-containers">2.1. LXC </span><span class="glossary-icon"></span></a> (Linux Containers)</h3>
-<p>LXC </span><span class="glossary-icon"></span></a> provides System Containers. The philosophy behind LXC </span><span class="glossary-icon"></span></a> is to offer a lightweight virtual machine experience without the overhead of hardware emulation. An LXC </span><span class="glossary-icon"></span></a> container boots a full init system (like systemd), runs multiple services (SSH, Cron, Syslog), and persists data like a traditional server. It is ideal for infrastructure consolidation where you require long-running servers but want the density and efficiency of containers.</p>
+<h3 id="21-lxc-linux-containers">2.1. LXC <span class="glossary-icon"></span> (Linux Containers)</h3>
+<p>LXC <span class="glossary-icon"></span> provides System Containers. The philosophy behind LXC <span class="glossary-icon"></span> is to offer a lightweight virtual machine experience without the overhead of hardware emulation. An LXC <span class="glossary-icon"></span> container boots a full init system (like systemd), runs multiple services (SSH, Cron, Syslog), and persists data like a traditional server. It is ideal for infrastructure consolidation where you require long-running servers but want the density and efficiency of containers.</p>
 <h3 id="22-docker">2.2. Docker</h3>
-<p>Docker popularized Application Containers. Unlike LXC </span><span class="glossary-icon"></span></a>, Docker allows you to package an application and its dependencies into a single runnable unit. A Docker container typically runs a single process (such as Nginx or Python) and is ephemeral in nature. Data is stored in external volumes, and the container itself can be destroyed and recreated easily. Docker is the standard for microservices and modern software delivery.</p>
+<p>Docker popularized Application Containers. Unlike LXC <span class="glossary-icon"></span>, Docker allows you to package an application and its dependencies into a single runnable unit. A Docker container typically runs a single process (such as Nginx or Python) and is ephemeral in nature. Data is stored in external volumes, and the container itself can be destroyed and recreated easily. Docker is the standard for microservices and modern software delivery.</p>
 <h3 id="23-podman">2.3. Podman</h3>
 <p>Podman is a modern alternative to Docker, developed by Red Hat. It maintains compatibility with Docker's commands and image format (OCI) but differs significantly in architecture. Podman is daemonless; it does not require a background service running as root. Instead, it starts containers directly as child processes of the user. This architecture enhances security and natively supports "rootless" containers, allowing unprivileged users to run containers safely.</p>
 <h3 id="24-apptainer-formerly-singularity">2.4. Apptainer (formerly Singularity)</h3>
 <p>Apptainer is designed specifically for High Performance Computing (HPC) and research environments. In these environments, users run jobs on shared clusters where they do not have root access. Apptainer accommodates this by encapsulating the entire environment into a single file (<code>.sif</code>) and running it with the user's existing privileges. It prioritizes mobility of compute and integration with batch schedulers like Slurm.</p>
 <h3 id="25-comparison-table">2.5. Comparison Table</h3>
 <p><img alt="Container Technologies Comparison" src="images/container_tech_comparison.png"/>
-<em>Figure 3: Container Technologies Landscape - LXC </span><span class="glossary-icon"></span></a> for system containers, Docker for application containers, Podman for secure daemonless containers, Apptainer for HPC workloads</em></p>
+<em>Figure 3: Container Technologies Landscape - LXC <span class="glossary-icon"></span> for system containers, Docker for application containers, Podman for secure daemonless containers, Apptainer for HPC workloads</em></p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">Feature</th>
-<th style="text-align: left;">LXC </span><span class="glossary-icon"></span></a></th>
+<th style="text-align: left;">LXC <span class="glossary-icon"></span></th>
 <th style="text-align: left;">Docker</th>
 <th style="text-align: left;">Podman</th>
 <th style="text-align: left;">Apptainer</th>
@@ -571,7 +623,7 @@ Containers share the Hot Kernel; VMs use their own Kernel.</p>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Philosophy</strong></td>
-<td style="text-align: left;">"Lightweight VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a>"</td>
+<td style="text-align: left;">"Lightweight VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>"</td>
 <td style="text-align: left;">"Single Service"</td>
 <td style="text-align: left;">"Single Service"</td>
 <td style="text-align: left;">"Portable Application"</td>
@@ -624,27 +676,27 @@ Containers share the Hot Kernel; VMs use their own Kernel.</p>
 <h3 id="26-section-2-checkpoint">2.6. Section 2 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>LXC </span><span class="glossary-icon"></span></a></strong>: System Containers (OS-like, persistent). Used for VPS/Infrastructure.</li>
+<li><strong>LXC <span class="glossary-icon"></span></strong>: System Containers (OS-like, persistent). Used for VPS/Infrastructure.</li>
 <li><strong>Docker</strong>: Application Containers (Single process, ephemeral). Used for Dev/Microservices.</li>
 <li><strong>Podman</strong>: Daemonless, secure alternative to Docker.</li>
 </ul>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why is "Daemonless" considered a security feature?</li>
-<li>Which technology would you use to host a permanent MySQL server: LXC </span><span class="glossary-icon"></span></a> or Docker?</li>
+<li>Which technology would you use to host a permanent MySQL server: LXC <span class="glossary-icon"></span> or Docker?</li>
 </ul>
 <p><strong>Resources</strong>:</p>
 <ul>
 <li><a href="https://opencontainers.org/">Open Container Initiative (OCI)</a></li>
 </ul>
 <hr/>
-<h2 id="3-working-with-system-containers-lxc-cli">3. Working with System Containers (LXC </span><span class="glossary-icon"></span></a> CLI)</h2>
-<p>Before utilizing the graphical interface of Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> VE, it is important to understand the underlying mechanics of LXC </span><span class="glossary-icon"></span></a> using standard command-line tools. This knowledge is applicable to any Linux system running LXC </span><span class="glossary-icon"></span></a>.</p>
+<h2 id="3-working-with-system-containers-lxc-cli">3. Working with System Containers (LXC <span class="glossary-icon"></span> CLI)</h2>
+<p>Before utilizing the graphical interface of Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE, it is important to understand the underlying mechanics of LXC <span class="glossary-icon"></span> using standard command-line tools. This knowledge is applicable to any Linux system running LXC <span class="glossary-icon"></span>.</p>
 <h3 id="31-creating-a-container">3.1. Creating a Container</h3>
-<p>In the Docker ecosystem, users typically "pull" an image from a registry. In the LXC </span><span class="glossary-icon"></span></a> ecosystem, the process involves "creating" a container from a template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a>. A template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a> is a script or tarball that constructs the root filesystem for a specific Linux distribution. The <code>lxc-create</code> command handles this process, downloading the necessary files to a directory on the host (typically <code>/var/lib/lxc</code>).</p>
+<p>In the Docker ecosystem, users typically "pull" an image from a registry. In the LXC <span class="glossary-icon"></span> ecosystem, the process involves "creating" a container from a template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span>. A template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span> is a script or tarball that constructs the root filesystem for a specific Linux distribution. The <code>lxc-create</code> command handles this process, downloading the necessary files to a directory on the host (typically <code>/var/lib/lxc</code>).</p>
 <p><img alt="LXC Container Lifecycle Workflow" src="images/lxc_workflow.png"/>
-<em>Figure 4: LXC </span><span class="glossary-icon"></span></a> Container Lifecycle - From template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a> download through creation, start, attach, stop, to destroy</em></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Syntax: lxc </span><span class="glossary-icon"></span></a>-create -n <name> -t <template_script></template_script></name></span>
+<em>Figure 4: LXC <span class="glossary-icon"></span> Container Lifecycle - From template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span> download through creation, start, attach, stop, to destroy</em></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Syntax: lxc </span><span class="glossary-icon"></span>-create -n <name> -t <template_script></template_script></name>
 sudo<span class="w"> </span>lxc-create<span class="w"> </span>-n<span class="w"> </span>my-web-server<span class="w"> </span>-t<span class="w"> </span>download<span class="w"> </span>--<span class="w"> </span>--dist<span class="w"> </span>ubuntu<span class="w"> </span>--release<span class="w"> </span>jammy<span class="w"> </span>--arch<span class="w"> </span>amd64
 </code></pre></div>
 <h3 id="32-listing-and-monitoring">3.2. Listing and Monitoring</h3>
@@ -652,11 +704,11 @@ sudo<span class="w"> </span>lxc-create<span class="w"> </span>-n<span class="w">
 <div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>lxc-ls<span class="w"> </span>--fancy
 </code></pre></div>
 <h3 id="33-starting-a-container">3.3. Starting a Container</h3>
-<p>Booting an LXC </span><span class="glossary-icon"></span></a> container is significantly faster than booting a virtual machine because there is no kernel initialization. The <code>lxc-start</code> command simply initiates the init system within the isolated namespace environment.</p>
+<p>Booting an LXC <span class="glossary-icon"></span> container is significantly faster than booting a virtual machine because there is no kernel initialization. The <code>lxc-start</code> command simply initiates the init system within the isolated namespace environment.</p>
 <div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>lxc-start<span class="w"> </span>-n<span class="w"> </span>my-web-server
 </code></pre></div>
 <h3 id="34-accessing-the-container">3.4. Accessing the Container</h3>
-<p>While it is possible to configure SSH for an LXC </span><span class="glossary-icon"></span></a> container, administrators often use <code>lxc-attach</code> to enter the container's namespace directly from the host. This works similarly to jumping into a chroot environment but respects the namespace boundaries. Once attached, you are the root user inside the container and can manage packages and services normally.</p>
+<p>While it is possible to configure SSH for an LXC <span class="glossary-icon"></span> container, administrators often use <code>lxc-attach</code> to enter the container's namespace directly from the host. This works similarly to jumping into a chroot environment but respects the namespace boundaries. Once attached, you are the root user inside the container and can manage packages and services normally.</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Attach to the running process space</span>
 sudo<span class="w"> </span>lxc-attach<span class="w"> </span>-n<span class="w"> </span>my-web-server
 
@@ -672,7 +724,7 @@ sudo<span class="w"> </span>lxc-destroy<span class="w"> </span>-n<span class="w"
 <h3 id="36-section-3-checkpoint">3.6. Section 3 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Create</strong>: Builds a rootfs from a Template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a> (<code>lxc-create</code>).</li>
+<li><strong>Create</strong>: Builds a rootfs from a Template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span> (<code>lxc-create</code>).</li>
 <li><strong>Start</strong>: Boots the init system inside the namespace (<code>lxc-start</code>).</li>
 <li><strong>Attach</strong>: Enters the namespace directly (<code>lxc-attach</code>).</li>
 </ul>
@@ -686,20 +738,20 @@ sudo<span class="w"> </span>lxc-destroy<span class="w"> </span>-n<span class="w"
 <li><a href="https://linuxcontainers.org/">Linux Containers (LXC) Project</a></li>
 </ul>
 <hr/>
-<h2 id="4-lxc-in-proxmox-ve-gui-workflow">4. LXC </span><span class="glossary-icon"></span></a> in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> VE (GUI Workflow)</h2>
-<p>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> VE integrates LXC </span><span class="glossary-icon"></span></a> natively, wrapping the underlying LXC </span><span class="glossary-icon"></span></a> technologies in a sophisticated management interface. This abstracts the complexity of command-line management while providing powerful features like backup, replication, and high availability.</p>
+<h2 id="4-lxc-in-proxmox-ve-gui-workflow">4. LXC <span class="glossary-icon"></span> in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE (GUI Workflow)</h2>
+<p>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE integrates LXC <span class="glossary-icon"></span> natively, wrapping the underlying LXC <span class="glossary-icon"></span> technologies in a sophisticated management interface. This abstracts the complexity of command-line management while providing powerful features like backup, replication, and high availability.</p>
 <p><img alt="Proxmox LXC Management Interface" src="images/proxmox_lxc_gui.png"/>
-<em>Figure 8: Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> VE Container Management - GUI workflow from template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a> download to container creation with dynamic resource management</em></p>
+<em>Figure 8: Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE Container Management - GUI workflow from template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span> download to container creation with dynamic resource management</em></p>
 <h3 id="41-step-1-downloading-templates">4.1. Step 1: Downloading Templates</h3>
-<p>Before a container can be created, a template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a> must be available on the configured storage. In the Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> GUI, navigate to the storage view (such as <code>local</code> or <code>local-lvm</code>). The <strong>CT Templates</strong> section provides a built-in browser for downloading official templates for various distributions like Ubuntu, Debian, Alpine, and CentOS, as well as TurnKey Linux appliances which come pre-configured with software stacks.</p>
+<p>Before a container can be created, a template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span> must be available on the configured storage. In the Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> GUI, navigate to the storage view (such as <code>local</code> or <code>local-lvm</code>). The <strong>CT Templates</strong> section provides a built-in browser for downloading official templates for various distributions like Ubuntu, Debian, Alpine, and CentOS, as well as TurnKey Linux appliances which come pre-configured with software stacks.</p>
 <h3 id="42-step-2-creating-a-container">4.2. Step 2: Creating a Container</h3>
 <p>The creation wizard guides you through the configuration. Important settings include the <strong>Hostname</strong>, which sets the container's internal identity, and the <strong>Unprivileged</strong> option. Unprivileged containers are the default and recommended choice; they use user namespaces to map the container's root user to a non-privileged user on the host, significantly reducing the impact of a potential container escape. During <strong>Disk</strong> and <strong>CPU/Memory</strong> configuration, you set the resource limits that cgroups will enforce.</p>
 <h3 id="43-step-3-managing-resources-dynamically">4.3. Step 3: Managing Resources Dynamically</h3>
-<p>One of the key advantages of containers is the ability to adjust resources without rebooting. If a container is under memory pressure, you can navigate to the <strong>Resources</strong> tab in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> and increase the Memory limit. The change is applied instantly to the running container's cgroup. This elasticity allows for highly efficient resource management compared to the static allocation often required for virtual machines.</p>
+<p>One of the key advantages of containers is the ability to adjust resources without rebooting. If a container is under memory pressure, you can navigate to the <strong>Resources</strong> tab in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> and increase the Memory limit. The change is applied instantly to the running container's cgroup. This elasticity allows for highly efficient resource management compared to the static allocation often required for virtual machines.</p>
 <h3 id="44-section-4-checkpoint">4.4. Section 4 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> uses typical LXC </span><span class="glossary-icon"></span></a> tech but wraps it in a GUI for ease of use.</li>
+<li>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> uses typical LXC <span class="glossary-icon"></span> tech but wraps it in a GUI for ease of use.</li>
 <li><strong>Templates</strong>: Must be downloaded to storage before creation.</li>
 <li><strong>Unprivileged</strong>: Maps root inside container to non-root outside for security.</li>
 </ul>
@@ -753,8 +805,8 @@ docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </spa
 </code></pre></div>
 <p>Resource usage can be monitored using <code>docker stats</code>, which provides real-time information on CPU, memory, and network usage for running containers.</p>
 <h3 id="55-building-custom-images-with-dockerfiles">5.5. Building Custom Images with Dockerfiles</h3>
-<p>While pre-built images satisfy many needs, real applications require custom images. A <strong>Dockerfile image </span><span class="glossary-icon"></span></a></strong> is a text file containing instructions for building an image, where each instruction creates a new layer.</p>
-<p>Consider a simple Python web application. A Dockerfile image </span><span class="glossary-icon"></span></a> might look like this:</p>
+<p>While pre-built images satisfy many needs, real applications require custom images. A <strong>Dockerfile image <span class="glossary-icon"></span></strong> is a text file containing instructions for building an image, where each instruction creates a new layer.</p>
+<p>Consider a simple Python web application. A Dockerfile image <span class="glossary-icon"></span> might look like this:</p>
 <div class="codehilite"><pre><span></span><code><span class="c"># Base image - using slim variant to reduce size</span>
 <span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
 
@@ -782,21 +834,21 @@ docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </spa
 </code></pre></div>
 <p>Each instruction has a specific purpose. <code>FROM</code> establishes the base image. <code>WORKDIR</code> sets the working directory. The sequence of copying <code>requirements.txt</code> before the rest of the code leverages <strong>layer caching</strong>: if your application code changes but your dependencies do not, Docker reuses the layer where dependencies are installed, significantly speeding up rebuilds. <code>USER</code> switches to a non-privileged user, a critical security best practice. <code>CMD</code> defines the command that runs when the container starts.</p>
 <p><img alt="Docker Image Layers and Caching" src="images/dockerfile_layers.png"/>
-<em>Figure 6: Dockerfile image </span><span class="glossary-icon"></span></a> Image Layers - Each instruction creates a new layer; cached layers speed up rebuilds when only code changes</em></p>
-<p>Building the image from this Dockerfile image </span><span class="glossary-icon"></span></a> is done with the <code>docker build</code> command:</p>
+<em>Figure 6: Dockerfile image <span class="glossary-icon"></span> Image Layers - Each instruction creates a new layer; cached layers speed up rebuilds when only code changes</em></p>
+<p>Building the image from this Dockerfile image <span class="glossary-icon"></span> is done with the <code>docker build</code> command:</p>
 <div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>myapp:1.0<span class="w"> </span>.
 </code></pre></div>
-<p>This reads the Dockerfile image </span><span class="glossary-icon"></span></a> in the current directory (<code>.</code>) and builds an image tagged as <code>myapp:1.0</code>.</p>
+<p>This reads the Dockerfile image <span class="glossary-icon"></span> in the current directory (<code>.</code>) and builds an image tagged as <code>myapp:1.0</code>.</p>
 <h3 id="56-section-5-checkpoint">5.6. Section 5 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
 <li><strong>Images</strong>: Read-only layers containing the app.</li>
 <li><strong>Containers</strong>: Runnable instances of images.</li>
-<li><strong>Dockerfile image </span><span class="glossary-icon"></span></a></strong>: Recipe for building images.</li>
+<li><strong>Dockerfile image <span class="glossary-icon"></span></strong>: Recipe for building images.</li>
 </ul>
 <p><strong>Reflection</strong>:</p>
 <ul>
-<li>Why do we put the dependencies copy/install step <em>before</em> copying the app code in a Dockerfile image </span><span class="glossary-icon"></span></a>?</li>
+<li>Why do we put the dependencies copy/install step <em>before</em> copying the app code in a Dockerfile image <span class="glossary-icon"></span>?</li>
 <li>What happens to data inside a Docker container when you delete it?</li>
 </ul>
 <p><strong>Resources</strong>:</p>
@@ -817,12 +869,12 @@ podman<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </sp
 podman<span class="w"> </span>ps
 </code></pre></div>
 <h3 id="62-pods">6.2. Pods</h3>
-<p>Podman allows you to manage "Pods" locally. A Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> is a group of containers that share the same network namespace (localhost), a concept directly compatible with Kubernetes orchestration platform </span><span class="glossary-icon"></span></a>.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> that exposes port 8888</span>
+<p>Podman allows you to manage "Pods" locally. A Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span> is a group of containers that share the same network namespace (localhost), a concept directly compatible with Kubernetes orchestration platform <span class="glossary-icon"></span>.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a Pod orchestration platform </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> that exposes port 8888
 podman<span class="w"> </span>pod<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>my-pod<span class="w"> </span>-p<span class="w"> </span><span class="m">8888</span>:80
 
-<span class="c1"># Run a container INSIDE the Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a></span>
-<span class="c1"># Note: We don't map ports here; the Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> holds the port mapping</span>
+<span class="c1"># Run a container INSIDE the Pod orchestration platform </span><span class="glossary-icon"></span> <span class="glossary-icon"></span>
+<span class="c1"># Note: We don't map ports here; the Pod orchestration platform </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> holds the port mapping
 podman<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--pod<span class="w"> </span>my-pod<span class="w"> </span>--name<span class="w"> </span>member1<span class="w"> </span>nginx
 </code></pre></div>
 <h3 id="63-section-6-checkpoint">6.3. Section 6 Checkpoint</h3>
@@ -835,41 +887,41 @@ podman<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </sp
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>How can a rootless container bind to port 80 (privileged port)?</li>
-<li>Why is Podman considered "Kubernetes orchestration platform </span><span class="glossary-icon"></span></a>-friendly"?</li>
+<li>Why is Podman considered "Kubernetes orchestration platform <span class="glossary-icon"></span>-friendly"?</li>
 </ul>
 <p><strong>Resources</strong>:</p>
 <ul>
 <li><a href="https://podman.io/get-started">Podman: Getting Started</a></li>
 </ul>
 <hr/>
-<h2 id="7-future-preview-kubernetes-and-kubectl">7. Future Preview: Kubernetes orchestration platform </span><span class="glossary-icon"></span></a> and <code>kubectl</code></h2>
-<p>While Docker and Podman manage containers on a <em>single host</em>, modern cloud infrastructure requires managing containers across <em>hundreds of hosts</em>. This is the role of <strong>Kubernetes orchestration platform </span><span class="glossary-icon"></span></a> (K8s)</strong>, the Container Orchestrator.</p>
-<p>In this course, we will not install Kubernetes orchestration platform </span><span class="glossary-icon"></span></a> manually (the "Hard Way"). Instead, in <strong>Week 11</strong>, we will use <strong>OpenStack platform </span><span class="glossary-icon"></span></a> Magnum</strong> to deploy a production-ready Kubernetes orchestration platform </span><span class="glossary-icon"></span></a> cluster instantly. However, the tool you use to talk to that cluster—<code>kubectl</code>—is universal.</p>
+<h2 id="7-future-preview-kubernetes-and-kubectl">7. Future Preview: Kubernetes orchestration platform <span class="glossary-icon"></span> and <code>kubectl</code></h2>
+<p>While Docker and Podman manage containers on a <em>single host</em>, modern cloud infrastructure requires managing containers across <em>hundreds of hosts</em>. This is the role of <strong>Kubernetes orchestration platform <span class="glossary-icon"></span> (K8s)</strong>, the Container Orchestrator.</p>
+<p>In this course, we will not install Kubernetes orchestration platform <span class="glossary-icon"></span> manually (the "Hard Way"). Instead, in <strong>Week 11</strong>, we will use <strong>OpenStack platform <span class="glossary-icon"></span> Magnum</strong> to deploy a production-ready Kubernetes orchestration platform <span class="glossary-icon"></span> cluster instantly. However, the tool you use to talk to that cluster—<code>kubectl</code>—is universal.</p>
 <h3 id="71-the-core-concepts-the-k8s-dictionary">7.1. The Core Concepts (The K8s Dictionary)</h3>
 <p>Understanding K8s requires learning a new vocabulary, distinct from Docker's:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">Docker Concept</th>
-<th style="text-align: left;">Kubernetes orchestration platform </span><span class="glossary-icon"></span></a> Concept</th>
+<th style="text-align: left;">Kubernetes orchestration platform <span class="glossary-icon"></span> Concept</th>
 <th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>Container</strong></td>
-<td style="text-align: left;"><strong>Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a></strong></td>
-<td style="text-align: left;">A Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> is the smallest unit. It usually contains one container (like Nginx), but can contain helpers ("Sidecars"). Pods share a network namespace (localhost).</td>
+<td style="text-align: left;"><strong>Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span></strong></td>
+<td style="text-align: left;">A Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span> is the smallest unit. It usually contains one container (like Nginx), but can contain helpers ("Sidecars"). Pods share a network namespace (localhost).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Volme</strong></td>
 <td style="text-align: left;"><strong>Volume / PVC</strong></td>
-<td style="text-align: left;">Storage that persists beyond the Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a>'s lifecycle.</td>
+<td style="text-align: left;">Storage that persists beyond the Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span>'s lifecycle.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Network</strong></td>
 <td style="text-align: left;"><strong>Service</strong></td>
-<td style="text-align: left;">A stable IP address/DNS name that sits in front of dynamic Pods. If a Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> dies and is replaced, the Service IP stays the same.</td>
+<td style="text-align: left;">A stable IP address/DNS name that sits in front of dynamic Pods. If a Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span> dies and is replaced, the Service IP stays the same.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Compose File</strong></td>
@@ -880,10 +932,10 @@ podman<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </sp
 </table>
 <!-- table-break -->
 <h3 id="72-the-control-loop-desired-state">7.2. The Control Loop (Desired State)</h3>
-<p>Kubernetes orchestration platform </span><span class="glossary-icon"></span></a> is <strong>Declarative</strong>. Unlike Docker, where you say "Run this container" (Imperative), in Kubernetes orchestration platform </span><span class="glossary-icon"></span></a> you say "I want 3 Nginx Pods" (Declarative). The <strong>Control Plane</strong> constantly checks:
+<p>Kubernetes orchestration platform <span class="glossary-icon"></span> is <strong>Declarative</strong>. Unlike Docker, where you say "Run this container" (Imperative), in Kubernetes orchestration platform <span class="glossary-icon"></span> you say "I want 3 Nginx Pods" (Declarative). The <strong>Control Plane</strong> constantly checks:
 1.  What is the User's Desired State? (3 Pods)
 2.  What is the Actual State? (2 Pods running)
-3.  <strong>Action</strong>: Create 1 more Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> to match the desire.</p>
+3.  <strong>Action</strong>: Create 1 more Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span> to match the desire.</p>
 <h3 id="73-the-kubectl-cli">7.3. The <code>kubectl</code> CLI</h3>
 <p>Start familiarizing yourself with these commands now. You will use them extensively in Week 11.</p>
 <p><strong>1. Creating Resources (Imperative)</strong></p>
@@ -892,9 +944,9 @@ kubectl<span class="w"> </span>run<span class="w"> </span>nginx-pod<span class="
 </code></pre></div>
 <blockquote>
 <p><strong>Command Analysis</strong>:
-*   <code>run</code>: Tells Kubernetes orchestration platform </span><span class="glossary-icon"></span></a> to create a single Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a>.
+*   <code>run</code>: Tells Kubernetes orchestration platform <span class="glossary-icon"></span> to create a single Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span>.
 *   <code>--image=nginx</code>: Uses the standard Nginx image from Docker Hub.
-*   <code>--restart=Never</code>: Ensures this is treated as a simple Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a>, not a managed service that automatically restarts.</p>
+*   <code>--restart=Never</code>: Ensures this is treated as a simple Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span>, not a managed service that automatically restarts.</p>
 </blockquote>
 <p><strong>2. Inspecting Resources</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># List all Pods (Docker equivalent: docker ps)</span>
@@ -906,7 +958,7 @@ kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w
 <blockquote>
 <p><strong>Command Analysis</strong>:
 *   <code>get</code>: The universal command to list resources. You can use it for <code>pods</code>, <code>nodes</code>, <code>services</code>, etc.
-*   <code>describe</code>: Shows the "Event Log" for a specific resource. If your Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> creation failed (e.g., "ImagePullBackOff"), this command tells you <em>why</em>.</p>
+*   <code>describe</code>: Shows the "Event Log" for a specific resource. If your Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span> creation failed (e.g., "ImagePullBackOff"), this command tells you <em>why</em>.</p>
 </blockquote>
 <p><strong>3. Scaling Applications</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Create a Deployment (Manages Replicas)</span>
@@ -917,9 +969,9 @@ kubectl<span class="w"> </span>scale<span class="w"> </span>deployment<span clas
 </code></pre></div>
 <blockquote>
 <p><strong>Command Analysis</strong>:
-*   <code>create deployment</code>: Instead of a single Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a>, we create a Controller that <em>manages</em> Pods.
+*   <code>create deployment</code>: Instead of a single Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span>, we create a Controller that <em>manages</em> Pods.
 *   <code>--replicas=3</code>: We tell K8s we want 3 identical copies. K8s will start 3 Pods immediately.
-*   <code>scale</code>: Changing this number updates the "Desired State." Kubernetes orchestration platform </span><span class="glossary-icon"></span></a> effectively "forks" 7 more copies to reach 10.</p>
+*   <code>scale</code>: Changing this number updates the "Desired State." Kubernetes orchestration platform <span class="glossary-icon"></span> effectively "forks" 7 more copies to reach 10.</p>
 </blockquote>
 <p><strong>4. Exposing to the World</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Create a Service to give the Pods a stable IP</span>
@@ -933,19 +985,19 @@ kubectl<span class="w"> </span>expose<span class="w"> </span>deployment<span cla
 </blockquote>
 <h3 id="74-self-correction-checklist">7.4. Self-Correction Checklist</h3>
 <ul>
-<li><strong>Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> vs Container</strong>: A Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> wraps a container. K8s manages Pods, not containers directly.</li>
-<li><strong>Service</strong>: Without a Service, you cannot reliably talk to a Pod orchestration platform </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> because its IP changes every time it restarts.</li>
-<li><strong>Magnum</strong>: We will use OpenStack platform </span><span class="glossary-icon"></span></a> Magnum to build the cluster, so we don't have to manage the Master Nodes ourselves.</li>
+<li><strong>Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span> vs Container</strong>: A Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span> wraps a container. K8s manages Pods, not containers directly.</li>
+<li><strong>Service</strong>: Without a Service, you cannot reliably talk to a Pod orchestration platform <span class="glossary-icon"></span> <span class="glossary-icon"></span> because its IP changes every time it restarts.</li>
+<li><strong>Magnum</strong>: We will use OpenStack platform <span class="glossary-icon"></span> Magnum to build the cluster, so we don't have to manage the Master Nodes ourselves.</li>
 </ul>
 <hr/>
 <h2 id="8-summary">8. Summary</h2>
-<p>This week you have bridged the gap between traditional virtualization and modern "Cloud Native" approaches. We have distinguished between <strong>Virtual Machines</strong>, which provide strong hardware-level isolation for complete operating systems, and <strong>LXC </span><span class="glossary-icon"></span></a> Containers</strong>, which provide lightweight efficiency for long-running Linux infrastructure. Additionally, we explored <strong>Application Containers</strong> (Docker/Podman), which provide ephemeral, portable packages for shipping software.</p>
-<p>In enterprise environments, these technologies often coexist in a layered architecture: a physical cluster runs Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> VE; Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a> hosts Virtual Machines and LXC </span><span class="glossary-icon"></span></a> containers; and inside those VMs, Docker runs the individual microservices. This "nesting" leverages the strengths of each technology: the management and security of virtualization with the agility of application containers.</p>
+<p>This week you have bridged the gap between traditional virtualization and modern "Cloud Native" approaches. We have distinguished between <strong>Virtual Machines</strong>, which provide strong hardware-level isolation for complete operating systems, and <strong>LXC <span class="glossary-icon"></span> Containers</strong>, which provide lightweight efficiency for long-running Linux infrastructure. Additionally, we explored <strong>Application Containers</strong> (Docker/Podman), which provide ephemeral, portable packages for shipping software.</p>
+<p>In enterprise environments, these technologies often coexist in a layered architecture: a physical cluster runs Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE; Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> hosts Virtual Machines and LXC <span class="glossary-icon"></span> containers; and inside those VMs, Docker runs the individual microservices. This "nesting" leverages the strengths of each technology: the management and security of virtualization with the agility of application containers.</p>
 <hr/>
 <h2 id="9-additional-resources">9. Additional Resources</h2>
 <h3 id="91-video-tutorials">9.1. Video Tutorials</h3>
 <ul>
-<li><strong>LXC </span><span class="glossary-icon"></span></a> in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a></strong>: <a href="https://www.youtube.com/watch?v=xKhWRMj5Nrc">YouTube</a> (Compares to VMs, setup guide).</li>
+<li><strong>LXC <span class="glossary-icon"></span> in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span></strong>: <a href="https://www.youtube.com/watch?v=xKhWRMj5Nrc">YouTube</a> (Compares to VMs, setup guide).</li>
 <li><strong>Docker vs. Podman</strong>: <a href="https://www.youtube.com/watch?v=lc7p4ANkQ3U">YouTube</a> (Explains differences, cloud use cases).</li>
 <li><strong>Docker Basics</strong>: <a href="https://www.youtube.com/watch?v=rOt3f0G4Sr4">YouTube</a> (Beginner guide to Docker containers).</li>
 </ul>
@@ -960,7 +1012,7 @@ kubectl<span class="w"> </span>expose<span class="w"> </span>deployment<span cla
 <h2 id="10-lab-exercises">10. Lab Exercises</h2>
 <ul>
 <li><a href="Week_5_Lab_1_LXC_System_Containers.html">Lab 1: System Containers (LXC)</a><ul>
-<li><strong>Goal</strong>: Introduction to System Containers on Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span></a> and LXC </span><span class="glossary-icon"></span></a> </span><span class="glossary-icon"></span></a>.</li>
+<li><strong>Goal</strong>: Introduction to System Containers on Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span>.</li>
 </ul>
 </li>
 <li><a href="Week_5_Lab_2_Docker_and_Orchestration.html">Lab 2: Docker Ecosystem &amp; Orchestration</a><ul>

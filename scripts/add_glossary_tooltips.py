@@ -43,7 +43,7 @@ GLOSSARY_TERMS = {
     "NFS": "Network File System - Remote file access protocol",
     "iSCSI": "Internet SCSI - Block storage over IP networks",
     "Ceph": "Distributed storage system for object/block/file storage",
-    "Container": "Lightweight package with app code and dependencies",
+    "Container": "Lightweight package with application code and dependencies",
     "Docker": "Platform for developing and running containers",
     "Docker Image": "Template for creating Docker containers",
     "Dockerfile": "Instructions for building a Docker image",
@@ -152,32 +152,47 @@ def add_glossary_tooltips(html_content, output_path):
         # Sort terms by length (longest first) to match longer phrases first
         sorted_terms = sorted(GLOSSARY_TERMS.items(), key=lambda x: len(x[0]), reverse=True)
         
-        # Process text content - ONLY in paragraphs, NOT in headings
-        for element in article.find_all(text=True):
-            if element.parent.name in ['script', 'style', 'code', 'pre', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-                continue  # Skip these elements
-            
-            text = str(element)
-            modified_text = text
-            
-            for term, definition in sorted_terms:
-                # Use word boundary regex to match whole words/phrases
-                pattern = r'\b' + re.escape(term) + r'\b'
-                matches = list(re.finditer(pattern, modified_text, re.IGNORECASE))
+        # Identify "Objective" or "Intro" section elements
+        elements_to_process = []
+        
+        # Iterate through direct children of article
+        for child in article.children:
+            # Stop if we hit a major section header or horizontal rule
+            if child.name in ['h2', 'hr']:
+                break
                 
-                # Replace matches (in reverse to maintain positions)
-                for match in reversed(matches):
-                    matched_text = match.group()
-                    # Create tooltip HTML without icon
-                    tooltip_html = f'<a href="glossary.html#{term.replace(" ", "-")}" class="glossary-term">{matched_text}<span class="glossary-tooltip">{definition}</span></a>'
+            # If it's a content block (p, blockquote, ul, ol, div), add to list
+            if child.name in ['p', 'blockquote', 'ul', 'ol', 'div']:
+                elements_to_process.append(child)
+                
+        # Process text content in selected elements
+        for parent_element in elements_to_process:
+            for element in parent_element.find_all(text=True):
+                # Skip headings/scripts/style/etc
+                if element.parent.name in ['script', 'style', 'code', 'pre', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+                    continue  # Skip these elements
+                
+                text = str(element)
+                modified_text = text
+                
+                for term, definition in sorted_terms:
+                    # Use word boundary regex to match whole words/phrases
+                    pattern = r'\b' + re.escape(term) + r'\b'
+                    matches = list(re.finditer(pattern, modified_text, re.IGNORECASE))
                     
-                    # Replace in text
-                    modified_text = modified_text[:match.start()] + tooltip_html + modified_text[match.end():]
-            
-            # Replace the text node with modified HTML if changed
-            if modified_text != text:
-                new_soup = BeautifulSoup(modified_text, 'html.parser')
-                element.replace_with(new_soup)
+                    # Replace matches (in reverse to maintain positions)
+                    for match in reversed(matches):
+                        matched_text = match.group()
+                        # Create clean tooltip HTML without icons
+                        tooltip_html = f'<a href="glossary.html#{term.replace(" ", "-")}" class="glossary-term">{matched_text}<span class="glossary-tooltip">{definition}</span></a>'
+                        
+                        # Replace in text
+                        modified_text = modified_text[:match.start()] + tooltip_html + modified_text[match.end():]
+                
+                # Replace the text node with modified HTML if changed
+                if modified_text != text:
+                    new_soup = BeautifulSoup(modified_text, 'html.parser')
+                    element.replace_with(new_soup)
     
     return str(soup)
 
@@ -204,7 +219,7 @@ def process_html_files(base_dir):
                     f.write(modified_content)
                 
                 processed += 1
-                print(f"  ✅ Added glossary tooltips")
+                print(f"  ✅ Added glossary tooltips (Header section only)")
     
     return processed
 

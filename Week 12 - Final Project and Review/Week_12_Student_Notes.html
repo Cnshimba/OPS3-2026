@@ -884,7 +884,59 @@
 
         /* Literal.String.Symbol */
     </style>
-</head>
+<style>
+        /* Glossary Tooltip Styles */
+        .glossary-term {
+            color: #c9984a;
+            border-bottom: 2px dotted #c9984a;
+            cursor: help;
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .glossary-term:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+        
+        .glossary-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            z-index: 1000;
+            background: linear-gradient(135deg, #1e3a5f 0%, #142a46 100%);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #c9984a;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 300px;
+            width: max-content;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glossary-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #c9984a transparent transparent transparent;
+        }
+        
+        .glossary-term:hover .glossary-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        </style></head>
 <body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
 <!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)] transition-colors duration-300">
@@ -945,7 +997,7 @@
 <h2 id="1-project-overview">1. Project Overview</h2>
 <p>You have been hired as a Cloud Architect for "VaalTech Solutions". They require a fully functional
                 Private Cloud environment to host their new intranet application.
-                You must use <strong>OpenStack platform </span><span class="glossary-icon"></span></a> (MicroStack)</strong> to build the infrastructure, secure it, and deploy
+                You must use <strong>OpenStack platform <span class="glossary-icon"></span> (MicroStack)</strong> to build the infrastructure, secure it, and deploy
                 a web application automatically.</p>
 <p><img alt="Three Tier Architecture" src="images/three_tier_architecture.png"/><br/>
 <em>Figure 1: Conceptual Architecture - The goal is to build a standard 3-Tier Web Application
@@ -963,7 +1015,7 @@
 </li>
 <li><strong>Storage</strong>:
                     <ul>
-<li>Create a Cinder platform </span><span class="glossary-icon"></span></a> block storage service </span><span class="glossary-icon"></span></a> Volume <code>db-data</code> (2GB).</li>
+<li>Create a Cinder platform <span class="glossary-icon"></span> block storage service <span class="glossary-icon"></span> Volume <code>db-data</code> (2GB).</li>
 </ul>
 </li>
 <li><strong>Security</strong>:
@@ -984,7 +1036,7 @@
 <li><strong>Frontend Server</strong>:
                     <ul>
 <li>Name: <code>web-01</code>.</li>
-<li>Flavor - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> template - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> image for quick deployment </span><span class="glossary-icon"></span></a> defining vCPUs, RAM, and disk </span><span class="glossary-icon"></span></a>: <code>m1.tiny</code>.</li>
+<li>Flavor - A software-based emulation of a physical computer <span class="glossary-icon"></span> template - A software-based emulation of a physical computer <span class="glossary-icon"></span> image for quick deployment <span class="glossary-icon"></span> defining vCPUs, RAM, and disk <span class="glossary-icon"></span>: <code>m1.tiny</code>.</li>
 <li>Image: <code>ubuntu</code> (or <code>cirros</code>).</li>
 <li><strong>Automation</strong>: Must use <code>User-Data</code> (Cloud-Init) to install a web
                             server (<code>apache2</code> or <code>nginx</code>) and create a customized
@@ -998,7 +1050,7 @@
                     <ul>
 <li>Name: <code>db-01</code>.</li>
 <li>Network: Attached to <code>corporate-net</code>. No Floating IP.</li>
-<li>Storage: Attach the <code>db-data</code> Cinder platform </span><span class="glossary-icon"></span></a> block storage service </span><span class="glossary-icon"></span></a> Volume.</li>
+<li>Storage: Attach the <code>db-data</code> Cinder platform <span class="glossary-icon"></span> block storage service <span class="glossary-icon"></span> Volume.</li>
 <li>Security: <code>backend-sg</code>.</li>
 </ul>
 </li>
@@ -1032,8 +1084,8 @@
 <ol>
 <li><strong>Golden Image Strategy</strong>:
                     <ul>
-<li>Create a <strong>Snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a></strong> of your configured <code>web-01</code> server.</li>
-<li>Launch a new instance <code>web-02</code> from this Snapshot - A software-based emulation of a physical computer </span><span class="glossary-icon"></span></a> state for rollback </span><span class="glossary-icon"></span></a>.</li>
+<li>Create a <strong>Snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span></strong> of your configured <code>web-01</code> server.</li>
+<li>Launch a new instance <code>web-02</code> from this Snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span>.</li>
 <li><strong>Requirement</strong>: <code>web-02</code> must serve the website
                             <em>immediately</em> upon boot without needing <code>User-Data</code>.</li>
 <li><strong>Theory</strong>: In your report, explain why this "Golden Image" approach boots
@@ -1045,7 +1097,7 @@
 <h2 id="3-submission-guidelines">3. Submission Guidelines</h2>
 <p>You must submit a <strong>PDF Report</strong> containing:</p>
 <ol>
-<li><strong>Topology Diagram</strong>: A screenshot of the Horizon platform </span><span class="glossary-icon"></span></a> web dashboard </span><span class="glossary-icon"></span></a> Network Topology tab.</li>
+<li><strong>Topology Diagram</strong>: A screenshot of the Horizon platform <span class="glossary-icon"></span> web dashboard <span class="glossary-icon"></span> Network Topology tab.</li>
 <li><strong>Automation Script</strong>: The Cloud-Init (<code>user-data</code>) file you used.</li>
 <li><strong>Proof of Life</strong>: A screenshot of the web browser showing your index page.</li>
 <li><strong>CLI Verification</strong>: Output of <code>openstack server list</code> and
