@@ -135,7 +135,24 @@ window.sendMessage = async function () {
 
         if (data.error) {
             console.error("Gemini Error:", data.error);
-            addMessage(`❌ API Error: ${data.error.message}`, false);
+            let errorMsg = `❌ API Error: ${data.error.message}`;
+
+            // Auto-diagnose: List available models
+            try {
+                addMessage("⚠️ API Error encountered. Checking available models...", false);
+                const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_API_KEY}`);
+                const listData = await listResp.json();
+
+                if (listData.models) {
+                    const modelNames = listData.models.map(m => m.name.replace('models/', '')).join(', ');
+                    errorMsg += `<br><br><strong>Available Models:</strong> ${modelNames}`;
+                    // Try to auto-fix? No, valid to just inform for now.
+                }
+            } catch (e) {
+                errorMsg += "<br>(Could not list models)";
+            }
+
+            addMessage(errorMsg, false);
         } else if (data.candidates && data.candidates[0].content) {
             const aiText = data.candidates[0].content.parts[0].text;
             addMessage(renderMarkdown(aiText), false);
