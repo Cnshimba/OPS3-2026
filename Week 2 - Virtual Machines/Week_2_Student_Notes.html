@@ -9,365 +9,365 @@
 <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <script>
-    tailwind.config = {
-        darkMode: 'class',
-        theme: {
-            extend: {
-                fontFamily: {
-                    sans: ['Inter', 'sans-serif'],
-                },
-                colors: {
-                    primary: '#002F6E', // VUT Midnight Blue
-                    secondary: '#6c757d',
-                    codebg: 'var(--bg-code)', 
-                },
-                typography: {
-                    DEFAULT: {
-                        css: {
-                            maxWidth: '100%',
-                            fontFamily: 'Inter, sans-serif',
-                            color: 'var(--text-body)',
-                            '--tw-prose-body': 'var(--text-body)',
-                            '--tw-prose-headings': 'var(--text-headings)',
-                            '--tw-prose-links': 'var(--text-link)',
-                            '--tw-prose-bold': 'var(--text-headings)',
-                            '--tw-prose-counters': 'var(--text-body)',
-                            '--tw-prose-bullets': 'var(--text-body)',
-                            '--tw-prose-hr': 'var(--border-color)',
-                            '--tw-prose-quotes': 'var(--text-body)',
-                            '--tw-prose-code': 'var(--text-code)',
-                            '--tw-prose-pre-code': 'var(--text-pre)',
-                            '--tw-prose-pre-bg': 'var(--bg-pre)',
-                            
-                            // Image Sizing Control
-                            img: {
-                                display: 'block',
-                                marginLeft: 'auto',
-                                marginRight: 'auto',
-                                maxHeight: '500px',
-                                width: 'auto',
-                                height: 'auto',
-                                borderRadius: '0.5rem',
-                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                            },
-                            // Links
-                            a: {
-                                color: 'var(--text-link)',
-                                '&:hover': { opacity: '0.8' },
-                            },
-                            // Inline Code
-                            code: {
-                                color: 'var(--text-code)',
-                                backgroundColor: 'var(--bg-code)',
-                                padding: '0.2rem 0.4rem',
-                                borderRadius: '0.25rem',
-                                fontWeight: '600',
-                                border: '1px solid var(--border-code)',
-                            },
-                            'code::before': { content: '""' },
-                            'code::after': { content: '""' },
-                            // Code Blocks (Pre)
-                            pre: {
-                                backgroundColor: 'var(--bg-pre) !important',
-                                color: 'var(--text-pre)',
-                                padding: '1rem',
-                                borderRadius: '0.5rem',
-                                border: '1px solid var(--border-pre)',
-                            },
-                            // Notes/Alerts (Blockquotes)
-                            blockquote: {
-                                borderLeftColor: '#002F6E',
-                                borderLeftWidth: '4px',
-                                backgroundColor: 'var(--bg-note)',
-                                padding: '1rem',
-                                color: 'var(--text-body)',
-                                fontSize: '0.9rem', // Smaller text for notes
-                                fontStyle: 'italic',
-                                quotes: 'none',
-                                borderRadius: '0 0.5rem 0.5rem 0',
-                            },
-                            'blockquote p:first-of-type::before': { content: 'none' },
-                            'blockquote p:last-of-type::after': { content: 'none' },
-                            // Tables (Restored from First Attempt)
-                            table: {
-                                width: '100%',
-                                marginTop: '2em',
-                                marginBottom: '2em',
-                                borderCollapse: 'collapse',
-                                fontSize: '0.9rem',
-                            },
-                            'thead th': {
-                                backgroundColor: '#f3f4f6', 
-                                color: '#1f2937', 
-                                fontWeight: '600',
-                                padding: '0.75rem',
-                                borderBottom: '2px solid #e5e7eb',
-                                textAlign: 'left',
-                            },
-                            'tbody td': {
-                                padding: '0.75rem',
-                                borderBottom: '1px solid #e5e7eb',
-                                verticalAlign: 'top',
-                            },
-                            'tbody tr:hover': {
-                                backgroundColor: '#f9fafb',
-                            },
-                            
-                            // Task Lists (Checkboxes)
-                            '.task-list-item': {
-                                listStyleType: 'none',
-                            },
-                            '.task-list-item input[type="checkbox"]': {
-                                marginRight: '0.5rem',
-                            },
+ tailwind.config = {
+ darkMode: 'class',
+ theme: {
+ extend: {
+ fontFamily: {
+ sans: ['Inter', 'sans-serif'],
+ },
+ colors: {
+ primary: '#002F6E', // VUT Midnight Blue
+ secondary: '#6c757d',
+ codebg: 'var(--bg-code)', 
+ },
+ typography: {
+ DEFAULT: {
+ css: {
+ maxWidth: '100%',
+ fontFamily: 'Inter, sans-serif',
+ color: 'var(--text-body)',
+ '--tw-prose-body': 'var(--text-body)',
+ '--tw-prose-headings': 'var(--text-headings)',
+ '--tw-prose-links': 'var(--text-link)',
+ '--tw-prose-bold': 'var(--text-headings)',
+ '--tw-prose-counters': 'var(--text-body)',
+ '--tw-prose-bullets': 'var(--text-body)',
+ '--tw-prose-hr': 'var(--border-color)',
+ '--tw-prose-quotes': 'var(--text-body)',
+ '--tw-prose-code': 'var(--text-code)',
+ '--tw-prose-pre-code': 'var(--text-pre)',
+ '--tw-prose-pre-bg': 'var(--bg-pre)',
+ 
+ // Image Sizing Control
+ img: {
+ display: 'block',
+ marginLeft: 'auto',
+ marginRight: 'auto',
+ maxHeight: '500px',
+ width: 'auto',
+ height: 'auto',
+ borderRadius: '0.5rem',
+ boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+ },
+ // Links
+ a: {
+ color: 'var(--text-link)',
+ '&:hover': { opacity: '0.8' },
+ },
+ // Inline Code
+ code: {
+ color: 'var(--text-code)',
+ backgroundColor: 'var(--bg-code)',
+ padding: '0.2rem 0.4rem',
+ borderRadius: '0.25rem',
+ fontWeight: '600',
+ border: '1px solid var(--border-code)',
+ },
+ 'code::before': { content: '""' },
+ 'code::after': { content: '""' },
+ // Code Blocks (Pre)
+ pre: {
+ backgroundColor: 'var(--bg-pre) !important',
+ color: 'var(--text-pre)',
+ padding: '1rem',
+ borderRadius: '0.5rem',
+ border: '1px solid var(--border-pre)',
+ },
+ // Notes/Alerts (Blockquotes)
+ blockquote: {
+ borderLeftColor: '#002F6E',
+ borderLeftWidth: '4px',
+ backgroundColor: 'var(--bg-note)',
+ padding: '1rem',
+ color: 'var(--text-body)',
+ fontSize: '0.9rem', // Smaller text for notes
+ fontStyle: 'italic',
+ quotes: 'none',
+ borderRadius: '0 0.5rem 0.5rem 0',
+ },
+ 'blockquote p:first-of-type::before': { content: 'none' },
+ 'blockquote p:last-of-type::after': { content: 'none' },
+ // Tables (Restored from First Attempt)
+ table: {
+ width: '100%',
+ marginTop: '2em',
+ marginBottom: '2em',
+ borderCollapse: 'collapse',
+ fontSize: '0.9rem',
+ },
+ 'thead th': {
+ backgroundColor: '#f3f4f6', 
+ color: '#1f2937', 
+ fontWeight: '600',
+ padding: '0.75rem',
+ borderBottom: '2px solid #e5e7eb',
+ textAlign: 'left',
+ },
+ 'tbody td': {
+ padding: '0.75rem',
+ borderBottom: '1px solid #e5e7eb',
+ verticalAlign: 'top',
+ },
+ 'tbody tr:hover': {
+ backgroundColor: '#f9fafb',
+ },
+ 
+ // Task Lists (Checkboxes)
+ '.task-list-item': {
+ listStyleType: 'none',
+ },
+ '.task-list-item input[type="checkbox"]': {
+ marginRight: '0.5rem',
+ },
 
-                            thead: {
-                                borderBottomWidth: '2px',
-                                borderBottomColor: 'var(--border-color)',
-                            },
-                            'thead th': {
-                                color: 'var(--text-headings)',
-                                fontWeight: '600',
-                                verticalAlign: 'bottom',
-                                paddingRight: '0.75em',
-                                paddingBottom: '0.75em',
-                                paddingLeft: '0.75em',
-                                textAlign: 'left',
-                            },
-                            'tbody tr': {
-                                borderBottomWidth: '1px',
-                                borderBottomColor: 'var(--border-color)',
-                            },
-                            'tbody tr:last-child': {
-                                borderBottomWidth: '0',
-                            },
-                            'tbody td': {
-                                verticalAlign: 'top',
-                                padding: '0.75em',
-                            },
-                        },
-                    },
-                },
-            },
-        },
-    }
+ thead: {
+ borderBottomWidth: '2px',
+ borderBottomColor: 'var(--border-color)',
+ },
+ 'thead th': {
+ color: 'var(--text-headings)',
+ fontWeight: '600',
+ verticalAlign: 'bottom',
+ paddingRight: '0.75em',
+ paddingBottom: '0.75em',
+ paddingLeft: '0.75em',
+ textAlign: 'left',
+ },
+ 'tbody tr': {
+ borderBottomWidth: '1px',
+ borderBottomColor: 'var(--border-color)',
+ },
+ 'tbody tr:last-child': {
+ borderBottomWidth: '0',
+ },
+ 'tbody td': {
+ verticalAlign: 'top',
+ padding: '0.75em',
+ },
+ },
+ },
+ },
+ },
+ },
+ }
 </script>
 <script>
-    // Theme Toggle Logic
-    document.addEventListener('DOMContentLoaded', () => {
-        const themeToggle = document.getElementById('theme-toggle');
-        const html = document.documentElement;
-        const iconSun = document.getElementById('icon-sun');
-        const iconMoon = document.getElementById('icon-moon');
+ // Theme Toggle Logic
+ document.addEventListener('DOMContentLoaded', () => {
+ const themeToggle = document.getElementById('theme-toggle');
+ const html = document.documentElement;
+ const iconSun = document.getElementById('icon-sun');
+ const iconMoon = document.getElementById('icon-moon');
 
-        // Check local storage or preference
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            html.classList.add('dark');
-            iconSun.classList.remove('hidden');
-            iconMoon.classList.add('hidden');
-        } else {
-            html.classList.remove('dark');
-            iconSun.classList.add('hidden');
-            iconMoon.classList.remove('hidden');
-        }
+ // Check local storage or preference
+ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+ html.classList.add('dark');
+ iconSun.classList.remove('hidden');
+ iconMoon.classList.add('hidden');
+ } else {
+ html.classList.remove('dark');
+ iconSun.classList.add('hidden');
+ iconMoon.classList.remove('hidden');
+ }
 
-        themeToggle.addEventListener('click', () => {
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.theme = 'light';
-                iconSun.classList.add('hidden');
-                iconMoon.classList.remove('hidden');
-            } else {
-                html.classList.add('dark');
-                localStorage.theme = 'dark';
-                iconSun.classList.remove('hidden');
-                iconMoon.classList.add('hidden');
-            }
-        });
-    });
+ themeToggle.addEventListener('click', () => {
+ if (html.classList.contains('dark')) {
+ html.classList.remove('dark');
+ localStorage.theme = 'light';
+ iconSun.classList.add('hidden');
+ iconMoon.classList.remove('hidden');
+ } else {
+ html.classList.add('dark');
+ localStorage.theme = 'dark';
+ iconSun.classList.remove('hidden');
+ iconMoon.classList.add('hidden');
+ }
+ });
+ });
 </script>
 <style>
-    /* CSS Variables for Theming */
-    :root {
-        --bg-body: #f8fafc;
-        --bg-card: #ffffff;
-        --text-body: #334155;
-        --text-headings: #0f172a;
-        --text-link: #002F6E; /* VUT Blue */
-        --border-color: #e2e8f0;
-        
-        /* Code - Light Mode */
-        --bg-code: #f1f5f9;
-        --text-code: #d63384;
-        --border-code: #e2e8f0;
-        
-        /* Pre - Light Mode (Github Light) */
-        --bg-pre: #f6f8fa;
-        --text-pre: #24292e;
-        --border-pre: #d0d7de;
-        
-        /* Note - Light Mode */
-        --bg-note: #f8f9fa;
-        
-        /* Scrollbar */
-        --scroll-track: #f1f1f1;
-        --scroll-thumb: #888;
-    }
+ /* CSS Variables for Theming */
+ :root {
+ --bg-body: #f8fafc;
+ --bg-card: #ffffff;
+ --text-body: #334155;
+ --text-headings: #0f172a;
+ --text-link: #002F6E; /* VUT Blue */
+ --border-color: #e2e8f0;
+ 
+ /* Code - Light Mode */
+ --bg-code: #f1f5f9;
+ --text-code: #d63384;
+ --border-code: #e2e8f0;
+ 
+ /* Pre - Light Mode (Github Light) */
+ --bg-pre: #f6f8fa;
+ --text-pre: #24292e;
+ --border-pre: #d0d7de;
+ 
+ /* Note - Light Mode */
+ --bg-note: #f8f9fa;
+ 
+ /* Scrollbar */
+ --scroll-track: #f1f1f1;
+ --scroll-thumb: #888;
+ }
 
-    html.dark {
-        --bg-body: #0f172a;
-        --bg-card: #1e293b;
-        --text-body: #cbd5e1;
-        --text-headings: #f8fafc;
-        --text-link: #60a5fa; /* Blue 400 - Brighter for better contrast */
-        --border-color: #334155;
-        
-        /* Code - Dark Mode */
-        --bg-code: #334155;
-        --text-code: #f472b6; 
-        --border-code: #475569;
-        
-        /* Pre - Dark Mode (Monokai) */
-        --bg-pre: #272822;
-        --text-pre: #f8f8f2;
-        --border-pre: #464539;
-        
-        /* Note - Dark Mode */
-        --bg-note: #1e293b;
-        --scroll-track: #1e293b;
-        --scroll-thumb: #475569;
-    }
+ html.dark {
+ --bg-body: #0f172a;
+ --bg-card: #1e293b;
+ --text-body: #cbd5e1;
+ --text-headings: #f8fafc;
+ --text-link: #60a5fa; /* Blue 400 - Brighter for better contrast */
+ --border-color: #334155;
+ 
+ /* Code - Dark Mode */
+ --bg-code: #334155;
+ --text-code: #f472b6; 
+ --border-code: #475569;
+ 
+ /* Pre - Dark Mode (Monokai) */
+ --bg-pre: #272822;
+ --text-pre: #f8f8f2;
+ --border-pre: #464539;
+ 
+ /* Note - Dark Mode */
+ --bg-note: #1e293b;
+ --scroll-track: #1e293b;
+ --scroll-thumb: #475569;
+ }
 
-    /* Transition */
-    body, article, code, pre, blockquote {
-        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    }
+ /* Transition */
+ body, article, code, pre, blockquote {
+ transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+ }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--scroll-track); }
-    ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #555; }
-    
-    /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
-    .codehilite .hll { background-color: #ffffcc }
-    .codehilite .c { color: #6a737d; font-style: italic } /* Comment */
-    .codehilite .err { color: #f05240; background-color: #ffeaea } /* Error */
-    .codehilite .k { color: #d73a49; font-weight: bold } /* Keyword */
-    .codehilite .o { color: #d73a49; font-weight: bold } /* Operator */
-    .codehilite .cm { color: #6a737d; font-style: italic } /* Comment.Multiline */
-    .codehilite .cp { color: #6a737d; font-weight: bold } /* Comment.Preproc */
-    .codehilite .c1 { color: #6a737d; font-style: italic } /* Comment.Single */
-    .codehilite .cs { color: #6a737d; font-style: italic } /* Comment.Special */
-    .codehilite .gd { color: #d73a49; background-color: #fdd } /* Generic.Deleted */
-    .codehilite .ge { font-style: italic } /* Generic.Emph */
-    .codehilite .gr { color: #aa0000 } /* Generic.Error */
-    .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
-    .codehilite .gi { color: #00a000; background-color: #dfd } /* Generic.Inserted */
-    .codehilite .go { color: #888888 } /* Generic.Output */
-    .codehilite .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
-    .codehilite .gs { font-weight: bold } /* Generic.Strong */
-    .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
-    .codehilite .gt { color: #aa0000 } /* Generic.Traceback */
-    .codehilite .kc { color: #005cc5; font-weight: bold } /* Keyword.Constant */
-    .codehilite .kd { color: #d73a49; font-weight: bold } /* Keyword.Declaration */
-    .codehilite .kn { color: #d73a49; font-weight: bold } /* Keyword.Namespace */
-    .codehilite .kp { color: #d73a49 } /* Keyword.Pseudo */
-    .codehilite .kr { color: #d73a49; font-weight: bold } /* Keyword.Reserved */
-    .codehilite .kt { color: #445588; font-weight: bold } /* Keyword.Type */
-    .codehilite .m { color: #005cc5 } /* Literal.Number */
-    .codehilite .s { color: #032f62 } /* Literal.String */
-    .codehilite .na { color: #22863a } /* Name.Attribute */
-    .codehilite .nb { color: #005cc5 } /* Name.Builtin */
-    .codehilite .nc { color: #6f42c1; font-weight: bold } /* Name.Class */
-    .codehilite .no { color: #005cc5 } /* Name.Constant */
-    .codehilite .nd { color: #6f42c1; font-weight: bold } /* Name.Decorator */
-    .codehilite .ni { color: #800080 } /* Name.Entity */
-    .codehilite .ne { color: #990000; font-weight: bold } /* Name.Exception */
-    .codehilite .nf { color: #6f42c1; font-weight: bold } /* Name.Function */
-    .codehilite .nl { color: #990000; font-weight: bold } /* Name.Label */
-    .codehilite .nn { color: #6f42c1; font-weight: bold } /* Name.Namespace */
-    .codehilite .nt { color: #22863a } /* Name.Tag */
-    .codehilite .nv { color: #e36209 } /* Name.Variable */
-    .codehilite .ow { color: #d73a49; font-weight: bold } /* Operator.Word */
-    .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
-    .codehilite .mf { color: #005cc5 } /* Literal.Number.Float */
-    .codehilite .mh { color: #005cc5 } /* Literal.Number.Hex */
-    .codehilite .mi { color: #005cc5 } /* Literal.Number.Integer */
-    .codehilite .mo { color: #005cc5 } /* Literal.Number.Oct */
-    .codehilite .sb { color: #032f62 } /* Literal.String.Backtick */
-    .codehilite .sc { color: #032f62 } /* Literal.String.Char */
-    .codehilite .sd { color: #032f62 } /* Literal.String.Doc */
-    .codehilite .s2 { color: #032f62 } /* Literal.String.Double */
-    .codehilite .se { color: #005cc5 } /* Literal.String.Escape */
-    .codehilite .sh { color: #032f62 } /* Literal.String.Heredoc */
-    .codehilite .si { color: #032f62 } /* Literal.String.Interpol */
-    .codehilite .sx { color: #032f62 } /* Literal.String.Other */
-    .codehilite .sr { color: #032f62 } /* Literal.String.Regex */
-    .codehilite .s1 { color: #032f62 } /* Literal.String.Single */
-    .codehilite .ss { color: #005cc5 } /* Literal.String.Symbol */
-    .codehilite .bp { color: #005cc5 } /* Name.Builtin.Pseudo */
-    .codehilite .vc { color: #e36209 } /* Name.Variable.Class */
-    .codehilite .vg { color: #e36209 } /* Name.Variable.Global */
-    .codehilite .vi { color: #e36209 } /* Name.Variable.Instance */
-    .codehilite .il { color: #005cc5 } /* Literal.Number.Integer.Long */
-    
-    /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
-    html.dark .codehilite .hll { background-color: #49483e }
-    html.dark .codehilite .c { color: #75715e } /* Comment */
-    html.dark .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
-    html.dark .codehilite .k { color: #66d9ef; font-weight: normal } /* Keyword */
-    html.dark .codehilite .l { color: #ae81ff } /* Literal */
-    html.dark .codehilite .n { color: #f8f8f2 } /* Name */
-    html.dark .codehilite .o { color: #f92672; font-weight: normal } /* Operator */
-    html.dark .codehilite .p { color: #f8f8f2 } /* Punctuation */
-    html.dark .codehilite .cm { color: #75715e } /* Comment.Multiline */
-    html.dark .codehilite .cp { color: #75715e } /* Comment.Preproc */
-    html.dark .codehilite .c1 { color: #75715e } /* Comment.Single */
-    html.dark .codehilite .cs { color: #75715e } /* Comment.Special */
-    html.dark .codehilite .ge { font-style: italic } /* Generic.Emph */
-    html.dark .codehilite .gs { font-weight: bold } /* Generic.Strong */
-    html.dark .codehilite .kc { color: #66d9ef; font-weight: normal } /* Keyword.Constant */
-    html.dark .codehilite .kd { color: #66d9ef; font-weight: normal  } /* Keyword.Declaration */
-    html.dark .codehilite .kn { color: #f92672; font-weight: normal  } /* Keyword.Namespace */
-    html.dark .codehilite .kp { color: #66d9ef; font-weight: normal  } /* Keyword.Pseudo */
-    html.dark .codehilite .kr { color: #66d9ef; font-weight: normal  } /* Keyword.Reserved */
-    html.dark .codehilite .kt { color: #66d9ef; font-weight: normal  } /* Keyword.Type */
-    html.dark .codehilite .ld { color: #e6db74 } /* Literal.Date */
-    html.dark .codehilite .m { color: #ae81ff } /* Literal.Number */
-    html.dark .codehilite .s { color: #e6db74 } /* Literal.String */
-    html.dark .codehilite .na { color: #a6e22e } /* Name.Attribute */
-    html.dark .codehilite .nb { color: #f8f8f2 } /* Name.Builtin */
-    html.dark .codehilite .nc { color: #a6e22e } /* Name.Class */
-    html.dark .codehilite .no { color: #66d9ef } /* Name.Constant */
-    html.dark .codehilite .nd { color: #a6e22e } /* Name.Decorator */
-    html.dark .codehilite .ni { color: #f8f8f2 } /* Name.Entity */
-    html.dark .codehilite .ne { color: #a6e22e } /* Name.Exception */
-    html.dark .codehilite .nf { color: #a6e22e } /* Name.Function */
-    html.dark .codehilite .nl { color: #f8f8f2 } /* Name.Label */
-    html.dark .codehilite .nn { color: #f8f8f2 } /* Name.Namespace */
-    html.dark .codehilite .nx { color: #a6e22e } /* Name.Other */
-    html.dark .codehilite .py { color: #f8f8f2 } /* Name.Property */
-    html.dark .codehilite .nt { color: #f92672 } /* Name.Tag */
-    html.dark .codehilite .nv { color: #f8f8f2 } /* Name.Variable */
-    html.dark .codehilite .ow { color: #f92672; font-weight: normal  } /* Operator.Word */
-    html.dark .codehilite .w { color: #f8f8f2 } /* Text.Whitespace */
-    html.dark .codehilite .mb { color: #ae81ff } /* Literal.Number.Bin */
-    html.dark .codehilite .mf { color: #ae81ff } /* Literal.Number.Float */
-    html.dark .codehilite .mh { color: #ae81ff } /* Literal.Number.Hex */
-    html.dark .codehilite .mi { color: #ae81ff } /* Literal.Number.Integer */
-    html.dark .codehilite .mo { color: #ae81ff } /* Literal.Number.Oct */
-    html.dark .codehilite .sb { color: #e6db74 } /* Literal.String.Backtick */
-    html.dark .codehilite .sc { color: #e6db74 } /* Literal.String.Char */
-    html.dark .codehilite .sd { color: #e6db74 } /* Literal.String.Doc */
-    html.dark .codehilite .s2 { color: #e6db74 } /* Literal.String.Double */
-    html.dark .codehilite .se { color: #ae81ff } /* Literal.String.Escape */
-    html.dark .codehilite .sh { color: #e6db74 } /* Literal.String.Heredoc */
-    html.dark .codehilite .si { color: #e6db74 } /* Literal.String.Interpol */
-    html.dark .codehilite .sx { color: #e6db74 } /* Literal.String.Other */
-    html.dark .codehilite .sr { color: #e6db74 } /* Literal.String.Regex */
-    html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
-    html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
+ /* Custom Scrollbar */
+ ::-webkit-scrollbar { width: 8px; height: 8px; }
+ ::-webkit-scrollbar-track { background: var(--scroll-track); }
+ ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
+ ::-webkit-scrollbar-thumb:hover { background: #555; }
+ 
+ /* Syntax Highlighting - LIGHT MODE (GitHub Light Inspired) */
+ .codehilite .hll { background-color: #ffffcc }
+ .codehilite .c { color: #6a737d; font-style: italic } /* Comment */
+ .codehilite .err { color: #f05240; background-color: #ffeaea } /* Error */
+ .codehilite .k { color: #d73a49; font-weight: bold } /* Keyword */
+ .codehilite .o { color: #d73a49; font-weight: bold } /* Operator */
+ .codehilite .cm { color: #6a737d; font-style: italic } /* Comment.Multiline */
+ .codehilite .cp { color: #6a737d; font-weight: bold } /* Comment.Preproc */
+ .codehilite .c1 { color: #6a737d; font-style: italic } /* Comment.Single */
+ .codehilite .cs { color: #6a737d; font-style: italic } /* Comment.Special */
+ .codehilite .gd { color: #d73a49; background-color: #fdd } /* Generic.Deleted */
+ .codehilite .ge { font-style: italic } /* Generic.Emph */
+ .codehilite .gr { color: #aa0000 } /* Generic.Error */
+ .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+ .codehilite .gi { color: #00a000; background-color: #dfd } /* Generic.Inserted */
+ .codehilite .go { color: #888888 } /* Generic.Output */
+ .codehilite .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+ .codehilite .gs { font-weight: bold } /* Generic.Strong */
+ .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+ .codehilite .gt { color: #aa0000 } /* Generic.Traceback */
+ .codehilite .kc { color: #005cc5; font-weight: bold } /* Keyword.Constant */
+ .codehilite .kd { color: #d73a49; font-weight: bold } /* Keyword.Declaration */
+ .codehilite .kn { color: #d73a49; font-weight: bold } /* Keyword.Namespace */
+ .codehilite .kp { color: #d73a49 } /* Keyword.Pseudo */
+ .codehilite .kr { color: #d73a49; font-weight: bold } /* Keyword.Reserved */
+ .codehilite .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+ .codehilite .m { color: #005cc5 } /* Literal.Number */
+ .codehilite .s { color: #032f62 } /* Literal.String */
+ .codehilite .na { color: #22863a } /* Name.Attribute */
+ .codehilite .nb { color: #005cc5 } /* Name.Builtin */
+ .codehilite .nc { color: #6f42c1; font-weight: bold } /* Name.Class */
+ .codehilite .no { color: #005cc5 } /* Name.Constant */
+ .codehilite .nd { color: #6f42c1; font-weight: bold } /* Name.Decorator */
+ .codehilite .ni { color: #800080 } /* Name.Entity */
+ .codehilite .ne { color: #990000; font-weight: bold } /* Name.Exception */
+ .codehilite .nf { color: #6f42c1; font-weight: bold } /* Name.Function */
+ .codehilite .nl { color: #990000; font-weight: bold } /* Name.Label */
+ .codehilite .nn { color: #6f42c1; font-weight: bold } /* Name.Namespace */
+ .codehilite .nt { color: #22863a } /* Name.Tag */
+ .codehilite .nv { color: #e36209 } /* Name.Variable */
+ .codehilite .ow { color: #d73a49; font-weight: bold } /* Operator.Word */
+ .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+ .codehilite .mf { color: #005cc5 } /* Literal.Number.Float */
+ .codehilite .mh { color: #005cc5 } /* Literal.Number.Hex */
+ .codehilite .mi { color: #005cc5 } /* Literal.Number.Integer */
+ .codehilite .mo { color: #005cc5 } /* Literal.Number.Oct */
+ .codehilite .sb { color: #032f62 } /* Literal.String.Backtick */
+ .codehilite .sc { color: #032f62 } /* Literal.String.Char */
+ .codehilite .sd { color: #032f62 } /* Literal.String.Doc */
+ .codehilite .s2 { color: #032f62 } /* Literal.String.Double */
+ .codehilite .se { color: #005cc5 } /* Literal.String.Escape */
+ .codehilite .sh { color: #032f62 } /* Literal.String.Heredoc */
+ .codehilite .si { color: #032f62 } /* Literal.String.Interpol */
+ .codehilite .sx { color: #032f62 } /* Literal.String.Other */
+ .codehilite .sr { color: #032f62 } /* Literal.String.Regex */
+ .codehilite .s1 { color: #032f62 } /* Literal.String.Single */
+ .codehilite .ss { color: #005cc5 } /* Literal.String.Symbol */
+ .codehilite .bp { color: #005cc5 } /* Name.Builtin.Pseudo */
+ .codehilite .vc { color: #e36209 } /* Name.Variable.Class */
+ .codehilite .vg { color: #e36209 } /* Name.Variable.Global */
+ .codehilite .vi { color: #e36209 } /* Name.Variable.Instance */
+ .codehilite .il { color: #005cc5 } /* Literal.Number.Integer.Long */
+ 
+ /* Syntax Highlighting - DARK MODE (Monokai Overrides) */
+ html.dark .codehilite .hll { background-color: #49483e }
+ html.dark .codehilite .c { color: #75715e } /* Comment */
+ html.dark .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
+ html.dark .codehilite .k { color: #66d9ef; font-weight: normal } /* Keyword */
+ html.dark .codehilite .l { color: #ae81ff } /* Literal */
+ html.dark .codehilite .n { color: #f8f8f2 } /* Name */
+ html.dark .codehilite .o { color: #f92672; font-weight: normal } /* Operator */
+ html.dark .codehilite .p { color: #f8f8f2 } /* Punctuation */
+ html.dark .codehilite .cm { color: #75715e } /* Comment.Multiline */
+ html.dark .codehilite .cp { color: #75715e } /* Comment.Preproc */
+ html.dark .codehilite .c1 { color: #75715e } /* Comment.Single */
+ html.dark .codehilite .cs { color: #75715e } /* Comment.Special */
+ html.dark .codehilite .ge { font-style: italic } /* Generic.Emph */
+ html.dark .codehilite .gs { font-weight: bold } /* Generic.Strong */
+ html.dark .codehilite .kc { color: #66d9ef; font-weight: normal } /* Keyword.Constant */
+ html.dark .codehilite .kd { color: #66d9ef; font-weight: normal } /* Keyword.Declaration */
+ html.dark .codehilite .kn { color: #f92672; font-weight: normal } /* Keyword.Namespace */
+ html.dark .codehilite .kp { color: #66d9ef; font-weight: normal } /* Keyword.Pseudo */
+ html.dark .codehilite .kr { color: #66d9ef; font-weight: normal } /* Keyword.Reserved */
+ html.dark .codehilite .kt { color: #66d9ef; font-weight: normal } /* Keyword.Type */
+ html.dark .codehilite .ld { color: #e6db74 } /* Literal.Date */
+ html.dark .codehilite .m { color: #ae81ff } /* Literal.Number */
+ html.dark .codehilite .s { color: #e6db74 } /* Literal.String */
+ html.dark .codehilite .na { color: #a6e22e } /* Name.Attribute */
+ html.dark .codehilite .nb { color: #f8f8f2 } /* Name.Builtin */
+ html.dark .codehilite .nc { color: #a6e22e } /* Name.Class */
+ html.dark .codehilite .no { color: #66d9ef } /* Name.Constant */
+ html.dark .codehilite .nd { color: #a6e22e } /* Name.Decorator */
+ html.dark .codehilite .ni { color: #f8f8f2 } /* Name.Entity */
+ html.dark .codehilite .ne { color: #a6e22e } /* Name.Exception */
+ html.dark .codehilite .nf { color: #a6e22e } /* Name.Function */
+ html.dark .codehilite .nl { color: #f8f8f2 } /* Name.Label */
+ html.dark .codehilite .nn { color: #f8f8f2 } /* Name.Namespace */
+ html.dark .codehilite .nx { color: #a6e22e } /* Name.Other */
+ html.dark .codehilite .py { color: #f8f8f2 } /* Name.Property */
+ html.dark .codehilite .nt { color: #f92672 } /* Name.Tag */
+ html.dark .codehilite .nv { color: #f8f8f2 } /* Name.Variable */
+ html.dark .codehilite .ow { color: #f92672; font-weight: normal } /* Operator.Word */
+ html.dark .codehilite .w { color: #f8f8f2 } /* Text.Whitespace */
+ html.dark .codehilite .mb { color: #ae81ff } /* Literal.Number.Bin */
+ html.dark .codehilite .mf { color: #ae81ff } /* Literal.Number.Float */
+ html.dark .codehilite .mh { color: #ae81ff } /* Literal.Number.Hex */
+ html.dark .codehilite .mi { color: #ae81ff } /* Literal.Number.Integer */
+ html.dark .codehilite .mo { color: #ae81ff } /* Literal.Number.Oct */
+ html.dark .codehilite .sb { color: #e6db74 } /* Literal.String.Backtick */
+ html.dark .codehilite .sc { color: #e6db74 } /* Literal.String.Char */
+ html.dark .codehilite .sd { color: #e6db74 } /* Literal.String.Doc */
+ html.dark .codehilite .s2 { color: #e6db74 } /* Literal.String.Double */
+ html.dark .codehilite .se { color: #ae81ff } /* Literal.String.Escape */
+ html.dark .codehilite .sh { color: #e6db74 } /* Literal.String.Heredoc */
+ html.dark .codehilite .si { color: #e6db74 } /* Literal.String.Interpol */
+ html.dark .codehilite .sx { color: #e6db74 } /* Literal.String.Other */
+ html.dark .codehilite .sr { color: #e6db74 } /* Literal.String.Regex */
+ html.dark .codehilite .s1 { color: #e6db74 } /* Literal.String.Single */
+ html.dark .codehilite .ss { color: #ae81ff } /* Literal.String.Symbol */
 </style>
 <style>
         /* Glossary Tooltip Styles */
@@ -429,15 +429,15 @@
 <a class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline" href="../index.html">
 <img alt="VUT Logo" class="h-12 w-auto object-contain" src="../ops3_logo.png"/>
 <div class="flex flex-col">
-<span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3</span>
-<span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation &amp; Cloud Technologies</span>
-<span class="font-bold text-lg tracking-tight sm:hidden">OPS3</span>
-</div>
+<span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Operating Systems 3
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Virtualisation &amp; Cloud Technologies
+<span class="font-bold text-lg tracking-tight sm:hidden">OPS3
+</span></span></span></div>
 </a>
 <div class="flex items-center space-x-6">
 <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline" href="../index.html">
-                Course Home
-            </a>
+ Course Home
+ </a>
 <!-- Theme Toggle Button -->
 <button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" id="theme-toggle">
 <!-- Sun Icon -->
@@ -458,8 +458,8 @@
 </div>
 <div class="flex-1 flex flex-col items-center justify-center p-6">
 <h1 class="text-2xl font-bold text-primary dark:text-sky-400 m-0 text-center">Virtual Machines (VMs)</h1>
-<span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes</span>
-</div>
+<span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
+</span></div>
 </div>
 <p><strong>Course</strong>: Computer Systems Engineering
 <strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
@@ -468,129 +468,129 @@
 <blockquote>
 <p>[!TIP]
 <strong>How to succeed in this week</strong>:
-VMs are the building blocks of infrastructure. Pay close attention to the lifecycle operations (create, configure, <a class="glossary-term" href="glossary.html#Snapshot">snapshot<span class="glossary-tooltip">Point-in-time copy of <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer</span></a> state for rollback</span></a> - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span>, <a class="glossary-term" href="glossary.html#Clone">clone<span class="glossary-tooltip">An exact copy of a virtual machine</span></a> <span class="glossary-icon"></span>). These patterns repeat in every cloud platform you'll encounter. Practice the <a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface</span></a> commands—they're faster than the GUI.</p>
+VMs are the building blocks of infrastructure. Pay close attention to the lifecycle operations (create, configure, <a class="glossary-term" href="glossary.html#Snapshot">snapshot<span class="glossary-tooltip">Point-in-time copy of <a class="glossary-term" href="glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer</span></a> state for rollback</span></a> state for rollback - A software-based emulation of a physical computer state for rollback , <a class="glossary-term" href="glossary.html#Clone">clone<span class="glossary-tooltip">An exact copy of a virtual machine</span></a> ). These patterns repeat in every cloud platform you'll encounter. Practice the <a class="glossary-term" href="glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface</span></a> commands—they're faster than the GUI.</p>
 </blockquote>
 <hr/>
 <h2 id="welcome-to-week-2">Welcome to Week 2!</h2>
-<p>Having established the theoretical foundations of virtualization, we now shift our focus to heavy technical implementation. This week is a deep dive into the specific technologies that power modern open-source virtualization: <strong>KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span></strong> (the engine), <strong>QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span></strong> (the emulator), and <strong>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE</strong> (the platform).</p>
-<p>We will deconstruct their compositions, explore their specific functions, and master their configurations. By the end of this week, you will move beyond theory to practice, demonstrating the ability to deploy virtual machines manually using QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> commands and efficiently managing them via the Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> interface.</p>
+<p>Having established the theoretical foundations of virtualization, we now shift our focus to heavy technical implementation. This week is a deep dive into the specific technologies that power modern open-source virtualization: <strong>KVM - Type 1 hypervisor </strong> (the engine), <strong>QEMU - Type 1 hypervisor for virtualization </strong> (the emulator), and <strong>Proxmox platform combining KVM - Type 1 hypervisor and LXC VE</strong> (the platform).</p>
+<p>We will deconstruct their compositions, explore their specific functions, and master their configurations. By the end of this week, you will move beyond theory to practice, demonstrating the ability to deploy virtual machines manually using QEMU - Type 1 hypervisor for virtualization commands and efficiently managing them via the Proxmox platform combining KVM - Type 1 hypervisor and LXC interface.</p>
 <hr/>
 <h2 id="what-youll-learn-this-week">What You'll Learn This Week</h2>
 <ul>
 <li>Create and configure virtual machines</li>
 <li>Understand CPU, RAM, and disk allocation strategies</li>
 <li>Install operating systems inside VMs</li>
-<li>Utilize the QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Guest Agent</li>
-<li>Perform cloning, snapshots, and other VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> management tasks</li>
+<li>Utilize the QEMU - Type 1 hypervisor for virtualization Guest Agent</li>
+<li>Perform cloning, snapshots, and other VM - A software-based emulation of a physical computer management tasks</li>
 </ul>
 <hr/>
-<h2 id="1-deep-dive-linux-virtualization-kvm-qemu">1. Deep Dive: Linux Virtualization (KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> &amp; QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span>)</h2>
-<p>Modern open-source virtualization relies on two pillars: <strong>KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span></strong> (The Engine) and <strong>QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span></strong> (The Hardware). Understanding how they interact is the key to mastering Linux virtualization, as these form the foundation upon which many enterprise platforms are built.</p>
-<h3 id="11-the-engine-kvm-kernel-based-virtual-machine">1.1 The Engine: KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> (Kernel-based Virtual Machine)</h3>
-<p>The Kernel-based Virtual Machine (KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span>) is implemented as a loadable kernel module (<code>kvm.ko</code>) that transforms the Linux kernel into a Type-1 hypervisor. Unlike traditional hypervisors that run as a separate software layer, KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> leverages the kernel's existing process scheduling, memory management, and I/O stack. It exposes a character device, <code>/dev/kvm</code>, which user-space processes (like QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span>) interact with via <code>ioctl()</code> system calls to create and run virtual machines.</p>
-<p><strong>The VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> Execution Loop (ioctl Interface)</strong>:
-The interaction between User Mode (the QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> process) and Guest Mode (the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> code) is handled via a blocking system call known as <code>KVM_RUN</code>. The process begins with <strong>Setup</strong>, where QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> opens the <code>/dev/kvm</code> device node, issues the <code>KVM_CREATE_VM</code> call to initialize the virtual environment, and maps the necessary memory for the guest. Once initialized, the <strong>Execution</strong> phase begins: QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> invokes the <code>KVM_RUN</code> ioctl, signaling the kernel to context-switch the CPU into <strong>Guest Mode</strong> (Ring -1 or VMX Root Operation).</p>
-<p>In this mode, the vCPU - A software-based emulation of a physical computer <span class="glossary-icon"></span> <span class="glossary-icon"></span> executes instructions directly on the silicon at native speed ("Direct Execution"). This continues until the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> attempts a privileged operation, such as writing to a hardware register or accessing restricted memory, which triggers a <strong>VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> Exit</strong>. The hardware forces the CPU back into Host Kernel Mode, where KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> analyzes the exit reason. If the exit is "Lightweight" (e.g., a simple timer interrupt or paging request), KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> handles it internally and immediately re-enters the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>. However, if the exit is "Heavyweight" (requiring complex I/O like disk writes), KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> returns control to the QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> user-space process. QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> then performs the necessary <strong>Emulation</strong> for the I/O operation and calls <code>KVM_RUN</code> again to resume execution, completing the loop.</p>
+<h2 id="1-deep-dive-linux-virtualization-kvm-qemu">1. Deep Dive: Linux Virtualization (KVM - Type 1 hypervisor &amp; QEMU - Type 1 hypervisor for virtualization )</h2>
+<p>Modern open-source virtualization relies on two pillars: <strong>KVM - Type 1 hypervisor </strong> (The Engine) and <strong>QEMU - Type 1 hypervisor for virtualization </strong> (The Hardware). Understanding how they interact is the key to mastering Linux virtualization, as these form the foundation upon which many enterprise platforms are built.</p>
+<h3 id="11-the-engine-kvm-kernel-based-virtual-machine">1.1 The Engine: KVM - Type 1 hypervisor (Kernel-based Virtual Machine)</h3>
+<p>The Kernel-based Virtual Machine (KVM - Type 1 hypervisor ) is implemented as a loadable kernel module (<code>kvm.ko</code>) that transforms the Linux kernel into a Type-1 hypervisor. Unlike traditional hypervisors that run as a separate software layer, KVM - Type 1 hypervisor leverages the kernel's existing process scheduling, memory management, and I/O stack. It exposes a character device, <code>/dev/kvm</code>, which user-space processes (like QEMU - Type 1 hypervisor for virtualization ) interact with via <code>ioctl()</code> system calls to create and run virtual machines.</p>
+<p><strong>The VM - A software-based emulation of a physical computer Execution Loop (ioctl Interface)</strong>:
+The interaction between User Mode (the QEMU - Type 1 hypervisor for virtualization process) and Guest Mode (the VM - A software-based emulation of a physical computer code) is handled via a blocking system call known as <code>KVM_RUN</code>. The process begins with <strong>Setup</strong>, where QEMU - Type 1 hypervisor for virtualization opens the <code>/dev/kvm</code> device node, issues the <code>KVM_CREATE_VM</code> call to initialize the virtual environment, and maps the necessary memory for the guest. Once initialized, the <strong>Execution</strong> phase begins: QEMU - Type 1 hypervisor for virtualization invokes the <code>KVM_RUN</code> ioctl, signaling the kernel to context-switch the CPU into <strong>Guest Mode</strong> (Ring -1 or VMX Root Operation).</p>
+<p>In this mode, the vCPU - A software-based emulation of a physical computer executes instructions directly on the silicon at native speed ("Direct Execution"). This continues until the VM - A software-based emulation of a physical computer attempts a privileged operation, such as writing to a hardware register or accessing restricted memory, which triggers a <strong>VM - A software-based emulation of a physical computer Exit</strong>. The hardware forces the CPU back into Host Kernel Mode, where KVM - Type 1 hypervisor analyzes the exit reason. If the exit is "Lightweight" (e.g., a simple timer interrupt or paging request), KVM - Type 1 hypervisor handles it internally and immediately re-enters the VM - A software-based emulation of a physical computer . However, if the exit is "Heavyweight" (requiring complex I/O like disk writes), KVM - Type 1 hypervisor returns control to the QEMU - Type 1 hypervisor for virtualization user-space process. QEMU - Type 1 hypervisor for virtualization then performs the necessary <strong>Emulation</strong> for the I/O operation and calls <code>KVM_RUN</code> again to resume execution, completing the loop.</p>
 <p><img alt="KVM Execution Loop" src="images/kvm_execution_loop.png"/>
 <em>Figure 1.2: The Cycle of Direct Execution and Trapped Emulation.</em></p>
-<p><strong>Code Snippet: Creating a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> via KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> API (C)</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// simplified example of creating a VM - A software-based emulation of a physical computer </span><span class="glossary-icon"></span> in C using the KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> API
-<span class="kt">int</span><span class="w"> </span><span class="n">kvm - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="s">"/dev/kvm - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span>"<span class="p">,</span><span class="w"> </span><span class="n">O_RDWR</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">O_CLOEXEC</span><span class="p">);</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">vmfd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ioctl</span><span class="p">(</span><span class="n">kvm - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span><span class="p">,</span><span class="w"> </span><span class="n">KVM_CREATE_VM</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<p><strong>Code Snippet: Creating a VM - A software-based emulation of a physical computer via KVM - Type 1 hypervisor API (C)</strong></p>
+<div class="codehilite"><pre><span><code><span class="c1">// simplified example of creating a VM - A software-based emulation of a physical computer in C using the KVM - Type 1 hypervisor API
+<span class="kt">int<span class="w"> <span class="n">kvm - Type 1 hypervisor <span class="w"> <span class="o">=<span class="w"> <span class="n">open<span class="p">(<span class="s">"/dev/kvm - Type 1 hypervisor "<span class="p">,<span class="w"> <span class="n">O_RDWR<span class="w"> <span class="o">|<span class="w"> <span class="n">O_CLOEXEC<span class="p">);
+<span class="kt">int<span class="w"> <span class="n">vmfd<span class="w"> <span class="o">=<span class="w"> <span class="n">ioctl<span class="p">(<span class="n">kvm - Type 1 hypervisor <span class="p">,<span class="w"> <span class="n">KVM_CREATE_VM<span class="p">,<span class="w"> <span class="mi">0<span class="p">);
 
-<span class="c1">// Map 1GB of memory for the guest</span>
-<span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="n">PROT_READ</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PROT_WRITE</span><span class="p">,</span><span class="w"> </span><span class="n">MAP_PRIVATE</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<span class="k">struct</span><span class="w"> </span><span class="nc">kvm_userspace_memory_region</span><span class="w"> </span><span class="n">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">.</span><span class="n">slot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">    </span><span class="p">.</span><span class="n">guest_phys_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">    </span><span class="p">.</span><span class="n">memory_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span>
-<span class="w">    </span><span class="p">.</span><span class="n">userspace_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">mem</span><span class="p">,</span>
-<span class="p">};</span>
-<span class="n">ioctl</span><span class="p">(</span><span class="n">vmfd</span><span class="p">,</span><span class="w"> </span><span class="n">KVM_SET_USER_MEMORY_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">region</span><span class="p">);</span>
-</code></pre></div>
-<p><em>Figure 1.1: Simplified C code showing how a user-space program instructs the kernel to create a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>.</em></p>
-<h3 id="12-advanced-kvm-technologies">1.2 Advanced KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> Technologies</h3>
-<p>Modern KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> deployments leverage several advanced kernel features to maximize efficiency:</p>
+<span class="c1">// Map 1GB of memory for the guest
+<span class="kt">void<span class="w"> <span class="o">*<span class="n">mem<span class="w"> <span class="o">=<span class="w"> <span class="n">mmap<span class="p">(<span class="nb">NULL<span class="p">,<span class="w"> <span class="mi">1<span class="w"> <span class="o">&lt;&lt;<span class="w"> <span class="mi">30<span class="p">,<span class="w"> <span class="n">PROT_READ<span class="w"> <span class="o">|<span class="w"> <span class="n">PROT_WRITE<span class="p">,<span class="w"> <span class="n">MAP_PRIVATE<span class="w"> <span class="o">|<span class="w"> <span class="n">MAP_ANONYMOUS<span class="p">,<span class="w"> <span class="mi">-1<span class="p">,<span class="w"> <span class="mi">0<span class="p">);
+<span class="k">struct<span class="w"> <span class="nc">kvm_userspace_memory_region<span class="w"> <span class="n">region<span class="w"> <span class="o">=<span class="w"> <span class="p">{
+<span class="w"> <span class="p">.<span class="n">slot<span class="w"> <span class="o">=<span class="w"> <span class="mi">0<span class="p">,
+<span class="w"> <span class="p">.<span class="n">guest_phys_addr<span class="w"> <span class="o">=<span class="w"> <span class="mi">0<span class="p">,
+<span class="w"> <span class="p">.<span class="n">memory_size<span class="w"> <span class="o">=<span class="w"> <span class="mi">1<span class="w"> <span class="o">&lt;&lt;<span class="w"> <span class="mi">30<span class="p">,
+<span class="w"> <span class="p">.<span class="n">userspace_addr<span class="w"> <span class="o">=<span class="w"> <span class="p">(<span class="kt">uint64_t<span class="p">)<span class="n">mem<span class="p">,
+<span class="p">};
+<span class="n">ioctl<span class="p">(<span class="n">vmfd<span class="p">,<span class="w"> <span class="n">KVM_SET_USER_MEMORY_REGION<span class="p">,<span class="w"> <span class="o">&amp;<span class="n">region<span class="p">);
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
+<p><em>Figure 1.1: Simplified C code showing how a user-space program instructs the kernel to create a VM - A software-based emulation of a physical computer .</em></p>
+<h3 id="12-advanced-kvm-technologies">1.2 Advanced KVM - Type 1 hypervisor Technologies</h3>
+<p>Modern KVM - Type 1 hypervisor deployments leverage several advanced kernel features to maximize efficiency:</p>
 <h4 id="121-ksm-kernel-samepage-merging">1.2.1 KSM (Kernel Samepage Merging)</h4>
 <p>Kernel Samepage Merging (KSM) is a memory deduplication feature within the Linux kernel (stored in <code>mm/ksm.c</code>) that allows for high-density virtualization. KSM utilizes a background kernel thread (<code>ksmd</code>) that periodically scans designated memory regions looking for pages with identical content. When matches are found, KSM merges these pages into a single physical page marked as Copy-on-Write (CoW). This allows multiple virtual machines running similar operating systems (e.g., ten instances of Windows Server) to share the same physical RAM for common libraries and kernel data. While this significantly increases density (memory overcommitment), it comes with a slight CPU overhead due to the scanning process.</p>
-<h4 id="122-live-migration">1.2.2 Live Migration - A software-based emulation of a physical computer <span class="glossary-icon"></span> between hosts without downtime <span class="glossary-icon"></span></h4>
-<p>Live Migration - A software-based emulation of a physical computer <span class="glossary-icon"></span> between hosts without downtime <span class="glossary-icon"></span> is the capability to move a running virtual machine from one physical host to another with no perceptible downtime to the end-user. The process involves an iterative memory copy mechanism. First, the hypervisor copies the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>'s memory to the destination host while the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> continues to execute. As memory changes (becomes "dirty") during this copy, those dirty pages are tracked and re-sent in subsequent rounds. Once the remaining dirty pages are small enough to be transferred instantly, the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> is momentarily paused, the final state (CPU registers and remaining memory) is synced, and execution resumes on the new host.</p>
+<h4 id="122-live-migration">1.2.2 Live Migration - A software-based emulation of a physical computer between hosts without downtime </h4>
+<p>Live Migration - A software-based emulation of a physical computer between hosts without downtime is the capability to move a running virtual machine from one physical host to another with no perceptible downtime to the end-user. The process involves an iterative memory copy mechanism. First, the hypervisor copies the VM - A software-based emulation of a physical computer 's memory to the destination host while the VM - A software-based emulation of a physical computer continues to execute. As memory changes (becomes "dirty") during this copy, those dirty pages are tracked and re-sent in subsequent rounds. Once the remaining dirty pages are small enough to be transferred instantly, the VM - A software-based emulation of a physical computer is momentarily paused, the final state (CPU registers and remaining memory) is synced, and execution resumes on the new host.</p>
 <h4 id="123-nested-virtualization">1.2.3 Nested Virtualization</h4>
-<p>Nested Virtualization refers to the practice of running a hypervisor inside another virtual machine—effectively, a "VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> inside a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>." This is achieved by forwarding hardware virtualization extensions (Intel VT-x or AMD-V) from the host CPU through Level 0 (Host Hypervisor) to Level 1 (Guest Hypervisor). This is particularly useful for training environments, development labs, or testing cloud orchestration platforms like OpenStack platform <span class="glossary-icon"></span> without requiring dedicated bare-metal hardware for every node.</p>
+<p>Nested Virtualization refers to the practice of running a hypervisor inside another virtual machine—effectively, a "VM - A software-based emulation of a physical computer inside a VM - A software-based emulation of a physical computer ." This is achieved by forwarding hardware virtualization extensions (Intel VT-x or AMD-V) from the host CPU through Level 0 (Host Hypervisor) to Level 1 (Guest Hypervisor). This is particularly useful for training environments, development labs, or testing cloud orchestration platforms like OpenStack platform without requiring dedicated bare-metal hardware for every node.</p>
 <h4 id="124-pci-passthrough-vfio">1.2.4 PCI Passthrough (VFIO)</h4>
-<p>Standard virtualization relies on QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> to emulate hardware devices, which introduces overhead due to the translation of instructions. For workloads requiring extreme performance—such as high-frequency trading, GPU-accelerated Machine Learning, or 100Gbps networking—emulation is insufficient. The Virtual Function I/O (VFIO) framework allows the host kernel to unbind a physical PCI device from the host drivers and pass it directly to the virtual machine. This gives the guest OS <span class="glossary-icon"></span> direct, exclusive access to the hardware, resulting in near-native performance, albeit at the cost of losing that device on the host system.</p>
+<p>Standard virtualization relies on QEMU - Type 1 hypervisor for virtualization to emulate hardware devices, which introduces overhead due to the translation of instructions. For workloads requiring extreme performance—such as high-frequency trading, GPU-accelerated Machine Learning, or 100Gbps networking—emulation is insufficient. The Virtual Function I/O (VFIO) framework allows the host kernel to unbind a physical PCI device from the host drivers and pass it directly to the virtual machine. This gives the guest OS direct, exclusive access to the hardware, resulting in near-native performance, albeit at the cost of losing that device on the host system.</p>
 <h4 id="125-memory-ballooning">1.2.5 Memory Ballooning</h4>
-<p>Memory Ballooning is a dynamic memory management technique that allows the hypervisor to reclaim RAM from running virtual machines. It utilizes the <code>virtio-balloon</code> driver installed within the guest OS <span class="glossary-icon"></span>. When the host is under memory pressure, it instructs the balloon driver to "inflate," causing the guest kernel to allocate RAM to the driver. The driver then informs the host which physical pages it has claimed, allowing the host to safely repurpose those physical pages for other tasks. Conversely, when the guest needs more memory, the balloon "deflates," returning the pages to the guest's free pool.</p>
-<h3 id="13-practical-verifying-kvm-support">1.3 Practical: Verifying KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> Support</h3>
+<p>Memory Ballooning is a dynamic memory management technique that allows the hypervisor to reclaim RAM from running virtual machines. It utilizes the <code>virtio-balloon</code> driver installed within the guest OS . When the host is under memory pressure, it instructs the balloon driver to "inflate," causing the guest kernel to allocate RAM to the driver. The driver then informs the host which physical pages it has claimed, allowing the host to safely repurpose those physical pages for other tasks. Conversely, when the guest needs more memory, the balloon "deflates," returning the pages to the guest's free pool.</p>
+<h3 id="13-practical-verifying-kvm-support">1.3 Practical: Verifying KVM - Type 1 hypervisor Support</h3>
 <p>Before creating virtual machines, it is imperative to verify that the host system is correctly configured to support hardware-assisted virtualization. This involves checking the CPU capabilities, kernel module status, and user permissions.</p>
 <h4 id="131-verifying-hardware-virtualization-cpu-flags">1.3.1 Verifying Hardware Virtualization (CPU Flags)</h4>
 <p>The first step is to confirm that the physical processor supports the necessary virtualization extensions (Intel VT-x or AMD-V) and that these extensions are enabled in the system BIOS/UEFI. In Linux, we verify this by inspecting the CPU flags via the <code>lscpu</code> command. We specifically filter for "Virtualization" to see the vendor-specific technology.</p>
-<div class="codehilite"><pre><span></span><code>lscpu<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Virtualization
-<span class="c1"># Expected Output: VT-x (for Intel processors) or AMD-V (for AMD processors)</span>
-</code></pre></div>
+<div class="codehilite"><pre><span><code>lscpu<span class="w"> <span class="p">|<span class="w"> grep<span class="w"> Virtualization
+<span class="c1"># Expected Output: VT-x (for Intel processors) or AMD-V (for AMD processors)
+</span></span></span></span></span></code></span></pre></div>
 <p>If this command returns no output, it indicates that hardware virtualization is disabled at the firmware level. You must reboot the machine, enter the BIOS setup, and enable "Virtualization Technology" (often labeled as VT-x, Vanderpool, or SVM).</p>
 <h4 id="132-confirming-kernel-module-loading">1.3.2 Confirming Kernel Module Loading</h4>
-<p>Once hardware support is confirmed, we must ensure the Linux kernel has loaded the KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> modules. The KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> system consists of a core module (<code>kvm.ko</code>) and a processor-specific module (<code>kvm_intel.ko</code> or <code>kvm_amd.ko</code>). We use <code>lsmod</code> to list loaded modules:</p>
-<div class="codehilite"><pre><span></span><code>lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>kvm
-<span class="c1"># Expected Output: Should list 'kvm - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span>' and either 'kvm_intel' or 'kvm_amd'
-</code></pre></div>
+<p>Once hardware support is confirmed, we must ensure the Linux kernel has loaded the KVM - Type 1 hypervisor modules. The KVM - Type 1 hypervisor system consists of a core module (<code>kvm.ko</code>) and a processor-specific module (<code>kvm_intel.ko</code> or <code>kvm_amd.ko</code>). We use <code>lsmod</code> to list loaded modules:</p>
+<div class="codehilite"><pre><span><code>lsmod<span class="w"> <span class="p">|<span class="w"> grep<span class="w"> kvm
+<span class="c1"># Expected Output: Should list 'kvm - Type 1 hypervisor ' and either 'kvm_intel' or 'kvm_amd'
+</span></span></span></span></span></code></span></pre></div>
 <p>If these modules are not present, they can often be loaded manually using <code>modprobe kvm_intel</code> (or <code>amd</code>), provided the hardware support is active.</p>
 <h4 id="133-verifying-access-permissions">1.3.3 Verifying Access Permissions</h4>
 <p>Security is a critical aspect of virtualization. The kernel interface for creating VMs, located at <code>/dev/kvm</code>, is restricted. Standard users cannot access this device by default. To allow a user to run VMs without root privileges (a security best practice), the user must be added to the specialized <code>kvm</code> group.</p>
-<div class="codehilite"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>/dev/kvm
-<span class="c1"># Shows ownership, typically root:kvm - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> </span><span class="glossary-icon"></span> with permissions crw-rw----
-</code></pre></div>
-<p>If you encounter a "Permission Denied" error when running QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span>, verify your group membership using the <code>groups</code> command. If the <code>kvm</code> group is missing, you must add your user to it (<code>sudo usermod -aG kvm $USER</code>) and log out/in to apply the changes.</p>
+<div class="codehilite"><pre><span><code>ls<span class="w"> -l<span class="w"> /dev/kvm
+<span class="c1"># Shows ownership, typically root:kvm - Type 1 hypervisor with permissions crw-rw----
+</span></span></span></code></span></pre></div>
+<p>If you encounter a "Permission Denied" error when running QEMU - Type 1 hypervisor for virtualization , verify your group membership using the <code>groups</code> command. If the <code>kvm</code> group is missing, you must add your user to it (<code>sudo usermod -aG kvm $USER</code>) and log out/in to apply the changes.</p>
 <h4 id="134-troubleshooting-common-failures">1.3.4 Troubleshooting Common Failures</h4>
 <p>You may encounter specific error messages during this verification process.</p>
 <ul>
-<li><strong>"KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span>: disabled by BIOS"</strong>: This message explicitly states that while the CPU supports virtualization, the feature is turned off in the computer's firmware. This cannot be fixed from within the OS; a physical reboot is required to modify BIOS settings.</li>
-<li><strong>"KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> support not available"</strong>: This often occurs when trying to run KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> inside another virtual machine (e.g., a cloud VPS) that does not support Nested Virtualization. In this scenario, the "outer" hypervisor has not passed the hardware extensions through to your "inner" guest.</li>
+<li><strong>"KVM - Type 1 hypervisor : disabled by BIOS"</strong>: This message explicitly states that while the CPU supports virtualization, the feature is turned off in the computer's firmware. This cannot be fixed from within the OS; a physical reboot is required to modify BIOS settings.</li>
+<li><strong>"KVM - Type 1 hypervisor support not available"</strong>: This often occurs when trying to run KVM - Type 1 hypervisor inside another virtual machine (e.g., a cloud VPS) that does not support Nested Virtualization. In this scenario, the "outer" hypervisor has not passed the hardware extensions through to your "inner" guest.</li>
 </ul>
-<h3 id="14-the-hardware-qemu-quick-emulator">1.4 The Hardware: QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> (Quick Emulator)</h3>
-<p>While KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> enables the kernel to execute instructions, it does not provide the "Computer." It is the role of QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> to provide the motherboard, the chipset, the PCI bus, and the plugged-in devices. Without QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span>, KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> is just a fast calculator; with QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span>, it becomes a server.</p>
+<h3 id="14-the-hardware-qemu-quick-emulator">1.4 The Hardware: QEMU - Type 1 hypervisor for virtualization (Quick Emulator)</h3>
+<p>While KVM - Type 1 hypervisor enables the kernel to execute instructions, it does not provide the "Computer." It is the role of QEMU - Type 1 hypervisor for virtualization to provide the motherboard, the chipset, the PCI bus, and the plugged-in devices. Without QEMU - Type 1 hypervisor for virtualization , KVM - Type 1 hypervisor is just a fast calculator; with QEMU - Type 1 hypervisor for virtualization , it becomes a server.</p>
 <h4 id="141-the-threading-architecture">1.4.1 The Threading Architecture</h4>
-<p>To the Host Linux Kernel, a running Virtual Machine is purely a standard user-space process (<code>qemu-system-x86_64</code>) that happens to be multi-threaded. It does not look different from a web browser or database server from the scheduler's perspective. The architecture relies on three distinct thread types. The <strong>Main Loop (iothread)</strong> is a single thread running a glib-based event loop responsible for non-blocking tasks, such as handling the QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Monitor (management interface), updating VNC/SPICE displays, and dispatching general I/O events. Parallel to this are the <strong>vCPU - A software-based emulation of a physical computer <span class="glossary-icon"></span> <span class="glossary-icon"></span> Threads</strong>; for every Virtual CPU core assigned to the guest, QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> spawns a dedicated POSIX thread (<code>pthread</code>) that enters the <code>KVM_RUN</code> ioctl loop to execute guest code on the physical CPU. Finally, heavy I/O operations, such as writing large blocks to a disk image, are offloaded to a pool of <strong>Worker Threads</strong>. This asynchronous design prevents the main loop or vCPU - A software-based emulation of a physical computer <span class="glossary-icon"></span> <span class="glossary-icon"></span> threads from blocking (freezing) while waiting for slow physical storage.</p>
+<p>To the Host Linux Kernel, a running Virtual Machine is purely a standard user-space process (<code>qemu-system-x86_64</code>) that happens to be multi-threaded. It does not look different from a web browser or database server from the scheduler's perspective. The architecture relies on three distinct thread types. The <strong>Main Loop (iothread)</strong> is a single thread running a glib-based event loop responsible for non-blocking tasks, such as handling the QEMU - Type 1 hypervisor for virtualization Monitor (management interface), updating VNC/SPICE displays, and dispatching general I/O events. Parallel to this are the <strong>vCPU - A software-based emulation of a physical computer Threads</strong>; for every Virtual CPU core assigned to the guest, QEMU - Type 1 hypervisor for virtualization spawns a dedicated POSIX thread (<code>pthread</code>) that enters the <code>KVM_RUN</code> ioctl loop to execute guest code on the physical CPU. Finally, heavy I/O operations, such as writing large blocks to a disk image, are offloaded to a pool of <strong>Worker Threads</strong>. This asynchronous design prevents the main loop or vCPU - A software-based emulation of a physical computer threads from blocking (freezing) while waiting for slow physical storage.</p>
 <h4 id="142-defining-the-virtual-motherboard">1.4.2 Defining the Virtual Motherboard</h4>
-<p>When you configure a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span>, you are actually selecting arguments for the QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> binary, starting with the Machine Type.</p>
-<div class="codehilite"><pre><span></span><code>-machine<span class="w"> </span>pc-q35-8.1,accel<span class="o">=</span>kvm
-</code></pre></div>
-<p>This single line defines the fundamental architecture of the virtual motherboard. The <code>pc-q35</code> argument selects the modern Q35 chipset, which provides support for PCIe native handling and Secure Boot, as opposed to the legacy <code>i440fx</code> type which mimics a 1996-era PC. Crucially, the <code>accel=kvm</code> flag explicitly links the <em>Emulator</em> (QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span>) to the <em>Engine</em> (KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span>). Without this flag, QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> would default to "TCG" (Tiny Code Generator), a software-only mode that interprets every instruction, resulting in agonizingly slow performance.</p>
+<p>When you configure a VM - A software-based emulation of a physical computer in Proxmox platform combining KVM - Type 1 hypervisor and LXC , you are actually selecting arguments for the QEMU - Type 1 hypervisor for virtualization binary, starting with the Machine Type.</p>
+<div class="codehilite"><pre><span><code>-machine<span class="w"> pc-q35-8.1,accel<span class="o">=kvm
+</span></span></code></span></pre></div>
+<p>This single line defines the fundamental architecture of the virtual motherboard. The <code>pc-q35</code> argument selects the modern Q35 chipset, which provides support for PCIe native handling and Secure Boot, as opposed to the legacy <code>i440fx</code> type which mimics a 1996-era PC. Crucially, the <code>accel=kvm</code> flag explicitly links the <em>Emulator</em> (QEMU - Type 1 hypervisor for virtualization ) to the <em>Engine</em> (KVM - Type 1 hypervisor ). Without this flag, QEMU - Type 1 hypervisor for virtualization would default to "TCG" (Tiny Code Generator), a software-only mode that interprets every instruction, resulting in agonizingly slow performance.</p>
 <h4 id="143-constructing-the-processor-topology">1.4.3 Constructing the Processor Topology</h4>
-<p>QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> allows granular control over how the CPU is presented to the guest OS <span class="glossary-icon"></span>. This is critical for licensing (some software is licensed per-socket) and performance (aligning with physical NUMA nodes).</p>
-<div class="codehilite"><pre><span></span><code>-smp<span class="w"> </span><span class="m">4</span>,sockets<span class="o">=</span><span class="m">1</span>,cores<span class="o">=</span><span class="m">4</span>,threads<span class="o">=</span><span class="m">1</span>
-</code></pre></div>
-<p>This argument creates a topology of 1 Socket with 4 Cores. The Guest OS <span class="glossary-icon"></span> sees this exactly as if it were physical silicon.</p>
+<p>QEMU - Type 1 hypervisor for virtualization allows granular control over how the CPU is presented to the guest OS . This is critical for licensing (some software is licensed per-socket) and performance (aligning with physical NUMA nodes).</p>
+<div class="codehilite"><pre><span><code>-smp<span class="w"> <span class="m">4,sockets<span class="o">=<span class="m">1,cores<span class="o">=<span class="m">4,threads<span class="o">=<span class="m">1
+</span></span></span></span></span></span></span></span></code></span></pre></div>
+<p>This argument creates a topology of 1 Socket with 4 Cores. The Guest OS sees this exactly as if it were physical silicon.</p>
 <h4 id="144-device-emulation-frontend-vs-backend">1.4.4 Device Emulation: Frontend vs Backend</h4>
-<p>In QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span>, every device is composed of two parts: the <strong>Frontend</strong> (what the Guest OS <span class="glossary-icon"></span> sees) and the <strong>Backend</strong> (how the Host handles the data).</p>
-<div class="codehilite"><pre><span></span><code>-drive<span class="w"> </span><span class="nv">file</span><span class="o">=</span>/dev/pve/vm-100-disk-0,format<span class="o">=</span>raw,if<span class="o">=</span>virtio<span class="w">  </span><span class="c1"># Backend &amp; Frontend</span>
--netdev<span class="w"> </span>tap,id<span class="o">=</span>net0,ifname<span class="o">=</span>tap100i0<span class="w">                      </span><span class="c1"># Network Backend</span>
--device<span class="w"> </span>virtio-net-pci,netdev<span class="o">=</span>net0<span class="w">                       </span><span class="c1"># Network Frontend</span>
-</code></pre></div>
-<p>The <strong>Backend</strong> (defined by <code>-netdev</code> or <code>-drive</code>) refers to the host-side resource, such as connecting to a Linux Bridge (<code>tap100i0</code>) or a disk image file. <em>(Note: The concept of the Linux Bridge and how it connects VMs to the physical network will be discussed in depth in the Network Chapter in Week 4.)</em> The <strong>Frontend</strong> (defined by <code>-device</code>) creates the virtual hardware that appears on the guest's PCI bus, such as a "VirtIO Network Card". The guest OS <span class="glossary-icon"></span> writes data to the Frontend device, and QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> is responsible for passing that data to the polling Backend.</p>
+<p>In QEMU - Type 1 hypervisor for virtualization , every device is composed of two parts: the <strong>Frontend</strong> (what the Guest OS sees) and the <strong>Backend</strong> (how the Host handles the data).</p>
+<div class="codehilite"><pre><span><code>-drive<span class="w"> <span class="nv">file<span class="o">=/dev/pve/vm-100-disk-0,format<span class="o">=raw,if<span class="o">=virtio<span class="w"> <span class="c1"># Backend &amp; Frontend
+-netdev<span class="w"> tap,id<span class="o">=net0,ifname<span class="o">=tap100i0<span class="w"> <span class="c1"># Network Backend
+-device<span class="w"> virtio-net-pci,netdev<span class="o">=net0<span class="w"> <span class="c1"># Network Frontend
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
+<p>The <strong>Backend</strong> (defined by <code>-netdev</code> or <code>-drive</code>) refers to the host-side resource, such as connecting to a Linux Bridge (<code>tap100i0</code>) or a disk image file. <em>(Note: The concept of the Linux Bridge and how it connects VMs to the physical network will be discussed in depth in the Network Chapter in Week 4.)</em> The <strong>Frontend</strong> (defined by <code>-device</code>) creates the virtual hardware that appears on the guest's PCI bus, such as a "VirtIO Network Card". The guest OS writes data to the Frontend device, and QEMU - Type 1 hypervisor for virtualization is responsible for passing that data to the polling Backend.</p>
 <h3 id="15-optimization-virtio-paravirtualization">1.5 Optimization: VirtIO (Paravirtualization)</h3>
-<p>Emulating physical hardware (like an Intel E1000 network card) is "expensive" because every packet sent requires a context switch (VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> Exit) to write to device registers, which QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> then has to decode and simulate.</p>
+<p>Emulating physical hardware (like an Intel E1000 network card) is "expensive" because every packet sent requires a context switch (VM - A software-based emulation of a physical computer Exit) to write to device registers, which QEMU - Type 1 hypervisor for virtualization then has to decode and simulate.</p>
 <p><strong>The Solution: VirtIO</strong>
-VirtIO replaces full hardware emulation with a standardized "Paravirtualized" architecture. In this model, the Guest OS <span class="glossary-icon"></span> is aware that it is running in a virtual environment. Instead of trapping and emulating legacy hardware registers (which is slow), the Guest uses a specialized <code>virtio</code> driver to communicate directly with the Host via a shared memory interface.</p>
+VirtIO replaces full hardware emulation with a standardized "Paravirtualized" architecture. In this model, the Guest OS is aware that it is running in a virtual environment. Instead of trapping and emulating legacy hardware registers (which is slow), the Guest uses a specialized <code>virtio</code> driver to communicate directly with the Host via a shared memory interface.</p>
 <p><strong>Mechanism (The Ring Buffer)</strong>:
-The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented as a circular ring buffer in shared memory. The process begins with <strong>Shared Memory</strong>, where QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> allocates a region of RAM that is mapped into the address spaces of both the Host and the Guest. When the Guest needs to send data (e.g., a network packet), it initiates a <strong>vRing Operation</strong> by placing a descriptor pointer into the vRing buffer. Subsequently, the Guest performs a <strong>Kick Notification</strong>—a lightweight signal (via <code>ioeventfd</code>)—to alert the Host that new data is available. Finally, the Host performs <strong>Zero-Copy Processing</strong> by reading the data directly from the shared memory without needing to simulate a physical device operation, processing it, and placing a response back in the ring. This architecture bypasses the context-switching overhead inherent in traditional emulation.</p>
-<p><em>Note: This is why you must select "VirtIO" for Network and Disk in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> when performance matters.</em></p>
+The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented as a circular ring buffer in shared memory. The process begins with <strong>Shared Memory</strong>, where QEMU - Type 1 hypervisor for virtualization allocates a region of RAM that is mapped into the address spaces of both the Host and the Guest. When the Guest needs to send data (e.g., a network packet), it initiates a <strong>vRing Operation</strong> by placing a descriptor pointer into the vRing buffer. Subsequently, the Guest performs a <strong>Kick Notification</strong>—a lightweight signal (via <code>ioeventfd</code>)—to alert the Host that new data is available. Finally, the Host performs <strong>Zero-Copy Processing</strong> by reading the data directly from the shared memory without needing to simulate a physical device operation, processing it, and placing a response back in the ring. This architecture bypasses the context-switching overhead inherent in traditional emulation.</p>
+<p><em>Note: This is why you must select "VirtIO" for Network and Disk in Proxmox platform combining KVM - Type 1 hypervisor and LXC when performance matters.</em></p>
 <h3 id="16-essential-command-reference">1.6 Essential Command Reference</h3>
-<p>While Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> handles these automatically, knowing the underlying commands is useful for debugging and "deep dive" understanding. The following commands are provided for reference and theoretical understanding; you will have the opportunity to execute them and observe their output directly in this week's Lab exercises.</p>
-<h4 id="161-disk-management-qemu-img">1.6.1 Disk Management (qemu - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span>-img)</h4>
-<p>The <code>qemu-img</code> utility handles virtual disk - A software-based emulation of a physical computer <span class="glossary-icon"></span> <span class="glossary-icon"></span> creation and manipulation. To create a new disk, the <code>create</code> subcommand is used, specifying the format (typically <code>qcow2</code> for thin provisioning) and the size. For example, <code>qemu-img create -f qcow2 mydisk.qcow2 20G</code>. To inspect an existing disk's virtual size and actual disk usage, the <code>info</code> command provides detailed metadata. Furthermore, the <code>convert</code> subcommand interacts with the format translation engine, allowing administrators to transform a generic <code>.img</code> image into a VMware <code>.vmdk</code> or QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> <code>.qcow2</code> image.</p>
-<h4 id="162-vm-execution-qemu-system-x86_64">1.6.2 VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> Execution (qemu - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span>-system-x86_64)</h4>
-<p>Launching a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> manually involves the <code>qemu-system-x86_64</code> binary. A basic invocation usually requires defining the hard drive (<code>-hda</code>), the allocated RAM (<code>-m</code>), and crucially, the KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> accelerator (<code>-enable-kvm</code> or <code>-accel kvm</code>). For booting from an installer ISO, the <code>-cdrom</code> flag is added, often accompanied by <code>-boot d</code> to prioritize the optical drive in the boot order.</p>
+<p>While Proxmox platform combining KVM - Type 1 hypervisor and LXC handles these automatically, knowing the underlying commands is useful for debugging and "deep dive" understanding. The following commands are provided for reference and theoretical understanding; you will have the opportunity to execute them and observe their output directly in this week's Lab exercises.</p>
+<h4 id="161-disk-management-qemu-img">1.6.1 Disk Management (qemu - Type 1 hypervisor for virtualization -img)</h4>
+<p>The <code>qemu-img</code> utility handles virtual disk - A software-based emulation of a physical computer creation and manipulation. To create a new disk, the <code>create</code> subcommand is used, specifying the format (typically <code>qcow2</code> for thin provisioning) and the size. For example, <code>qemu-img create -f qcow2 mydisk.qcow2 20G</code>. To inspect an existing disk's virtual size and actual disk usage, the <code>info</code> command provides detailed metadata. Furthermore, the <code>convert</code> subcommand interacts with the format translation engine, allowing administrators to transform a generic <code>.img</code> image into a VMware <code>.vmdk</code> or QEMU - Type 1 hypervisor for virtualization <code>.qcow2</code> image.</p>
+<h4 id="162-vm-execution-qemu-system-x86_64">1.6.2 VM - A software-based emulation of a physical computer Execution (qemu - Type 1 hypervisor for virtualization -system-x86_64)</h4>
+<p>Launching a VM - A software-based emulation of a physical computer manually involves the <code>qemu-system-x86_64</code> binary. A basic invocation usually requires defining the hard drive (<code>-hda</code>), the allocated RAM (<code>-m</code>), and crucially, the KVM - Type 1 hypervisor accelerator (<code>-enable-kvm</code> or <code>-accel kvm</code>). For booting from an installer ISO, the <code>-cdrom</code> flag is added, often accompanied by <code>-boot d</code> to prioritize the optical drive in the boot order.</p>
 <h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span></strong>: The kernel module that handles CPU execution (Guest Mode).</li>
-<li><strong>QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span></strong>: The process that provides virtual hardware (Disks, NICs).</li>
+<li><strong>KVM - Type 1 hypervisor </strong>: The kernel module that handles CPU execution (Guest Mode).</li>
+<li><strong>QEMU - Type 1 hypervisor for virtualization </strong>: The process that provides virtual hardware (Disks, NICs).</li>
 <li><strong>VirtIO</strong>: Special drivers that bypass emulation for speed.</li>
 </ul>
 <p><strong>Reflection</strong>:</p>
 <ul>
-<li>Why does <code>top</code> on the host show a <code>qemu-kvm</code> process using 100% CPU if the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> is busy?</li>
+<li>Why does <code>top</code> on the host show a <code>qemu-kvm</code> process using 100% CPU if the VM - A software-based emulation of a physical computer is busy?</li>
 <li>What is the difference between "Full Emulation" and "Paravirtualization"?</li>
 </ul>
 <p><strong>Resources</strong>:</p>
@@ -598,31 +598,31 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 <li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/chap-kvm_architecture">Red Hat: KVM Architecture</a></li>
 </ul>
 <hr/>
-<h2 id="2-the-platform-proxmox-ve">2. The Platform: Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE</h2>
-<p>To understand Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE, one must first understand its relationship with the underlying technologies. If KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> is the <strong>engine</strong> that powers virtualization and QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> is the <strong>chassis</strong> that constructs the virtual hardware, then Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE acts as the <strong>dashboard and control center</strong>. While it is technically possible to manage KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> directly via the command line, this approach is granular, tedious, and unscalable for production environments. Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE solves this by serving as an orchestration layer; it automates the complex <code>qemu</code> commands and kernel interactions, wrapping them in a cohesive, enterprise-grade management platform that provides visibility, clustering, and backup capabilities which the raw tools lack on their own.</p>
+<h2 id="2-the-platform-proxmox-ve">2. The Platform: Proxmox platform combining KVM - Type 1 hypervisor and LXC VE</h2>
+<p>To understand Proxmox platform combining KVM - Type 1 hypervisor and LXC VE, one must first understand its relationship with the underlying technologies. If KVM - Type 1 hypervisor is the <strong>engine</strong> that powers virtualization and QEMU - Type 1 hypervisor for virtualization is the <strong>chassis</strong> that constructs the virtual hardware, then Proxmox platform combining KVM - Type 1 hypervisor and LXC VE acts as the <strong>dashboard and control center</strong>. While it is technically possible to manage KVM - Type 1 hypervisor and QEMU - Type 1 hypervisor for virtualization directly via the command line, this approach is granular, tedious, and unscalable for production environments. Proxmox platform combining KVM - Type 1 hypervisor and LXC VE solves this by serving as an orchestration layer; it automates the complex <code>qemu</code> commands and kernel interactions, wrapping them in a cohesive, enterprise-grade management platform that provides visibility, clustering, and backup capabilities which the raw tools lack on their own.</p>
 <h3 id="21-architectural-breakdown">2.1 Architectural Breakdown</h3>
 <p><img alt="Proxmox VE Structure" src="images/proxmox_ve_layers.png"/>
-<em>Figure 2.1: Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE Architecture - Decoupling the Web Interface, API, and Core KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> Engine.</em></p>
-<p>As illustrated in <strong>Figure 2.1</strong>, Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE is designed as a layered interaction model. It is not a monolithic black box, but a collection of distinct services working in harmony.</p>
+<em>Figure 2.1: Proxmox platform combining KVM - Type 1 hypervisor and LXC VE Architecture - Decoupling the Web Interface, API, and Core KVM - Type 1 hypervisor Engine.</em></p>
+<p>As illustrated in <strong>Figure 2.1</strong>, Proxmox platform combining KVM - Type 1 hypervisor and LXC VE is designed as a layered interaction model. It is not a monolithic black box, but a collection of distinct services working in harmony.</p>
 <h4 id="211-the-management-layer-top">2.1.1 The Management Layer (Top)</h4>
 <p>This layer facilitates all human-to-machine interaction and is driven by several key daemons. The <strong>pveproxy</strong> service acts as the primary "front door," listening on port 8006 and serving the web interface via a secure HTTP server; it forwards valid requests to the internal API (pvedaemon). For console access, <strong>spiceproxy</strong> and <strong>vncterm</strong> handle the streaming of graphical display data from VMs to the browser. The <strong>pvedaemon</strong> (PVE API Daemon) is the worker background process that actually executes privileged tasks; whether triggered by the JSON-based Web GUI, the <strong>pvesh</strong> CLI tool, or an external script, all roads lead to this daemon, ensuring a consistent execution path for every command. This layer also enforces <strong>User Authentication</strong>, validating credentials against configurable realms (PAM, LDAP, AD) before granting access.</p>
 <h4 id="212-the-cluster-layer-middle">2.1.2 The Cluster Layer (Middle)</h4>
-<p>Invisible to the user, a suite of daemons maintains the cluster's brain. <strong>Corosync engine for group communication <span class="glossary-icon"></span></strong> is the foundational cluster engine, providing the reliable, low-latency communication required to maintain quorum to function <span class="glossary-icon"></span> (node consensus). Data consistency is handled by <strong>pmxcfs</strong> (Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> Cluster File System), a database-driven filesystem that instantly replicates configuration files in <code>/etc/pve</code> to all nodes. Monitoring is the responsibility of <strong>pvestatd</strong> (PVE Status Daemon), which queries the status of VMs, containers, and storage every 10 seconds to update the management layer. Finally, the High Availability (HA - System design for minimal downtime <span class="glossary-icon"></span>) stack consists of two critical components: the <strong>pve-ha - System design for minimal downtime <span class="glossary-icon"></span>-crm</strong> (Cluster Resource Manager), which decides <em>where</em> a service should run, and the <strong>pve-ha - System design for minimal downtime <span class="glossary-icon"></span>-lrm</strong> (Local Resource Manager), which watches services on the local node and reports their state to the CRM, ensuring rapid recovery if a node fails.</p>
+<p>Invisible to the user, a suite of daemons maintains the cluster's brain. <strong>Corosync engine for group communication </strong> is the foundational cluster engine, providing the reliable, low-latency communication required to maintain quorum to function (node consensus). Data consistency is handled by <strong>pmxcfs</strong> (Proxmox platform combining KVM - Type 1 hypervisor and LXC Cluster File System), a database-driven filesystem that instantly replicates configuration files in <code>/etc/pve</code> to all nodes. Monitoring is the responsibility of <strong>pvestatd</strong> (PVE Status Daemon), which queries the status of VMs, containers, and storage every 10 seconds to update the management layer. Finally, the High Availability (HA - System design for minimal downtime ) stack consists of two critical components: the <strong>pve-ha - System design for minimal downtime -crm</strong> (Cluster Resource Manager), which decides <em>where</em> a service should run, and the <strong>pve-ha - System design for minimal downtime -lrm</strong> (Local Resource Manager), which watches services on the local node and reports their state to the CRM, ensuring rapid recovery if a node fails.</p>
 <h4 id="213-the-resource-layer-bottom">2.1.3 The Resource Layer (Bottom)</h4>
-<p>This is where the actual work happens, overseen by the Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> Kernel. For full virtualization, the <strong>KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span></strong> kernel module turns the Linux kernel into a hypervisor, while <strong>QEMU - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span></strong> processes utilize this to run guest operating systems. For lightweight virtualization, <strong>LXC <span class="glossary-icon"></span></strong> (Linux Containers) enables kernel-shared environments, supported by <strong>lxcfs</strong>, a userspace filesystem that provides containers with virtualized views of <code>/proc</code> files (like CPU and memory stats) so they don't see the host's full resources. <strong>Storage Plugins</strong> simplify disk management by translating abstract requests ("create disk") into specific backend commands (e.g., <code>zfs create</code> or <code>rbd create</code>). Similarly, the <strong>pve-firewall</strong> service generates 'iptables' rules dynamically for each guest, creating isolated security zones (Interfaces/Bridges) at the kernel level.</p>
+<p>This is where the actual work happens, overseen by the Proxmox platform combining KVM - Type 1 hypervisor and LXC Kernel. For full virtualization, the <strong>KVM - Type 1 hypervisor </strong> kernel module turns the Linux kernel into a hypervisor, while <strong>QEMU - Type 1 hypervisor for virtualization </strong> processes utilize this to run guest operating systems. For lightweight virtualization, <strong>LXC </strong> (Linux Containers) enables kernel-shared environments, supported by <strong>lxcfs</strong>, a userspace filesystem that provides containers with virtualized views of <code>/proc</code> files (like CPU and memory stats) so they don't see the host's full resources. <strong>Storage Plugins</strong> simplify disk management by translating abstract requests ("create disk") into specific backend commands (e.g., <code>zfs create</code> or <code>rbd create</code>). Similarly, the <strong>pve-firewall</strong> service generates 'iptables' rules dynamically for each guest, creating isolated security zones (Interfaces/Bridges) at the kernel level.</p>
 <h3 id="22-key-components">2.2 Key Components</h3>
-<p>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE is not a single application but a suite of integrated components. Understanding how these distinct parts—the interface, storage backends, and clustering services—fit together is essential for designing a resilient infrastructure. Although the architecture is layered, the daily operational experience revolves around extensive interaction with the following key subsystems.</p>
+<p>Proxmox platform combining KVM - Type 1 hypervisor and LXC VE is not a single application but a suite of integrated components. Understanding how these distinct parts—the interface, storage backends, and clustering services—fit together is essential for designing a resilient infrastructure. Although the architecture is layered, the daily operational experience revolves around extensive interaction with the following key subsystems.</p>
 <h4 id="221-web-interface-gui">2.2.1 Web Interface (GUI)</h4>
 <p><img alt="Proxmox VE Web Interface" src="images/proxmox_gui.png"/>
-<em>Figure 2.2: The Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> VE Web Interface (GUI) providing a centralized view of the datacenter.</em></p>
+<em>Figure 2.2: The Proxmox platform combining KVM - Type 1 hypervisor and LXC VE Web Interface (GUI) providing a centralized view of the datacenter.</em></p>
 <p>The primary management point is the web-based Graphical User Interface, accessible via port <code>8006</code>. It abstracts the complexity of <code>qemu</code> command lines and configuration files, allowing administrators to create VMs, manage storage pools, and configure software-defined networking bridges with visual feedback.</p>
 <p>The interface organizes these capabilities into four distinct regions. At the top, the <strong>Header</strong> provides critical status information and action buttons for system-wide operations. To the left, the <strong>Resource Tree</strong> acts as the main navigation hub, allowing you to select specific objects such as nodes, VMs, or storage pools. The center region contains the <strong>Content Panel</strong>, which dynamically updates to show the configuration options and status for whichever object is selected in the tree. Finally, the <strong>Log Panel</strong> resides at the bottom, creating a real-time audit trail of recent tasks; administrators can double-click these entries to view detailed execution logs or abort running operations.</p>
 <h4 id="222-storage-backends">2.2.2 Storage Backends</h4>
-<p>Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> decouples compute from storage to facilitate flexibility across different environments. For standalone setups, administrators often utilize <strong>Local Storage</strong> such as LVM-Thin or ZFS, which support advanced features like instant snapshots. In clustered environments, the platform leverages <strong>Network Storage</strong> (NFS, iSCSI, or SMB) to enable VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> mobility and Live Migration - A software-based emulation of a physical computer <span class="glossary-icon"></span> between hosts without downtime <span class="glossary-icon"></span>. Furthermore, Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> supports <strong>Hyper-Converged</strong> infrastructure through native integration with Ceph, a distributed object store that runs directly on the nodes themselves, eliminating the need for expensive external SAN hardware.</p>
+<p>Proxmox platform combining KVM - Type 1 hypervisor and LXC decouples compute from storage to facilitate flexibility across different environments. For standalone setups, administrators often utilize <strong>Local Storage</strong> such as LVM-Thin or ZFS, which support advanced features like instant snapshots. In clustered environments, the platform leverages <strong>Network Storage</strong> (NFS, iSCSI, or SMB) to enable VM - A software-based emulation of a physical computer mobility and Live Migration - A software-based emulation of a physical computer between hosts without downtime . Furthermore, Proxmox platform combining KVM - Type 1 hypervisor and LXC supports <strong>Hyper-Converged</strong> infrastructure through native integration with Ceph, a distributed object store that runs directly on the nodes themselves, eliminating the need for expensive external SAN hardware.</p>
 <h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
-<li><strong>Architecture</strong>: Web UI -&gt; API -&gt; Corosync engine for group communication <span class="glossary-icon"></span>/pmxcfs -&gt; Kernel/KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span>.</li>
+<li><strong>Architecture</strong>: Web UI -&gt; API -&gt; Corosync engine for group communication /pmxcfs -&gt; Kernel/KVM - Type 1 hypervisor .</li>
 <li><strong>pmxcfs</strong>: The magic filesystem that keeps cluster configs in sync.</li>
 <li><strong>Storage</strong>: Decoupled from compute to allow flexibility (Local vs Shared).</li>
 </ul>
@@ -632,27 +632,27 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 <li>If <code>pmxcfs</code> replicates configs, what happens if you lose network connectivity between nodes?</li>
 </ul>
 <hr/>
-<h2 id="3-vm-management-features">3. VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> Management Features</h2>
+<h2 id="3-vm-management-features">3. VM - A software-based emulation of a physical computer Management Features</h2>
 <h3 id="31-cloning">3.1 Cloning</h3>
-<p>Cloning is the process of creating a new virtual machine based on the state of an existing one. Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> offers two distinct methods suited for different use cases.</p>
-<h4 id="311-full-clone">3.1.1 Full Clone <span class="glossary-icon"></span></h4>
-<p>A Full Clone <span class="glossary-icon"></span> is a complete, independent copy of the original VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>. The system performs a block-by-block copy of the source disk image to a new file. Since it duplicates all data, it consumes significant time and storage space. However, its complete isolation makes it ideal for production deployments, as the new VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> has no dependency on the original.</p>
-<h4 id="312-linked-clone">3.1.2 Linked Clone <span class="glossary-icon"></span></h4>
-<p>A Linked Clone <span class="glossary-icon"></span> uses a "Copy-on-Write" mechanism. It does not copy the original disk; instead, it creates a new delta file that references the original "Base" disk. The new VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> reads from the Base disk but writes changes to its own small delta file. This allows for near-instant creation and minimal storage usage, making it perfect for efficient testing or classroom labs. However, it introduces a critical dependency: the Base disk cannot be deleted without breaking all Linked Clones.</p>
+<p>Cloning is the process of creating a new virtual machine based on the state of an existing one. Proxmox platform combining KVM - Type 1 hypervisor and LXC offers two distinct methods suited for different use cases.</p>
+<h4 id="311-full-clone">3.1.1 Full Clone </h4>
+<p>A Full Clone is a complete, independent copy of the original VM - A software-based emulation of a physical computer . The system performs a block-by-block copy of the source disk image to a new file. Since it duplicates all data, it consumes significant time and storage space. However, its complete isolation makes it ideal for production deployments, as the new VM - A software-based emulation of a physical computer has no dependency on the original.</p>
+<h4 id="312-linked-clone">3.1.2 Linked Clone </h4>
+<p>A Linked Clone uses a "Copy-on-Write" mechanism. It does not copy the original disk; instead, it creates a new delta file that references the original "Base" disk. The new VM - A software-based emulation of a physical computer reads from the Base disk but writes changes to its own small delta file. This allows for near-instant creation and minimal storage usage, making it perfect for efficient testing or classroom labs. However, it introduces a critical dependency: the Base disk cannot be deleted without breaking all Linked Clones.</p>
 <p><img alt="Full Clone vs Linked Clone" src="images/full_vs_linked_clone.png"/>
 <em>Figure 3.1: Full Clones copy data; Linked Clones reference data.</em></p>
 <h3 id="32-snapshots">3.2 Snapshots</h3>
-<p>A snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> preserves the state of a virtual machine at a specific point in time. Unlike a backup, which is a copy of data, a snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> is a freeze-frame of the disk and memory state.</p>
+<p>A snapshot - A software-based emulation of a physical computer state for rollback preserves the state of a virtual machine at a specific point in time. Unlike a backup, which is a copy of data, a snapshot - A software-based emulation of a physical computer state for rollback is a freeze-frame of the disk and memory state.</p>
 <h4 id="321-use-cases-and-mechanism">3.2.1 Use Cases and Mechanism</h4>
-<p>Snapshots are primarily used as a safety net before performing risky operations, such as major OS upgrades or testing unstable software. If the operation fails, the administrator can perform a "Rollback" to revert the system state exactly to the moment the snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> was taken.</p>
-<h4 id="322-the-snapshot-process">3.2.2 The Snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> Process</h4>
-<p>When a snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> is taken in Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> (specifically on QCOW2 - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> for virtualization <span class="glossary-icon"></span> Copy-On-Write disk image format <span class="glossary-icon"></span> or ZFS storage), the system marks the current data blocks as read-only. Any new writes are diverted to new blocks. If basic disk snapshotting is selected, only the disk state is saved (crash-consistent). If "Include RAM" is selected, the entire contents of the running memory are dumped to disk. This allows the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> to be restored to a running state, preserving open applications and processes, though it takes longer to complete.</p>
+<p>Snapshots are primarily used as a safety net before performing risky operations, such as major OS upgrades or testing unstable software. If the operation fails, the administrator can perform a "Rollback" to revert the system state exactly to the moment the snapshot - A software-based emulation of a physical computer state for rollback was taken.</p>
+<h4 id="322-the-snapshot-process">3.2.2 The Snapshot - A software-based emulation of a physical computer state for rollback Process</h4>
+<p>When a snapshot - A software-based emulation of a physical computer state for rollback is taken in Proxmox platform combining KVM - Type 1 hypervisor and LXC (specifically on QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format or ZFS storage), the system marks the current data blocks as read-only. Any new writes are diverted to new blocks. If basic disk snapshotting is selected, only the disk state is saved (crash-consistent). If "Include RAM" is selected, the entire contents of the running memory are dumped to disk. This allows the VM - A software-based emulation of a physical computer to be restored to a running state, preserving open applications and processes, though it takes longer to complete.</p>
 <h3 id="33-console-access">3.3 Console Access</h3>
-<p>Accessing the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>'s display is handled via remote desktop protocols integrated into the browser.</p>
+<p>Accessing the VM - A software-based emulation of a physical computer 's display is handled via remote desktop protocols integrated into the browser.</p>
 <h4 id="331-novnc">3.3.1 NoVNC</h4>
-<p>NoVNC is the default HTML5-based console. It requires no plugins and renders the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>'s display directly in any modern web browser using WebSockets. It is lightweight and universally compatible but has limited support for clipboard integration and audio forwarding.</p>
+<p>NoVNC is the default HTML5-based console. It requires no plugins and renders the VM - A software-based emulation of a physical computer 's display directly in any modern web browser using WebSockets. It is lightweight and universally compatible but has limited support for clipboard integration and audio forwarding.</p>
 <h4 id="332-spice-simple-protocol-for-independent-computing-environments">3.3.2 SPICE (Simple Protocol for Independent Computing Environments)</h4>
-<p>For a richer desktop experience, Proxmox platform combining KVM - A Hypervisor" class="glossary-term"&gt;Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware </span><span class="glossary-icon"></span> <span class="glossary-icon"></span> and LXC <span class="glossary-icon"></span> <span class="glossary-icon"></span> supports SPICE. This protocol offers advanced features such as high-quality audio streaming, multi-monitor support, and USB device redirection (plugging a USB drive into your client and having it appear in the VM - A software-based emulation of a physical computer <span class="glossary-icon"></span>). However, unlike NoVNC, SPICE requires a dedicated client viewer software (<code>virt-viewer</code>) to be installed on the user's machine.</p>
+<p>For a richer desktop experience, Proxmox platform combining KVM - Type 1 hypervisor and LXC supports SPICE. This protocol offers advanced features such as high-quality audio streaming, multi-monitor support, and USB device redirection (plugging a USB drive into your client and having it appear in the VM - A software-based emulation of a physical computer ). However, unlike NoVNC, SPICE requires a dedicated client viewer software (<code>virt-viewer</code>) to be installed on the user's machine.</p>
 <h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
 <p><strong>Summary</strong>:</p>
 <ul>
@@ -662,8 +662,8 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 </ul>
 <p><strong>Reflection</strong>:</p>
 <ul>
-<li>Why should you delete a Linked Clone <span class="glossary-icon"></span> if you delete the Parent?</li>
-<li>Does a snapshot - A software-based emulation of a physical computer <span class="glossary-icon"></span> state for rollback <span class="glossary-icon"></span> consume disk space? If so, when?</li>
+<li>Why should you delete a Linked Clone if you delete the Parent?</li>
+<li>Does a snapshot - A software-based emulation of a physical computer state for rollback consume disk space? If so, when?</li>
 </ul>
 <p><strong>Resources</strong>:</p>
 <ul>
@@ -673,11 +673,11 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 <h2 id="4-summary-and-next-steps">4. Summary and Next Steps</h2>
 <p>This week we peeled back the layers of virtualization to reveal the mechanism inside. You learned that a "Virtual Machine" is not a magical black box, but simply a standard Linux process (<code>kvm</code>) managed by the kernel. You discovered that vCPUs are just threads scheduled by CFS, and vRAM is just memory allocated via <code>mmap()</code>. Finally, you mastered the art of tuning this engine—balancing resources to ensure stability—and explored the management features that make virtualization so powerful.</p>
 <h3 id="preparing-for-week-3">Preparing for Week 3</h3>
-<p>Next week, we go deeper into the infrastructure. We will explore <strong>Virtual Networking Fundamentals</strong>. Since you now know that a VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> is just a process, it's time to understand how to wire these processes together using Linux Bridges, veth pairs, and VLANs.</p>
+<p>Next week, we go deeper into the infrastructure. We will explore <strong>Virtual Networking Fundamentals</strong>. Since you now know that a VM - A software-based emulation of a physical computer is just a process, it's time to understand how to wire these processes together using Linux Bridges, veth pairs, and VLANs.</p>
 <p><strong>Checklist:</strong></p>
 <ul>
-<li>Can you explain what happens during a "VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> Exit"?</li>
-<li>Do you understand why a vCPU - A software-based emulation of a physical computer <span class="glossary-icon"></span> <span class="glossary-icon"></span> is treated like a Chrome tab by the scheduler?</li>
+<li>Can you explain what happens during a "VM - A software-based emulation of a physical computer Exit"?</li>
+<li>Do you understand why a vCPU - A software-based emulation of a physical computer is treated like a Chrome tab by the scheduler?</li>
 <li>Have you successfully SSH'd into your new Ubuntu Server?</li>
 </ul>
 <hr/>
@@ -685,7 +685,7 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 <ul>
 <li><strong><a href="Week_2_Lab_1_Virtualization_Basics.html">Lab 1: KVM Virtualization Fundamentals</a></strong><ul>
 <li><strong>Part A</strong>: Verification &amp; Preparation (Hardware/Disks).</li>
-<li><strong>Part B</strong>: Launching &amp; Logging In (CLI VM - A software-based emulation of a physical computer <span class="glossary-icon"></span> Boot).</li>
+<li><strong>Part B</strong>: Launching &amp; Logging In (CLI VM - A software-based emulation of a physical computer Boot).</li>
 </ul>
 </li>
 <li><strong><a href="Week_2_Lab_2_Managing_VMs.html">Lab 2: Proxmox VM Management</a></strong><ul>
@@ -698,8 +698,8 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
 <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
 <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_2_Quiz.html" id="start-quiz-btn">
-                        Start Quiz
-                    </a>
+ Start Quiz
+ </a>
 </div>
 </article>
 </main>
