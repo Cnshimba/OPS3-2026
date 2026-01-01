@@ -169,7 +169,7 @@ def add_glossary_tooltips(html_content, output_path):
                 for match in reversed(matches):
                     matched_text = match.group()
                     # Create tooltip HTML without icon
-                    tooltip_html = f'<a href="glossary.html#{term.replace(" ", "-")}" class="glossary-term">{matched_text}<span class="glossary-tooltip">{definition} 📖</span></a>'
+                    tooltip_html = f'<a href="glossary.html#{term.replace(" ", "-")}" class="glossary-term">{matched_text}<span class="glossary-tooltip">{definition}</span></a>'
                     
                     # Replace in text
                     modified_text = modified_text[:match.start()] + tooltip_html + modified_text[match.end():]
