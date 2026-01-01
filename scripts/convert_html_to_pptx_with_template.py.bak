@@ -1,0 +1,404 @@
+#!/usr/bin/env python3
+"""
+Convert HTML Slides to PowerPoint Presentations (Enhanced Version)
+Uses PowerPoint Template.pptx as base and includes images from student notes
+"""
+
+from bs4 import BeautifulSoup
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.enum.text import PP_ALIGN
+from pptx.dml.color import RGBColor
+import re
+import os
+from pathlib import Path
+from urllib.parse import unquote
+
+
+# VUT Color Palette (fallback if template doesn't have these)
+VUT_MIDNIGHT_BLUE = RGBColor(15, 52, 96)      # #0f3460
+VUT_DARK_BLUE = RGBColor(22, 33, 62)          # #16213e
+VUT_CORAL = RGBColor(233, 69, 96)             # #e94560
+VUT_GOLD = RGBColor(255, 215, 0)              # #ffd700
+VUT_LIGHT_BLUE = RGBColor(168, 218, 220)      # #a8dadc
+WHITE = RGBColor(255, 255, 255)
+
+
+def load_template(template_path):
+    """Load PowerPoint template"""
+    if template_path.exists():
+        print(f"✓ Using template: {template_path.name}")
+        return Presentation(str(template_path))
+    else:
+        print(f"⚠ Template not found, using blank presentation")
+        return Presentation()
+
+
+def add_title_slide(prs, title, week_num):
+    """Add a title slide using template's title layout"""
+    # Try to use the template's title slide layout (usually layout 0)
+    try:
+        slide = prs.slides.add_slide(prs.slide_layouts[0])
+        
+        # Fill in the placeholders
+        if slide.shapes.title:
+            slide.shapes.title.text = f"Week {week_num}"
+        
+        # Try to find subtitle placeholder
+        for shape in slide.placeholders:
+            if shape.placeholder_format.type == 2:  # Subtitle
+                shape.text = title
+                break
+    except:
+        # Fallback to blank layout
+        slide = prs.slides.add_slide(prs.slide_layouts[6] if len(prs.slide_layouts) > 6 else prs.slide_layouts[0])
+
+
+def add_content_slide(prs, title, content_items, image_path=None):
+    """Add a content slide with title and bullet points, optionally with image"""
+    # Use content layout (usually layout 1) or title and content layout
+    try:
+        if image_path:
+            # Use a two-content layout if available (usually layout 3 or 4)
+            layout_idx = 3 if len(prs.slide_layouts) > 3 else 1
+        else:
+            layout_idx = 1
+        
+        slide = prs.slides.add_slide(prs.slide_layouts[layout_idx])
+        
+        # Set title
+        if slide.shapes.title:
+            slide.shapes.title.text = title
+        
+        # Find text placeholder and add content
+        text_placeholder = None
+        for shape in slide.placeholders:
+            if hasattr(shape, 'text_frame') and shape.placeholder_format.type == 2:  # Body
+                text_placeholder = shape
+                break
+        
+        if text_placeholder:
+            tf = text_placeholder.text_frame
+            tf.clear()  # Clear any default text
+            
+            for idx, item in enumerate(content_items):
+                if idx == 0:
+                    p = tf.paragraphs[0]
+                else:
+                    p = tf.add_paragraph()
+                
+                p.text = item
+                p.level = 0
+                p.font.size = Pt(18)
+        
+        # Add image if provided
+        if image_path and image_path.exists():
+            try:
+                # Find content placeholder or add image to a specific location
+                img_placeholder = None
+                for shape in slide.placeholders:
+                    if shape.placeholder_format.type == 18:  # Picture placeholder
+                        img_placeholder = shape
+                        break
+                
+                if img_placeholder:
+                    # Replace placeholder with image
+                    img_placeholder.insert_picture(str(image_path))
+                else:
+                    # Add image to right side if no placeholder
+                    left = Inches(6)
+                    top = Inches(2)
+                    height = Inches(4)
+                    slide.shapes.add_picture(str(image_path), left, top, height=height)
+            except Exception as e:
+                print(f"    ⚠ Could not add image {image_path.name}: {str(e)}")
+    
+    except Exception as e:
+        print(f"    ⚠ Layout error: {str(e)}")
+        # Fallback to blank layout
+        slide = prs.slides.add_slide(prs.slide_layouts[6] if len(prs.slide_layouts) > 6 else prs.slide_layouts[0])
+
+
+def add_section_slide(prs, section_title):
+    """Add a section divider slide"""
+    try:
+        # Use section header layout (usually layout 2)
+        slide = prs.slides.add_slide(prs.slide_layouts[2] if len(prs.slide_layouts) > 2 else prs.slide_layouts[0])
+        
+        if slide.shapes.title:
+            slide.shapes.title.text = section_title
+    except:
+        slide = prs.slides.add_slide(prs.slide_layouts[0])
+        if slide.shapes.title:
+            slide.shapes.title.text = section_title
+
+
+def add_code_slide(prs, title, code_text):
+    """Add a slide with code content"""
+    try:
+        slide = prs.slides.add_slide(prs.slide_layouts[1])
+        
+        if slide.shapes.title:
+            slide.shapes.title.text = title
+        
+        # Find text placeholder
+        for shape in slide.placeholders:
+            if hasattr(shape, 'text_frame') and shape.placeholder_format.type == 2:
+                tf = shape.text_frame
+                tf.clear()
+                tf.text = code_text
+                
+                for paragraph in tf.paragraphs:
+                    paragraph.font.name = 'Courier New'
+                    paragraph.font.size = Pt(11)
+                break
+    except:
+        slide = prs.slides.add_slide(prs.slide_layouts[6] if len(prs.slide_layouts) > 6 else prs.slide_layouts[0])
+
+
+def extract_images_from_html(html_path):
+    """Extract image paths from HTML file"""
+    with open(html_path, 'r', encoding='utf-8') as f:
+        html_content = f.read()
+    
+    soup = BeautifulSoup(html_content, 'html.parser')
+    images = []
+    
+    for img in soup.find_all('img'):
+        src = img.get('src', '')
+        alt = img.get('alt', '')
+        
+        if src:
+            # Resolve relative paths
+            if not src.startswith('http'):
+                img_path = html_path.parent / src
+                if img_path.exists():
+                    images.append({
+                        'path': img_path,
+                        'alt': alt,
+                        'src': src
+                    })
+    
+    return images
+
+
+def parse_html_slides(html_path, student_notes_path=None):
+    """Parse HTML slides and extract content, including images from student notes"""
+    with open(html_path, 'r', encoding='utf-8') as f:
+        html_content = f.read()
+    
+    soup = BeautifulSoup(html_content, 'html.parser')
+    
+    # Extract images from student notes if available
+    images = []
+    if student_notes_path and student_notes_path.exists():
+        images = extract_images_from_html(student_notes_path)
+        if images:
+            print(f"  Found {len(images)} images in student notes")
+    
+    # Extract week number and title from first slide
+    title_slide = soup.find('div', class_='title-slide')
+    if title_slide:
+        week_text = title_slide.find('div', class_='week-number')
+        week_num = week_text.get_text().strip().replace('Week ', '') if week_text else '1'
+        title = title_slide.find('h1').get_text().strip() if title_slide.find('h1') else 'Presentation'
+    else:
+        week_num = '1'
+        title = 'Presentation'
+    
+    # Extract all slides
+    slides_data = []
+    all_slides = soup.find_all('div', class_='slide')
+    
+    image_index = 0
+    
+    for slide_div in all_slides:
+        slide_info = {
+            'type': 'content',
+            'title': '',
+            'content': [],
+            'image': None
+        }
+        
+        # Check if it's a title slide
+        if 'title-slide' in slide_div.get('class', []):
+            continue  # Skip title slides, we'll create our own
+        
+        # Get the main heading (h2 or h3)
+        h2 = slide_div.find('h2')
+        h3 = slide_div.find('h3')
+        
+        if h2:
+            slide_info['title'] = h2.get_text().strip()
+            # Check if this is a section divider
+            if not h3 and not slide_div.find('ul') and not slide_div.find('p') and not slide_div.find('pre'):
+                slide_info['type'] = 'section'
+        elif h3:
+            slide_info['title'] = h3.get_text().strip()
+        
+        # Extract content
+        ul_elements = slide_div.find_all('ul', recursive=False)
+        for ul in ul_elements:
+            for li in ul.find_all('li', recursive=False):
+                text = li.get_text().strip()
+                if text and len(text) < 500:
+                    slide_info['content'].append(text)
+        
+        # Get paragraphs (if no lists)
+        if not slide_info['content']:
+            p_elements = slide_div.find_all('p', recursive=False)
+            for p in p_elements[:5]:
+                text = p.get_text().strip()
+                if text and len(text) < 500:
+                    slide_info['content'].append(text)
+        
+        # Get code blocks
+        pre_elements = slide_div.find_all('pre')
+        if pre_elements:
+            for pre in pre_elements[:1]:
+                code_text = pre.get_text().strip()
+                if code_text:
+                    slide_info['type'] = 'code'
+                    slide_info['code'] = code_text[:1000]
+        
+        # Assign images to content slides (distribute them across slides)
+        if slide_info['type'] == 'content' and images and image_index < len(images):
+            # Add image to every 3rd-4th content slide
+            if len(slides_data) % 4 == 0:
+                slide_info['image'] = images[image_index]['path']
+                image_index += 1
+        
+        # Only add slides with content
+        if slide_info['title'] or slide_info['content']:
+            slides_data.append(slide_info)
+    
+    return week_num, title, slides_data
+
+
+def create_powerpoint(html_path, output_path, template_path=None, student_notes_path=None):
+    """Create PowerPoint presentation from HTML slides using template"""
+    week_num, title, slides_data = parse_html_slides(html_path, student_notes_path)
+    
+    # Load template or create new presentation
+    if template_path and template_path.exists():
+        try:
+            # Resolve to absolute path and normalize
+            abs_template = template_path.resolve()
+            prs = Presentation(abs_template)
+            print(f"  ✓ Loaded template successfully")
+        except Exception as e:
+            print(f"  ⚠ Could not load template: {str(e)}")
+            print(f"  ⚠ Creating presentation without template")
+            prs = Presentation()
+    else:
+        prs = Presentation()
+    
+    # Add title slide
+    add_title_slide(prs, title, week_num)
+    
+    # Add content slides
+    for slide_info in slides_data:
+        if slide_info['type'] == 'section':
+            add_section_slide(prs, slide_info['title'])
+        elif slide_info['type'] == 'code':
+            add_code_slide(prs, slide_info['title'], slide_info.get('code', ''))
+        else:
+            # Regular content slide
+            if slide_info['content']:
+                # Split into multiple slides if too many items
+                max_items = 8
+                content_chunks = [slide_info['content'][i:i+max_items] 
+                                for i in range(0, len(slide_info['content']), max_items)]
+                
+                for idx, chunk in enumerate(content_chunks):
+                    slide_title = slide_info['title']
+                    if len(content_chunks) > 1:
+                        slide_title += f" ({idx+1}/{len(content_chunks)})"
+                    
+                    # Add image only to first chunk
+                    img_path = slide_info.get('image') if idx == 0 else None
+                    add_content_slide(prs, slide_title, chunk, img_path)
+            else:
+                # Slide with just title
+                add_section_slide(prs, slide_info['title'])
+    
+    # Add summary slide
+    add_section_slide(prs, "Summary")
+    
+    # Save presentation
+    prs.save(output_path)
+    return len(prs.slides)
+
+
+def process_week(week_dir, week_num, template_path):
+    """Process a single week's HTML slides and create PowerPoint"""
+    html_path = week_dir / f"Week_{week_num}_Slides.html"
+    student_notes_path = week_dir / f"Week_{week_num}_Student_Notes.html"
+    pptx_path = week_dir / f"Week_{week_num}_Slides.pptx"
+    
+    if not html_path.exists():
+        print(f"⚠️  Week {week_num}: HTML slides not found at {html_path}")
+        return False
+    
+    try:
+        num_slides = create_powerpoint(html_path, pptx_path, template_path, student_notes_path)
+        print(f"✅ Week {week_num}: Created PowerPoint with {num_slides} slides -> {pptx_path.name}")
+        return True
+    except Exception as e:
+        print(f"❌ Week {week_num}: Error creating PowerPoint - {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
+def main():
+    """Main function to process all weeks"""
+    base_dir = Path(__file__).parent.parent
+    template_path = base_dir / "_template.pptx"
+    
+    print("=" * 70)
+    print("Converting HTML Slides to PowerPoint Presentations (Enhanced)")
+    print("=" * 70)
+    print()
+    
+    if template_path.exists():
+        print(f"✓ Using template: {template_path.name}")
+        print(f"✓ Images will be included from student notes")
+    else:
+        print(f"⚠ Template not found: {template_path}")
+        print(f"  Continuing without template...")
+    
+    print()
+    
+    weeks = [
+        ("Week 1 - Introduction to Virtualization", 1),
+        ("Week 2 - Virtual Machines", 2),
+        ("Week 3 - Virtual Networking and Linux Networking Fundamentals", 3),
+        ("Week 4 - Storage and Backup", 4),
+        ("Week 5 - Containers and Resource Management", 5),
+        ("Week 6 - Proxmox Cluster and High Availability", 6),
+        ("Week 7 - Transition to Cloud Computing Concepts", 7),
+        ("Week 8 - Cloud Foundation", 8),
+        ("Week 9 - Compute Operations", 9),
+        ("Week 10 - Storage and Persistence", 10),
+        ("Week 11 - Automation and Cloud API", 11),
+        ("Week 12 - Final Project and Review", 12),
+    ]
+    
+    success_count = 0
+    for week_name, week_num in weeks:
+        week_dir = base_dir / week_name
+        if week_dir.exists():
+            if process_week(week_dir, week_num, template_path):
+                success_count += 1
+        else:
+            print(f"⚠️  Week {week_num}: Directory not found: {week_name}")
+    
+    print()
+    print("=" * 70)
+    print(f"✅ Successfully created {success_count}/{len(weeks)} PowerPoint presentations")
+    print("=" * 70)
+
+
+if __name__ == "__main__":
+    main()
