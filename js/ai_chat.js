@@ -183,8 +183,10 @@ function getRelevantContext(question) {
     // Take top 3 relevant chunks + basic system info
     // If no keywords matched, default to the first chunk (Introduction) or just a short summary
     if (relevantChunks.length === 0) {
-        // Fallback: Send the first ~2000 chars or just Week 1
-        return weeks[0] ? "WEEK" + weeks[0] : COURSE_CONTEXT.slice(0, 5000);
+        console.warn("No relevant context found. Sending truncated fallback.");
+        // FIX: Ensure we truncate even if we return weeks[0]
+        const rawFallback = weeks[0] ? ("WEEK" + weeks[0]) : COURSE_CONTEXT;
+        return rawFallback.slice(0, 5000) + "\n... [Fallback Truncated]";
     }
 
     // STAGE 2 DECISION: Enforce strict character limit (approx 4000 tokens)
