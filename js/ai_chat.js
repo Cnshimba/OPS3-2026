@@ -119,7 +119,7 @@ window.sendMessage = async function () {
     const fullPrompt = `${SYSTEM_PROMPT} \n\nCOURSE CONTEXT: \n${COURSE_CONTEXT} \n\nSTUDENT QUESTION: ${question} `;
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -135,11 +135,18 @@ window.sendMessage = async function () {
 
         if (data.error) {
             console.error("Gemini Error:", data.error);
-            // Show immediate error
-            addMessage(`❌ API Error: ${data.error.message}`, false);
 
-            // Checking models in background
-            diagnoseAvailableModels();
+            // Nice handling for Rate Limits
+            if (data.error.code === 429 || data.error.message.includes('Quota')) {
+                addMessage("⏳ <strong>Rate Limit Exceeded:</strong> Please wait a few seconds before sending another message.", false);
+            } else {
+                // Show immediate error
+                addMessage(`❌ API Error: ${data.error.message}`, false);
+
+                // Checking models in background only for non-quota errors
+                diagnoseAvailableModels();
+            }
+
         } else if (data.candidates && data.candidates[0].content) {
             const aiText = data.candidates[0].content.parts[0].text;
             addMessage(renderMarkdown(aiText), false);
