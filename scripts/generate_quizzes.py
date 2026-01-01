@@ -1,0 +1,756 @@
+#!/usr/bin/env python3
+"""
+Generate Interactive Quizzes for OPS3 Course
+Creates VUT-themed quizzes with dynamic question generation
+"""
+
+from pathlib import Path
+import json
+import random
+
+# Quiz question bank for all weeks
+QUIZ_QUESTIONS = {
+    1: {  # Week 1 - Virtualization
+        "scenario": [
+            {
+                "question": "A company needs to run multiple isolated server environments on a single physical machine to reduce hardware costs. They require complete OS isolation and the ability to run different operating systems. What virtualization approach should they use?",
+                "options": ["Type 1 Hypervisor (bare-metal)", "Type 2 Hypervisor (hosted)", "Containers", "Virtual Networks"],
+                "answer": "Type 1 Hypervisor (bare-metal)",
+                "explanation": "Type 1 hypervisors run directly on hardware, providing better performance and complete OS isolation for production environments."
+            },
+            {
+                "question": "Your organization is testing development applications on different OS platforms. The IT team wants a solution that's easy to set up on existing Windows workstations without dedicated server hardware. What should they choose?",
+                "options": ["KVM", "Type 2 Hypervisor like VirtualBox", "Proxmox VE", "Docker containers"],
+                "answer": "Type 2 Hypervisor like VirtualBox",
+                "explanation": "Type 2 hypervisors run on existing OS installations, making them ideal for development and testing without dedicated hardware."
+            },
+            {
+                "question": "A data center wants to consolidate 20 physical servers running at 15% CPU utilization into a virtualized environment. What is the primary benefit they'll achieve?",
+                "options": ["Better security", "Hardware consolidation and cost savings", "Faster application performance", "Automatic backups"],
+                "answer": "Hardware consolidation and cost savings",
+                "explanation": "Virtualization allows multiple VMs to share physical resources, dramatically reducing hardware costs and data center space."
+            }
+        ],
+        "fill_blank": [
+            {
+                "question": "The software layer that creates and manages virtual machines by abstracting physical hardware is called a _______.",
+                "answer": "hypervisor",
+                "alternatives": ["Hypervisor", "VMM", "Virtual Machine Monitor"],
+                "explanation": "A hypervisor (or VMM) sits between hardware and VMs, managing resource allocation."
+            },
+            {
+                "question": "_______ is a Type 1 hypervisor built into the Linux kernel that provides hardware-assisted virtualization.",
+                "answer": "KVM",
+                "alternatives": ["kvm", "Kernel-based Virtual Machine"],
+                "explanation": "KVM (Kernel-based Virtual Machine) turns the Linux kernel into a hypervisor."
+            },
+            {
+                "question": "In virtualization, the operating system running inside a virtual machine is called the _______ OS.",
+                "answer": "guest",
+                "alternatives": ["Guest"],
+                "explanation": "The guest OS runs inside the VM, while the host OS (in Type 2) runs on the physical hardware."
+            }
+        ],
+        "command": [
+            {
+                "question": "Complete the command to check if your CPU supports hardware virtualization (Intel VT-x):",
+                "prompt": "grep -E '(vmx|svm)' /proc/_______",
+                "answer": "cpuinfo",
+                "explanation": "The /proc/cpuinfo file contains CPU information including virtualization flags (vmx for Intel, svm for AMD)."
+            },
+            {
+                "question": "Complete the QEMU command to create a 20GB qcow2 disk image:",
+                "prompt": "qemu-img create -f qcow2 disk.qcow2 _______",
+                "answer": "20G",
+                "alternatives": ["20g", "20GB", "20gb"],
+                "explanation": "The size parameter uses G for gigabytes in QEMU disk creation."
+            }
+        ]
+    },
+    2: {  # Week 2 - Virtual Machines
+        "scenario": [
+            {
+                "question": "A VM suddenly stopped responding. You need to save its current state to analyze later without losing data. What feature should you use?",
+                "options": ["Clone", "Snapshot", "Template", "Backup"],
+                "answer": "Snapshot",
+                "explanation": "Snapshots capture the VM's state at a specific point in time, allowing you to analyze or rollback without data loss."
+            },
+            {
+                "question": "Your team needs to deploy 50 identical web servers quickly. What's the most efficient approach?",
+                "options": ["Install OS manually on each VM", "Create a template and clone it", "Use live migration", "Take snapshots"],
+                "answer": "Create a template and clone it",
+                "explanation": "Templates provide a pre-configured baseline for rapid, consistent VM deployment."
+            }
+        ],
+        "fill_blank": [
+            {
+                "question": "A _______ is a virtual representation of a physical CPU allocated to a virtual machine.",
+                "answer": "vCPU",
+                "alternatives": ["vcpu", "virtual CPU"],
+                "explanation": "vCPUs represent the CPU resources allocated from the physical processor to VMs."
+            },
+            {
+                "question": "The _______ disk format supports compression, encryption, and snapshots in QEMU.",
+                "answer": "qcow2",
+                "alternatives": ["QCOW2", "qcow"],
+                "explanation": "qcow2 (QEMU Copy-On-Write version 2) is an advanced disk image format."
+            }
+        ],
+        "command": [
+            {
+                "question": "Complete the command to list all VMs in Proxmox:",
+                "prompt": "qm _______",
+                "answer": "list",
+                "explanation": "The 'qm list' command shows all QEMU/KVM virtual machines in Proxmox."
+            },
+            {
+                "question": "Complete the command to start VM with ID 100:",
+                "prompt": "qm _______ 100",
+                "answer": "start",
+                "explanation": "The 'qm start' command powers on the specified virtual machine."
+            }
+        ]
+    },
+    # Add questions for remaining weeks...
+}
+
+def generate_quiz_html(week_num, output_path):
+    """Generate interactive quiz HTML for a specific week"""
+    
+    questions = QUIZ_QUESTIONS.get(week_num, {})
+    if not questions:
+        print(f"⚠️  No questions defined for Week {week_num}")
+        return False
+    
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week {week_num} Quiz - OPS3</title>
+    <style>
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+        
+        body {{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #142a46 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }}
+        
+        .container {{
+            max-width: 900px;
+            margin: 0 auto;
+        }}
+        
+        header {{
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(30, 58, 95, 0.6);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }}
+        
+        header h1 {{
+            font-size: 2.5em;
+            color: #c9984a;
+            margin-bottom: 10px;
+        }}
+        
+        .quiz-setup {{
+            background: rgba(30, 58, 95, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #c9984a;
+        }}
+        
+        .quiz-setup label {{
+            display: block;
+            font-size: 1.2em;
+            color: #c9984a;
+            margin-bottom: 10px;
+        }}
+        
+        .quiz-setup select {{
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 2px solid #c9984a;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            margin-bottom: 20px;
+        }}
+        
+        .start-btn {{
+            width: 100%;
+            padding: 15px;
+            background: #c9984a;
+            color: #1e3a5f;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }}
+        
+        .start-btn:hover {{
+            background: #ffffff;
+            transform: scale(1.02);
+        }}
+        
+        .quiz-container {{
+            display: none;
+        }}
+        
+        .quiz-container.active {{
+            display: block;
+        }}
+        
+        .question-card {{
+            background: rgba(30, 58, 95, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #c9984a;
+        }}
+        
+        .question-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }}
+        
+        .question-number {{
+            background: #c9984a;
+            color: #1e3a5f;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }}
+        
+        .question-type {{
+            background: rgba(201, 152, 74, 0.3);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #c9984a;
+        }}
+        
+        .question-text {{
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }}
+        
+        .command-prompt {{
+            background: #0f0f0f;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #c9984a;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            color: #a8dadc;
+        }}
+        
+        .options {{
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }}
+        
+        .option {{
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(201, 152, 74, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }}
+        
+        .option:hover {{
+            background: rgba(201, 152, 74, 0.2);
+            border-color: #c9984a;
+            transform: translateX(5px);
+        }}
+        
+        .option.selected {{
+            background: rgba(201, 152, 74, 0.3);
+            border-color: #c9984a;
+        }}
+        
+        .option.correct {{
+            background: rgba(76, 175, 80, 0.3);
+            border-color: #4caf50;
+        }}
+        
+        .option.incorrect {{
+            background: rgba(244, 67, 54, 0.3);
+            border-color: #f44336;
+        }}
+        
+        .fill-input {{
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 2px solid #c9984a;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+        }}
+        
+        .explanation {{
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(201, 152, 74, 0.1);
+            border-left: 4px solid #c9984a;
+            border-radius: 5px;
+            display: none;
+        }}
+        
+        .explanation.show {{
+            display: block;
+        }}
+        
+        .explanation strong {{
+            color: #c9984a;
+        }}
+        
+        .navigation {{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }}
+        
+        .nav-btn {{
+            padding: 12px 30px;
+            background: rgba(201, 152, 74, 0.3);
+            color: #c9984a;
+            border: 2px solid #c9984a;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }}
+        
+        .nav-btn:hover {{
+            background: #c9984a;
+            color: #1e3a5f;
+        }}
+        
+        .nav-btn:disabled {{
+            opacity: 0.3;
+            cursor: not-allowed;
+        }}
+        
+        .results {{
+            background: rgba(30, 58, 95, 0.6);
+            padding: 40px;
+            border-radius: 15px;
+            border: 3px solid #c9984a;
+            text-align: center;
+            display: none;
+        }}
+        
+        .results.show {{
+            display: block;
+        }}
+        
+        .score {{
+            font-size: 4em;
+            color: #c9984a;
+            font-weight: bold;
+            margin: 20px 0;
+        }}
+        
+        .grade {{
+            font-size: 2em;
+            margin: 20px 0;
+        }}
+        
+        .attempts-left {{
+            background: rgba(201, 152, 74, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }}
+        
+        @media (max-width: 768px) {{
+            header h1 {{
+                font-size: 2em;
+            }}
+            
+            .question-text {{
+                font-size: 1.1em;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Week {week_num} Quiz</h1>
+            <p>OPS3 - Virtualization and Cloud Infrastructure</p>
+        </header>
+        
+        <!-- Quiz Setup -->
+        <div class="quiz-setup" id="quizSetup">
+            <h2 style="color: #c9984a; margin-bottom: 20px;">Quiz Settings</h2>
+            <label for="attempts">Select Maximum Attempts:</label>
+            <select id="attempts">
+                <option value="1">1 Attempt</option>
+                <option value="2">2 Attempts</option>
+                <option value="3" selected>3 Attempts (Recommended)</option>
+            </select>
+            
+            <div style="background: rgba(201, 152, 74, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <p><strong style="color: #c9984a;">Quiz Format:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>15 randomized questions per attempt</li>
+                    <li>Mix of scenarios, fill-in-blanks, and commands</li>
+                    <li>New questions generated each retry</li>
+                    <li>Passing score: 70%</li>
+                </ul>
+            </div>
+            
+            <button class="start-btn" onclick="startQuiz()">🚀 Start Quiz</button>
+        </div>
+        
+        <!-- Quiz Questions -->
+        <div class="quiz-container" id="quizContainer">
+            <div id="questionsArea"></div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="nav-btn" onclick="nextQuestion()" id="nextBtn">Next →</button>
+                <button class="nav-btn" onclick="submitQuiz()" id="submitBtn" style="display: none;">✓ Submit Quiz</button>
+            </div>
+        </div>
+        
+        <!-- Results -->
+        <div class="results" id="results">
+            <h2 style="color: #c9984a;">Quiz Results</h2>
+            <div class="score" id="scoreDisplay"></div>
+            <div class="grade" id="gradeDisplay"></div>
+            <div id="attemptsInfo"></div>
+            <button class="start-btn" onclick="retryQuiz()" id="retryBtn" style="margin-top: 20px;">🔄 Retry Quiz</button>
+            <a href="../index.html" class="nav-btn" style="display: inline-block; margin-top: 20px; text-decoration: none;">← Back to Course</a>
+        </div>
+    </div>
+    
+    <script>
+        // Quiz data will be embedded here
+        const quizData = {json.dumps(questions, indent=12)};
+        
+        let currentAttempt = 1;
+        let maxAttempts = 3;
+        let currentQuestion = 0;
+        let questions = [];
+        let userAnswers = [];
+        let score = 0;
+        
+        function generateQuestions() {{
+            questions = [];
+            userAnswers = [];
+            
+            // Get all questions and shuffle
+            let allQuestions = [];
+            
+            // Add scenario questions
+            if (quizData.scenario) {{
+                quizData.scenario.forEach(q => {{
+                    allQuestions.push({{...q, type: 'scenario'}});
+                }});
+            }}
+            
+            // Add fill-in-blank questions
+            if (quizData.fill_blank) {{
+                quizData.fill_blank.forEach(q => {{
+                    allQuestions.push({{...q, type: 'fill_blank'}});
+                }});
+            }}
+            
+            // Add command completion questions
+            if (quizData.command) {{
+                quizData.command.forEach(q => {{
+                    allQuestions.push({{...q, type: 'command'}});
+                }});
+            }}
+            
+            // Shuffle and select 15 questions
+            allQuestions = shuffleArray(allQuestions);
+            questions = allQuestions.slice(0, 15);
+            
+            // Initialize answers array
+            userAnswers = new Array(questions.length).fill(null);
+        }}
+        
+        function shuffleArray(array) {{
+            for (let i = array.length - 1; i > 0; i--) {{
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }}
+            return array;
+        }}
+        
+        function startQuiz() {{
+            maxAttempts = parseInt(document.getElementById('attempts').value);
+            generateQuestions();
+            
+            document.getElementById('quizSetup').style.display = 'none';
+            document.getElementById('quizContainer').classList.add('active');
+            
+            renderQuestions();
+            showQuestion(0);
+        }}
+        
+        function renderQuestions() {{
+            const area = document.getElementById('questionsArea');
+            area.innerHTML = '';
+            
+            questions.forEach((q, index) => {{
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-card';
+                qDiv.id = `question-${{index}}`;
+                qDiv.style.display = 'none';
+                
+                let typeLabel = '';
+                if (q.type === 'scenario') typeLabel = '📋 Scenario';
+                else if (q.type === 'fill_blank') typeLabel = '✏️ Fill in the Blank';
+                else if (q.type === 'command') typeLabel = '⌨️ Command Completion';
+                
+                let content = `
+                    <div class="question-header">
+                        <span class="question-number">Question ${{index + 1}} of ${{questions.length}}</span>
+                        <span class="question-type">${{typeLabel}}</span>
+                    </div>
+                    <div class="question-text">${{q.question}}</div>
+                `;
+                
+                if (q.type === 'scenario') {{
+                    content += '<div class="options">';
+                    q.options.forEach((opt, i) => {{
+                        content += `
+                            <div class="option" onclick="selectOption(${{index}}, '${{opt}}')">
+                                ${{String.fromCharCode(65 + i)}}. ${{opt}}
+                            </div>
+                        `;
+                    }});
+                    content += '</div>';
+                }} else if (q.type === 'fill_blank') {{
+                    content += `
+                        <input type="text" class="fill-input" id="answer-${{index}}" 
+                               placeholder="Type your answer..." onchange="saveAnswer(${{index}}, this.value)">
+                    `;
+                }} else if (q.type === 'command') {{
+                    content += `
+                        <div class="command-prompt">${{q.prompt}}</div>
+                        <input type="text" class="fill-input" id="answer-${{index}}" 
+                               placeholder="Complete the command..." onchange="saveAnswer(${{index}}, this.value)">
+                    `;
+                }}
+                
+                content += `
+                    <div class="explanation" id="explanation-${{index}}">
+                        <strong>Explanation:</strong> ${{q.explanation}}
+                    </div>
+                `;
+                
+                qDiv.innerHTML = content;
+                area.appendChild(qDiv);
+            }});
+        }}
+        
+        function showQuestion(index) {{
+            // Hide all questions
+            questions.forEach((_, i) => {{
+                document.getElementById(`question-${{i}}`).style.display = 'none';
+            }});
+            
+            // Show current question
+            document.getElementById(`question-${{index}}`).style.display = 'block';
+            currentQuestion = index;
+            
+            // Update navigation
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').style.display = index < questions.length - 1 ? 'block' : 'none';
+            document.getElementById('submitBtn').style.display = index === questions.length - 1 ? 'block' : 'none';
+        }}
+        
+        function selectOption(qIndex, answer) {{
+            userAnswers[qIndex] = answer;
+            
+            // Update UI
+            const options = document.getElementById(`question-${{qIndex}}`).querySelectorAll('.option');
+            options.forEach(opt => {{
+                opt.classList.remove('selected');
+                if (opt.textContent.includes(answer)) {{
+                    opt.classList.add('selected');
+                }}
+            }});
+        }}
+        
+        function saveAnswer(qIndex, answer) {{
+            userAnswers[qIndex] = answer.trim();
+        }}
+        
+        function previousQuestion() {{
+            if (currentQuestion > 0) {{
+                showQuestion(currentQuestion - 1);
+            }}
+        }}
+        
+        function nextQuestion() {{
+            if (currentQuestion < questions.length - 1) {{
+                showQuestion(currentQuestion + 1);
+            }}
+        }}
+        
+        function submitQuiz() {{
+            calculateScore();
+            document.getElementById('quizContainer').classList.remove('active');
+            showResults();
+        }}
+        
+        function calculateScore() {{
+            score = 0;
+            
+            questions.forEach((q, i) => {{
+                const userAnswer = userAnswers[i];
+                let isCorrect = false;
+                
+                if (q.type === 'scenario') {{
+                    isCorrect = userAnswer === q.answer;
+                }} else {{
+                    // For fill-in and command, check against answer and alternatives
+                    const validAnswers = [q.answer];
+                    if (q.alternatives) {{
+                        validAnswers.push(...q.alternatives);
+                    }}
+                    isCorrect = validAnswers.some(ans => 
+                        ans.toLowerCase() === (userAnswer || '').toLowerCase()
+                    );
+                }}
+                
+                if (isCorrect) score++;
+                
+                // Show explanation and mark answer
+                const qCard = document.getElementById(`question-${{i}}`);
+                if (q.type === 'scenario') {{
+                    const options = qCard.querySelectorAll('.option');
+                    options.forEach(opt => {{
+                        if (opt.textContent.includes(q.answer)) {{
+                            opt.classList.add('correct');
+                        }} else if (opt.textContent.includes(userAnswer) && !isCorrect) {{
+                            opt.classList.add('incorrect');
+                        }}
+                    }});
+                }}
+                
+                document.getElementById(`explanation-${{i}}`).classList.add('show');
+            }});
+        }}
+        
+        function showResults() {{
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('scoreDisplay').textContent = `${{score}}/${{questions.length}}`;
+            
+            let grade = '';
+            if (percentage >= 90) grade = '🌟 Excellent!';
+            else if (percentage >= 80) grade = '✨ Great Job!';
+            else if (percentage >= 70) grade = '✓ Passed';
+            else grade = '📚 Keep Studying';
+            
+            document.getElementById('gradeDisplay').textContent = `${{percentage}}% - ${{grade}}`;
+            
+            const attemptsLeft = maxAttempts - currentAttempt;
+            let attemptInfo = `<div class="attempts-left">`;
+            attemptInfo += `<strong>Attempt ${{currentAttempt}} of ${{maxAttempts}}</strong><br>`;
+            if (percentage < 70 && attemptsLeft > 0) {{
+                attemptInfo += `You have ${{attemptsLeft}} attempt(s) remaining. Click Retry to try again with new questions.`;
+                document.getElementById('retryBtn').style.display = 'block';
+            }} else if (attemptsLeft === 0 && percentage < 70) {{
+                attemptInfo += `No attempts remaining. Please review the material and try again later.`;
+                document.getElementById('retryBtn').style.display = 'none';
+            }} else {{
+                attemptInfo += `Congratulations! You passed the quiz.`;
+                document.getElementById('retryBtn').style.display = 'none';
+            }}
+            attemptInfo += `</div>`;
+            
+            document.getElementById('attemptsInfo').innerHTML = attemptInfo;
+            document.getElementById('results').classList.add('show');
+        }}
+        
+        function retryQuiz() {{
+            if (currentAttempt < maxAttempts) {{
+                currentAttempt++;
+                document.getElementById('results').classList.remove('show');
+                generateQuestions();
+                renderQuestions();
+                currentQuestion = 0;
+                showQuestion(0);
+                document.getElementById('quizContainer').classList.add('active');
+            }}
+        }}
+    </script>
+</body>
+</html>
+"""
+    
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    
+    return True
+
+def main():
+    """Generate quizzes for all weeks"""
+    base_dir = Path(__file__).parent.parent
+    
+    print("=" * 70)
+    print("Generating Interactive Quizzes")
+    print("=" * 70)
+    print()
+    
+    created = 0
+    for week in range(1, 13):
+        week_folders = {
+            1: "Week 1 - Introduction to Virtualization",
+            2: "Week 2 - Virtual Machines",
+            3: "Week 3 - Virtual Networking and Linux Networking Fundamentals",
+            4: "Week 4 - Storage and Backup",
+            5: "Week 5 - Containers and Resource Management",
+            6: "Week 6 - Proxmox Cluster and High Availability",
+            7: "Week 7 - Transition to Cloud Computing Concepts",
+            8: "Week 8 - Cloud Foundation",
+            9: "Week 9 - Compute Operations",
+            10: "Week 10 - Storage and Persistence",
+            11: "Week 11 - Automation and Cloud API",
+            12: "Week 12 - Final Project and Review"
+        }
+        
+        week_dir = base_dir / week_folders[week]
+        if week_dir.exists():
+            output_file = week_dir / f"Week_{week}_Quiz.html"
+            if generate_quiz_html(week, output_file):
+                print(f"✅ Week {week}: Created quiz")
+                created += 1
+    
+    print()
+    print("=" * 70)
+    print(f"✅ Created {created} interactive quizzes")
+    print("=" * 70)
+
+if __name__ == "__main__":
+    main()
