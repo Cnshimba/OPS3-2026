@@ -956,6 +956,8 @@
             <ol>
                 <li><strong>Part A</strong>: Verify hardware virtualization support and prepare virtual disks.</li>
                 <li><strong>Part B</strong>: Launch a Virtual Machine via CLI, log in, and manage its power state.</li>
+                <li><strong>Part C</strong>: (Bonus) Permanently install Alpine Linux to the virtual disk.</li>
+                <li><strong>Part D</strong>: Use <code>libvirt</code> and <code>virsh</code> to accomplish the same tasks through a management API.</li>
             </ol>
             <p><strong>Prerequisites</strong>:</p>
             <ul>
@@ -1228,6 +1230,249 @@
                     virtual hard drive!</li>
             </ol>
             <hr />
+            <h2 id="part-d-managing-vms-with-libvirt">Part D: Managing VMs with libvirt</h2>
+            <p>In Parts A–C, you used raw <code>qemu-img</code> and <code>qemu-system-x86_64</code> commands to create storage and launch VMs. While this teaches you what happens "under the hood", production environments rarely work this way.</p>
+            <p><strong>libvirt</strong> is an open-source API and management layer that sits <em>on top</em> of hypervisors like KVM/QEMU. It provides a single, consistent interface (<code>virsh</code> CLI, XML configs, and a daemon) that is used by virtually every major virtualisation platform — including <strong>Proxmox VE</strong> (Lab 2), <strong>OpenStack</strong> (Week 8+), and <strong>oVirt</strong>.</p>
+            <p>Think of it this way:</p>
+            <ul>
+                <li><strong>QEMU/KVM</strong> = The engine of a car</li>
+                <li><strong>libvirt</strong> = The dashboard, steering wheel, and pedals</li>
+                <li><strong>Proxmox/OpenStack</strong> = A full self-driving system built on top of those controls</li>
+            </ul>
+
+            <h3 id="d1-install-libvirt">1. Install libvirt</h3>
+            <p>Install the libvirt daemon, the <code>virsh</code> CLI, and the <code>virt-install</code> provisioning tool:</p>
+            <div class="codehilite">
+                <pre><span></span><code>sudo apt install qemu-kvm libvirt-daemon-system virtinst -y
+</code></pre>
+            </div>
+
+            <p>Verify the service is running:</p>
+            <div class="codehilite">
+                <pre><span></span><code>systemctl status libvirtd
+</code></pre>
+            </div>
+
+            <ul>
+                <li><strong>Record</strong>: Is the service <code>active (running)</code>? [ ] Yes [ ] No</li>
+            </ul>
+
+            <p>Add your user to the <code>libvirt</code> group so you can manage VMs without <code>sudo</code>:</p>
+            <div class="codehilite">
+                <pre><span></span><code>sudo usermod -aG libvirt $USER
+</code></pre>
+            </div>
+            <blockquote>
+                <p><strong>Note</strong>: You may need to log out and log back in for the group change to take effect. On the Proxmox shell, you can skip this step as you are already root.</p>
+            </blockquote>
+
+            <h3 id="d2-create-storage-pool">2. Create a Storage Pool and Volume</h3>
+            <p>In Part A, you created a disk with <code>qemu-img create</code>. With libvirt, storage is organised into <strong>Pools</strong> (directories, LVM groups, NFS mounts, etc.) and <strong>Volumes</strong> (individual disk images within a pool).</p>
+
+            <p><strong>Step 1: Define a Storage Pool</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh pool-define-as lab-pool dir --target /var/lib/libvirt/images/lab-pool
+</code></pre>
+            </div>
+
+            <p><strong>Step 2: Build, Start, and Auto-start the Pool</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh pool-build lab-pool
+virsh pool-start lab-pool
+virsh pool-autostart lab-pool
+</code></pre>
+            </div>
+
+            <p><strong>Step 3: Verify the Pool</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh pool-list --all
+</code></pre>
+            </div>
+            <ul>
+                <li><strong>Record</strong>: Is <code>lab-pool</code> listed with state <code>active</code>? [ ] Yes [ ] No</li>
+            </ul>
+
+            <p><strong>Step 4: Create a Volume</strong> (equivalent to <code>qemu-img create -f qcow2</code>)</p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh vol-create-as lab-pool libvirt-test-disk.qcow2 10G --format qcow2
+</code></pre>
+            </div>
+
+            <p><strong>Step 5: Verify the Volume</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh vol-info libvirt-test-disk.qcow2 --pool lab-pool
+</code></pre>
+            </div>
+            <ul>
+                <li><strong>Record</strong>:
+                    <ul>
+                        <li><strong>Capacity</strong>: ____________________ (should be 10 GiB)</li>
+                        <li><strong>Allocation</strong>: ____________________ (should be very small — thin provisioned!)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 id="d3-deploy-vm-with-virt-install">3. Deploy a VM with virt-install</h3>
+            <p>In Part B, you used a long <code>qemu-system-x86_64</code> command to wire up all the virtual hardware. The <code>virt-install</code> tool does the same thing but through libvirt, and it automatically generates the XML domain definition that libvirt uses to manage the VM.</p>
+
+            <p>First, copy the Alpine ISO to a location libvirt can access:</p>
+            <div class="codehilite">
+                <pre><span></span><code>sudo cp alpine-virt-3.20.0-x86_64.iso /var/lib/libvirt/images/
+</code></pre>
+            </div>
+
+            <p>Now deploy:</p>
+            <div class="codehilite">
+                <pre><span></span><code>virt-install \
+  --name alpine-libvirt \
+  --ram 512 \
+  --vcpus 1 \
+  --disk vol=lab-pool/libvirt-test-disk.qcow2 \
+  --cdrom /var/lib/libvirt/images/alpine-virt-3.20.0-x86_64.iso \
+  --os-variant alpinelinux3.19 \
+  --graphics none \
+  --console pty,target_type=serial \
+  --boot cdrom
+</code></pre>
+            </div>
+
+            <p><strong>Command Analysis</strong> (compare with Part B):</p>
+            <ul>
+                <li><code>--name</code>: Gives the VM a persistent name (libvirt tracks it by name).</li>
+                <li><code>--ram 512</code>: Same as <code>-m 512</code> in QEMU.</li>
+                <li><code>--vcpus 1</code>: Allocates 1 virtual CPU.</li>
+                <li><code>--disk vol=lab-pool/...</code>: References the volume we created in our pool (instead of a raw file path).</li>
+                <li><code>--cdrom</code>: Same concept as <code>-cdrom</code> in QEMU.</li>
+                <li><code>--os-variant</code>: Helps libvirt optimise settings for the guest OS.</li>
+                <li><code>--graphics none --console pty</code>: Attaches directly to the serial console (no GUI window).</li>
+            </ul>
+
+            <p>When the VM boots, log in as <code>root</code> (no password) just like in Part B.</p>
+
+            <blockquote>
+                <p><strong>Tip</strong>: To detach from the console without shutting down the VM, press <code>Ctrl+]</code>.</p>
+            </blockquote>
+
+            <h3 id="d4-manage-vm-with-virsh">4. Manage the VM with virsh</h3>
+            <p>Now use <code>virsh</code> to manage your running VM — no QEMU commands needed.</p>
+
+            <p><strong>List running VMs:</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh list
+</code></pre>
+            </div>
+            <ul>
+                <li><strong>Record</strong>: Is <code>alpine-libvirt</code> listed with state <code>running</code>? [ ] Yes [ ] No</li>
+            </ul>
+
+            <p><strong>Get VM details:</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh dominfo alpine-libvirt
+</code></pre>
+            </div>
+            <ul>
+                <li><strong>Record</strong>:
+                    <ul>
+                        <li><strong>Max memory</strong>: ____________________</li>
+                        <li><strong>CPU(s)</strong>: ____________________</li>
+                        <li><strong>State</strong>: ____________________</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>Reconnect to the console</strong> (if you detached earlier):</p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh console alpine-libvirt
+</code></pre>
+            </div>
+
+            <p><strong>Gracefully shut down the VM:</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh shutdown alpine-libvirt
+</code></pre>
+            </div>
+
+            <p><strong>Start it again:</strong></p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh start alpine-libvirt
+</code></pre>
+            </div>
+
+            <p><strong>Force stop</strong> (like pulling the power plug):</p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh destroy alpine-libvirt
+</code></pre>
+            </div>
+
+            <p><strong>Delete the VM definition</strong> (clean up when done):</p>
+            <div class="codehilite">
+                <pre><span></span><code>virsh undefine alpine-libvirt
+</code></pre>
+            </div>
+
+            <h3 id="d5-comparison-table">5. Comparison: QEMU CLI vs libvirt</h3>
+            <p>The following table summarises how the raw QEMU commands you used in Parts A–C map to their libvirt equivalents:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Task</th>
+                        <th style="text-align: left;">Raw QEMU Command</th>
+                        <th style="text-align: left;">libvirt / virsh Equivalent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: left;">Create a virtual disk</td>
+                        <td style="text-align: left;"><code>qemu-img create -f qcow2 disk.qcow2 10G</code></td>
+                        <td style="text-align: left;"><code>virsh vol-create-as pool disk.qcow2 10G --format qcow2</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Inspect a disk</td>
+                        <td style="text-align: left;"><code>qemu-img info disk.qcow2</code></td>
+                        <td style="text-align: left;"><code>virsh vol-info disk.qcow2 --pool pool</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Launch a VM</td>
+                        <td style="text-align: left;"><code>qemu-system-x86_64 -enable-kvm -m 512 ...</code></td>
+                        <td style="text-align: left;"><code>virt-install --name vm --ram 512 ...</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">List running VMs</td>
+                        <td style="text-align: left;"><code>ps aux | grep qemu</code></td>
+                        <td style="text-align: left;"><code>virsh list</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Shut down a VM</td>
+                        <td style="text-align: left;"><code>poweroff</code> (from inside guest)</td>
+                        <td style="text-align: left;"><code>virsh shutdown vm-name</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Force stop a VM</td>
+                        <td style="text-align: left;">Kill the QEMU process</td>
+                        <td style="text-align: left;"><code>virsh destroy vm-name</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Start a stopped VM</td>
+                        <td style="text-align: left;">Re-run the full QEMU command</td>
+                        <td style="text-align: left;"><code>virsh start vm-name</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Get VM info</td>
+                        <td style="text-align: left;"><code>info</code> in QEMU monitor</td>
+                        <td style="text-align: left;"><code>virsh dominfo vm-name</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Critical Thinking</strong>:</p>
+            <ul>
+                <li>Why would a cloud platform like OpenStack use libvirt instead of calling QEMU directly?
+                    <code>[ _________________________________________________________________________ ]</code></li>
+                <li>What advantage does a named VM (<code>virsh start alpine-libvirt</code>) have over re-typing the full QEMU command each time?
+                    <code>[ _________________________________________________________________________ ]</code></li>
+            </ul>
+
+            <hr />
             <h2 id="lab-checkpoint">Lab Checkpoint</h2>
             <h3 id="practical-skills-checklist">Practical Skills Checklist</h3>
             <ul>
@@ -1244,6 +1489,14 @@
                     inside VM</li>
                 <li class="task-list-item"><input type="checkbox" disabled> (Bonus) Permanently installed Alpine Linux
                     to the disk</li>
+                <li class="task-list-item"><input type="checkbox" disabled> Installed libvirt and verified
+                    <code>libvirtd</code> service is running</li>
+                <li class="task-list-item"><input type="checkbox" disabled> Created a storage pool and volume using
+                    <code>virsh</code></li>
+                <li class="task-list-item"><input type="checkbox" disabled> Deployed a VM using
+                    <code>virt-install</code></li>
+                <li class="task-list-item"><input type="checkbox" disabled> Managed VM lifecycle (list, console,
+                    shutdown, start, destroy) with <code>virsh</code></li>
             </ul>
             <h3 id="theoretical-understanding-checklist">Theoretical Understanding Checklist</h3>
             <ul>
@@ -1254,6 +1507,12 @@
                 <li class="task-list-item"><input type="checkbox" disabled> Identified the role of SLIRP networking</li>
                 <li class="task-list-item"><input type="checkbox" disabled> Recognized the difference between live boot
                     and permanent installation</li>
+                <li class="task-list-item"><input type="checkbox" disabled> Explained the role of libvirt as an
+                    abstraction layer over QEMU/KVM</li>
+                <li class="task-list-item"><input type="checkbox" disabled> Understood the relationship between storage
+                    pools, volumes, and disk images</li>
+                <li class="task-list-item"><input type="checkbox" disabled> Compared raw QEMU commands with libvirt/virsh
+                    equivalents</li>
             </ul>
             <h3 id="troubleshooting-scenarios">Troubleshooting Scenarios</h3>
             <p><strong>Scenario 1</strong>: <code>qemu-system-x86_64</code> command errors with "Could not access KVM
