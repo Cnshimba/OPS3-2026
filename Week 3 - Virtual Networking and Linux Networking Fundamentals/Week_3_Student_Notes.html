@@ -1288,6 +1288,65 @@ sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">e
                 <li>The <strong>Linux Bridge</strong> (e.g., <code>vmbr0</code>) acts like the Switch.</li>
                 <li>The <strong>TAP interface</strong> is the cable connecting them.</li>
             </ul>
+
+            <p><strong>Simulating an Ethernet Device</strong><br />
+                In the physical world, your computer has a Network Interface Card (NIC) where you plug in a cable. In
+                the virtual world, the VM needs to "think" it has a physical NIC. A TAP (Terminal Access Point) device
+                is a software-based network interface. To the Linux kernel, a TAP device looks and acts exactly like a
+                physical Ethernet port (like eth0 or enp0s3).</p>
+            <ul>
+                <li>The VM sees one end of this "cable" as its own hardware.</li>
+                <li>The Host OS sees the other end as a network interface it can manage.</li>
+            </ul>
+
+            <p><strong>Operating at Layer 2 (Data Link Layer)</strong><br />
+                The "Layer 2" part is the most critical distinction. In the OSI model, Layer 2 deals with Ethernet
+                frames and MAC addresses. Because a TAP interface operates at Layer 2, it can pass raw Ethernet frames
+                directly. This means it carries information about MAC addresses, not just IP addresses.</p>
+            <p><strong>Why this matters for VMs:</strong> Because it handles MAC addresses, you can bridge a TAP
+                interface. This allows a VM to:</p>
+            <ul>
+                <li>Have its own unique MAC address.</li>
+                <li>Use DHCP to get an IP address from your physical router.</li>
+                <li>Support non-IP protocols (like ARP or certain industrial protocols).</li>
+            </ul>
+
+            <p><strong>TAP vs. TUN (The Common Comparison)</strong><br />
+                You will often see TAP mentioned alongside TUN. Here is the difference:</p>
+            <div class="overflow-x-auto my-6">
+                <table class="min-w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    <thead>
+                        <tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+                            <th class="px-4 py-2 text-left font-bold text-slate-700 dark:text-slate-200">Feature</th>
+                            <th class="px-4 py-2 text-left font-bold text-slate-700 dark:text-slate-200">TAP</th>
+                            <th class="px-4 py-2 text-left font-bold text-slate-700 dark:text-slate-200">TUN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-700">
+                            <td class="px-4 py-2 font-semibold">OSI Layer</td>
+                            <td class="px-4 py-2">Layer 2 (Data Link)</td>
+                            <td class="px-4 py-2">Layer 3 (Network)</td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-700">
+                            <td class="px-4 py-2 font-semibold">Data Unit</td>
+                            <td class="px-4 py-2">Ethernet Frames (includes MAC)</td>
+                            <td class="px-4 py-2">IP Packets</td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-700">
+                            <td class="px-4 py-2 font-semibold">Use Case</td>
+                            <td class="px-4 py-2">Virtual Machines, Bridges</td>
+                            <td class="px-4 py-2">VPNs (OpenVPN, WireGuard)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2 font-semibold">Analogy</td>
+                            <td class="px-4 py-2">A virtual Ethernet cable</td>
+                            <td class="px-4 py-2">A virtual point-to-point tunnel</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <p><strong>The Difference:</strong> Unlike Veth, which has two "network interface" ends, a TAP device has
                 one "network interface" end (in the kernel) and one "file descriptor" end (which the VM software opens
                 like a file to read/write packets).</p>
@@ -1313,15 +1372,10 @@ sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">e
                             <td class="px-4 py-2">Containers (Docker/LXC)</td>
                             <td class="px-4 py-2">Virtual Machines (KVM/QEMU)</td>
                         </tr>
-                        <tr class="border-b border-slate-100 dark:border-slate-700">
+                        <tr>
                             <td class="px-4 py-2 font-semibold">Structure</td>
                             <td class="px-4 py-2">Two ends, both are "interfaces"</td>
                             <td class="px-4 py-2">One interface end + one "software" end</td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2 font-semibold text-blue-600 dark:text-blue-400">Your Lab Context</td>
-                            <td class="px-4 py-2">Useful if you run Slurm in containers</td>
-                            <td class="px-4 py-2 font-semibold">Essential for your KVM VMs on the M1000 blades</td>
                         </tr>
                     </tbody>
                 </table>
