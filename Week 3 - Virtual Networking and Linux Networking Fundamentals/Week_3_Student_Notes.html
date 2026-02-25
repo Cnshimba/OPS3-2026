@@ -1496,45 +1496,81 @@ sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">e
                         Containers - OS-level virtualization</span></a>)</h2>
             <p>In Week 3, we discussed containers. Now we see how they use the Linux networking primitives we just
                 learned.</p>
-            <h3 id="41-docker-the-standard-bridge">4.1 Docker (The Standard Bridge)</h3>
-            <p>When you install Docker, it creates a Linux Bridge named <code>docker0</code>.</p>
+            <h3 id="41-docker-the-standard-bridge">4.1 Docker (The Standard Bridge): From Manual Plumbing to
+                Automation</h3>
+            <p>When you install Docker, it sets up a permanent "Virtual Switch" on your host machine called
+                <code>docker0</code>. This bridge acts as the central hub for all containers.
+            </p>
+
+            <p><strong>The Architecture of a Container Connection</strong></p>
             <ul>
-                <li><strong>The Bridge</strong>: <code>docker0</code> (Usually 172.17.0.1/16).</li>
-                <li><strong>The Veth</strong>: Every time you run <code>docker run</code>, Docker creates a
-                    <code>veth</code> pair. One end sits on the host (plugged into <code>docker0</code>), the other sits
-                    inside the container.
+                <li><strong>The Hub</strong>: The Linux Bridge named <code>docker0</code> (usually assigned the gateway
+                    IP <code>172.17.0.1/16</code>).</li>
+                <li><strong>The Cable</strong>: Every time you run <code>docker run</code>, Docker creates a
+                    <code>veth</code> pair (Virtual Ethernet).
+                    <ul>
+                        <li>One end is "plugged" into the <code>docker0</code> bridge (Host side).</li>
+                        <li>The other end is "teleported" into the container (Namespace side).</li>
+                    </ul>
                 </li>
-                <li><strong>The Namespace</strong>: The container <em>is</em> just a process running inside a network
-                    namespace.</li>
+                <li><strong>The Room</strong>: The container is not a separate machine; it is a standard process living
+                    inside a restricted Network Namespace.</li>
             </ul>
-            <p><strong>CLI Comparison:</strong></p>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="text-align: left;">Action</th>
-                        <th style="text-align: left;">Manual Linux Command</th>
-                        <th style="text-align: left;">Docker Command</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="text-align: left;">Create Net</td>
-                        <td style="text-align: left;"><code>ip link add br0 type bridge</code></td>
-                        <td style="text-align: left;"><code>docker network create mynet</code></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;">Create NS</td>
-                        <td style="text-align: left;"><code>ip netns add container1</code></td>
-                        <td style="text-align: left;"><code>docker run --name container1 ...</code></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;">Connect</td>
-                        <td style="text-align: left;"><code>ip link set veth master br0</code></td>
-                        <td style="text-align: left;">Auto-connected to <code>docker0</code> or custom net</td>
-                    </tr>
-                </tbody>
-            </table>
-            End of CLI Comparison table
+
+            <p><strong>Direct CLI Comparison: Manual Linux vs. Docker</strong><br />
+                This table shows how the complex manual steps you learned in Section 3 are condensed into single Docker
+                commands.</p>
+            <div class="overflow-x-auto my-6">
+                <table class="min-w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    <thead>
+                        <tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+                            <th class="px-4 py-2 text-left font-bold text-slate-700 dark:text-slate-200">Action</th>
+                            <th class="px-4 py-2 text-left font-bold text-slate-700 dark:text-slate-200">Manual Linux
+                                Commands (The Hard Way)</th>
+                            <th class="px-4 py-2 text-left font-bold text-slate-700 dark:text-slate-200">Docker Command
+                                (The Automated Way)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-700">
+                            <td class="px-4 py-2 font-semibold">Create the Switch</td>
+                            <td class="px-4 py-2"><code>ip link add br0 type bridge</code></td>
+                            <td class="px-4 py-2"><code>docker network create my-net</code></td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-700">
+                            <td class="px-4 py-2 font-semibold">Create the Room</td>
+                            <td class="px-4 py-2"><code>ip netns add student-lab</code></td>
+                            <td class="px-4 py-2"><code>docker run --name student-lab ...</code></td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-700">
+                            <td class="px-4 py-2 font-semibold">Create the Cable</td>
+                            <td class="px-4 py-2"><code>ip link add veth-h type veth peer veth-c</code></td>
+                            <td class="px-4 py-2 italic text-slate-500">(Handled automatically during
+                                <code>run</code>)
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-700">
+                            <td class="px-4 py-2 font-semibold">Plug into Switch</td>
+                            <td class="px-4 py-2"><code>ip link set veth-h master br0</code></td>
+                            <td class="px-4 py-2 italic text-slate-500">(Handled automatically during
+                                <code>run</code>)
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-700">
+                            <td class="px-4 py-2 font-semibold">Move to Room</td>
+                            <td class="px-4 py-2"><code>ip link set veth-c netns student-lab</code></td>
+                            <td class="px-4 py-2 italic text-slate-500">(Handled automatically during
+                                <code>run</code>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2 font-semibold">Add IP Address</td>
+                            <td class="px-4 py-2"><code>ip netns exec student-lab ip addr add ...</code></td>
+                            <td class="px-4 py-2"><code>--ip 172.17.0.5</code> (or via DHCP)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <h3 id="42-podman-rootless-networking">4.2 Podman (Rootless Networking)</h3>
             <p>Podman often manages containers without root privileges. Standard bridges require root. How does it work?
             </p>
