@@ -1,0 +1,234 @@
+{\rtf1\ansi\deff0
+{\fonttbl{\f0\fswiss\fcharset0 Arial;}{\f1\froman\fcharset0 Times New Roman;}}
+\viewkind4\uc1\pard\f0\fs28\b OPS3 Assessment 2: Proxmox, Containers, and Cloud Intro (Weeks 5-8)\b0\fs24\par
+\par
+\b Total Points: 100\b0\par
+\par
+\pard\sb100\sa100\f1\fs24\b ## Section A: Short-Form Questions (50 Points)\b0\par
+\par
+\b Multiple Choice (10 x 1 Point = 10 Points)\b0\par
+\par
+1. Which Proxmox feature allows a VM to automatically restart on another node if its host fails?\par
+a) Snapshotting\par
+b) Fencing\par
+c) High Availability (HA)\par
+d) Live Migration\par
+\b Answer: c)\b0\par
+\par
+2. What is the minimum number of nodes required in a Proxmox cluster to maintain "Quorum"?\par
+a) 1\par
+b) 2\par
+c) 3\par
+d) 5\par
+\b Answer: c)\b0\par
+\par
+3. Docker containers share their host's \b _____\b0 , while VMs have their own.\par
+a) Hardware BIOS\par
+b) Operating System Kernel\par
+c) Network Switch\par
+d) Virtual Disk\par
+\b Answer: b)\b0\par
+\par
+4. Which Docker command is used to run a container in the background?\par
+a) docker start\par
+b) docker run -d\par
+c) docker exec -it\par
+d) docker push\par
+\b Answer: b)\b0\par
+\par
+5. What is the purpose of a Docker "Volume"?\par
+a) To increase the CPU speed of a container\par
+b) To persist data outside of the container's lifecycle\par
+c) To encrypt the network traffic\par
+d) To compress the container image\par
+\b Answer: b)\b0\par
+\par
+6. Which cloud service model provides OS, storage, and networking (e.g., AWS EC2)?\par
+a) SaaS\par
+b) PaaS\par
+c) IaaS\par
+d) FaaS\par
+\b Answer: c)\b0\par
+\par
+7. Public Cloud is characterized by:\par
+a) Full ownership of physical hardware\par
+b) Multi-tenancy and pay-as-you-go pricing\par
+c) Stated-owned infrastructure only\par
+d) No internet connectivity\par
+\b Answer: b)\b0\par
+\par
+8. Which command in Docker Compose builds and starts all services in the YAML file?\par
+a) docker build\par
+b) docker-compose up\par
+c) docker-compose restart\par
+d) docker-compose run\par
+\b Answer: b)\b0\par
+\par
+9. What is "Cloud Elasticity"?\par
+a) The ability to stretch physical cables\par
+b) The ability to rapidly increase or decrease resources based on demand\par
+c) The security of cloud servers\par
+d) The price of a cloud subscription\par
+\b Answer: b)\b0\par
+\par
+10. In Proxmox, which TUI tool is used for cluster management via the command line?\par
+a) pvecm\par
+b) ha-manager\par
+c) qm\par
+d) pct\par
+\b Answer: a)\b0\par
+\par
+\b Fill-in-the-Blanks (10 x 1 Point = 10 Points)\b0\par
+\par
+11. \b _____\b0  is the protocol used in Proxmox clusters for node communication and status.\par
+\b Answer: Corosync\b0\par
+\par
+12. A Proxmox \b _____\b0  is a collection of nodes managed as a single entity.\par
+\b Answer: Cluster\b0\par
+\par
+13. In Docker, a \b _____\b0  is a read-only template used to create containers.\par
+\b Answer: Image\b0\par
+\par
+14. The \b _____\b0  technique ensures a failed node in an HA cluster is isolated to prevent split-brain.\par
+\b Answer: Fencing\b0\par
+\par
+15. \b _____\b0  Migration in Proxmox moves a running VM from one node to another without downtime.\par
+\b Answer: Live\b0\par
+\par
+16. The \b _____\b0  tool is used for defining and running multi-container Docker applications.\par
+\b Answer: Docker Compose\b0\par
+\par
+17. Cloud \b _____\b0  computing combines private and public clouds.\par
+\b Answer: Hybrid\b0\par
+\par
+18. To download a Docker image from a registry, you use \b docker _____\b0 .\par
+\b Answer: pull\b0\par
+\par
+19. Storage that is accessible to all nodes in a cluster simultaneously is called \b _____\b0  storage.\par
+\b Answer: Shared (or Cluster)\b0\par
+\par
+20. In AWS or OpenStack, \b _____\b0  Groups act as virtual firewalls for instances.\par
+\b Answer: Security\b0\par
+\par
+\b True or False (10 x 1 Point = 10 Points)\b0\par
+\par
+21. True or False: Proxmox uses KVM for virtual machines and LXC for containers.\par
+\b Answer: True\b0\par
+\par
+22. True or False: In a Proxmox cluster, if quorum is lost, VMs will still start normally.\par
+\b Answer: False\b0\par
+\par
+23. True or False: Docker containers have their own dedicated operating system kernel.\par
+\b Answer: False\b0\par
+\par
+24. True or False: A Docker Image is mutable (can be changed while a container is running).\par
+\b Answer: False\b0\par
+\par
+25. True or False: SaaS stands for "Software as a Storage".\par
+\b Answer: False (Software as a Service)\b0\par
+\par
+26. True or False: Vertical Scaling involves adding more CPU or RAM to an existing server.\par
+\b Answer: True\b0\par
+\par
+27. True or False: Horizontal Scaling involves adding more server instances to a cluster.\par
+\b Answer: True\b0\par
+\par
+28. True or False: You can run a Proxmox cluster with 2 nodes safely without extra configuration.\par
+\b Answer: False (Requires QDevice for safe quorum).\b0\par
+\par
+29. True or False: 'docker ps' shows only the containers that are currently running.\par
+\b Answer: True\b0\par
+\par
+30. True or False: A 'Private Cloud' is hosted within a company's own data center.\par
+\b Answer: True\b0\par
+\par
+\b Matching (2 x 10 Points = 20 Points)\b0\par
+\par
+31. Match the concept with its definition:\par
+Items:\par
+1. Fencing\par
+2. Quorum\par
+3. LXC\par
+4. Snapshot\par
+5. Live Migration\par
+\par
+Definitions:\par
+A. Moving a running VM between nodes without downtime.\par
+B. Majority vote required for cluster operations.\par
+C. Isolating or rebooting a failed node to protect data.\par
+D. Linux-based OS-level virtualization (containers).\par
+E. Saving the current state of a disk and RAM.\par
+\par
+\b Answer:\b0\par
+1-C, 2-B, 3-D, 4-E, 5-A\par
+\par
+32. Match the Cloud concept with its characteristic:\par
+Items:\par
+1. Multi-tenancy\par
+2. Pay-as-you-go\par
+3. PaaS\par
+4. Security Group\par
+5. Availability Zone\par
+\par
+Characteristics:\par
+A. Scalable platform for developers (e.g. Heroku).\par
+B. Operational expenditure model based on actual usage.\par
+C. Isolated data center within a cloud region.\par
+D. Multiple customers sharing the same physical hardware.\par
+E. Virtual firewall rules for cloud instances.\par
+\par
+\b Answer:\b0\par
+1-D, 2-B, 3-A, 4-E, 5-C\par
+\par
+\pard\sb100\sa100\f1\fs24\hrule\par
+\par
+\b ## Section B: Long Scenario Questions (50 Points)\b0\par
+\par
+\b Question 33: Proxmox High Availability and Clustering (25 Points)\b0\par
+\par
+\b Scenario:\b0  You are managing a 3-node Proxmox cluster (pve-01, pve-02, pve-03). You need to ensure that if one node fails, its critical VMs automatically restart on another node.\par
+\par
+1.1. What is the minimum number of nodes required in a Proxmox cluster to maintain "Quorum" without manual intervention? Explain why. [5 Points]\par
+\par
+1.2. Fencing:\par
+a) What is the purpose of "Fencing" in an HA cluster? [3 Points]\par
+b) What is the name of the software-based fencing component used in Proxmox to reboot a failed node? [2 Points]\par
+\par
+1.3. You want to mark VM 101 as "High Availability".\par
+a) What is the Proxmox CLI command (ha-manager) to add VM 101 to the HA manager? [3 Points]\par
+b) Which status code in the HA manager indicates the VM is healthy and being monitored? [2 Points]\par
+\par
+1.4. Shared Storage is a prerequisite for HA.\par
+a) Explain why local LVM storage cannot be used for HA VMs. [3 Points]\par
+b) Provide one example of a storage backend that Proxmox can use that supports cluster-wide access. [2 Points]\par
+\par
+1.5. Node Recovery: Node pve-03 lost power. After fixing the issue, you want to see the status of all nodes in the cluster. Provide the command. [5 Points]\par
+\par
+\b Answer:\b0\par
+1.1. 3 nodes. Majority (more than 50%) is needed to prevent split-brain; with 3 nodes, you can lose 1 and still have 2 votes.\par
+1.2. a) Fencing isolates or kills a failed node before others touch its disks. b) Watchdog.\par
+1.3. a) \f0\fs22 ha-manager add vm:101\f1\fs24 . b) \b started\b0 .\par
+1.4. a) Local storage is only on one disk; if the node dies, the data is gone. b) Ceph / NFS.\par
+1.5. \f0\fs22 pvecm status\f1\fs24\par
+\par
+\b Question 34: Orchestration, Containers, and Automation (20 Pts fragment - adjusted to 25)\b0\par
+\par
+\b Scenario:\b0  You are transitioning a legacy web application into a modern microservices architecture using Docker.\par
+\par
+1.1. You have a Dockerfile. You need to build an image named web-app:v1 and then run a container from it in the background, mapping host port 80 to container port 80. [5 Points]\par
+\par
+1.2. Persistence: Your app needs to save logs to the host machine at /var/log/myapp. How do you define a "Bind Mount" in the 'docker run' command to map this host directory to /app/logs inside the container? [6 Points]\par
+\par
+1.3. Docker Compose: You have a database service and a web service. Explain why you should use 'depends_on' in your docker-compose.yml file. [4 Points]\par
+\par
+1.4. Networking: How does Docker allow containers on the same host to talk to each other by their "container name"? [5 Points]\par
+\par
+1.5. Clean-up: Provide the command to remove all stopped containers and unused networks at once. [5 Points]\par
+\par
+\b Answer:\b0\par
+1.1. \f0\fs22 docker build -t web-app:v1 .\f1\fs24  then \f0\fs22 docker run -d -p 80:80 web-app:v1\f1\fs24\par
+1.2. \f0\fs22 -v /var/log/myapp:/app/logs\f1\fs24\par
+1.3. To ensure the database starts before the web server starts.\par
+1.4. Using the built-in Docker DNS server (on a user-defined bridge network).\par
+1.5. \f0\fs22 docker system prune\f1\fs24\par
+}

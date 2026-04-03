@@ -1,0 +1,239 @@
+{\rtf1\ansi\deff0
+{\fonttbl{\f0\fswiss\fcharset0 Arial;}{\f1\froman\fcharset0 Times New Roman;}}
+\viewkind4\uc1\pard\f0\fs28\b OPS3 Assessment 3: OpenStack, Kubernetes, and Cloud Orchestration (Weeks 9-11)\b0\fs24\par
+\par
+\b Total Points: 100\b0\par
+\par
+\pard\sb100\sa100\f1\fs24\b ## Section A: Short-Form Questions (50 Points)\b0\par
+\par
+\b Multiple Choice (10 x 1 Point = 10 Points)\b0\par
+\par
+1. In OpenStack, which service is responsible for managing networking (subnets, routers)?\par
+a) Nova\par
+b) Cinder\par
+c) Neutron\par
+d) Keystone\par
+\b Answer: c)\b0\par
+\par
+2. What is the smallest deployable unit in Kubernetes?\par
+a) Container\par
+b) Pod\par
+c) Node\par
+d) Namespace\par
+\b Answer: b)\b0\par
+\par
+3. Which OpenStack service provides Block Storage (Volumes)?\par
+a) Swift\par
+b) Glance\par
+c) Cinder\par
+d) Horizon\par
+\b Answer: c)\b0\par
+\par
+4. In a Kubernetes cluster, which component manages the desired state of pods (e.g., scaling)?\par
+a) kubelet\par
+b) Controller Manager\par
+c) etcd\par
+d) API Server\par
+\b Answer: b)\b0\par
+\par
+5. What is the purpose of a "Floating IP" in OpenStack?\par
+a) To speed up internal traffic\par
+b) To provide a public, routable IP address to a VM on a private network\par
+c) To encrypt the instance disk\par
+d) To replace the need for a router\par
+\b Answer: b)\b0\par
+\par
+6. Which tool is used to automate OpenStack infrastructure using YAML templates?\par
+a) Ansible\par
+b) Terraform\par
+c) HEAT (HOT)\par
+d) Jenkins\par
+\b Answer: c)\b0\par
+\par
+7. In Kubernetes, a \b _____\b0  provides a stable IP and DNS name to reach a group of pods.\par
+a) Deployment\par
+b) Service\par
+c) Ingress\par
+d) DaemonSet\par
+\b Answer: b)\b0\par
+\par
+8. Which Heat instruction defined a dependency between resources (e.g. Volume before Server)?\par
+a) wait_for\par
+b) depends_on\par
+c) after_resource\par
+d) link_to\par
+\b Answer: b)\b0\par
+\par
+9. Cloud-Init scripts run primarily at which stage of a VM lifecycle?\par
+a) Every time the user logs in\par
+b) Once, during the very first boot (provisioning)\par
+c) Only when the VM crashes\par
+d) During the shutdown process\par
+\b Answer: b)\b0\par
+\par
+10. Which command shows the status of a Heat stack?\par
+a) openstack stack list\par
+b) openstack server show\par
+c) kubectl get stacks\par
+d) heat status\par
+\b Answer: a)\b0\par
+\par
+\b Fill-in-the-Blanks (10 x 1 Point = 10 Points)\b0\par
+\par
+11. \b _____\b0  is the OpenStack service for Compute (creating and managing VMs).\par
+\b Answer: Nova\b0\par
+\par
+12. In Kubernetes, the \b _____\b0  command-line tool is used to interact with the cluster API.\par
+\b Answer: kubectl\b0\par
+\par
+13. A Cloud-Init configuration file must always start with the line \b _____\b0 .\par
+\b Answer: #cloud-config\b0\par
+\par
+14. OpenStack \b _____\b0  is the identity service used for authentication.\par
+\b Answer: Keystone\b0\par
+\par
+15. In Kubernetes, \b _____\b0  are used to limit the amount of CPU or RAM a pod can consume.\par
+\b Answer: Resource Limits (or Quotas)\b0\par
+\par
+16. The "Magic IP" \b _____\b0  is used by instances to access metadata and user-data.\par
+\b Answer: 169.254.169.254\b0\par
+\par
+17. A \b _____\b0  Load Balancer in Kubernetes distributes traffic to multiple pods.\par
+\b Answer: Service\b0\par
+\par
+18. In Heat, \b _____\b0  parameters allow the user to input values (like flavor) during stack creation.\par
+\b Answer: Parameters\b0\par
+\par
+19. \b _____\b0  is the OpenStack image service used to store VM disk templates.\par
+\b Answer: Glance\b0\par
+\par
+20. To scale a Kubernetes deployment to 5 replicas, you use the command \b kubectl _____\b0 .\par
+\b Answer: scale\b0\par
+\par
+\b True or False (10 x 1 Point = 10 Points)\b0\par
+\par
+21. True or False: OpenStack can be used to build a Private Cloud infrastructure.\par
+\b Answer: True\b0\par
+\par
+22. True or False: A Kubernetes Pod can contain more than one container.\par
+\b Answer: True\b0\par
+\par
+23. True or False: Cinder volumes are ephemeral (deleted automatically when the VM is deleted).\par
+\b Answer: False (They are persistent).\b0\par
+\par
+24. True or False: HEAT templates are written in XML format.\par
+\b Answer: False (YAML)\b0\par
+\par
+25. True or False: Cloud-Init can be used to automatically install packages like 'apache2' on boot.\par
+\b Answer: True\b0\par
+\par
+26. True or False: 'kubectl get nodes' shows all physical or virtual servers in the K8s cluster.\par
+\b Answer: True\b0\par
+\par
+27. True or False: Neutron handles the DHCP and routing for your virtual cloud networks.\par
+\b Answer: True\b0\par
+\par
+28. True or False: Rolling updates in Kubernetes ensure zero-downtime during application upgrades.\par
+\b Answer: True\b0\par
+\par
+29. True or False: You can attach a Cinder volume to two different VMs at the same time by default.\par
+\b Answer: False (Requires Multi-attach capability and cluster filesystem).\b0\par
+\par
+30. True or False: Metadata service is only available inside the cloud instance.\par
+\b Answer: True\b0\par
+\par
+\b Matching (2 x 10 Points = 20 Points)\b0\par
+\par
+31. Match the OpenStack service with its role:\par
+Items:\par
+1. Keystone\par
+2. Horizon\par
+3. Glance\par
+4. Neutron\par
+5. Nova\par
+\par
+Roles:\par
+A. VM Image Repository.\par
+B. Identity and Authentication.\par
+C. Compute/Instance Management.\par
+D. Web-based Dashboard GUI.\par
+E. Networking and Connectivity.\par
+\par
+\b Answer:\b0\par
+1-B, 2-D, 3-A, 4-E, 5-C\par
+\par
+32. Match the Orchestration concept with its definition:\par
+Items:\par
+1. Stack\par
+2. Output\par
+3. Resource\par
+4. Deployment\par
+5. NodePort\par
+\par
+Definitions:\par
+A. A single object in a template (VM, Network, Volume).\par
+B. A collection of related cloud resources managed as one.\par
+C. Exposing a K8s service on a static port on each host IP.\par
+D. Information returned to the user after stack creation.\par
+E. Kubernetes object for managing replicated pods.\par
+\par
+\b Answer:\b0\par
+1-B, 2-D, 3-A, 4-E, 5-C\par
+\par
+\pard\sb100\sa100\f1\fs24\hrule\par
+\par
+\b ## Section B: Long Scenario Questions (50 Points)\b0\par
+\par
+\b Question 33: Cloud Networking and Routing (25 Points)\b0\par
+\par
+\b Scenario:\b0  You are designing a private cloud network in OpenStack. You have an internal network private-net (10.0.1.0/24) and need to connect it to the physical external-net so your VMs can access the internet.\par
+\par
+1.1. In OpenStack, which resource sits between the private network and the external network to handle traffic routing and NAT? [4 Points]\par
+\par
+1.2. Provide the sequence of CLI commands to:\par
+a) Create a router named my-router. [2 Points]\par
+b) Set the gateway of the router to the external-net. [3 Points]\par
+\par
+1.3. Connectivity: You now need to link your private-net subnet to this router. Provide the command to add the subnet private-subnet to the router my-router. [5 Points]\par
+\par
+1.4. Troubleshooting: A VM on the private-net is "ACTIVE" and has an internal IP, but cannot reach Google (8.8.8.8).\par
+a) Name two common networking reasons why this might happen. [4 Points]\par
+b) Which command on the VM would you use to see the path the packets are taking? [2 Points]\par
+\par
+1.5. Floating IPs:\par
+a) Explain why a Floating IP is necessary for a VM on a private subnet to be reached from the internet. [3 Points]\par
+b) Provide the command to associate a floating IP (e.g., 203.0.113.10) with a VM named web-vm. [2 Points]\par
+\par
+\b Answer:\b0\par
+1.1. \b Router\b0 .\par
+1.2. a) \f0\fs22 openstack router create my-router\f1\fs24 . b) \f0\fs22 openstack router set --external-gateway external-net my-router\f1\fs24\par
+1.3. \f0\fs22 openstack router add subnet my-router private-subnet\f1\fs24\par
+1.4. a) Router missing gateway; subnet not added to router interface. b) \f0\fs22 traceroute\f1\fs24 .\par
+1.5. a) Private IPs aren't routable; FIP provides 1-to-1 NAT. b) \f0\fs22 openstack server add floating ip web-vm 203.0.113.10\f1\fs24\par
+\par
+\b Question 34: Advanced Automation and Cloud-Init (25 Points)\b0\par
+\par
+\b Scenario:\b0  You are automating the deployment of 50 web servers. Each server must be updated, have git installed, and have a specific folder created on its first boot.\par
+\par
+1.1. You are using Cloud-Init. Which mandatory "header" must be at the very top of your YAML configuration file? [4 Points]\par
+\par
+1.2. Provide the cloud-config YAML snippet to install the package git and ensure all existing packages are updated to their latest versions. [6 Points]\par
+\par
+1.3. You want to run a custom bash command to create a directory at /opt/app_data. Which Cloud-Init key is used for running arbitrary shell commands? Provide the snippet. [5 Points]\par
+\par
+1.4. Debugging: After launching a VM with User Data, the folder was not created.\par
+a) Where is the primary Cloud-Init log file located on a Linux system? [3 Points]\par
+b) Which file contains the "result"/output of the scripts that ran during boot? [2 Points]\par
+\par
+1.5. Metadata Service:\par
+a) What is the "Magic IP" address used by cloud instances to request their specific User Data? [2 Points]\par
+b) Provide the curl command a VM can run to see its own hostname from the metadata service. [3 Points]\par
+\par
+\b Answer:\b0\par
+1.1. \f0\fs22 #cloud-config\f1\fs24\par
+1.2. \f0\fs22 package_upgrade: true\par
+packages: [git]\f1\fs24\par
+1.3. \f0\fs22 runcmd\f1\fs24 . Snippet: \f0\fs22 runcmd: [ [ mkdir, -p, /opt/app_data ] ]\f1\fs24\par
+1.4. a) \f0\fs22 /var/log/cloud-init.log\f1\fs24 . b) \f0\fs22 /var/log/cloud-init-output.log\f1\fs24\par
+1.5. a) \b 169.254.169.254\b0 . b) \f0\fs22 curl http://169.254.169.254/latest/meta-data/hostname\f1\fs24\par
+}
