@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -414,7 +414,7 @@
 <p><strong><a href="index.html">Back to Course Index</a></strong></p>
 <hr />
 <h2 id="course-overview">Course Overview</h2>
-<p>This 12-week course introduces 3rd-year undergraduates to virtualization and cloud computing using Proxmox VE and OpenStack on lab PCs (i7, 24 GB RAM). Students progress from foundational virtualization concepts through to advanced cloud infrastructure management and automation. The course emphasizes hands-on labs, supplemented by theoretical notes, practical demonstrations, and real-world scenarios.</p>
+<p>This 11-week course introduces 3rd-year undergraduates to virtualization and cloud computing using Proxmox VE and OpenStack on lab PCs (i7, 24 GB RAM). Students progress from foundational virtualization concepts through to advanced cloud infrastructure management and automation. The course emphasizes hands-on labs, supplemented by theoretical notes, practical demonstrations, and real-world scenarios.</p>
 <h3 id="learning-outcomes">Learning Outcomes</h3>
 <p>By the end of the course, students will:
 1. Explain virtualization principles and hypervisor architectures (Type-1 vs Type-2)
@@ -525,12 +525,6 @@
 </ul>
 <h3 id="key-concepts_2">Key Concepts</h3>
 <ul>
-<li><strong>Containers vs. VMs</strong>: VMs emulate entire systems (including kernel); containers share the host kernel, making them lightweight and faster. Containers are ideal for microservices, development, and cloud workloads.</li>
-<li><strong>LXC (Linux Containers)</strong>: Proxmox-supported container technology for OS-level virtualization, using cgroups and namespaces for isolation.</li>
-<li><strong>Docker</strong>: Popular container platform with a daemon-based architecture (<code>dockerd</code>). Widely used in private and public clouds (e.g., AWS, OpenStack’s Zun/Magnum) for its ecosystem and Kubernetes integration. Example: <code>docker run -it ubuntu bash</code>.</li>
-<li><strong>Podman</strong>: Daemonless, rootless container engine, compatible with Docker images. Gaining traction in security-focused private clouds (e.g., Red Hat OpenStack, OpenShift). Example: <code>podman run -it ubuntu bash</code>.</li>
-<li><strong>Resource Isolation</strong>: Containers use cgroups and namespaces to isolate CPU, memory, and network resources.</li>
-<li><strong>Use Cases</strong>: Microservices, lightweight apps, development environments, and cloud-native applications (e.g., containerized web apps in OpenStack’s Magnum).</li>
 <li><strong>Cloud Relevance</strong>: Docker dominates in OpenStack (Zun for containers, Magnum for Kubernetes clusters); Podman is used in Red Hat-based clouds for security.</li>
 </ul>
 <h3 id="lecture-content_2">Lecture Content</h3>
@@ -540,7 +534,7 @@
 <li><strong>Docker and Podman</strong>: Introduce Docker’s role in clouds (e.g., OpenStack’s Zun/Magnum) and Podman’s security advantages. Highlight Docker’s dominance in public/private clouds and Podman’s rise in Red Hat environments.</li>
 <li><strong>Resource Limits</strong>: Set CPU/memory limits to prevent overuse (e.g., <code>pct set &lt;ID&gt; -cpulimit 1</code> for LXC, <code>docker run --memory 512m</code> for Docker).</li>
 <li><strong>Performance Comparison</strong>: Containers (LXC, Docker, Podman) have faster boot times and lower resource usage than VMs, critical for cloud scalability.</li>
-<li><strong>OpenStack Connection</strong>: Preview how OpenStack (Week 7–12) uses Docker for container workloads (Zun) and orchestration (Magnum), with Podman as an alternative in secure deployments.</li>
+<li><strong>OpenStack Connection</strong>: Preview how OpenStack (Week 7–11) uses Docker for container workloads (Zun) and orchestration (Magnum), with Podman as an alternative in secure deployments.</li>
 </ol>
 <h3 id="supplementary-video-resources_2">Supplementary Video Resources</h3>
 <ul>
@@ -553,7 +547,7 @@
 <h3 id="interactive-session-suggestions_2">Interactive Session Suggestions</h3>
 <ul>
 <li><strong>Face-to-Face Focus</strong>: Use student write-ups to identify container setup issues (e.g., resource limits). Demo Docker/Podman vs. LXC boot times in groups.</li>
-<li><strong>Class Discussions</strong>: Prompt “From videos, when would you use Docker vs. Podman vs. LXC in a cloud like OpenStack?” to connect to Weeks 7–12.</li>
+<li><strong>Class Discussions</strong>: Prompt “From videos, when would you use Docker vs. Podman vs. LXC in a cloud like OpenStack?” to connect to Weeks 7–11.</li>
 <li><strong>Student Presentations</strong>: Assign 1-2 students to present (5-10 min) a comparison of LXC, Docker, and Podman, focusing on cloud use cases.</li>
 </ul>
 <h3 id="assessment_2">Assessment</h3>
@@ -926,57 +920,13 @@
 <li><a href="https://docs.openstack.org/api-guide/compute/">OpenStack API</a></li>
 </ul>
 <hr />
-<h2 id="week-12-final-project-and-review">Week 12: Final Project and Review</h2>
-<h3 id="objectives_12">Objectives</h3>
-<ul>
-<li>Integrate all learned concepts into a project.</li>
-<li>Present a private cloud or service deployment.</li>
-</ul>
-<h3 id="key-concepts_12">Key Concepts</h3>
-<ul>
-<li><strong>Private Cloud</strong>: Self-contained OpenStack environment.</li>
-<li><strong>Multi-Tier Application</strong>: Web and database components.</li>
-<li><strong>Project Scope</strong>: Compute, networking, storage, automation. Optional: Include containerized apps via Zun/Magnum.</li>
-</ul>
-<h3 id="lecture-content_12">Lecture Content</h3>
-<ol>
-<li><strong>Project Overview</strong>: Requirements (networks, instances, volumes, security groups, optional containers).</li>
-<li><strong>Design Principles</strong>: Modularity, security, documentation.</li>
-<li><strong>Presentation Skills</strong>: Explain technical setups clearly.</li>
-<li><strong>Review</strong>: Recap virtualization (Proxmox) to cloud (OpenStack).</li>
-</ol>
-<h3 id="supplementary-video-resources_9">Supplementary Video Resources</h3>
-<ul>
-<li>OpenStack private cloud: <a href="https://www.youtube.com/watch?v=_gWfFEuert8">YouTube</a> (Comprehensive deployment).</li>
-<li>Multi-tier app deployment: <a href="https://www.youtube.com/watch?v=q4nFzVgU4Gc">YouTube</a> (Group-based policy for apps).</li>
-</ul>
-<h3 id="lab-reference_12">Lab Reference</h3>
-<p>Students design/deploy a mini private cloud in OpenStack, hosting a multi-tier application with automation (bonus). Optional: Deploy containerized app using Zun/Magnum.</p>
-<h3 id="interactive-session-suggestions_9">Interactive Session Suggestions</h3>
-<ul>
-<li><strong>Face-to-Face Focus</strong>: Provide feedback on project drafts; highlight integration challenges (e.g., containers).</li>
-<li><strong>Class Discussions</strong>: Group review of course concepts.</li>
-<li><strong>Student Presentations</strong>: All students present projects (15% weight), explaining designs/demos.</li>
-</ul>
-<h3 id="assessment_12">Assessment</h3>
-<ul>
-<li>System design/documentation (25%)</li>
-<li>Functioning deployment (50%)</li>
-<li>Presentation/explanation (15%)</li>
-<li>Innovation/automation (10%)</li>
-</ul>
-<h3 id="resources_9">Resources</h3>
-<ul>
-<li><a href="https://docs.openstack.org/">OpenStack Tutorials</a></li>
-<li><a href="https://pve.proxmox.com/wiki/Main_Page">Proxmox VE Guide</a></li>
-</ul>
 <hr />
 <h2 id="instructor-notes">Instructor Notes</h2>
 <ul>
 <li><strong>Lab Setup</strong>: Ensure lab PCs (i7, 24 GB RAM) support nested virtualization. Pre-install Proxmox ISOs, Ubuntu images, and Docker/Podman for Week 3 optional labs.</li>
-<li><strong>Pacing</strong>: Weeks 1–6 (virtualization), 7–12 (cloud). Adjust lab time per student progress.</li>
+<li><strong>Pacing</strong>: Weeks 1–6 (virtualization), 7–11 (cloud). Adjust lab time per student progress.</li>
 <li><strong>Interactivity</strong>: Require pre-session prep (notes, videos, labs). Use polls (e.g., Mentimeter) for engagement. Track student presentations for participation.</li>
-<li><strong>Week 3 Note</strong>: Docker/Podman content prepares students for OpenStack’s container services (Zun, Magnum) in Weeks 7–12. Emphasize Docker’s prevalence in clouds and Podman’s security benefits.</li>
+<li><strong>Week 3 Note</strong>: Docker/Podman content prepares students for OpenStack’s container services (Zun, Magnum) in Weeks 7–11. Emphasize Docker’s prevalence in clouds and Podman’s security benefits.</li>
 <li><strong>Week 4 Note</strong>: Linux networking content is foundational for Proxmox labs. Encourage students to practice <code>ip</code> commands and namespace exercises before labs.</li>
 <li><strong>Optional Enhancements</strong>:</li>
 <li>Use Git for lab submissions.</li>
@@ -1003,7 +953,7 @@
 <li><strong>Week 3 Revisions</strong>: Added Docker and Podman to complement LXC, focusing on Docker’s dominance in private/public clouds (e.g., OpenStack’s Zun/Magnum) and Podman’s security benefits in Red Hat environments. Optional lab tasks include running Docker/Podman containers to prepare for OpenStack labs.</li>
 <li><strong>Week 4</strong>: Retained comprehensive Linux networking content (<code>ip</code> command, namespaces, bridges, veth, VLANs, OVS) to ensure a strong foundation for Proxmox networking labs.</li>
 <li><strong>Week 7</strong>: Included containers (Docker/Podman) in OpenStack context to bridge Week 3 and cloud lessons.</li>
-<li><strong>12-Week Structure</strong>: Maintained by streamlining Docker/Podman content to focus on essentials, keeping LXC primary for Proxmox labs.</li>
+<li><strong>11-Week Structure</strong>: Maintained by streamlining Docker/Podman content to focus on essentials, keeping LXC primary for Proxmox labs.</li>
 </ul>
     </article>
 </main>
