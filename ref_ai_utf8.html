@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Student Notes - AI Course</title>
+    
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: { sans: ['Inter', 'sans-serif'] },
+                colors: {
+                    primary: '#002F6E', // VUT Midnight Blue
+                    secondary: '#c9984a', // Gold
+                    background: '#f8fafc',
+                    card: '#ffffff',
+                },
+                typography: {
+                    DEFAULT: {
+                        css: {
+                            color: '#334155',
+                            maxWidth: '100%',
+                            h1: { color: '#002F6E' },
+                            h2: { color: '#c9984a', borderBottom: '2px solid #c9984a', paddingBottom: '0.5rem' },
+                            h3: { color: '#002F6E' },
+                            a: { color: '#002F6E', '&:hover': { color: '#c9984a' } },
+                            blockquote: { borderLeftColor: '#c9984a', backgroundColor: 'rgba(201, 152, 74, 0.1)', color: '#475569' },
+                            code: { color: '#d63384', backgroundColor: '#f1f5f9', borderRadius: '0.25rem', padding: '0.2rem 0.4rem' },
+                            'code::before': { content: '""' },
+                            'code::after': { content: '""' }
+                        }
+                    },
+                    dark: {
+                        css: {
+                            color: '#cbd5e1',
+                            h1: { color: '#38bdf8' }, // Sky 400
+                            h2: { color: '#c9984a' },
+                            h3: { color: '#38bdf8' },
+                            a: { color: '#38bdf8', '&:hover': { color: '#c9984a' } },
+                            blockquote: { borderLeftColor: '#c9984a', backgroundColor: 'rgba(201, 152, 74, 0.1)', color: '#94a3b8' },
+                            code: { color: '#f472b6', backgroundColor: '#1e293b' }
+                        }
+                    }
+                }
+            }
+        }
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            iconSun.classList.remove('hidden');
+            iconMoon.classList.add('hidden');
+        } else {
+            html.classList.remove('dark');
+            iconSun.classList.add('hidden');
+            iconMoon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+            }
+        });
+    });
+</script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codejar/1.0.0/codejar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Glossary Tooltip */
+        .glossary-term { color: #c9984a; border-bottom: 2px dotted #c9984a; cursor: help; position: relative; text-decoration: none; }
+        .glossary-term:hover { color: #002F6E; }
+        html.dark .glossary-term:hover { color: #ffffff; }
+
+        /* OPS3-Style Code Blocks (VUT Theme) */
+        pre {
+            background: #0f0f0f !important;
+            border-left: 4px solid #c9984a !important; /* VUT Gold */
+            padding: 20px !important;
+            margin: 20px 0 !important;
+            border-radius: 5px !important;
+            overflow-x: auto !important;
+            font-size: 1.1em !important;
+            line-height: 1.5 !important;
+            /* color removed to support highlight.js */
+        }
+        code {
+            font-family: 'Courier New', monospace !important;
+        }
+        /* Override prose defaults */
+        .prose pre {
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 pt-20 transition-colors duration-300">
+    
+<nav class="fixed top-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-sm z-50 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+    <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+        <a href="../index.html" class="flex items-center space-x-3 text-slate-900 dark:text-white hover:text-blue-600 transition-colors no-underline">
+            <div class="flex flex-col">
+                <span class="font-bold text-lg leading-tight tracking-tight text-primary dark:text-sky-400 hidden sm:block">Artificial Intelligence
+                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">AI Module 2026</span>
+                </span>
+            </div>
+        </a>
+        <div class="flex items-center space-x-6">
+            <a href="../index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">Course Home</a>
+            <a href="../glossary.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors no-underline">Glossary</a>
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <svg id="icon-sun" class="w-5 h-5 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="icon-moon" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+    
+    <main class="container mx-auto px-4 max-w-5xl mb-12">
+        <article class="prose lg:prose-lg dark:prose-invert max-w-none bg-white dark:bg-slate-800 p-6 md:p-12 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            
+<div class="flex items-stretch bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-8 overflow-hidden">
+    <div class="w-48 flex-shrink-0 flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 p-4">
+        <div class="w-32 h-32 rounded-full bg-primary border-4 border-secondary flex items-center justify-center shadow-lg mb-2 overflow-hidden">
+            <img src="../images/week_8_icon.png" class="h-full w-full object-contain p-4 grayscale invert mix-blend-screen" alt="Icon">
+        </div>
+        <span class="text-sm font-black text-slate-400 uppercase tracking-widest">WEEK 8</span>
+    </div>
+    <div class="flex-1 flex flex-col items-center justify-center p-6 text-center">
+        <h1 class="text-3xl font-bold text-secondary m-0">Convolutional Neural Networks (CNNs)</h1>
+        <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1"></span>
+    </div>
+</div>
+
+            
+            
+
+<div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300"><svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><div class="flex-1 text-sm md:text-base [&>p]:!m-0"><p><strong>Course</strong>: Computer Systems Engineering<br />
+<strong>Module</strong>: Artificial Intelligence (AI)<br />
+<strong>Topic</strong>: Convolutional Neural Networks (CNNs) with TensorFlow & Keras<br />
+<strong>Estimated Reading Time</strong>: 40 Minutes</p></div></div>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300"><svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 0 117.072 0l-.548 5.478a1 1 0 01-1.636 0L9.663 17z"></path></svg><div class="flex-1 text-sm md:text-base"><strong>Learning Outcomes</strong><br />
+By the end of this chapter, you will be able to:<br />
+1.  <strong>Explain</strong> the limitations of Dense Networks for image data.<br />
+2.  <strong>Describe</strong> the mechanics of Convolution and Pooling layers.<br />
+3.  <strong>Calculate</strong> the output shape of a tensor passing through a CNN.<br />
+4.  <strong>Implement</strong> the classic LeNet-5 architecture in Keras.</p></div></div>
+<!-- break -->
+
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300"><svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><div class="flex-1 text-sm md:text-base"><strong>Week 8 Goal</strong>:<br />
+Last week, we introduced the concept of the Neural Network. This week, we transition to professional tools. We will build upon the <strong>TensorFlow and Keras</strong> skills you learned last week. By leveraging the high-level Keras API, we can focus entirely on architecture rather than low-level calculus. We will use this power to build a <strong>Convolutional Neural Network (CNN)</strong>, the architecture that revolutionized computer vision.</p></div></div>
+<h2>1. Convolutional Neural Networks (CNNs) Theory</h2>
+<p>Traditional Fully Connected Networks (like the one we built previously) face significant challenges when processing images. First, they ignore spatial structure; treating a pixel at coordinate (0,0) and (0,1) as completely independent inputs involves losing valuable contextual information. Second, they suffer from a parameter explosion. Connecting a standard 1000x1000 pixel image to a hidden layer of just 100 neurons would require 100 million weights, making training computationally prohibitive and prone to overfitting.</p>
+
+<h3>1.1 Biological Inspiration: The Visual Cortex</h3>
+<p>CNNs are inspired by the architecture of the biological visual cortex. In the late 1950s, researchers <strong>David Hubel and Torsten Wiesel</strong> discovered that neurons in the visual cortex have a small <strong>local receptive field</strong>, meaning they only react to visual stimuli in a specific, limited region of the visual field.</p>
+<p>Some neurons fire only when they see vertical lines, others horizontal lines, and others still at specific angles. Modern CNNs mimic this by using small filters that "scan" the image for local patterns before aggregating them into complex objects.</p>
+
+<h3>1.2 The Mechanics: Filters and Convolutions</h3>
+<p>A CNN uses a <strong>Filter</strong> (or Kernel)—a small matrix, typically 3x3 or 5x5. This filter slides across the image, performing element-wise multiplication and summation. The result is a <strong>Feature Map</strong>, which highlights where specific patterns (edges, textures) occur.</p>
+<p><img alt="Figure 1: Convolution Operation" src="images/convolution_operation.png" /><br />
+<em>Figure 1: Convolution Operation. A 3x3 filter slides across the input image to produce feature maps.</em></p>
+
+<h3>1.3 Stride and Padding</h3>
+<p>Control of the output dimensions is managed by two critical hyperparameters:</p>
+<ul>
+    <li><strong>Stride ($S$)</strong>: The distance the filter moves at each step. A stride of 1 moves one pixel at a time. A stride of 2 skips a pixel, effectively halving the output width and height.</li>
+    <li><strong>Padding ($P$)</strong>: Because filters have width, they "lose" pixels at the edges of an image.
+        <ul>
+            <li><strong>VALID Padding</strong>: No padding is used. The output is smaller than the input.</li>
+            <li><strong>SAME Padding</strong>: Zeros are added around the border so the output size matches the input size.</li>
+        </ul>
+    </li>
+</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300"><svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 0 117.072 0l-.548 5.478a1 1 0 01-1.636 0L9.663 17z"></path></svg><div class="flex-1 text-sm md:text-base"><strong>Math Foundation: Calculation Output Size</strong><br />To calculate the output dimension ($O$) of a layer, use this formula:<br />
+    $$ O = \lfloor \frac{W - K + 2P}{S} \rfloor + 1 $$<br />
+    Where $W$ is input size, $K$ is kernel size, $P$ is padding, and $S$ is stride.</div></div>
+
+<h3>1.4 Pooling (Downsampling)</h3>
+<p>Once features are detected, exact location becomes less important than relative position. <strong>Pooling</strong> layers reduce the spatial dimensions of the feature maps, typically by keeping only the maximum value in a small window (Max Pooling).</p>
+<p><img alt="Figure 2: Max Pooling Operation" src="images/pooling_operation.png" /><br />
+<em>Figure 2: Max Pooling Operation. A 2x2 window slides across the feature map, keeping only the maximum value to reduce spatial dimensions.</em></p>
+
+<h3>1.5 The Unified Block: Conv, ReLU, Pool</h3>
+<p>A standard CNN layer is actually a functional unit consisting of three steps:</p>
+<ul>
+    <li><strong>Convolution</strong>: Feature extraction (linear).</li>
+    <li><strong>ReLU</strong>: Activation (non-linear).</li>
+    <li><strong>Pooling</strong>: Spatial reduction.</li>
+</ul>
+<p>A network learns deep features by stacking these blocks: Level 1 finds edges $\to$ Level 2 finds shapes $\to$ Level 3 finds objects.</p>
+
+<hr />
+
+<h2>2. Deep Computer Vision with Keras</h2>
+<p>Now that we understand the theory, we can implement these components efficiently using the high-level Keras API.</p>
+
+<h3>2.1 Image Data Dimensions (Channel-Last)</h3>
+<p>TensorFlow and Keras use the <strong>Channel-Last</strong> convention:</p>
+<ul>
+<li><strong>Grayscale Image</strong>: <code>[Height, Width, 1]</code></li>
+<li><strong>Color Image</strong>: <code>[Height, Width, 3]</code></li>
+<li><strong>Batch of Images</strong>: <code>[BatchSize, Height, Width, Channels]</code></li>
+</ul>
+
+<h3>2.2 The Conv2D Layer</h3>
+<p>In Keras, the convolution operation is handled by <code>layers.Conv2D</code>.</p>
+<pre><code class="language-python">from tensorflow.keras import layers
+
+# Creating a Convolutional Layer
+conv_layer = layers.Conv2D(
+    filters=32,            # Number of feature maps to output
+    kernel_size=(3, 3),    # Size of the sliding window
+    padding='same',        # Keep output size same as input
+    activation='relu',     # Apply ReLU directly
+    input_shape=(28, 28, 1) 
+)
+</code></pre>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300"><svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><div class="flex-1 text-sm md:text-base"><strong>Code Breakdown:</strong><br />
+<code>filters=32</code> — the layer will learn <strong>32 different patterns</strong> simultaneously.<br />
+<code>kernel_size=(3, 3)</code> — standard filter size.<br />
+<code>padding='same'</code> — tells Keras to add zero-padding so the image doesn't shrink.<br />
+<code>activation='relu'</code> — non-linearity used to detect complex features.</div></div>
+
+<h3>2.3 The MaxPooling2D Layer</h3>
+<pre><code class="language-python"># Creating a Max Pooling Layer
+pool_layer = layers.MaxPooling2D(
+    pool_size=(2, 2)       # Reduces spatial dimensions by half
+)
+</code></pre>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300"><svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><div class="flex-1 text-sm md:text-base"><strong>Code Breakdown:</strong><br />
+<code>pool_size=(2, 2)</code> — looks at 2×2 blocks and keeps only the maximum value, reducing the data by 75%.</div></div>
+
+<h3>2.4 Flatten & Dense Layers</h3>
+<pre><code class="language-python">flatten_layer = layers.Flatten()
+dense_layer = layers.Dense(10, activation='softmax')
+</code></pre>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300"><svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 0 117.072 0l-.548 5.478a1 1 0 01-1.636 0L9.663 17z"></path></svg><div class="flex-1 text-sm md:text-base"><strong>Key Insight — The Bridge Between Spatial and Linear:</strong><br />
+<code>layers.Flatten()</code> collapses every value in the 3D feature volume into a single long 1D array. If your last pooling layer outputs shape <code>[5, 5, 16]</code>, Flatten produces a vector of length 5×5×16 = <strong>400</strong>. The subsequent <code>layers.Dense(10, activation='softmax')</code> treats each of those 400 values as an independent feature and learns a weighted vote for each of the 10 digit classes.</div></div>
+<p>This repeated pattern (<code>Conv -&gt; ReLU -&gt; Pool</code>) allows the network to learn increasingly abstract representations. The first block might find "Edges"; the second block finds "Shapes" (circles, squares); the third block finds "Objects" (eyes, wheels).</p>
+<p><img alt="Figure 3: CNN Feature Hierarchy" src="images/cnn_feature_hierarchy.png" /><br />
+<em>Figure 3: Hierarchical Feature Learning. CNNs learn increasingly complex features: Level 1 detects edges, Level 2 detects shapes, Level 3 detects objects.</em></p>
+<hr />
+<h2>3. Understanding Shapes: The Flow of Tensors</h2>
+<p>The #1 error beginners face in <strong>TensorFlow/Keras</strong> is a <strong>Shape Mismatch</strong>. You must understand how the dimensions of your data change as it flows through the network.</p>
+<h3>3.1 The Transformation Chain</h3>
+<p>Imagine we are processing a standard MNIST image (Grayscale, 28x28 pixels).<br />
+1.  <strong>Input</strong>: <code>[1, 28, 28]</code> (1 Channel, 28 Height, 28 Width).<br />
+2.  <strong>Pass through Conv Layer (k=5, padding="same")</strong>: The number of channels increases (we find multiple features), but the height/width stays roughly the same. -&gt; <code>[28, 28, 6]</code> (6 Feature Maps).<br />
+3.  <strong>Pass through Pool Layer (2x2)</strong>: The spatial dimensions are cut in half. -&gt; <code>[14, 14, 6]</code>.<br />
+4.  <strong>Repeat</strong>: Another Conv/Pool block might take us to -&gt; <code>[5, 5, 16]</code>.</p>
+<h3>3.2 The Flattening Problem</h3>
+<p>At the end of the feature extraction, we have a 3D volume of data (<code>5 height x 5 width x 16 channels</code>). But our final Classifier (Fully Connected Layer) expects a flat list of numbers (a 1D Vector).<br />
+Before we can classify, we must <strong>Flatten</strong> the tensor:<br />
+$$ 16 \times 5 \times 5 = 400 $$<br />
+Our 1D Vector will have a length of 400. This is why you will see <code>layers.Flatten()</code> in the code. If you calculate this number wrong, your code will crash.</p>
+<hr />
+<h2>4. The Architecture: LeNet-5</h2>
+<p>Proposed by Yann LeCun in 1998, <strong>LeNet-5</strong> is the foundational architecture of modern computer vision. It was originally designed to recognize handwritten zip codes on mail.</p>
+<p>The architecture follows a funnel-like structure. It begins with <strong>Convolutional Layers</strong> to extract features, followed by <strong>Pooling Layers</strong> to compress the data. This process is repeated to extract higher-level features. Finally, the spatially compressed feature maps are flattened into a 1D vector and passed through <strong>Fully Connected Layers</strong> to perform the final classification. We will implement this classic structure—Conv, Pool, Conv, Pool, Linear, Output—to solve the MNIST classification problem.</p>
+<p><img alt="Figure 4: LeNet-5 Architecture" src="images/lenet_architecture.png" /><br />
+<em>Figure 4: LeNet-5 Architecture. The network processes a 28x28 input image through convolutional and pooling layers, then flattens and classifies via fully connected layers to output 10 class predictions.</em></p>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300"><svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><div class="flex-1 text-sm md:text-base"><strong>ReLU Mechanic</strong>: Mathematically, the derivative of ReLU is 1 for positive inputs and 0 for negative inputs, which explains both its efficiency and the risk of "dead neurons".</p></div></div>
+<hr />
+<h2>5. Lab Preview: LeNet in Keras</h2>
+<p>In this week's lab, we will implement the LeNet-5 architecture using TensorFlow/Keras.</p>
+<ol>
+<li><strong>Define the Network</strong>: You will create a class that inherits from <code>models.Sequential()</code>, stacking layers like <code>Conv2D</code> and <code>Dense</code> in the constructor.</li>
+<li><strong>Forward Pass</strong>: Keras handles the forward pass automatically based on layer order.</li>
+<li><strong>Training</strong>: You will use <code>model.compile()</code> to define an optimizer and <code>model.fit()</code> to train the network.</li>
+</ol>
+<p>This lab demonstrates the massive productivity gain provided by modern Deep Learning frameworks.</p>
+<hr />
+<h2>6. Summary</h2>
+<p>We expanded our framework toolkit to include Convolutional layers in TensorFlow/Keras. We introduced the Convolutional Neural Network, which uses filters and pooling to efficiently process image data. This week's lab will generate a fully functional LeNet-5 model, capable of reading handwritten digits with high accuracy.</p>
+            
+            
+<div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_8_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
+
+        </article>
+    </main>
+
+    <footer class="text-center text-slate-500 dark:text-slate-400 text-sm pb-24">
+        Vaal University of Technology - AI Module 2026
+    </footer>
+
+    
+<div class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 dark:bg-slate-900/90 backdrop-blur border border-gray-200 dark:border-gray-700 rounded-full shadow-2xl px-6 py-2 flex items-center space-x-8 z-50">
+    
+                        <a href="../Week%207%20-%20Neural%20Networks%20&%20Deep%20Learning%20Basics/Week_7_Student_Notes.html" class="group flex flex-col items-center hover:text-primary dark:hover:text-sky-400 transition-colors">
+                            <div class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 mb-1">
+                                <svg class="w-6 h-6 text-slate-400 group-hover:text-primary dark:group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                            </div>
+                            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider group-hover:text-primary dark:group-hover:text-sky-400">Week 7</span>
+                        </a>
+                        
+    
+    <a href="../index.html" class="group relative flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-lg border-2 border-secondary group-hover:scale-110 transition-transform">
+             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        </div>
+        <span class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Course Index</span>
+    </a>
+
+    
+                        <a href="../Week%209%20-%20Natural%20Language%20Processing%20(NLP)/Week_9_Student_Notes.html" class="group flex flex-col items-center hover:text-primary dark:hover:text-sky-400 transition-colors">
+                            <div class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 mb-1">
+                                <svg class="w-6 h-6 text-slate-400 group-hover:text-primary dark:group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
+                            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider group-hover:text-primary dark:group-hover:text-sky-400">Week 9</span>
+                        </a>
+                        
+</div>
+
+</body>
+</html>

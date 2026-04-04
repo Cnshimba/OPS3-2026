@@ -460,15 +460,23 @@
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
 </span></div>
 </div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Automation and Cloud <a class="glossary-term" href="../glossary.html#API">API<span class="glossary-tooltip">Application Programming Interface</span></a>
-<strong>Estimated Reading Time</strong>: 30 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-Automation is what separates a cloud engineer from a sysadmin. Focus on understanding APIs and —clicking buttons doesn't scale, but code does.</p>
-</blockquote>
+<div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base [&>p]:!m-0">
+        <p><strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: Automation and Cloud API<br />
+        <strong>Estimated Reading Time</strong>: 30 Minutes</p>
+    </div>
+</div>
+
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 0 117.072 0l-.548 5.478a1 1 0 01-1.636 0L9.663 17z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:<br />
+        Automation is what separates a cloud engineer from a sysadmin. Focus on understanding APIs — clicking buttons doesn't scale, but code does.
+    </div>
+</div>
 <hr/>
 <h2 id="welcome-to-devops">Welcome to DevOps</h2>
 <p>Clicking GUI buttons is fine for 1 server. It fails for 100 servers. This creates a scalability bottleneck that manual administration simply cannot overcome.</p>
@@ -512,8 +520,13 @@ In the example above, the <code>-f json</code> flag forces OpenStack platform to
 <em>Figure 1: Pet vs Cattle - Manual "Pet" servers require constant care, while Automated "Cattle" servers are replaceable and identical</em></p>
 <p><strong>Golden Images (Mutable/Baked)</strong> involve installing all application dependencies—such as Apache, PHP, and custom code—into the Virtual Machine image <em>before</em> it is ever launched. This is typically done using tools like Packer. The primary advantage is speed; since the software is pre-installed, the VM - is ready almost instantly upon boot. However, this method suffers from "Image Sprawl," where every minor code change requires building and uploading a new multi-gigabyte image to Glance platform image service , consuming storage and bandwidth.</p>
 <p><strong>Post-Boot Configuration (Immutable/Runtime)</strong> takes a different approach. You launch a generic, "Vanilla" operating system image (like Ubuntu Cloud Image) and use automation tools to install software <em>after</em> the instance boots. While this results in a slower initial startup time as packages are downloaded and installed, it offers superior flexibility. A single small base image can serve thousands of different purposes. Modern cloud architecture typically favors a <strong>Hybrid Approach</strong>, using a base image for the OS and tools like Ansible for the final application configuration.</p>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>: JSON is the lingua franca of Cloud APIs, providing a structured format that is difficult for humans to read but trivial for machines to parse. To work effectively with this data in a shell environment, <code>jq</code> is an essential tool for extracting specific fields like resource IDs. Before writing any automation script, a cloud engineer must master the ability to retrieve clean, predictable data programmatically rather than relying on brittle text parsing methods like <code>grep</code>.</p>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong><br />
+        JSON is the lingua franca of Cloud APIs, providing a structured format that is trivial for machines to parse. To work effectively, <code>jq</code> is an essential tool for extracting specific fields like resource IDs. Before writing any automation, a cloud engineer must master programmatically retrieving clean, predictable data.
+    </div>
+</div>
 <p><strong>Reflection</strong>: Consider why <code>grep</code> is a poor choice for parsing JSON data; a simple change in line breaks or spacing could break a script, whereas <code>jq</code> parses the data structure itself. Also, recall that the <code>-r</code> flag in <code>jq</code> strips quotes from the output, which is essentially when passing values to other CLI commands.</p>
 <p><strong>Resources</strong>:
 <a href="https://stedolan.github.io/jq/tutorial/">jq Tutorial</a></p>
@@ -609,8 +622,13 @@ This pattern instructs the system to upgrade all installed packages on boot. Use
 <li><strong><code>/var/log/cloud-init.log</code></strong>: The high-level log of what cloud-init attempted to do.</li>
 <li><strong><code>/var/log/cloud-init-output.log</code></strong>: The raw stdout/stderr of your scripts. If your <code>apt-get install</code> failed, the error message will be here.</li>
 </ul>
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>: Cloud-Init is the bridge between a generic OS image and a functional server. It relies on a <strong>Datasource</strong> (Metadata Service) to fetch configuration. It executes in strict <strong>Stages</strong> (Init -&gt; Config -&gt; Final) to ensure the network is ready before attempting to install software. Debugging automation failures requires inspecting the logs inside the VM - , as errors here rarely stop the instance from booting.</p>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 0 117.072 0l-.548 5.478a1 1 0 01-1.636 0L9.663 17z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong><br />
+        Cloud-Init is the bridge between a generic OS image and a functional server. It relies on a <strong>Datasource</strong> to fetch configuration and executes in strict <strong>Stages</strong> (Init &rarr; Config &rarr; Final) to ensure the network is ready before Attempting to install software.
+    </div>
+</div>
 <p><strong>Reflection</strong>: Why is the "Magic IP" (<code>169.254.169.254</code>) accessible from inside the VM - without any internet access? (Hint: It is a Link-Local address routed explicitly by the Hypervisor/Neutron platform networking service ).</p>
 <p><strong>Resources</strong>:
 <a href="https://cloud-init.io/">Cloud-Init Documentation</a></p>
@@ -682,11 +700,14 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="k">for <span class="n">server <span class="ow">in <span class="n">servers<span class="p">:
  <span class="nb">print<span class="p">(<span class="sa">f<span class="s2">"ID: <span class="si">{<span class="n">server<span class="o">.<span class="n">id<span class="si">}<span class="s2"> | Name: <span class="si">{<span class="n">server<span class="o">.<span class="n">name<span class="si">}<span class="s2"> | Status: <span class="si">{<span class="n">server<span class="o">.<span class="n">status<span class="si">}<span class="s2">"<span class="p">)
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Code Analysis</strong>:
-* <code>conn.compute.servers()</code>: Returns a "generator" (an iterable list) of Server objects.
-* <code>server.name</code>: We access the data using dot-notation, which is type-safe and cleaner than <code>grep</code>.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Code Analysis</strong>:<br />
+        • <code>conn.compute.servers()</code>: Returns a generator (iterable list) of Server objects.<br />
+        • <code>server.name</code>: Access data using dot-notation, which is cleaner than manual string parsing.
+    </div>
+</div>
 <h3 id="323-creating-resources-the-clean-way">3.2.3 Creating Resources (The Clean Way)</h3>
 <p>Creating a server in Python allows us to wrap the logic in a <strong>Try/Except</strong> block to handle failures (like Quota errors) gracefully.</p>
 <div class="codehilite"><pre><span><code><span class="k">try<span class="p">:
@@ -704,12 +725,15 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="k">except <span class="ne">Exception <span class="k">as <span class="n">e<span class="p">:
  <span class="nb">print<span class="p">(<span class="sa">f<span class="s2">"Failed to create server: <span class="si">{<span class="n">e<span class="si">}<span class="s2">"<span class="p">)
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Code Analysis</strong>:
-* <code>create_server()</code>: Accepts arguments as standard Python types (Strings, Lists).
-* <code>wait_for_server()</code>: A helper function that pauses the script until the server enters the <code>ACTIVE</code> state, replacing manual <code>sleep</code> loops.
-* <code>try/except</code>: If the cloud is full or the network ID is wrong, the script captures the error and prints a friendly message instead of crashing with a stack trace.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Code Analysis</strong>:<br />
+        • <code>create_server()</code>: Accepts arguments as standard Python types.<br />
+        • <code>wait_for_server()</code>: Pauses the script until the server is <code>ACTIVE</code>, replacing manual loops.<br />
+        • <code>try/except</code>: Captures errors (like Quotas) and prints friendly messages instead of crashing.
+    </div>
+</div>
 <hr/>
 <h2 id="4-infrastructure-as-code-heat-vs-terraform">4. : Heat vs Terraform</h2>
 <p>The distinction between "Imperative" scripts (Bash) and "Declarative" (IaC ) is fundamental. Imperative tools describe <em>how</em> to achieve a task step-by-step, whereas Declarative tools describe the desired <em>end state</em>, leaving the "how" to the engine.</p>
@@ -729,14 +753,22 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="w"> <span class="na">flavor_name<span class="w"> <span class="o">=<span class="w"> <span class="s2">"m1.small"
 <span class="p">}
 </span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Comparison</strong>:
-* <strong>Heat</strong>: Uses <code>type: OS::Nova::Server</code> and nested properties.
-* <strong>Terraform</strong>: Uses <code>resource "type" "name"</code> and <code>=</code> assignment syntax. Both achieve the exact same result.</p>
-<p><strong>Note</strong>: In this course, we focus on <strong>Heat</strong> because it requires no external setup and allows you to understand the underlying OpenStack platform resource model directly. However, in a multi-cloud professional environment, <strong>Terraform</strong> is the tool you will most likely encounter.</p>
-</blockquote>
-<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
-<p><strong>Summary</strong>: We have moved from <strong>Imperative</strong> scripts, where we define strict procedural steps, to <strong>Declarative</strong> IaC , where we define the target architecture. A critical property of these modern tools is <strong>Idempotency</strong>—the ability to execute the same script multiple times without causing errors or duplicating resources. If the resource already exists in the desired state, the tool simply does nothing.</p>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Comparison</strong>:<br />
+        • <strong>Heat</strong>: Uses <code>type: OS::Nova::Server</code> and nested properties.<br />
+        • <strong>Terraform</strong>: Uses <code>resource "type" "name"</code> and <code>=</code> assignment syntax.<br />
+        <strong>Note</strong>: We focus on <strong>Heat</strong> as it's native to OpenStack, but <strong>Terraform</strong> is the dominant industry standard for multi-cloud.
+    </div>
+</div>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 4 Checkpoint</strong><br />
+        We have transitioned from <strong>Imperative</strong> procedural steps to <strong>Declarative</strong> IaC. These tools are <strong>Idempotent</strong>, meaning they only act if the resource isn't already in the desired state.
+    </div>
+</div>
 <p><strong>Reflection</strong>: Consider why a company using multiple cloud providers (e.g., AWS and on-prem OpenStack platform ) would prefer Terraform over Heat. Also, think about the consequences of removing a resource definition from a Terraform file or Heat template - image for quick deployment ; unlike a script which simply stops running, IaC tools will actively destroy the resource to ensure the real world matches your definition.</p>
 <hr/>
 <h2 id="5-orchestration-with-heat-the-template-engine">5. Orchestration with Heat (The Template - image for quick deployment Engine)</h2>
@@ -761,12 +793,15 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="nt">outputs<span class="p">:
 <span class="w"> <span class="c1"># Return values defined here
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Structure Analysis</strong>:
-* <strong>Version</strong>: Always required. Defines the syntax version (HOT 2018-08-31 is standard for Queens/Rocky releases).
-* <strong>Parameters</strong>: Variables passed <em>in</em> (Input).
-* <strong>Outputs</strong>: Variables passed <em>out</em> (Return values).</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Structure Analysis</strong>:<br />
+        • <strong>Version</strong>: Required. HOT 2018-08-31 is standard for Queens/Rocky.<br />
+        • <strong>Parameters</strong>: Variables passed <em>in</em> (Input).<br />
+        • <strong>Outputs</strong>: Variables passed <em>out</em> (Return values).
+    </div>
+</div>
 <h3 id="52-building-blocks-primitives">5.2 Building Blocks (Primitives)</h3>
 <p>Rather than writing a massive script immediately, let's look at how to create individual components.</p>
 <p><strong>Creating a Network</strong></p>
@@ -776,13 +811,15 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="w"> <span class="nt">properties<span class="p">:
 <span class="w"> <span class="nt">name<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">deep-dive-net
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Resource Analysis</strong>:
-* <code>resources</code>: The top-level keyword indicating the start of the infrastructure definition block.
-* <code>my_private_net</code>: The <strong>Logical ID</strong> (Variable Name) used to reference this resource elsewhere in the template - image for quick deployment .
-* <code>type</code>: The specific OpenStack platform resource class (e.g., <code>OS::Neutron::Net</code>).
-* <code>properties</code>: Configuration specific to that resource (like the network name).</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Resource Analysis</strong>:<br />
+        • <code>my_private_net</code>: The <strong>Logical ID</strong> used for internal references.<br />
+        • <code>type</code>: Specific class (e.g., <code>OS::Neutron::Net</code>).<br />
+        • <code>properties</code>: Specific configuration like the network name.
+    </div>
+</div>
 <p><strong>Creating a Security Group</strong></p>
 <div class="codehilite"><pre><span><code><span class="nt">resources<span class="p">:
 <span class="w"> <span class="nt">my_security_group<span class="p">:
@@ -794,13 +831,14 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="w"> <span class="nt">port_range_max<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">80
 <span class="w"> <span class="nt">remote_ip_prefix<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0/0
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Resource Analysis</strong>:
-* <code>rules</code>: OpenStack platform Security Groups are <strong>Default Deny</strong>. No traffic is allowed unless explicitly permitted here.
-* <code>protocol</code>: The definition (tcp, udp, icmp).
-* <code>port_range_min/max</code>: The port range (80 to 80 means just port 80).
-* <code>remote_ip_prefix</code>: Defines <strong>Who</strong> can access this port (The Source). <code>0.0.0.0/0</code> is CIDR notation for "The entire internet." For specific networks, you would use something like <code>192.168.1.0/24</code>.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Security Analysis</strong>:<br />
+        • <strong>Default Deny</strong>: No traffic is allowed unless explicitly permitted.<br />
+        • <strong>CIDR Notation</strong>: <code>0.0.0.0/0</code> means "The entire internet," while <code>192.168.1.0/24</code> limits access to a specific network.
+    </div>
+</div>
 <p><strong>Creating a Block Storage Volume</strong></p>
 <div class="codehilite"><pre><span><code><span class="nt">resources<span class="p">:
 <span class="w"> <span class="nt">my_data_volume<span class="p">:
@@ -809,13 +847,14 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="w"> <span class="nt">size<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">10
 <span class="w"> <span class="nt">name<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">db_data
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Resource Analysis</strong>:
-* <code>my_data_volume</code>: The Logical ID.
-* <code>type: OS::Cinder::Volume</code>: Explicitly creates a block device in Cinder platform block storage service .
-* <code>size</code>: The capacity in Gigabytes (GB).
-* <code>name</code>: The display name visible in the dashboard.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Storage Analysis</strong>:<br />
+        • <code>type: OS::Cinder::Volume</code>: Creates a block device in Cinder.<br />
+        • <code>size</code>: Capacity in Gigabytes (GB).
+    </div>
+</div>
 <p><strong>Creating a Virtual Machine</strong></p>
 <div class="codehilite"><pre><span><code><span class="nt">resources<span class="p">:
 <span class="w"> <span class="nt">my_server<span class="p">:
@@ -824,13 +863,14 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="w"> <span class="nt">image<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">ubuntu
 <span class="w"> <span class="nt">flavor - template - image for quick deployment defining vCPUs, RAM, and disk <span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">m1.small
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Resource Analysis</strong>:
-* <code>my_server</code>: The Logical ID.
-* <code>type: OS::Nova::Server</code>: The standard compute instance type.
-* <code>image</code> / <code>flavor</code>: The <strong>Mandatory</strong> properties defining the specs.
-* <strong>Note</strong>: There are many other optional properties not shown here, such as <code>key_name</code> (SSH Access), <code>networks</code> (Connectivity), <code>security_groups</code> (Firewall), and <code>user_data</code> (Cloud-Init Scripts). We will combine these in the Unified Stack example below.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Compute Analysis</strong>:<br />
+        • <code>image</code> / <code>flavor</code>: Mandatory properties defining specs.<br />
+        • <strong>Properties</strong>: Includes <code>key_name</code> (SSH), <code>networks</code> (Connect), and <code>user_data</code> (Cloud-Init).
+    </div>
+</div>
 <h3 id="53-the-unified-stack">5.3 The Unified Stack</h3>
 <p>The true power of Heat comes from combining these primitives using <strong>Intrinsic Functions</strong>.</p>
 <ul>
@@ -912,12 +952,14 @@ Python offers several advantages over shell scripting. First, <strong>Error Hand
 <span class="w"> <span class="nt">description<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">The Public URL of the deployed application
 <span class="w"> <span class="nt">value<span class="p">:<span class="w"> <span class="p p-Indicator">{<span class="nt"> get_attr<span class="p">:<span class="w"> <span class="p p-Indicator">[<span class="nv">my_floating_ip<span class="p p-Indicator">,<span class="w"> <span class="nv">floating_ip_address<span class="p p-Indicator">]<span class="w"> <span class="p p-Indicator">}
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Stack Analysis</strong>:
-* <strong>Floating IP</strong>: We created a <code>FloatingIP</code> resource on the public network and then an <code>Association</code> resource to link it to our server. This is how the server becomes accessible from your laptop.
-* <strong>User Data</strong>: We embedded a <strong>Cloud-Config</strong> payload to install Docker and launch Nginx as a container. Heat injects this into Cloud-Init, which executes the declarative instructions on boot.
-* <strong>Dependency Chain</strong>: The <code>association</code> depends on both the <code>floating_ip</code> and the <code>web_instance</code>. Heat orchestrates this perfectly.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Stack Analysis</strong>:<br />
+        • <strong>Floating IP</strong>: Bridging the server to the internet.<br />
+        • <strong>Dependency Chain</strong>: Heat orchestrates the creation order automatically based on resource relationships.
+    </div>
+</div>
 <h3 id="54-the-terraform-translation-rosetta-stone">5.4 The Terraform Translation (Rosetta Stone)</h3>
 <p>To prove that these skills are transferable, here is the exact same Nginx server we built in Heat, translated into Terraform. Notice that while the keywords differ (<code>resources</code> vs <code>resource</code>), the structural logic—defining a network, security group, and server with dependencies—is identical.</p>
 <p><strong>Terraform (main.tf)</strong></p>
@@ -1010,12 +1052,14 @@ This defines the "Shape" of the cluster (OS Image, Keypair, Network Driver).</p>
 <span class="w"> --master-flavor<span class="w"> m1.medium<span class="w"> <span class="se">\
 <span class="w"> --coe<span class="w"> kubernetes
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Command Analysis</strong>:
-* <code>template create</code>: Sets the blueprint.
-* <code>--image</code>: Magnum requires special Fedora Atomic or CoreOS images optimized for containers, not standard Ubuntu.
-* <code>--coe</code>: Specifies the engine. Magnum also supports Docker Swarm and Apache Mesos, but Kubernetes orchestration platform is the standard.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Command Analysis</strong>:<br />
+        • <code>template create</code>: Sets the cluster blueprint.<br />
+        • <code>--image</code>: Magnum requires specialized CoreOS/Atomic images optimized for containers.
+    </div>
+</div>
 <p><strong>Phase 2: Launch the Cluster</strong>
 This triggers Heat to actually build the stack (VMs, Load Balancers, Security Groups).</p>
 <div class="codehilite"><pre><span><code>openstack<span class="w"> coe<span class="w"> cluster<span class="w"> create<span class="w"> k8s-cluster<span class="w"> <span class="se">\
@@ -1081,8 +1125,13 @@ kubectl<span class="w"> get<span class="w"> nodes
 * <strong>Replicas: 3</strong>: Instead of creating <code>web_server_01</code>, <code>web_server_02</code>, etc., we simply ask for "3 copies". Kubernetes orchestration platform ensures they are always running.
 * <strong>Service (LoadBalancer)</strong>: This object talks to OpenStack platform Neutron platform networking service /Octavia to provision a real Load Balancer that distributes traffic to those 3 pods.</p>
 </blockquote>
-<h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
-<p><strong>Summary</strong>: Heat templates allow us to define an entire infrastructure stack in a single file. By understanding the core structure (Parameters, Resources, Outputs) and the Building Blocks (Cinder platform block storage service , Nova platform compute service for VMs , Neutron platform networking service resources), we can assemble complex environments that are consistently reproducible.</p>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 5 Checkpoint</strong><br />
+        Heat templates allow us to define an entire infrastructure stack in a single file via Parameters, Resources, and Outputs. This makes environments consistently reproducible and "self-contained."
+    </div>
+</div>
 <p><strong>Reflection</strong>: Why is it better to define the Security Group inside the template - image for quick deployment rather than assuming it already exists? (Hint: It makes the template - image for quick deployment "self-contained" and easier to deploy in a fresh project).</p>
 <hr/>
 <h2 id="6-configuration-management-with-ansible">6. Configuration Management with Ansible</h2>
@@ -1104,12 +1153,15 @@ kubectl<span class="w"> get<span class="w"> nodes
 <span class="w"> <span class="nt">db-01<span class="p">:
 <span class="w"> <span class="nt">ansible_host<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">192.168.1.20
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Inventory Analysis</strong>:
-* <code>all</code>: The root group containing every server.
-* <code>children</code>: Sub-groups (e.g., <code>webservers</code>, <code>databases</code>) allow you to target specific roles.
-* <code>ansible_host</code>: Variable defining the actual IP to connect to.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Inventory Analysis</strong>:<br />
+        • <code>all</code>: Root group for every server managed.<br />
+        • <code>children</code>: Sub-groups (e.g., webservers) for role-based targeting.<br />
+        • <code>ansible_host</code>: The actual IP assigned to the node.
+    </div>
+</div>
 <h3 id="62-ad-hoc-commands">6.2 Ad-Hoc Commands</h3>
 <p>For quick, one-off tasks, you don't need to write a script. You can simply "speak" to your cluster using the CLI.</p>
 <div class="codehilite"><pre><span><code><span class="c1"># Ping all servers
@@ -1146,11 +1198,14 @@ ansible<span class="w"> webservers<span class="w"> -m<span class="w"> shell<span
 <span class="w"> <span class="nt">name<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">apache2
 <span class="w"> <span class="nt">state<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">started
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Playbook Analysis</strong>:
-* <code>apt</code>, <code>copy</code>, <code>service</code>: These are <strong>Modules</strong>. They abstract away the OS details (e.g., you don't type <code>apt-get install</code>, you just say <code>state: present</code>).
-* <strong>Idempotency</strong>: This is the most critical concept. If you run this playbook 100 times, it will only make changes the first time. On subsequent runs, it checks "Is Apache present?", sees "Yes", and does nothing. This makes it safe to run against production systems repeatedly.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Playbook Analysis</strong>:<br />
+        • <strong>Modules</strong>: Abstract away OS-specific details (e.g., <code>apt</code>, <code>service</code>).<br />
+        • <strong>Idempotency</strong>: Safe to run repeatedly; only makes changes if the system is not in the desired state.
+    </div>
+</div>
 <h3 id="64-the-unified-pipeline-integration">6.4 The Unified Pipeline (Integration)</h3>
 <p>The ultimate goal is to chain these tools together. A simple Bash script can act as the "glue" that triggers Heat to build the infrastructure, waits for the output, and then passes that information to Ansible for configuration.</p>
 <p><strong>Example: <code>deploy.sh</code></strong></p>
@@ -1180,13 +1235,21 @@ openstack<span class="w"> stack<span class="w"> create<span class="w"> -t<span c
 <span class="nb">echo<span class="w"> <span class="s2">"Step 3: Configuring with Ansible..."
 ansible-playbook<span class="w"> -i<span class="w"> hosts.ini<span class="w"> site.yaml
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Pipeline Analysis</strong>:
-* <strong>Glue Code</strong>: Bash is used here not to manage resources, but to manage <em>tools</em>. It bridges the gap between Heat (Infrastructure) and Ansible (Config).
-* <strong>Dynamic Inventory</strong>: Note how we create <code>hosts.ini</code> on the fly. <em>Note: <code>ansible_user=ubuntu</code> assumes an Ubuntu image; adjust this for Rocky/CentOS (<code>rocky</code>) or Fedora (<code>fedora</code>).</em></p>
-</blockquote>
-<h3 id="section-6-checkpoint">Section 6 Checkpoint</h3>
-<p><strong>Summary</strong>: Ansible fills the gap of "Day 2 Operations." It uses an <strong>Inventory</strong> to group servers and <strong>Playbooks</strong> to define their configuration. Unlike a Bash script which runs blindly, Ansible is <strong>Idempotent</strong>—it only acts if the system is not in the desired state.</p>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Pipeline Analysis</strong>:<br />
+        • <strong>Glue Code</strong>: Bash is used to orchestrate tools (Heat &rarr; Ansible).<br />
+        • <strong>Dynamic Inventory</strong>: Creating inventory files on the fly during the pipeline.
+    </div>
+</div>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 6 Checkpoint</strong><br />
+        Ansible manages "Day 2 Operations" using an <strong>Inventory</strong> to group servers and <strong>Playbooks</strong> to define their state. Its greatest feature is <strong>Idempotency</strong> - ensuring safe, repeated execution.
+    </div>
+</div>
 <p><strong>Reflection</strong>: Compare this to the Bash script in Section 3. If you ran that Bash script twice, it would try to create the servers again (and fail). If you run an Ansible playbook twice, it simply reports "OK" (No Change).</p>
 <hr/>
 <hr/>
@@ -1212,11 +1275,14 @@ git<span class="w"> commit<span class="w"> -m<span class="w"> <span class="s2">"
 <span class="c1"># View History
 git<span class="w"> log
 </span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Git Analysis</strong>:
-* <code>commit</code>: This is your "Save Game" button. Make a commit every time you reach a stable state (e.g., "Heat template - image for quick deployment works", "Ansible connects").
-* <strong>GitOps</strong>: In advanced environments, applying a commit to a Git repository automatically triggers the <code>deploy.sh</code> pipeline we wrote above. This is known as <strong>GitOps</strong>.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Git Analysis</strong>:<br />
+        • <code>commit</code>: Your "Save Game" button. Commit at every stable milestone.<br />
+        • <strong>GitOps</strong>: Automatically triggering pipelines on code commits for total automation.
+    </div>
+</div>
 <h3 id="73-strategic-summary">7.3 Strategic Summary</h3>
 <p>To help you lock in the mental model of <strong>"Which Tool, When?"</strong>, review this comparison:</p>
 <table>
@@ -1296,13 +1362,13 @@ git<span class="w"> log
 <p><a href="Week_11_Lab_4_Kubernetes.html">Lab 4: Kubernetes with Magnum
 <strong>Goal</strong>: Provisioning a K8s cluster and deploying containers.</a></p>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_11_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
+<div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_11_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
 <div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
 <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 10 - Storage and Persistence/Week_10_Student_Notes.html">
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
