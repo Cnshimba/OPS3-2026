@@ -1004,20 +1004,22 @@
                     </span>
                 </div>
             </div>
-            <p><strong>Course</strong>: Computer Systems Engineering
-                <strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-                <strong>Topic</strong>: Virtual Networking and Linux Networking Fundamentals
-                <strong>Estimated Reading Time</strong>: 35 Minutes
-            </p>
-            <blockquote>
-                <p>[!TIP]
-                    <strong>How to succeed in this week</strong>:
-                    Networking is where VMs become useful. The concepts of bridges, <a class="glossary-term"
-                        href="../glossary.html#NAT">NAT<span class="glossary-tooltip">Network Address Translation - Maps
-                            private to public IPs</span></a>, and routing apply universally. Draw diagrams as you
-                    read—visualizing packet flow makes troubleshooting much easier later.
-                </p>
-            </blockquote>
+            <div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300 text-sm md:text-base">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 leading-relaxed">
+        <strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: Virtual Networking and Linux Networking Fundamentals<br />
+        <strong>Estimated Reading Time</strong>: 35 Minutes
+    </div>
+</div>
+            <div class="flex items-start p-4 my-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:
+        Networking is where VMs become useful. The concepts of bridges, NAT, and routing apply universally. Draw diagrams as you read—visualizing packet flow makes troubleshooting much easier later.
+    </div>
+</div>
             <hr />
             <h2 id="welcome-to-week-3">Welcome to Week 3!</h2>
             <p>Networking is the nervous system of any virtualized infrastructure. In a traditional data center, network
@@ -1137,13 +1139,13 @@ nmcli<span class="w"> con<span class="w"> mod<span class="w"> eno1<span class="w
 nmcli<span class="w"> con<span class="w"> up<span class="w"> eno1
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
             </div>
-            <h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li><code>ip</code> commands are runtime only (lost on reboot).</li>
-                <li><code>nmcli</code> commands are persistent (saved to disk).</li>
-                <li>Correct networking requires understanding both layers.</li>
-            </ul>
+            <div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong><br />
+        IP commands modify the direct kernel state (runtime), whereas nmcli manages persistent connection profiles on disk. Troubleshooting begins at the runtime layer, but fixes must be applied to the configuration layer.
+    </div>
+</div>
             <p><strong>Reflection</strong>:</p>
             <ul>
                 <li>Why did Linux move away from <code>ifconfig</code>?</li>
@@ -1220,13 +1222,13 @@ sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">e
 sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">exec<span class="w"> sandbox<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">set<span class="w"> lo<span class="w"> up
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
             </div>
-            <h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li>Namespaces isolate network stacks (interfaces, routes, firewalls).</li>
-                <li>They solve the "Multi-Tenant" problem (overlapping IPs).</li>
-                <li>They are the foundation of all Container technology.</li>
-            </ul>
+            <div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong><br />
+        Network Namespaces provide total isolation of interfaces, routing tables, and firewalls. This is the core mechanism enabling multi-tenancy and overlapping IP addresses in modern clouds and containers.
+    </div>
+</div>
             <p><strong>Reflection</strong>:</p>
             <ul>
                 <li>Can a process in Namespace A see the network traffic of Namespace B?</li>
@@ -1474,13 +1476,13 @@ sudo<span class="w"> ip<span class="w"> netns<span class="w"> <span class="nb">e
 </span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
             </div>
             <hr />
-            <h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li><code>veth</code> pairs act as virtual cables connecting namespaces.</li>
-                <li>Linux Bridges act as virtual switches, forwarding frames based on MAC addresses.</li>
-                <li>We can build complex topologies entirely in software.</li>
-            </ul>
+            <div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 3 Checkpoint</strong><br />
+        Veth pairs act as virtual crossover cables connecting namespaces, while Linux Bridges function as virtual Layer-2 switches. Together, they allow us to build complex, software-defined network topologies.
+    </div>
+</div>
             <p><strong>Reflection</strong>:</p>
             <ul>
                 <li>If you forget to "plug" the veth into the bridge (<code>master br0</code>), what happens?</li>
@@ -1608,13 +1610,13 @@ sudo<span class="w"> lxc-start<span class="w"> -n<span class="w"> my-container
 sudo<span class="w"> lxc-info<span class="w"> -n<span class="w"> my-container
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre>
             </div>
-            <h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li>Docker automates the creation of Bridges (<code>docker0</code>) and Veth pairs.</li>
-                <li>Podman uses <code>slirp4netns</code> for rootless, secure networking.</li>
-                <li>LXC behaves more like traditional VMs on the network.</li>
-            </ul>
+            <div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 4 Checkpoint</strong><br />
+        Modern container platforms automate complex kernel plumbing. Docker uses bridge-based automation, Podman leverages slirp4netns for secure rootless operation, and LXC bridges system containers directly.
+    </div>
+</div>
             <p><strong>Reflection</strong>:</p>
             <ul>
                 <li>Why is "Rootless" networking considered more secure?</li>
@@ -1776,15 +1778,13 @@ sudo tcpdump -i vmbr0 src 10.0.0.5
 sudo tcpdump -i vmbr0 -w crash_report.pcap
 </span></span></span></span></code></pre>
             </div>
-            <h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li><strong>Bonding</strong> aggregates links for redundancy (Active/Backup) or speed (LACP).</li>
-                <li><strong>Routing</strong> allows a Linux host to act as a Gateway.</li>
-                <li><strong>IPTables</strong> controls traffic flow (Input, Output, Forward).</li>
-                <li><strong>SS/Nmap</strong> allow you to discover open ports and listening services.</li>
-                <li><strong>Tcpdump</strong> allows us to see the actual packets on the wire.</li>
-            </ul>
+            <div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 5 Checkpoint</strong><br />
+        Advanced operations like Bonding provide hardware redundancy, while Forwarding and IPTables turn a Linux host into a gateway. Tools like ss, nmap, and tcpdump are essential for verifying and debugging traffic flow.
+    </div>
+</div>
             <p><strong>Reflection</strong>:</p>
             <ul>
                 <li>If you have a Bond with 2 cables and one is cut, does the server go offline?</li>
@@ -1871,14 +1871,13 @@ ovs-ofctl add-flow ovsbr0 "priority=0 actions=NORMAL"
 ovs-vsctl set-controller ovsbr0 tcp:192.168.56.10:6653
 </span></span></code></pre>
             </div>
-            <h3 id="section-6-checkpoint">Section 6 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li>OVS is a programmable, carrier-grade virtual switch.</li>
-                <li>It separates the Control Plane (Logic) from the Data Plane (Forwarding).</li>
-                <li>It uses "Flows" instead of just MAC tables, allowing for complex logic (Drop IP X, Redirect Port Y).
-                </li>
-            </ul>
+            <div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 6 Checkpoint</strong><br />
+        Open vSwitch (OVS) is the industrial foundation for Software Defined Networking. By separating the Control and Data planes and using flow-based logic, it enables programmable network orchestration at scale.
+    </div>
+</div>
             <p><strong>Reflection</strong>:</p>
             <ul>
                 <li>How does OVS differ from a standard Linux Bridge?</li>
@@ -2047,21 +2046,13 @@ sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">se
                 <code>bridge-vlan-aware yes</code>. The bridge then acts like a "Trunk Port", capable of carrying all
                 VLANs simultaneously.
             </p>
-            <h3 id="section-7-checkpoint">Section 7 Checkpoint</h3>
-            <p><strong>Summary</strong>:</p>
-            <ul>
-                <li><a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span
-                            class="glossary-tooltip">Open-source virtualization platform combining KVM and
-                            LXC</span></a> uses standard Linux Bridges and IPTables
-                    underneath the GUI.</li>
-                <li><strong>Bridged Mode</strong>: <a class="glossary-term" href="../glossary.html#VM">VM<span
-                            class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical
-                            computer</span></a> is on the LAN. Simplest.</li>
-                <li><strong>NAT Mode</strong>: <a class="glossary-term" href="../glossary.html#VM">VM<span
-                            class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical
-                            computer</span></a> is hidden behind the Host. Requires Masquerading.</li>
-                <li><strong>VLANs</strong>: Isolate traffic on the same physical wire using Tags.</li>
-            </ul>
+            <div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 7 Checkpoint</strong><br />
+        Proxmox orchestrates standard Linux primitives. Bridged mode provides LAN transparency, NAT mode isolates VMs behind the host, and VLAN tagging enables logical multi-tenancy over shared wires.
+    </div>
+</div>
             <p><strong>Reflection</strong>:</p>
             <ul>
                 <li>If you are in a Data Center with only 1 Public IP, which mode MUST you use?</li>
@@ -2102,17 +2093,13 @@ sudo<span class="w"> ip<span class="w"> link<span class="w"> <span class="nb">se
                 </li>
             </ul>
 
-            <div
-                class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-                <h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-                <p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take
-                    the interactive quiz now!</p>
-                <a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline"
-                    href="Week_3_Quiz.html" id="start-quiz-btn">
-                    Start Quiz
-
-                </a>
-            </div>
+            <div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_3_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
             <div
                 class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
                 <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline"

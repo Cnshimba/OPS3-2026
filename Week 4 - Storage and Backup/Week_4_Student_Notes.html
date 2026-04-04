@@ -460,15 +460,22 @@
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
 </span></div>
 </div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Storage and Backup
-<strong>Estimated Reading Time</strong>: 25 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-Storage decisions have long-term consequences. Understand the tradeoffs between local and shared storage, snapshots versus backups. The "3-2-1 backup rule" isn't just theory—it saves careers.</p>
-</blockquote>
+<div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: Storage and Backup<br />
+        <strong>Estimated Reading Time</strong>: 25 Minutes
+    </div>
+</div>
+<div class="flex items-start p-4 my-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:
+        Storage decisions have long-term consequences. Understand the tradeoffs between local and shared storage, snapshots versus backups. The "3-2-1 backup rule" isn't just theory—it saves careers.
+    </div>
+</div>
 <hr/>
 <h2 id="welcome-to-week-4">Welcome to Week 4!</h2>
 <p>You have learned how to create virtual machines (Compute) and how to connect them (Networking). Now, it is time to tackle the third and perhaps most critical pillar of the cloud: <strong>Storage</strong>.</p>
@@ -505,8 +512,13 @@ sudo<span class="w"> fdisk<span class="w"> /dev/sdb
 <span class="c1"># 'n' -&gt; New Partition
 <span class="c1"># 'w' -&gt; Write Changes
 </span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>: Linux treats disks as <strong>Block Devices</strong> (such as <code>/dev/sda</code>), and the <code>lsblk</code> command visualizes the storage hierarchy in a tree format while <code>fdisk</code> is used to create partitions. It is important to understand that Proxmox platform combining KVM - Type 1 hypervisor and LXC needs the underlying operating system to recognize and manage the disk before it can use it for virtual machine storage.</p>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong><br />
+        Linux treats disks as Block Devices (e.g., /dev/sda). Use lsblk to visualize the storage hierarchy and fdisk/parted to manage partitions. The host OS must recognize the disk before Proxmox can utilize it.
+    </div>
+</div>
 <p><strong>Reflection</strong>: Consider why NVMe drives have names like <code>nvme0n1</code> instead of <code>sda</code>. What happens if you attempt to partition a disk that is already mounted and actively in use?</p>
 <p><strong>Resources</strong>:</p>
 <ul>
@@ -535,8 +547,13 @@ sudo<span class="w"> lvcreate<span class="w"> -n<span class="w"> my_volume<span 
 sudo<span class="w"> vgs<span class="w"> <span class="c1"># View Groups
 sudo<span class="w"> lvs<span class="w"> <span class="c1"># View Volumes
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>: <strong>LVM</strong> adds significant flexibility over static partitions, enabling dynamic resizing and storage pooling. The architectural flow moves from <strong>PV</strong> (Physical Volume) to <strong>VG</strong> (Volume Group) to <strong>LV</strong> (Logical Volume), and Proxmox platform combining KVM - Type 1 hypervisor and LXC installs to LVM by default to take advantage of these capabilities.</p>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong><br />
+        LVM adds a flexible abstraction layer using Physical Volumes (PV), Volume Groups (VG), and Logical Volumes (LV). This architecture enables dynamic resizing and pooling of disparate physical disks.
+    </div>
+</div>
 <p><strong>Reflection</strong>: Can you shrink an LVM volume while it is online and actively in use? What is the difference between standard LVM and LVM-Thin provisioning?</p>
 <p><strong>Resources</strong>:</p>
 <ul>
@@ -573,8 +590,13 @@ sudo<span class="w"> zfs<span class="w"> snapshot<span class="w"> rpool/data/vm-
 <span class="c1"># 2. Rollback (Undo changes)
 sudo<span class="w"> zfs<span class="w"> rollback<span class="w"> rpool/data/vm-100-disk-0@before_update
 </span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-<p><strong>Summary</strong>: <strong>ZFS</strong> is a next-generation filesystem with RAID, Copy-on-Write, and checksumming built directly into its architecture. Its <strong>self-healing</strong> capability detects and fixes silent data corruption (commonly known as bit rot), while <strong>snapshots</strong> are instantaneous and consume zero space initially due to the Copy-on-Write mechanism.</p>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 3 Checkpoint</strong><br />
+        ZFS combines RAID and Volume Management with Copy-on-Write logic. Its self-healing checksums prevent bit-rot, and its architecture enables near-instant snapshots without initial storage overhead.
+    </div>
+</div>
 <p><strong>Reflection</strong>: Why does ZFS need direct access to the disk (passthrough) rather than working through a traditional RAID controller? What is the "ARC" in ZFS terms, and how does it improve performance?</p>
 <p><strong>Resources</strong>:</p>
 <ul>
@@ -621,22 +643,15 @@ sudo<span class="w"> zfs<span class="w"> rollback<span class="w"> rpool/data/vm-
 <td style="text-align: left;">QEMU - Type 1 hypervisor for virtualization Specific</td>
 </tr>
 <tr>
-<td style="text-align: left;">### Section 4 Checkpoint</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Summary</strong>:</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
 </tbody>
 </table>
-<ul>
-<li><strong>Raw</strong>: Fast, pre-allocated, simple. Good for Ceph/LVM.</li>
-<li><strong>QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format </strong>: Flexible, thin-provisioned, internal snapshots. Good for Directory/NFS.</li>
-<li>Trade-off is usually Performance vs Flexibility.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 4 Checkpoint</strong><br />
+        Raw disks offer near-native performance but lack flexibility. QCOW2 provides thin provisioning and internal snapshots. The choice depends on the underlying storage backend (LVM/ZFS vs. NFS/File).
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why can't you take an internal snapshot - on a Raw disk?</li>
@@ -666,13 +681,13 @@ sudo<span class="w"> zfs<span class="w"> rollback<span class="w"> rpool/data/vm-
 </li>
 </ul>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_4_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
+<div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_4_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
 <div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
 <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 3 - Virtual Networking and Linux Networking Fundamentals/Week_3_Student_Notes.html">
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>

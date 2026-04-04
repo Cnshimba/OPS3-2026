@@ -460,15 +460,22 @@
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
 </span></div>
 </div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Containers and Resource Management
-<strong>Estimated Reading Time</strong>: 35 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-Containers are NOT lightweight VMs—they're a different paradigm. Focus on understanding namespaces and cgroups. The <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> section (<a class="glossary-term" href="../glossary.html#Kubernetes">Kubernetes<span class="glossary-tooltip">Container orchestration platform</span></a> <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform <a class="glossary-term" href="../glossary.html#Orchestration">orchestration<span class="glossary-tooltip">Automated coordination of systems</span></a> platform ) builds on everything you've learned so far.</p>
-</blockquote>
+<div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: Containers and Resource Management<br />
+        <strong>Estimated Reading Time</strong>: 35 Minutes
+    </div>
+</div>
+<div class="flex items-start p-4 my-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:
+        Containers are NOT lightweight VMs—they're a different paradigm. Focus on understanding namespaces and cgroups. Orchestration (Kubernetes) builds on everything you've learned so far.
+    </div>
+</div>
 <hr/>
 <h2 id="welcome-to-week-5">Welcome to Week 5!</h2>
 <p>This week represents a significant shift in our exploration of <a class="glossary-term" href="../glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> technology. While the previous weeks focused on virtual machines that virtualize complete hardware stacks, this week introduces containers, a fundamentally different approach to <a class="glossary-term" href="../glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> that operates at the operating system level. Understanding containers is no longer optional for IT professionals. <a class="glossary-term" href="../glossary.html#Container">Container<span class="glossary-tooltip">Lightweight package with application code and dependencies</span></a> technology has become pervasive across <a class="glossary-term" href="../glossary.html#Cloud-Computing">cloud computing<span class="glossary-tooltip">Computing services delivered over the internet</span></a>, application development, and modern infrastructure management. Major technology companies deploy millions of containers daily, and cloud platforms like <a class="glossary-term" href="../glossary.html#OpenStack">OpenStack<span class="glossary-tooltip">Open-source cloud computing platform</span></a> platform integrate <a class="glossary-term" href="../glossary.html#Container">container<span class="glossary-tooltip">Lightweight package with application code and dependencies</span></a> services as core offerings.</p>
@@ -579,11 +586,13 @@ cat<span class="w"> /sys/fs/cgroup/system.slice/docker-<span class="si">${<span 
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
 <p><img alt="Linux Namespaces and Control Groups" src="images/namespaces_cgroups.png"/>
 <em>Figure 2: Linux Namespaces and Cgroups - Namespaces provide isolation (PID, Network, Mount) while cgroups enforce resource limits (CPU, Memory)</em></p>
-<h3 id="19-section-1-checkpoint">1.9. Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>:
-<em>Namespaces</em>: Provide isolation (Network, PID, Mount). The "Walls".
-<strong>Control Groups (cgroups)</strong>: Provide resource limiting (CPU, RAM). The "Police".
-Containers share the Hot Kernel; VMs use their own Kernel.</p>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong><br />
+        Namespaces provide isolation (Network, PID, Mount) by creating separate "views" of system resources. Control Groups (cgroups) provide resource limiting (CPU, RAM). Containers share the host kernel, whereas VMs use their own.
+    </div>
+</div>
 <p><strong>Reflection</strong>:
  If a container crashes the kernel, does the host crash? Why can't you run a Windows Container on a Linux Host (natively)?</p>
 <p><strong>Resources</strong>:
@@ -672,13 +681,13 @@ Containers share the Hot Kernel; VMs use their own Kernel.</p>
 </tbody>
 </table>
 <!-- table-break -->
-<h3 id="26-section-2-checkpoint">2.6. Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>LXC </strong>: System Containers (OS-like, persistent). Used for VPS/Infrastructure.</li>
-<li><strong>Docker</strong>: Application Containers (Single process, ephemeral). Used for Dev/Microservices.</li>
-<li><strong>Podman</strong>: Daemonless, secure alternative to Docker.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong><br />
+        LXC provides persistent System Containers (lightweight VMs). Docker popularized ephemeral Application Containers for microservices. Podman offers a secure, daemonless, and rootless alternative to Docker.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why is "Daemonless" considered a security feature?</li>
@@ -720,13 +729,13 @@ root@my-web-server:~#<span class="w"> apt<span class="w"> install<span class="w"
 <div class="codehilite"><pre><span><code>sudo<span class="w"> lxc-stop<span class="w"> -n<span class="w"> my-web-server
 sudo<span class="w"> lxc-destroy<span class="w"> -n<span class="w"> my-web-server
 </span></span></span></span></span></span></code></span></pre></div>
-<h3 id="36-section-3-checkpoint">3.6. Section 3 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Create</strong>: Builds a rootfs from a Template - image for quick deployment (<code>lxc-create</code>).</li>
-<li><strong>Start</strong>: Boots the init system inside the namespace (<code>lxc-start</code>).</li>
-<li><strong>Attach</strong>: Enters the namespace directly (<code>lxc-attach</code>).</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 3 Checkpoint</strong><br />
+        The LXC workflow involves creating a rootfs from a template (lxc-create), starting the init system inside the namespace (lxc-start), and optionally entering that namespace directly (lxc-attach).
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>How does <code>lxc-attach</code> differ from SSH?</li>
@@ -747,13 +756,13 @@ sudo<span class="w"> lxc-destroy<span class="w"> -n<span class="w"> my-web-serve
 <p>The creation wizard guides you through the configuration. Important settings include the <strong>Hostname</strong>, which sets the container's internal identity, and the <strong>Unprivileged</strong> option. Unprivileged containers are the default and recommended choice; they use user namespaces to map the container's root user to a non-privileged user on the host, significantly reducing the impact of a potential container escape. During <strong>Disk</strong> and <strong>CPU/Memory</strong> configuration, you set the resource limits that cgroups will enforce.</p>
 <h3 id="43-step-3-managing-resources-dynamically">4.3. Step 3: Managing Resources Dynamically</h3>
 <p>One of the key advantages of containers is the ability to adjust resources without rebooting. If a container is under memory pressure, you can navigate to the <strong>Resources</strong> tab in Proxmox platform combining KVM - Type 1 hypervisor and LXC and increase the Memory limit. The change is applied instantly to the running container's cgroup. This elasticity allows for highly efficient resource management compared to the static allocation often required for virtual machines.</p>
-<h3 id="44-section-4-checkpoint">4.4. Section 4 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li>Proxmox platform combining KVM - Type 1 hypervisor and LXC uses typical LXC tech but wraps it in a GUI for ease of use.</li>
-<li><strong>Templates</strong>: Must be downloaded to storage before creation.</li>
-<li><strong>Unprivileged</strong>: Maps root inside container to non-root outside for security.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 4 Checkpoint</strong><br />
+        Proxmox simplifies LXC management via a GUI. Key security practices include using "Unprivileged" containers, which map internal root to external non-root, and utilizing cgroups for dynamic resource scaling.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why is "Unprivileged" the default?</li>
@@ -838,13 +847,13 @@ docker<span class="w"> <span class="nb">exec<span class="w"> -it<span class="w">
 <div class="codehilite"><pre><span><code>docker<span class="w"> build<span class="w"> -t<span class="w"> myapp:1.0<span class="w"> .
 </span></span></span></span></code></span></pre></div>
 <p>This reads the Dockerfile image in the current directory (<code>.</code>) and builds an image tagged as <code>myapp:1.0</code>.</p>
-<h3 id="56-section-5-checkpoint">5.6. Section 5 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Images</strong>: Read-only layers containing the app.</li>
-<li><strong>Containers</strong>: Runnable instances of images.</li>
-<li><strong>Dockerfile image </strong>: Recipe for building images.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 5 Checkpoint</strong><br />
+        Docker images are read-only layered templates containing applications and dependencies. Containers are runnable instances of these images. Dockerfiles provide the declarative recipe for building tiered images.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why do we put the dependencies copy/install step <em>before</em> copying the app code in a Dockerfile image ?</li>
@@ -876,13 +885,13 @@ podman<span class="w"> pod<span class="w"> create<span class="w"> --name<span cl
 <span class="c1"># Note: We don't map ports here; the Pod orchestration platform holds the port mapping
 podman<span class="w"> run<span class="w"> -d<span class="w"> --pod<span class="w"> my-pod<span class="w"> --name<span class="w"> member1<span class="w"> nginx
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="63-section-6-checkpoint">6.3. Section 6 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Daemonless</strong>: Podman runs as the user process, avoiding the "Root Daemon" risk.</li>
-<li><strong>Rootless</strong>: Allows unprivileged users to run containers safely.</li>
-<li><strong>Pods</strong>: Groups of containers sharing a network namespace (localhost).</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 6 Checkpoint</strong><br />
+        Podman improves security by using a daemonless architecture, avoiding a persistent root service. It supports rootless operation natively and uses "Pods" to group containers sharing a local network namespace.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>How can a rootless container bind to port 80 (privileged port)?</li>
@@ -1020,13 +1029,13 @@ kubectl<span class="w"> expose<span class="w"> deployment<span class="w"> web-ap
 </a></li>
 </ul>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_5_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
+<div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_5_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
 <div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
 <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 4 - Storage and Backup/Week_4_Student_Notes.html">
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>

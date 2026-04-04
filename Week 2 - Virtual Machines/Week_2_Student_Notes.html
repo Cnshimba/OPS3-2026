@@ -460,15 +460,22 @@
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
 </span></div>
 </div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Virtual Machines (VMs)
-<strong>Estimated Reading Time</strong>: 30 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-VMs are the building blocks of infrastructure. Pay close attention to the lifecycle operations (create, configure, <a class="glossary-term" href="../glossary.html#Snapshot">snapshot<span class="glossary-tooltip">Point-in-time copy of VM state for rollback</span></a>  - , <a class="glossary-term" href="../glossary.html#Clone">clone<span class="glossary-tooltip">An exact copy of a virtual machine</span></a> ). These patterns repeat in every cloud platform you'll encounter. Practice the <a class="glossary-term" href="../glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface</span></a> commands—they're faster than the GUI.</p>
-</blockquote>
+<div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: Virtual Machines (VMs)<br />
+        <strong>Estimated Reading Time</strong>: 30 Minutes
+    </div>
+</div>
+<div class="flex items-start p-4 my-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:
+        VMs are the building blocks of infrastructure. Pay close attention to the lifecycle operations (create, configure, snapshot, clone). These patterns repeat in every cloud platform you'll encounter. Practice the CLI commands—they're faster than the GUI.
+    </div>
+</div>
 <hr/>
 <h2 id="welcome-to-week-2">Welcome to Week 2!</h2>
 <p>Having established the theoretical foundations of <a class="glossary-term" href="../glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a>, we now shift our focus to heavy technical implementation. This week is a deep dive into the specific technologies that power modern open-source <a class="glossary-term" href="../glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a>: <strong><a class="glossary-term" href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> </strong> (the engine), <strong><a class="glossary-term" href="../glossary.html#QEMU">QEMU<span class="glossary-tooltip">Quick Emulator - Works with KVM for virtualization</span></a> <a class="glossary-term" href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> for <a class="glossary-term" href="../glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> </strong> (the emulator), and <strong><a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> VE</strong> (the platform).</p>
@@ -580,13 +587,13 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 <p>The <code>qemu-img</code> utility handles virtual disk - creation and manipulation. To create a new disk, the <code>create</code> subcommand is used, specifying the format (typically <code>qcow2</code> for thin provisioning) and the size. For example, <code>qemu-img create -f qcow2 mydisk.qcow2 20G</code>. To inspect an existing disk's virtual size and actual disk usage, the <code>info</code> command provides detailed metadata. Furthermore, the <code>convert</code> subcommand interacts with the format translation engine, allowing administrators to transform a generic <code>.img</code> image into a VMware <code>.vmdk</code> or QEMU - Type 1 hypervisor for virtualization <code>.qcow2</code> image.</p>
 <h4 id="162-vm-execution-qemu-system-x86_64">1.6.2 VM - Execution (qemu - Type 1 hypervisor for virtualization -system-x86_64)</h4>
 <p>Launching a VM - manually involves the <code>qemu-system-x86_64</code> binary. A basic invocation usually requires defining the hard drive (<code>-hda</code>), the allocated RAM (<code>-m</code>), and crucially, the KVM - Type 1 hypervisor accelerator (<code>-enable-kvm</code> or <code>-accel kvm</code>). For booting from an installer ISO, the <code>-cdrom</code> flag is added, often accompanied by <code>-boot d</code> to prioritize the optical drive in the boot order.</p>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>KVM - Type 1 hypervisor </strong>: The kernel module that handles CPU execution (Guest Mode).</li>
-<li><strong>QEMU - Type 1 hypervisor for virtualization </strong>: The process that provides virtual hardware (Disks, NICs).</li>
-<li><strong>VirtIO</strong>: Special drivers that bypass emulation for speed.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong><br />
+        KVM is the kernel engine (Type-1), while QEMU provides the virtual hardware. VirtIO drivers are essential for paravirtualized performance, bypassing expensive emulation loops.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why does <code>top</code> on the host show a <code>qemu-kvm</code> process using 100% CPU if the VM - is busy?</li>
@@ -618,13 +625,13 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 <p>The interface organizes these capabilities into four distinct regions. At the top, the <strong>Header</strong> provides critical status information and action buttons for system-wide operations. To the left, the <strong>Resource Tree</strong> acts as the main navigation hub, allowing you to select specific objects such as nodes, VMs, or storage pools. The center region contains the <strong>Content Panel</strong>, which dynamically updates to show the configuration options and status for whichever object is selected in the tree. Finally, the <strong>Log Panel</strong> resides at the bottom, creating a real-time audit trail of recent tasks; administrators can double-click these entries to view detailed execution logs or abort running operations.</p>
 <h4 id="222-storage-backends">2.2.2 Storage Backends</h4>
 <p>Proxmox platform combining KVM - Type 1 hypervisor and LXC decouples compute from storage to facilitate flexibility across different environments. For standalone setups, administrators often utilize <strong>Local Storage</strong> such as LVM-Thin or ZFS, which support advanced features like instant snapshots. In clustered environments, the platform leverages <strong>Network Storage</strong> (NFS, iSCSI, or SMB) to enable VM - mobility and Live Migration - between hosts without downtime . Furthermore, Proxmox platform combining KVM - Type 1 hypervisor and LXC supports <strong>Hyper-Converged</strong> infrastructure through native integration with Ceph, a distributed object store that runs directly on the nodes themselves, eliminating the need for expensive external SAN hardware.</p>
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Architecture</strong>: Web UI -&gt; API -&gt; Corosync engine for group communication /pmxcfs -&gt; Kernel/KVM - Type 1 hypervisor .</li>
-<li><strong>pmxcfs</strong>: The magic filesystem that keeps cluster configs in sync.</li>
-<li><strong>Storage</strong>: Decoupled from compute to allow flexibility (Local vs Shared).</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong><br />
+        Proxmox VE is an orchestration layer that automates KVM/QEMU. It uses pmxcfs for cluster-wide configuration sync and supports both local and shared storage backends.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why is an API-first design better for automation?</li>
@@ -652,13 +659,13 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 <p>NoVNC is the default HTML5-based console. It requires no plugins and renders the VM - 's display directly in any modern web browser using WebSockets. It is lightweight and universally compatible but has limited support for clipboard integration and audio forwarding.</p>
 <h4 id="332-spice-simple-protocol-for-independent-computing-environments">3.3.2 SPICE (Simple Protocol for Independent Computing Environments)</h4>
 <p>For a richer desktop experience, Proxmox platform combining KVM - Type 1 hypervisor and LXC supports SPICE. This protocol offers advanced features such as high-quality audio streaming, multi-monitor support, and USB device redirection (plugging a USB drive into your client and having it appear in the VM - ). However, unlike NoVNC, SPICE requires a dedicated client viewer software (<code>virt-viewer</code>) to be installed on the user's machine.</p>
-<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Cloning</strong>: Full (Performance/Isolation) vs Linked (Speed/Space).</li>
-<li><strong>Snapshots</strong>: "Save Game" state before risky changes. Not a backup!</li>
-<li><strong>Consoles</strong>: NoVNC is convenient (browser-based), SPICE is powerful (requires client).</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 3 Checkpoint</strong><br />
+        Cloning enables rapid deployment (Full vs Linked), while Snapshots provide "save games" for rollback. Console access is provided via NoVNC (integrated) or SPICE (high performance).
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why should you delete a Linked Clone if you delete the Parent?</li>
@@ -693,13 +700,13 @@ The core of VirtIO's performance is the <strong>Virtqueue</strong>, implemented 
 </li>
 </ul>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_2_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
+<div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_2_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
 <div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
 <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 1 - Introduction to Virtualization/Week_1_Student_Notes.html">
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>

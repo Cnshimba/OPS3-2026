@@ -460,15 +460,22 @@
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
 </span></div>
 </div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Introduction to <a class="glossary-term" href="../glossary.html#Virtualization">Virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a>
-<strong>Estimated Reading Time</strong>: 25 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-Focus on understanding the WHY before the HOW. <a class="glossary-term" href="../glossary.html#Virtualization">Virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> solves real problems—hardware consolidation, isolation, and flexibility. As you read, ask yourself: "What problem does this solve?" The lab will make the theory concrete.</p>
-</blockquote>
+<div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: Introduction to Virtualization<br />
+        <strong>Estimated Reading Time</strong>: 25 Minutes
+    </div>
+</div>
+<div class="flex items-start p-4 my-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:
+        Focus on understanding the WHY before the HOW. Virtualization solves real problems—hardware consolidation, isolation, and flexibility. As you read, ask yourself: "What problem does this solve?" The lab will make the theory concrete.
+    </div>
+</div>
 <hr/>
 <h2 id="welcome-to-week-1">Welcome to Week 1!</h2>
 <p>This document serves as your comprehensive guide to understanding <a class="glossary-term" href="../glossary.html#Virtualization">virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> technology and its foundational role in modern computing infrastructure. <a class="glossary-term" href="../glossary.html#Virtualization">Virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a> has fundamentally transformed how organizations deploy, manage, and scale their IT resources.</p>
@@ -500,13 +507,13 @@ Focus on understanding the WHY before the HOW. <a class="glossary-term" href="..
 <p>Consider a concrete example: A medium-sized organization running 20 physical servers, each consuming 200 watts of power, uses 4,000 watts continuously. With appropriate consolidation onto 4 physical hosts running virtual machines, power consumption might drop to 1,200 watts while maintaining the same computational capacity. Over a year, this represents significant savings in electricity costs and reduced cooling requirements, which often consume as much power as the servers themselves.</p>
 <p>Isolation and security benefits emerge from the separation between virtual machines. Each VM - operates in its own isolated environment. If one VM - experiences a kernel panic, becomes compromised by malware, or suffers a critical software failure, other VMs on the same physical host continue operating normally. This isolation extends beyond mere process separation within a single OS. VMs have separate virtual hardware, separate kernel instances, and separate network stacks, providing strong isolation boundaries that enhance security and stability.</p>
 <p>Operational flexibility represents another significant advantage. Deploying a new physical server traditionally required procurement, delivery, racking, cabling, OS installation, and configuration—a process that could take days or weeks. Creating a new virtual machine can be accomplished in minutes. Need a test environment identical to production? Clone the production VM - and have a perfect replica ready immediately. Need to test a software upgrade? Take a snapshot - of the current VM - state, perform the upgrade, and if something goes wrong, restore the snapshot - to return to the previous state in seconds.</p>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li>Virtualization abstracts physical hardware to run multiple OSs concurrently.</li>
-<li>The Hypervisor is the intermediary layer managing this abstraction.</li>
-<li>Benefits include server consolidation, isolation, and rapid provisioning.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong><br />
+        Virtualization abstracts hardware to run multiple OSs concurrently via a Hypervisor. Key benefits include server consolidation, security isolation, and rapid resource provisioning.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>How does the concept of "abstraction" apply to other areas of computing (e.g., programming languages)?</li>
@@ -536,13 +543,13 @@ Focus on understanding the WHY before the HOW. <a class="glossary-term" href="..
 <p>The major advantage of Type-2 hypervisors is their accessibility and ease of use. Installation involves downloading the hypervisor software and running a standard installation wizard on your existing operating system, whether Windows, macOS, or Linux. There is no need to dedicate the entire physical machine to virtualization; you can continue using your computer normally while running virtual machines when needed. This makes Type-2 hypervisors excellent choices for developers who need to test software on different operating systems, IT professionals learning virtualization concepts, or users who occasionally need to run applications from different operating systems.</p>
 <p>However, Type-2 hypervisors have clear limitations. The performance overhead from the additional OS layer makes them unsuitable for performance-sensitive production workloads. The host operating system consumes significant resources that are therefore unavailable to virtual machines. If the host OS experiences problems or requires maintenance and reboots, all running VMs are affected. These factors make Type-2 hypervisors inappropriate for production server deployments where reliability and performance are critical.</p>
 <p>The distinction between Type-1 and Type-2 hypervisors is fundamental to understanding virtualization architecture. Type-1 hypervisors represent the professional, production-grade approach optimized for performance and reliability at the cost of dedicating hardware to virtualization. Type-2 hypervisors represent a more accessible, flexible approach suitable for development, testing, and learning, accepting performance trade-offs in exchange for the convenience of running on an existing desktop operating system. For this course, we use Proxmox platform combining KVM - Type 1 hypervisor and LXC VE, a Type-1 hypervisor, because it provides professional-grade capabilities while remaining accessible for learning purposes.</p>
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Type-1 (Bare Metal)</strong>: Runs directly on hardware (Proxmox platform combining KVM - Type 1 hypervisor and LXC , ESXi). Best for performance/security.</li>
-<li><strong>Type-2 (Hosted)</strong>: Runs as an app on an OS (VirtualBox). Best for testing/desktops.</li>
-<li>Major trade-off is Performance vs. Convenience.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong><br />
+        Type-1 (Bare Metal) hypervisors run directly on hardware for maximum performance. Type-2 (Hosted) run as applications for testing convenience. Professionals prioritize Type-1 for production.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>In what specific scenario would a Type-2 hypervisor be preferred over Type-1?</li>
@@ -597,14 +604,13 @@ Focus on understanding the WHY before the HOW. <a class="glossary-term" href="..
 <!-- Force Break -->
 <h3 id="34-virtual-network-interface-vnic">3.4 Virtual Network - communication Interface (vNIC)</h3>
 <p>Finally, for a VM - to communicate with the outside world, it requires a <strong>vNIC</strong>. This component connects the VM - to a virtual switch (Bridge) on the host, acting as the bridge between the virtual and physical networks. You will typically choose between two types of interfaces. The <strong>Emulated (E1000)</strong> interface mimics a real Intel network card, ensuring compatibility with almost any operating system out of the box, though it incurs higher CPU overhead. For performance-critical workloads, the <strong>Paravirtualized (VirtIO)</strong> interface is preferred; it is a software-defined card designed specifically for virtualization that works directly with the hypervisor to achieve network speeds often exceeding 10Gbps, though it requires specific drivers in the guest OS .</p>
-<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>vCPU - </strong>: Do not over-allocate cores. Use 'Host' type for speed.</li>
-<li><strong>vRAM</strong>: RAM is a hard limit. Do not over-commit.</li>
-<li><strong>vDisk</strong>: RAW is fast (Thick), QCOW2 - Type 1 hypervisor for virtualization Copy-On-Write disk image format is flexible (Thin).</li>
-<li><strong>vNIC</strong>: Use VirtIO for performance, E1000 for compatibility.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 3 Checkpoint</strong><br />
+        A VM consists of virtual CPUs (cores), RAM (non-overcommitted), Disks (RAW/QCOW2), and Interfaces (VirtIO). Proper allocation is critical to avoid CPU contention or system crashes.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why is "Thin Provisioning" dangerous if you are not monitoring your storage?</li>
@@ -619,13 +625,13 @@ Focus on understanding the WHY before the HOW. <a class="glossary-term" href="..
 <p>In the physical world, connecting servers requires physical switches and cabling. Software Defined Networking (SDN) eliminates this physical dependency by introducing the virtual switch—a software component residing within the hypervisor that functions exactly like its physical counterpart. This architecture decouples the network's control plane (intelligence) from the data plane (packet forwarding), allowing administrators to create complex network topologies, VLANs, and firewalls programmatically without ever touching a physical cable. We will explore these concepts in depth, including Linux Bridges, in <strong>Week 4: Virtual Networking</strong>.</p>
 <h3 id="42-storage-virtualization-sds">4.2 Storage Virtualization (SDS)</h3>
 <p>Software Defined Storage (SDS) fundamentally changes how we manage data persistence. Rather than relying on isolated physical disks attached to specific servers, SDS aggregates storage devices from multiple servers into a unified, reliable storage pool. This abstraction allows for enterprise-level features such as self-healing resilience; if a physical drive fails, the software automatically rebuilds the data on remaining drives without interrupting the virtual machine. By treating storage as a flexible software resource rather than a rigid hardware appliance, we gain immense scalability. These technologies, including Ceph and NFS, are the focus of <strong>Week 5: Storage &amp; Backup</strong>.</p>
-<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>SDDC</strong>: Visualizing Compute, Network, and Storage together.</li>
-<li><strong>SDN</strong>: Moving network intelligence into software (Virtual Switches).</li>
-<li><strong>SDS</strong>: Abstracting physical disks into flexible Storage Pools.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 4 Checkpoint</strong><br />
+        SDDC visualizes infrastructure holistically—using SDN for virtual switching and SDS for shared storage pools. This abstraction allows for programmatic control and self-healing resilience.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>If the network is "software," does it still need physical cables at all?</li>
@@ -638,13 +644,13 @@ Focus on understanding the WHY before the HOW. <a class="glossary-term" href="..
 <p>When you provision a virtual machine instance in AWS, Azure, or Google Cloud, you are essentially consuming a virtualized resource managed by a massive hypervisor farm. The <strong>Infrastructure-as-a-Service (IaaS)</strong> model exposes this virtualization as a service via APIs, relying on two core capabilities. First, <strong>Multi-tenancy</strong> allows multiple distinct customers (tenants) to run their workloads on the exact same physical hardware, securely isolated from one another by the hypervisor. Second, <strong>Elasticity</strong> leverages the fact that VMs are merely files and processes, allowing them to be provisioned, scaled, or destroyed in seconds to match demand—something impossible with physical hardware.</p>
 <h3 id="52-containers-and-serverless">5.2 Containers and Serverless</h3>
 <p>By mastering the abstraction layer (the Hypervisor), you unlock the ability to understand even lighter forms of abstraction, such as <strong>Containers (Docker)</strong>, which share the OS kernel, and <strong>Serverless Functions</strong>, which abstract the OS entirely. We will explore these evolutions specifically in <strong>Week 3: Containers &amp; Resources</strong>.</p>
-<h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li>Virtualization is the bedrock of Cloud Computing (AWS, Azure).</li>
-<li>Abstraction enables flexibility, security, and efficiency.</li>
-<li>Type-1 vs Type-2 is the first major architectural decision.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 5 Checkpoint</strong><br />
+        Virtualization is the foundation of Cloud (AWS/Azure). Hypervisor abstraction enables Multi-tenancy and Elasticity, allowing organizations to scale infrastructure in seconds.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>How does virtualization enable "Elasticity" in the cloud?</li>
@@ -670,13 +676,13 @@ Focus on understanding the WHY before the HOW. <a class="glossary-term" href="..
 <li>Do you know which Hypervisor type is best for a Production Database vs a Developer Laptop?</li>
 </ul>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_1_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
+<div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_1_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
 <div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700"><div></div>
 <a class="flex items-center font-semibold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors no-underline" href="../index.html">
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>

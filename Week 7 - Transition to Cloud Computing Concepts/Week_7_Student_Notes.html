@@ -460,15 +460,22 @@
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
 </span></div>
 </div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Transition to <a class="glossary-term" href="../glossary.html#Cloud-Computing">Cloud Computing<span class="glossary-tooltip">Computing services delivered over the internet</span></a> Concepts
-<strong>Estimated Reading Time</strong>: 20 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-This week is the <a class="glossary-term" href="../glossary.html#Bridge">bridge<span class="glossary-tooltip">Network device connecting network segments</span></a> from on-premise to cloud thinking. The shift from "servers" to "services" is fundamental. Pay attention to the business drivers for cloud adoption—technical skills alone aren't enough.</p>
-</blockquote>
+<div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: Transition to Cloud Computing Concepts<br />
+        <strong>Estimated Reading Time</strong>: 20 Minutes
+    </div>
+</div>
+<div class="flex items-start p-4 my-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:
+        This week is the bridge from on-premise to cloud thinking. The shift from "servers" to "services" is fundamental. Pay attention to the business drivers for cloud adoption—technical skills alone aren't enough.
+    </div>
+</div>
 <hr/>
 <h2 id="welcome-to-week-7">Welcome to Week 7!</h2>
 <p>Congratulations. Up to this point, you have mastered <strong><a class="glossary-term" href="../glossary.html#Virtualization">Virtualization<span class="glossary-tooltip">The creation of virtual versions of physical computing resources</span></a></strong>. You can manually create Virtual Machines (VMs), configure bridges, and manage storage volumes. You are a competent System Administrator capable of managing "Pet" servers. However, the modern enterprise has evolved. We no longer want to file a ticket and wait three days for a SysAdmin to create a <a class="glossary-term" href="../glossary.html#VM">VM<span class="glossary-tooltip">Virtual Machine - A software-based emulation of a physical computer</span></a> - . We want to click a button and receive a resource in 30 seconds.</p>
@@ -557,17 +564,13 @@ This involves abandoning the legacy application entirely and moving to a commerc
 Upon analysis, many organizations discover applications that are no longer useful. These are simply turned off, resulting in immediate cost savings.</p>
 <p><strong>6. Retain</strong>
 Some applications are simply too complex, too sensitive, or too intertwined with legacy hardware (like mainframes) to serve as viable candidates for migration. These are deliberately kept on-premise.</p>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>NIST Cloud Definition</strong>: Self-Service, Broad Access, Pooling, Elasticity, Measured.</li>
-<li><strong>Service Models</strong>: IaaS (Rent Hardware), PaaS (Rent Platform), SaaS (Rent App).</li>
-<li><strong>Deployment</strong>: Public (Shared), Private (Dedicated), Hybrid (Mixed).</li>
-<li><strong>Shared Responsibility</strong>: You are always responsible for Data and Identity.</li>
-<li><strong>Economics</strong>: Shift from CapEx (Investment) to OpEx (Consumption).</li>
-<li><strong>Dynamics</strong>: Scalability (Growth) vs Elasticity (Auto-sizing).</li>
-<li><strong>Migration</strong>: Rehost (Fastest) vs Refactor (Best Long-term).</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong><br />
+        Cloud is defined by NIST as On-Demand, Broad Access, Resource Pooling, Elasticity, and Measured Service. The main service models are IaaS, PaaS, and SaaS, while deployment models include Public, Private, and Hybrid. Adoption shifts costs from CapEx to OpEx.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>In a SaaS model (like Gmail), who is responsible if you share a confidential file with the wrong person? (Hint: Shared Responsibility).</li>
@@ -614,15 +617,13 @@ Before starting the VM - , Nova platform compute service for VMs acts as a proxy
 The <code>nova-compute</code> service on the selected node (<code>Compute-Node-05</code>) receives the command to build. It checks its local image cache for the requested OS image (e.g., Ubuntu 22.04). If the image is missing, it contacts <strong>Glance platform image service </strong> to download it securely via an HTTP API. It then converts the image into a bootable volume, typically using a Copy-on-Write (CoW) backing file to save space and time.</p>
 <p><strong>Step 5: Wiring (The Final Assembly)</strong>
 Finally, <code>nova-compute</code> instructs the Hypervisor (KVM - Type 1 hypervisor /Libvirt) to define the VM - . Simultaneously, the <strong>Neutron platform networking service L2 Agent</strong> on that node detects the new port data and programs the local virtual switch (Open vSwitch) to connect the VM - 's virtual network - communication card to the physical network bridge. Only then does the VM - start booting, drawing its IP address from the DHCP agent as it initializes.</p>
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Nova platform compute service for VMs </strong>: Compute (The Brain).</li>
-<li><strong>Neutron platform networking service </strong>: Networking (The Plumber).</li>
-<li><strong>Keystone platform identity/authentication service </strong>: Identity/Auth (The Bouncer).</li>
-<li><strong>Glance platform image service </strong>: Image Storage (The Librarian).</li>
-<li><strong>Horizon platform web dashboard </strong>: Dashboard GUI (The Face).</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong><br />
+        OpenStack consists of modular services: Nova (Compute), Neutron (Networking), Keystone (Identity), Glance (Images), and Horizon (Dashboard). These services coordinate through a standard five-step API workflow to provision virtual resources.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>If Keystone platform identity/authentication service goes down, can you still log in to Horizon platform web dashboard ?</li>
@@ -650,13 +651,13 @@ Finally, <code>nova-compute</code> instructs the Hypervisor (KVM - Type 1 hyperv
 </li>
 </ul>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_7_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
+<div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_7_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
 <div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
 <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 6 - Proxmox Cluster and High Availability/Week_6_Student_Notes.html">
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>

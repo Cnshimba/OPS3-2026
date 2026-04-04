@@ -460,15 +460,22 @@
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
 </span></div>
 </div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Storage and Persistence (<a class="glossary-term" href="../glossary.html#Cinder">Cinder<span class="glossary-tooltip">OpenStack block storage service</span></a> platform block storage service )
-<strong>Estimated Reading Time</strong>: 25 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-Understand the critical difference between ephemeral and persistent storage—VMs are temporary, but data should last forever. <a class="glossary-term" href="../glossary.html#Cinder">Cinder<span class="glossary-tooltip">OpenStack block storage service</span></a> platform block storage service volumes are like USB drives for your cloud instances.</p>
-</blockquote>
+<div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: Storage and Persistence (Cinder)<br />
+        <strong>Estimated Reading Time</strong>: 25 Minutes
+    </div>
+</div>
+<div class="flex items-start p-4 my-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:
+        Understand the critical difference between ephemeral and persistent storage—VMs are temporary, but data should last forever. Cinder volumes are like USB drives for your cloud instances.
+    </div>
+</div>
 <hr/>
 <h2 id="1-the-hierarchy-of-cloud-storage">1. The Hierarchy of Cloud Storage</h2>
 <p>In Week 9, we launched compute instances, but if we terminate them, the data on their root disk is deleted. This is known as <strong>Ephemeral Storage</strong>. For a business like <strong>Nebula Inc.</strong>, we need a place to store our critical customer database that survives even if the Virtual Machine is destroyed.</p>
@@ -480,13 +487,13 @@ Understand the critical difference between ephemeral and persistent storage—VM
 </ul>
 <h3 id="11-ephemeral-vs-persistent-storage">1.1 Ephemeral vs. Persistent Storage</h3>
 <p>It is crucial to distinguish between the two primary ephemeral and persistent storage models in cloud architectures. <strong>Ephemeral Storage</strong> (Nova platform compute service for VMs ) is strictly tied to the lifecycle of the Compute Instance. It functions effectively as a local scratch disk, optimized for operating system caches and temporary file processing. However, if the instance is terminated or the underlying hypervisor fails, this data is irrevocably lost. In contrast, <strong>Persistent Storage</strong> (Cinder platform block storage service ) operates as an independent capability. A Cinder platform block storage service volume operates similarly to a physical USB drive or a SAN LUN; it exists independently of any single server. This durability ensures that critical datasets, such as customer databases or file servers, can survive compute failures and can be detached and re-attached to healthy instances during recovery operations.</p>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Ephemeral Storage</strong> (Nova platform compute service for VMs ): Temporary, fast, dies with the VM - . Use for OS / Cache.</li>
-<li><strong>Persistent Storage</strong> (Cinder platform block storage service ): Durable, independent, survives VM - deletion. Use for Databases / Critical Data.</li>
-<li><strong>Analogy</strong>: Ephemeral is RAM/Swap; Persistent is the Hard Drive.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong><br />
+        Ephemeral storage is tied to the VM lifecycle and is lost upon termination. Persistent cloud storage (Cinder) operates as an independent resource that survives instance deletion, making it essential for critical data such as databases and file systems.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why shouldn't you store your customer MySQL database on the Nova platform compute service for VMs Ephemeral disk?</li>
@@ -572,13 +579,13 @@ chmod<span class="w"> <span class="m">0640<span class="w"> /etc/cinder/nfs_share
 <span class="na">nfs_shares_config<span class="w"> <span class="o">=<span class="w"> <span class="s">/etc/cinder platform block storage service /nfs_shares
 <span class="na">nfs_mount_point_base<span class="w"> <span class="o">=<span class="w"> <span class="s">/var/lib/cinder platform block storage service /nfs
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Cinder platform block storage service </strong>: Manages block storage (Creating/Attaching volumes).</li>
-<li><strong>Backends</strong>: Connects to LVM (Local), NFS (File), or Ceph (Distributed).</li>
-<li><strong>Ceph</strong>: The Gold Standard for OpenStack platform . Self-healing, scalable, compliant.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong><br />
+        Cinder orchestrates storage via a driver model, supporting LVM, NFS, and Ceph backends. Ceph is the enterprise gold standard, providing a self-healing, distributed architecture that eliminates single points of failure and supports high-performance snapshots.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why is Ceph preferred over NFS for large clouds? (Hint: Single Point of Failure).</li>
@@ -602,13 +609,13 @@ The foundational level of data safety is Local Redundancy, known as LRS in Azure
 The next tier is Zonal Redundancy (ZRS), designed to ensure data survives the total destruction of a building due to fire or power loss. Public clouds implement this by replicating data across distinct Availability Zones—separate facilities with independent power and cooling. In OpenStack platform , you replicate this architecture using <strong>Cinder platform block storage service Availability Zones</strong>. By modifying <code>cinder.conf</code>, an administrator can define logical zones (e.g., <code>zone-A</code>, <code>zone-B</code>) and map them to specific storage racks or entirely separate Ceph clusters. This requires users to consciously select a zone when provisioning a volume, ensuring their application architecture can withstand a facility-level failure.</p>
 <p><strong>Level 3: Geo Redundancy (GRS)</strong>
 The highest level of protection is Geo Redundancy (GRS), which ensures survival against regional catastrophes, such as major natural disasters. While public clouds handle this via asynchronous replication between regions (e.g., North Europe to West Europe), a private cloud architect typically implements this using <strong>Cinder platform block storage service Backup</strong>. By configuring Cinder platform block storage service to send volume backups to a remote Swift Object Storage cluster located in a different city, you guarantee that critical data can be restored even if the primary datacenter is lost. More advanced (and expensive) setups can also utilize driver-level volume replication for real-time Active/Passive disaster recovery.</p>
-<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Snapshot - </strong>: Quick, local, dependent on source. Use for "Undo" before changes.</li>
-<li><strong>Backup</strong>: Slow, remote, independent. Use for Disaster Recovery (Fire/Flood).</li>
-<li><strong>Redundancy</strong>: LRS (Disk Fail), ZRS (Rack/Building Fail), GRS (City Fail).</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 3 Checkpoint</strong><br />
+        Snapshots provide instant, local point-in-time recovery using Copy-on-Write logic, while Backups offer independent disaster recovery by offloading data to separate clusters. Redundancy strategies (LRS, ZRS, GRS) protect against failures ranging from single disks to entire city-wide outages.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why isn't a Snapshot - considered a true Backup?</li>
@@ -647,13 +654,13 @@ sudo<span class="w"> sh<span class="w"> -c<span class="w"> <span class="s1">'ech
 <p>Before executing any destructive changes or updates to the database, standard procedure dictates creating a snapshot - to preserve the current state.</p>
 <div class="codehilite"><pre><span><code>openstack<span class="w"> volume<span class="w"> snapshot<span class="w"> create<span class="w"> --volume<span class="w"> nebula_db_vol<span class="w"> nebula_db_snap_v1
 </span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Process</strong>: Create Volume -&gt; Attach to VM - -&gt; Format (mkfs) -&gt; Mount.</li>
-<li><strong>Guest Responsibility</strong>: The Cloud Provider connects the wire; YOU must format the disk.</li>
-<li><strong>Persistence</strong>: Data survives detach/reattach and VM - deletion.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 4 Checkpoint</strong><br />
+        Provisioning peristent storage follows a clear workflow: Create Volume → Attach to VM → Format OS device → Mount to directory. This ensures the guest OS can effectively utilize the raw block storage delivered by the cloud provide.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why doesn't the volume show up automatically in <code>/mnt</code> when you attach it?</li>
@@ -736,13 +743,13 @@ sudo<span class="w"> sh<span class="w"> -c<span class="w"> <span class="s1">'ech
 </li>
 </ul>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_10_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
+<div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_10_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
 <div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
 <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 9 - Compute Operations/Week_9_Student_Notes.html">
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>

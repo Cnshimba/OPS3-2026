@@ -460,15 +460,22 @@
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
 </span></div>
 </div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: Compute Operations (<a class="glossary-term" href="../glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs</span></a> platform compute service for VMs )
-<strong>Estimated Reading Time</strong>: 30 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-<a class="glossary-term" href="../glossary.html#Nova">Nova<span class="glossary-tooltip">OpenStack compute service for VMs</span></a> platform compute service for VMs is the compute engine—focus on understanding the scheduling process and instance lifecycle. The <a class="glossary-term" href="../glossary.html#CLI">CLI<span class="glossary-tooltip">Command Line Interface</span></a> commands build on Week 8's foundation, so review <a class="glossary-term" href="../glossary.html#Keystone">Keystone<span class="glossary-tooltip">OpenStack identity/authentication service</span></a> platform identity/authentication service , <a class="glossary-term" href="../glossary.html#Glance">Glance<span class="glossary-tooltip">OpenStack image service</span></a> platform image service , and <a class="glossary-term" href="../glossary.html#Neutron">Neutron<span class="glossary-tooltip">OpenStack networking service</span></a> platform networking service concepts if needed.</p>
-</blockquote>
+<div class="flex items-start p-4 mb-8 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: Compute Operations (Nova)<br />
+        <strong>Estimated Reading Time</strong>: 30 Minutes
+    </div>
+</div>
+<div class="flex items-start p-4 my-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:
+        Nova is the compute engine—focus on understanding the scheduling process and instance lifecycle. The CLI commands build on Week 8's foundation, so review Keystone, Glance, and Neutron concepts if needed.
+    </div>
+</div>
 <hr/>
 <h2 id="1-introduction-to-openstack-compute-nova">1. Introduction to OpenStack platform Compute (Nova platform compute service for VMs )</h2>
 <p>In Week 7, we introduced the core services that make up an OpenStack platform cloud. This week, we tear apart the engine to understand the most critical component: <strong>Nova platform compute service for VMs </strong>. As the primary computing controller, Nova platform compute service for VMs is responsible for orchestrating, scheduling, and managing the lifecycle of virtual machines.</p>
@@ -480,13 +487,13 @@
 </ul>
 <p>It is important to clarify that Nova platform compute service for VMs does not provide the virtualization itself; that task remains the job of the Hypervisor, such as KVM - Type 1 hypervisor or QEMU - Type 1 hypervisor for virtualization . Instead, Nova platform compute service for VMs acts as the management layer that allows administrators to scale this virtualization across thousands of physical servers seamlessly.</p>
 <p>Modern Nova platform compute service for VMs utilizes a <strong>Cellular Architecture</strong> to achieve this massive scale. In early versions of OpenStack platform , a single central database and message queue handled every request in the cloud. However, as clusters grew to tens of thousands of nodes, the database lock contention became a severe bottleneck. The solution was to partition the cloud into "Cells." In this model, the API and Scheduler remain at the global level, but the Compute nodes are grouped into independent cells, each with its own database and message queue. This implies that if "Cell 1" suffers a critical database failure, "Cell 2" continues to operate without interruption, effectively partitioning the cloud to isolate failures and improve resilience.</p>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Nova platform compute service for VMs </strong> is the compute controller, equivalent to <code>Microsoft.Compute</code>.</li>
-<li><strong>Cellular Architecture</strong>: Partitions the cloud for scalability and resilience.</li>
-<li><strong>Hypervisor Agnostic</strong>: Nova platform compute service for VMs manages the hypervisor (KVM - Type 1 hypervisor ) but is not the hypervisor itself.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong><br />
+        Nova is the compute resource provider in OpenStack. It uses a hypervisor-agnostic design and a cellular architecture to scale to thousands of nodes while isolating failures through independent database and message queue partitions.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why does Nova platform compute service for VMs need a "Cellular Architecture" for large-scale clouds?</li>
@@ -507,13 +514,13 @@
 <code>nova-compute</code> is designed to be hypervisor-agnostic. It does not speak directly to the kernel; instead, it uses a driver. In our Linux environment, it uses the <strong>Libvirt</strong> driver. When you ask for a VM - , <code>nova-compute</code> translates your request into a <strong>Libvirt XML</strong> file—a precise recipe describing the VM - 's CPU, RAM, and Devices—and passes it to the Libvirt daemon, which ultimately spawns the <strong>QEMU - Type 1 hypervisor for virtualization /KVM - Type 1 hypervisor </strong> process.</p>
 <p><strong>The Resource Tracker</strong>
 Beyond creating VMs, <code>nova-compute</code> is responsible for auditing the physical server. It runs a periodic task (typically every 60 seconds) called the <strong>Resource Tracker</strong>. This task scans the available RAM, CPU cores, and Disk space on the host and compares it against the reserved resources. It then reports this "Inventory" back to the central database. This ensures that the Scheduler always possesses an accurate, up-to-date map of the cloud's capacity, preventing it from sending a VM - to a host that is already full.</p>
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Control Plane</strong>: <code>nova-api</code> (Entry), <code>nova-scheduler</code> (Decision), <code>nova-conductor</code> (DB Guard).</li>
-<li><strong>Data Plane</strong>: <code>nova-compute</code> (Hypervisor Worker).</li>
-<li><strong>Security</strong>: Compute nodes cannot talk directly to the DB; they go through Conductor.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong><br />
+        The Nova control plane consists of the API, Scheduler, and Conductor. The Conductor improves security by preventing compute nodes from accessing the database directly. The <code>nova-compute</code> worker on each host uses drivers like Libvirt to manage VMs and reports physical inventory back to the cloud database.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why is <code>nova-api</code> considered "stateless"?</li>
@@ -538,13 +545,13 @@ Beyond creating VMs, <code>nova-compute</code> is responsible for auditing the p
 <li><strong>Stacking Strategy</strong>: Fills up one server completely before moving to the next. This saves power but creates hotspots.</li>
 <li><strong>Spreading Strategy</strong> (Default): Places the VM - on the emptiest possible server to maximize performance and minimize the "noisy neighbor" effect.</li>
 </ul>
-<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Filtering</strong>: Removes invalid hosts (e.g., Not enough RAM).</li>
-<li><strong>Weighting</strong>: Ranks valid hosts (e.g., Emptiest first).</li>
-<li><strong>Goal</strong>: Select the single best host (Candidate) for the VM - .</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 3 Checkpoint</strong><br />
+        The Scheduler uses a funnel process: Filtering removes incapable hosts based on requirements like RAM and AZs, while Weighting ranks the remaining candidates to find the optimal host using strategies like "Spreading" to maximize performance.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>What is the difference between "Stacking" and "Spreading" strategies?</li>
@@ -555,14 +562,13 @@ Beyond creating VMs, <code>nova-compute</code> is responsible for auditing the p
 <p>A Virtual Machine goes through several status changes during its life. Understanding these transitions is critical for troubleshooting when things go wrong.</p>
 <p>The process begins in the <strong>BUILD</strong> state. Initially, the API has accepted the request, but the VM - does not exist yet; the Scheduler is still finding a home for it. The state remains <strong>BUILD</strong> while the Conductor waits for Neutron platform networking service to assign an IP address and Port (Networking phase). It then transitions to the Spawning phase, where <code>nova-compute</code> downloads the disk image from Glance platform image service .</p>
 <p>If all goes well, the status changes to <strong>ACTIVE</strong>, meaning the Hypervisor considers the VM - process to be running successfully. If a failure occurs at any point, the status will change to <strong>ERROR</strong>, and the administrator must check the <code>nova-compute.log</code> to determine the cause. Other states include <strong>SHELVED</strong>, where the VM - is written to disk and removed from RAM to save resources (a "Deep Freeze"), and <strong>RESCUE</strong>, where the VM - is booted from a special recovery image to repair a corrupted disk.</p>
-<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>BUILD</strong>: Scheduling and Networking in progress.</li>
-<li><strong>ACTIVE</strong>: VM - is running on the Hypervisor.</li>
-<li><strong>ERROR</strong>: Something went wrong (Check logs).</li>
-<li><strong>SHELVED</strong>: VM - offloaded to disk.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 4 Checkpoint</strong><br />
+        Instances transition through various states: BUILD (Provisioning), ACTIVE (Running), ERROR (Failure), and SHELVED (Offloaded to disk). Understanding these states is critical for monitoring the lifecycle and troubleshooting deployment issues.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>What happens during the "Spawning" phase?</li>
@@ -666,14 +672,13 @@ If a VM - fails to become reachable (e.g., no network), check the boot logs.</p>
 <ul>
 <li><strong>Explanation</strong>: Retrieves the kernel ring buffer (dmesg) and cloud-init output directly from the hypervisor. Use this to find kernel panics or DHCP failures.</li>
 </ul>
-<h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Flavor - template - image for quick deployment defining vCPUs, RAM, and disk </strong>: Virtual hardware template - image for quick deployment (CPU/RAM). Provider defines, Consumer selects.</li>
-<li><strong>Security Group</strong>: Stateful virtual firewall. "Implicit Deny" by default.</li>
-<li><strong>Keypairs</strong>: SSH Keys for identity. Private Key never leaves your laptop.</li>
-<li><strong>Floating IP</strong>: Assigns a public address to reach the VM - from outside.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 5 Checkpoint</strong><br />
+        The provisioning process involves defining Flavors (Hardware sizes), creating Keypairs (SSH credentials), and configuring Security Groups (Stateful firewalls). Floating IPs are then mapped to provide public access to the instances.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why must we use <code>chmod 600</code> on the private key?</li>
@@ -760,13 +765,13 @@ Notice how similar the flags are across all three platforms.</p>
 <p><strong>Azure (Compute)</strong></p>
 <div class="codehilite"><pre><span><code>az<span class="w"> vm<span class="w"> create<span class="w"> --image<span class="w"> UbuntuLTS<span class="w"> --size<span class="w"> Standard_B1s<span class="w"> --ssh-key-value<span class="w"> @mykey.pub<span class="w"> --nsg<span class="w"> web-nsg<span class="w"> --name<span class="w"> my-server
 </span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-6-checkpoint">Section 6 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li>Concepts are universal; only terms change (Flavor - template - image for quick deployment defining vCPUs, RAM, and disk -&gt; Instance Type).</li>
-<li><strong>Nova platform compute service for VMs </strong> = AWS EC2 = Azure Compute.</li>
-<li><strong>Security Group</strong> is the standard term across OpenStack platform and AWS.</li>
-</ul>
+<div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 6 Checkpoint</strong><br />
+        Cloud concepts are universal. Nova compute, Flavors, and Security Groups in OpenStack map directly to EC2 Instances and Azure VMs, sharing nearly identical lifecycle workflows and CLI patterns across all major platforms.
+    </div>
+</div>
 <p><strong>Reflection</strong>:</p>
 <ul>
 <li>Why is it valuable to learn the underlying concept rather than just the tool command?</li>
@@ -814,13 +819,13 @@ Notice how similar the flags are across all three platforms.</p>
 </li>
 </ul>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_9_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
+<div class="mt-12 p-8 bg-[#002F6E]/10 dark:bg-[#002F6E]/20 rounded-xl border border-[#002F6E] text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-300 mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
+    <a href="Week_9_Quiz.html" class="inline-block px-8 py-3 bg-[#002F6E] hover:bg-[#002355] text-white font-bold rounded-lg transition-colors shadow-md no-underline">
+        Start Quiz
+    </a>
+</div>
 <div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
 <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 8 - Cloud Foundation/Week_8_Student_Notes.html">
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
