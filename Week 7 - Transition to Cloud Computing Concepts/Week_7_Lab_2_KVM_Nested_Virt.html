@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 7 Lab 2: KVM Nested Virtualization</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                colors: {
+                    primary: '#002F6E', // VUT Midnight Blue
+                    secondary: '#6c757d',
+                },
+                typography: {
+                    DEFAULT: {
+                        css: {
+                            maxWidth: '100%',
+                            fontFamily: 'Inter, sans-serif',
+                            color: 'var(--text-body)',
+                            '--tw-prose-body': 'var(--text-body)',
+                            '--tw-prose-headings': 'var(--text-headings)',
+                            '--tw-prose-links': 'var(--text-link)',
+                            '--tw-prose-bold': 'var(--text-headings)',
+                            '--tw-prose-counters': 'var(--text-body)',
+                            '--tw-prose-bullets': 'var(--text-body)',
+                            '--tw-prose-hr': 'var(--border-color)',
+                            '--tw-prose-quotes': 'var(--text-body)',
+                            '--tw-prose-code': 'var(--text-code)',
+                            '--tw-prose-pre-code': 'var(--text-pre)',
+                            '--tw-prose-pre-bg': 'var(--bg-pre)',
+                            img: {
+                                display: 'block',
+                                marginLeft: 'auto',
+                                marginRight: 'auto',
+                                borderRadius: '0.5rem',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        });
+    });
+</script>
+<style>
+    :root {
+        --bg-body: #f8fafc;
+        --bg-card: #ffffff;
+        --text-body: #334155;
+        --text-headings: #0f172a;
+        --text-link: #002F6E;
+        --border-color: #e2e8f0;
+        --bg-code: #f1f5f9;
+        --text-code: #d63384;
+        --bg-pre: #f6f8fa;
+        --text-pre: #24292e;
+    }
+    html.dark {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --text-body: #cbd5e1;
+        --text-headings: #f8fafc;
+        --text-link: #60a5fa;
+        --border-color: #334155;
+        --bg-code: #334155;
+        --text-code: #f472b6;
+        --bg-pre: #272822;
+        --text-pre: #f8f8f2;
+    }
+    body { transition: background-color 0.3s, color 0.3s; }
+</style>
+</head>
+<body class="bg-[var(--bg-body)] text-[var(--text-body)] pt-20 transition-colors duration-300">
+
+<nav class="fixed top-0 left-0 right-0 bg-[var(--bg-card)]/90 backdrop-blur-md shadow-sm z-50 border-b border-[var(--border-color)]">
+    <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+        <a href="../index.html" class="flex items-center space-x-3 text-[var(--text-headings)] hover:text-blue-600 transition-colors no-underline">
+            <span class="font-bold text-lg">Operating Systems 3</span>
+        </a>
+        <div class="flex items-center space-x-6">
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<main class="container mx-auto px-4 max-w-5xl mb-12">
+    <article class="prose lg:prose-lg max-w-none bg-[var(--bg-card)] p-6 md:p-12 rounded-xl shadow-sm border border-[var(--border-color)]">
+        <p><a href="../index.html">← Back to Course Index</a></p>
+        <h1 id="week-7-lab-2-project-cloud-node-advanced-kvm-nested-virtualization">Week 7 Lab 2: Project Cloud-Node (Advanced KVM & Nested Virtualization)</h1>
+        <p><strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)</p>
+        <p><strong>Estimated Time</strong>: 60 Minutes<br />
+        <strong>Lab Type</strong>: Advanced Infrastructure / CLI</p>
+        <hr />
+        
+        <h2 id="lab-overview">Lab Overview</h2>
+        <p>In Lab 1, we used VirtualBox (the "Easy Way") to import a cloud environment. In this lab, you will act as a <strong>Cloud Infrastructure Engineer</strong> for "Project Blue-Stack." You will use <strong>KVM/libvirt</strong> (the "Professional Way") to enable <strong>Nested Virtualization</strong> and deploy a cloud-ready Ubuntu node from the command line.</p>
+        
+        <blockquote>
+            <p><strong>Definition: Nested Virtualization</strong> allows you to run a hypervisor (like KVM or Proxmox) <em>inside</em> another virtual machine. This is how major cloud providers (AWS, Azure) allow you to run your own lab environments in the cloud.</p>
+        </blockquote>
+
+        <h2 id="objectives">Objectives:</h2>
+        <ol>
+            <li><strong>Enable Nesting</strong>: Configure the host KVM module to support hardware-assisted nesting.</li>
+            <li><strong>Cloud Image Prep</strong>: Download and customize a sparse Ubuntu Cloud Image.</li>
+            <li><strong>CLI Deployment</strong>: Use <code>virt-install</code> with "Host-Passthrough" to launch the guest.</li>
+            <li><strong>Verification</strong>: Confirm that the Guest VM is capable of running its own virtual machines.</li>
+        </ol>
+
+        <hr />
+
+        <h2 id="part-1-enabling-nested-virtualization-on-the-host">Part 1: Enabling Nested Virtualization on the Host</h2>
+        <p>Before launching a guest that can virtualize, we must tell the Linux kernel and KVM module to pass through the hardware acceleration features.</p>
+        
+        <ol>
+            <li><strong>Check Current Status</strong>:
+                <pre><code>cat /sys/module/kvm_intel/parameters/nested</code></pre>
+                <em>(Note: If on AMD, use <code>kvm_amd</code>)</em>. If it returns <strong>N</strong>, nesting is disabled.
+            </li>
+            <li><strong>Enable Nesting Temporarily</strong>:
+                <pre><code>sudo modprobe -r kvm_intel
+sudo modprobe kvm_intel nested=1</code></pre>
+            </li>
+            <li><strong>Verify</strong>:
+                <pre><code>cat /sys/module/kvm_intel/parameters/nested</code></pre>
+                It should now return <strong>Y</strong>.
+            </li>
+        </ol>
+
+        <hr />
+
+        <h2 id="part-2-preparing-the-cloud-image">Part 2: Preparing the Cloud Image</h2>
+        <p>Cloud providers don't use ISOs; they use specialized <strong>Cloud Images</strong> (often .qcow2) that are pre-installed and ready to boot.</p>
+        
+        <ol>
+            <li><strong>Download the Image</strong>:
+                <pre><code>wget https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img</code></pre>
+            </li>
+            <li><strong>Create a Sparse Working Copy</strong> (The "Golden Master" concept):
+                <pre><code>cp jammy-server-cloudimg-amd64.img cloud-node-01.qcow2
+qemu-img resize cloud-node-01.qcow2 +10G</code></pre>
+            </li>
+        </ol>
+
+        <hr />
+
+        <h2 id="part-3-deploying the-cloud-node-via-cli">Part 3: Deploying the Cloud Node via CLI</h2>
+        <p>We will use <code>virt-install</code> to launch the VM. The <strong>critical flag</strong> is <code>--cpu host-passthrough</code>.</p>
+        
+        <pre><code>sudo virt-install \
+  --name Cloud-Node-01 \
+  --memory 4096 \
+  --vcpus 2 \
+  --disk path=./cloud-node-01.qcow2,format=qcow2 \
+  --import \
+  --os-variant ubuntu22.04 \
+  --network bridge=virbr0 \
+  --cpu host-passthrough \
+  --graphics none \
+  --noautoconsole</code></pre>
+        
+        <p><strong>Why <code>host-passthrough</code>?</strong> This passes the physical CPU's "VMX" (Virtual Machine Extensions) into the guest.</p>
+
+        <hr />
+
+        <h2 id="part-4-the-nested-verification-test">Part 4: The Nested Verification Test</h2>
+        <ol>
+            <li>Log into your new VM via <code>virsh console Cloud-Node-01</code> or SSH.</li>
+            <li>Install the verification tool:
+                <pre><code>sudo apt update && sudo apt install cpu-checker -y</code></pre>
+            </li>
+            <li>Run the KVM check:
+                <pre><code>kvm-ok</code></pre>
+            </li>
+            <li><strong>Success Output</strong>: <code>INFO: /dev/kvm exists. KVM acceleration can be used.</code></li>
+        </ol>
+
+        <hr />
+
+        <h2 id="lab-checkpoint">Lab Checkpoint</h2>
+        <ul>
+            <li class="task-list-item"><input type="checkbox" disabled> Host KVM module has <code>nested=Y</code>.</li>
+            <li class="task-list-item"><input type="checkbox" disabled> Cloud image has been resized for storage elasticity.</li>
+            <li class="task-list-item"><input type="checkbox" disabled> VM deployed using <code>host-passthrough</code>.</li>
+            <li class="task-list-item"><input type="checkbox" disabled> <code>kvm-ok</code> returns success <strong>inside</strong> the guest.</li>
+        </ul>
+
+        <hr />
+        <p><strong>Instructor Signature</strong>: <strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong>
+        <strong>Date</strong>: <strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong></strong></p>
+        <p><a href="../index.html">← Back to Course Index</a></p>
+    </article>
+</main>
+
+<script src="../js/course_logic.js"></script>
+
+</body>
+</html>
