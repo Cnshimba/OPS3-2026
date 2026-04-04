@@ -599,9 +599,12 @@ For "Nebula Inc.", we need a custom "Micro" size for cheap testing. We will name
 </ul>
 <div class="codehilite"><pre><span><code>openstack<span class="w"> flavor<span class="w"> create<span class="w"> --id<span class="w"> auto<span class="w"> --ram<span class="w"> <span class="m">512<span class="w"> --disk<span class="w"> <span class="m">1<span class="w"> --vcpus<span class="w"> <span class="m">1<span class="w"> m1.nebula_micro
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<ul>
-<li><strong>Result</strong>: We have added a new item to the menu. Users can now select <code>m1.nebula_micro</code> when launching instances.</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Result</strong>: We have added a new item to the menu. Users can now select <code>m1.nebula_micro</code> when launching instances.
+    </div>
+</div>
 <h3 id="52-securing-access-keys-groups">5.2 Securing Access (Keys &amp; Groups)</h3>
 <p>Security in the cloud is a two-layered approach. First, we must secure <strong>Identity</strong> (proving who you are) using Keypairs. Second, we must secure the <strong>Network</strong> (controlling traffic flow) using Security Groups. You cannot access a VM - unless both of these layers are correctly configured.</p>
 <h3 id="521-keypairs-login-access">5.2.1 Keypairs (Login Access)</h3>
@@ -610,9 +613,12 @@ For "Nebula Inc.", we need a custom "Micro" size for cheap testing. We will name
 <div class="codehilite"><pre><span><code>openstack<span class="w"> keypair<span class="w"> create<span class="w"> nebula_key<span class="w"> &gt;<span class="w"> nebula_key.pem
 chmod<span class="w"> <span class="m">600<span class="w"> nebula_key.pem
 </span></span></span></span></span></span></span></span></code></span></pre></div>
-<ul>
-<li><strong>Explanation</strong>: This command generates the pair. It stores the Public Key in the Nova platform compute service for VMs Database and writes the Private Key to <code>nebula_key.pem</code> on your disk. The <code>chmod</code> is critical; SSH will refuse to use a key if the file permissions are too open.</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Explanation</strong>: This command generates the pair. It stores the Public Key in the Nova platform compute service for VMs Database and writes the Private Key to <code>nebula_key.pem</code> on your disk. The <code>chmod</code> is critical; SSH will refuse to use a key if the file permissions are too open.
+    </div>
+</div>
 <h3 id="522-security-groups-the-virtual-firewall">5.2.2 Security Groups (The Virtual Firewall)</h3>
 <p>In traditional networking, firewalls are physical appliances sitting at the edge of the network. In Cloud Computing, we use <strong>Security Groups</strong>. A Security Group is a virtual firewall that is applied directly to the network interface (vNIC) of an instance, regardless of where it runs in the data center.</p>
 <p><img alt="Security Group Packet Flow" src="images/security_group_flow.png"/>
@@ -637,9 +643,12 @@ openstack<span class="w"> security<span class="w"> group<span class="w"> rule<sp
 <span class="c1"># Allow HTTP (Port 80) - Public Web Access
 openstack<span class="w"> security<span class="w"> group<span class="w"> rule<span class="w"> create<span class="w"> --proto<span class="w"> tcp<span class="w"> --dst-port<span class="w"> <span class="m">80<span class="w"> nebula_web_sg
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<ul>
-<li><strong>Result</strong>: The OVS Agent on the compute node intercepts traffic to <code>nebula_web_01</code> and filters it against these rules.</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Result</strong>: The OVS Agent on the compute node intercepts traffic to <code>nebula_web_01</code> and filters it against these rules.
+    </div>
+</div>
 <h3 id="53-launching-instances">5.3 Launching Instances</h3>
 <p>The <code>server create</code> command brings together the Flavor - template - image for quick deployment defining vCPUs, RAM, and disk , Image, Network, Key, and Security Group to instantiate a VM - .</p>
 <p><strong>Boot Command</strong></p>
@@ -650,15 +659,18 @@ openstack<span class="w"> security<span class="w"> group<span class="w"> rule<sp
 <span class="w"> --security-group<span class="w"> nebula_web_sg<span class="w"> <span class="se">\
 <span class="w"> nebula_web_01
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<ul>
-<li><strong>Explanation</strong>:<ul>
-<li><code>--flavor</code>: Defines the size.</li>
-<li><code>--image</code>: Defines the software (OS).</li>
-<li><code>--network</code>: Defines the wiring.</li>
-<li><strong>Result</strong>: Triggers the entire scheduling and build process seen in Section 4.</li>
-</ul>
-</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Explanation</strong>:
+        <ul class="list-disc ml-6 mt-2">
+            <li><code>--flavor</code>: Defines the size.</li>
+            <li><code>--image</code>: Defines the software (OS).</li>
+            <li><code>--network</code>: Defines the wiring.</li>
+            <li><strong>Result</strong>: Triggers the entire scheduling and build process seen in Section 4.</li>
+        </ul>
+    </div>
+</div>
 <h3 id="54-day-2-operations-debugging-access">5.4 Day 2 Operations (Debugging &amp; Access)</h3>
 <p><strong>Floating IPs</strong> (Public Access)
 To access the VM - from the internet, map a public IP to it.</p>
@@ -669,9 +681,12 @@ openstack<span class="w"> server<span class="w"> add<span class="w"> floating<sp
 If a VM - fails to become reachable (e.g., no network), check the boot logs.</p>
 <div class="codehilite"><pre><span><code>openstack<span class="w"> console<span class="w"> log<span class="w"> show<span class="w"> nebula_web_01
 </span></span></span></span></code></span></pre></div>
-<ul>
-<li><strong>Explanation</strong>: Retrieves the kernel ring buffer (dmesg) and cloud-init output directly from the hypervisor. Use this to find kernel panics or DHCP failures.</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Explanation</strong>: Retrieves the kernel ring buffer (dmesg) and cloud-init output directly from the hypervisor. Use this to find kernel panics or DHCP failures.
+    </div>
+</div>
 <div class="flex items-start p-4 mt-8 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
     <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
     <div class="flex-1 text-sm md:text-base">

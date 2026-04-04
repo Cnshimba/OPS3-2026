@@ -493,10 +493,13 @@ openstack<span class="w"> server<span class="w"> list
 <span class="c1"># JSON Output (Machine Readable)
 openstack<span class="w"> server<span class="w"> list<span class="w"> --format<span class="w"> json
 </span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Command Analysis</strong>:
-* <code>--format json</code>: Forces the CLI to output raw JSON data instead of an ASCII table. This is essential for piping data into tools like <code>jq</code> or Python scripts.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Command Analysis</strong>:<br />
+        • <code>--format json</code>: Forces the CLI to output raw JSON data instead of an ASCII table. This is essential for piping data into tools like <code>jq</code> or Python scripts.
+    </div>
+</div>
 <h3 id="12-parsing-with-jq">1.2 Parsing with <code>jq</code></h3>
 <p><code>jq</code> is a lightweight command-line JSON processor that allows us to filter, slice, and map JSON data directly in the terminal. It acts as a bridge between the verbose API output and the specific strings (like UUIDs) needed for subsequent commands.</p>
 <div class="codehilite"><pre><span><code><span class="c1"># Basic: Get the ID of the network named 'private-net'
@@ -506,14 +509,19 @@ openstack<span class="w"> server<span class="w"> list<span class="w"> --format<s
 <span class="c1"># We pipe the server list into jq, filter for specific status, and extract the IDs.
 <span class="nv">ACTIVE_IDS<span class="o">=<span class="k">$(openstack<span class="w"> server<span class="w"> list<span class="w"> -f<span class="w"> json<span class="w"> <span class="p">|<span class="w"> jq<span class="w"> -r<span class="w"> <span class="s1">'.[] | select(.Status=="ACTIVE") | .ID'<span class="k">)
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Code Analysis</strong>:
-* <code>$()</code>: Command substitution; runs the inner command and assigns the output to the variable.
-* <code>|</code>: The pipe operator passes the output of the openstack platform command directly to <code>jq</code>.
-* <code>jq -r .id</code>: Filters the JSON to find the key "id". The <code>-r</code> (raw) flag removes quotation marks, leaving just the UUID.
-* <code>select()</code>: A powerful <code>jq</code> function that acts like a <code>WHERE</code> clause in SQL, allowing you to filter lists based on conditions.
-In the example above, the <code>-f json</code> flag forces OpenStack platform to output JSON. We then pipe this valid JSON to <code>jq</code>. The <code>-r</code> flag is crucial as it outputs "raw" strings without quotation marks, making the output ready for variable assignment. We also use the <code>select</code> function to filter the array, ignoring any servers that are building, paused, or shut down.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Code Analysis</strong>:
+        <ul class="list-disc ml-6 mt-2">
+            <li><code>$()</code>: Command substitution; runs the inner command and assigns the output to the variable.</li>
+            <li><code>|</code>: The pipe operator passes the output of the openstack platform command directly to <code>jq</code>.</li>
+            <li><code>jq -r .id</code>: Filters the JSON to find the key "id". The <code>-r</code> (raw) flag removes quotation marks, leaving just the UUID.</li>
+            <li><code>select()</code>: A powerful <code>jq</code> function that acts like a <code>WHERE</code> clause in SQL, allowing you to filter lists based on conditions.</li>
+        </ul>
+        <p class="mt-2">In the example above, the <code>-f json</code> flag forces OpenStack platform to output JSON. We then pipe this valid JSON to <code>jq</code>. The <code>-r</code> flag is crucial as it outputs "raw" strings without quotation marks, making the output ready for variable assignment. We also use the <code>select</code> function to filter the array, ignoring any servers that are building, paused, or shut down.</p>
+    </div>
+</div>
 <h3 id="13-architectural-insight-golden-images-vs-post-boot-config">1.3 Architectural Insight: Golden Images vs. Post-Boot Config</h3>
 <p>The <em>OpenStack platform for Architects</em> book details two competing strategies for deploying applications: <strong>Golden Images</strong> and <strong>Post-Boot Configuration</strong>.</p>
 <p><img alt="Pet vs Cattle Automation" src="images/pet_vs_cattle_automation.png"/>
@@ -554,12 +562,17 @@ In the example above, the <code>-f json</code> flag forces OpenStack platform to
 <span class="w"> <span class="p p-Indicator">-<span class="w"> <span class="l l-Scalar l-Scalar-Plain">systemctl start apache2
 <span class="w"> <span class="p p-Indicator">-<span class="w"> <span class="l l-Scalar l-Scalar-Plain">echo "&lt;h1&gt;Deployed via Automation&lt;/h1&gt;" &gt; /var/www/html/index.html
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Config Analysis</strong>:
-* <code>#cloud-config</code>: The required header telling Cloud-Init this is declarative YAML.
-* <code>packages</code>: A list of software to install via the OS package manager (<code>apt</code>, <code>yum</code>).
-* <code>runcmd</code>: A list of shell commands to execute <em>after</em> packages are installed. This is often used to start services or configure files.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Config Analysis</strong>:
+        <ul class="list-disc ml-6 mt-2">
+            <li><code>#cloud-config</code>: The required header telling Cloud-Init this is declarative YAML.</li>
+            <li><code>packages</code>: A list of software to install via the OS package manager (<code>apt</code>, <code>yum</code>).</li>
+            <li><code>runcmd</code>: A list of shell commands to execute <em>after</em> packages are installed. This is often used to start services or configure files.</li>
+        </ul>
+    </div>
+</div>
 <h3 id="24-common-patterns-the-cookbook">2.4 Common Patterns (The Cookbook)</h3>
 <p>Writing User Data requires understanding common patterns. Below are standard recipes frequently used in production.</p>
 <p><strong>Pattern 1: The Web Server</strong>
@@ -574,11 +587,16 @@ This pattern installs a web server, writes a custom index file, and ensures the 
 <span class="nt">runcmd<span class="p">:
 <span class="w"> <span class="p p-Indicator">-<span class="w"> <span class="l l-Scalar l-Scalar-Plain">systemctl restart nginx
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Pattern Analysis</strong>:
-* <code>write_files</code>: Creates use-case specific configuration files. The <code>content</code> block allows multiline text.
-* <code>runcmd</code>: Restarts the service to ensure the new configuration is applied.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Pattern Analysis</strong>:
+        <ul class="list-disc ml-6 mt-2">
+            <li><code>write_files</code>: Creates use-case specific configuration files. The <code>content</code> block allows multiline text.</li>
+            <li><code>runcmd</code>: Restarts the service to ensure the new configuration is applied.</li>
+        </ul>
+    </div>
+</div>
 <p><strong>Pattern 2: The User Creator</strong>
 This pattern creates a new user account, grants it sudo privileges without a password requirement, and injects an SSH public key for secure access.</p>
 <div class="codehilite"><pre><span><code><span class="c1">#cloud-config
@@ -590,20 +608,28 @@ This pattern creates a new user account, grants it sudo privileges without a pas
 <span class="w"> <span class="nt">ssh_authorized_keys<span class="p">:
 <span class="w"> <span class="p p-Indicator">-<span class="w"> <span class="l l-Scalar l-Scalar-Plain">ssh-rsa AAAAB3Nza...
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Pattern Analysis</strong>:
-* <code>users</code>: A dedicated module for user management.
-* <code>sudo</code>: Grants password-less root access, critical for automated management tools like Ansible.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Pattern Analysis</strong>:
+        <ul class="list-disc ml-6 mt-2">
+            <li><code>users</code>: A dedicated module for user management.</li>
+            <li><code>sudo</code>: Grants password-less root access, critical for automated management tools like Ansible.</li>
+        </ul>
+    </div>
+</div>
 <p><strong>Pattern 3: The Update</strong>
 This pattern instructs the system to upgrade all installed packages on boot. Use this cautiously, as it significantly increases the boot time.</p>
 <div class="codehilite"><pre><span><code><span class="c1">#cloud-config
 <span class="nt">package_upgrade<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">true
 </span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Pattern Analysis</strong>:
-* <code>package_upgrade: true</code>: Forces an <code>apt-get upgrade</code> or <code>yum update</code> on first boot. While secure, it adds significant time to the boot process.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Pattern Analysis</strong>:<br />
+        • <code>package_upgrade: true</code>: Forces an <code>apt-get upgrade</code> or <code>yum update</code> on first boot. While secure, it adds significant time to the boot process.
+    </div>
+</div>
 <h3 id="25-using-it-in-cli">2.5 Using it in CLI</h3>
 <p>To inject this configuration, you save the YAML to a local file (e.g., <code>setup.yaml</code>) and pass it to the compute API during the server creation process.</p>
 <div class="codehilite"><pre><span><code>openstack<span class="w"> server<span class="w"> create<span class="w"> <span class="se">\
@@ -612,10 +638,13 @@ This pattern instructs the system to upgrade all installed packages on boot. Use
 <span class="w"> --user-data<span class="w"> setup.yaml<span class="w"> <span class="se">\
 <span class="w"> my-automated-server
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Command Analysis</strong>:
-* <code>--user-data setup.yaml</code>: Injects the contents of the file <code>setup.yaml</code> into the instance's metadata service. Cloud-Init reads this file upon first boot.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Command Analysis</strong>:<br />
+        • <code>--user-data setup.yaml</code>: Injects the contents of the file <code>setup.yaml</code> into the instance's metadata service. Cloud-Init reads this file upon first boot.
+    </div>
+</div>
 <h3 id="26-troubleshooting-when-things-go-wrong">2.6 Troubleshooting (When things go wrong)</h3>
 <p>A common mistake is assuming that if a server boots, the automation worked. If your script fails (e.g., a syntax error in YAML), the server will still boot, but your app won't be there. To debug this, you must SSH into the server and check the logs:</p>
 <ul>
@@ -649,12 +678,17 @@ This pattern instructs the system to upgrade all installed packages on boot. Use
 <span class="w"> web-<span class="nv">$i
 <span class="k">done
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Script Analysis</strong>:
-* <code>for i in {1..5}</code>: Creates a loop that runs 5 times, with variable <code>$i</code> set to 1, 2, 3, 4, 5.
-* <code>web-$i</code>: Dynamically names the servers (web-1, web-2...) using the variable.
-* <code>--network private-net</code>: Ensures all servers attach to the same internal network.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Script Analysis</strong>:
+        <ul class="list-disc ml-6 mt-2">
+            <li><code>for i in {1..5}</code>: Creates a loop that runs 5 times, with variable <code>$i</code> set to 1, 2, 3, 4, 5.</li>
+            <li><code>web-$i</code>: Dynamically names the servers (web-1, web-2...) using the variable.</li>
+            <li><code>--network private-net</code>: Ensures all servers attach to the same internal network.</li>
+        </ul>
+    </div>
+</div>
 <h3 id="32-python-automation-the-sdk">3.2 Python Automation (The SDK)</h3>
 <p>While Bash scripts are useful for quick tasks, they often become unmaintainable "spaghetti code" when applied to complex systems. For professional cloud engineering, the <strong>OpenStack platform SDK</strong> (Python) provides a robust alternative.</p>
 <p><strong>Why Python?</strong>
