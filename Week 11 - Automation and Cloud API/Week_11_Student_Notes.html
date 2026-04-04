@@ -1154,11 +1154,14 @@ kubectl<span class="w"> get<span class="w"> nodes
 <span class="w"> <span class="p p-Indicator">-<span class="w"> <span class="nt">port<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">80
 <span class="w"> <span class="nt">targetPort<span class="p">:<span class="w"> <span class="l l-Scalar l-Scalar-Plain">80
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Stack Analysis</strong>:
-* <strong>Replicas: 3</strong>: Instead of creating <code>web_server_01</code>, <code>web_server_02</code>, etc., we simply ask for "3 copies". Kubernetes orchestration platform ensures they are always running.
-* <strong>Service (LoadBalancer)</strong>: This object talks to OpenStack platform Neutron platform networking service /Octavia to provision a real Load Balancer that distributes traffic to those 3 pods.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Stack Analysis</strong>:<br />
+        • <strong>Replicas: 3</strong>: Instead of creating <code>web_server_01</code>, <code>web_server_02</code>, etc., we simply ask for "3 copies". Kubernetes orchestration platform ensures they are always running.<br />
+        • <strong>Service (LoadBalancer)</strong>: This object talks to OpenStack platform Neutron platform networking service /Octavia to provision a real Load Balancer that distributes traffic to those 3 pods.
+    </div>
+</div>
 <div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
     <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
     <div class="flex-1 text-sm md:text-base">
@@ -1204,12 +1207,15 @@ ansible<span class="w"> all<span class="w"> -m<span class="w"> ping<span class="
 <span class="c1"># Check uptime on webservers only
 ansible<span class="w"> webservers<span class="w"> -m<span class="w"> shell<span class="w"> -a<span class="w"> <span class="s2">"uptime"<span class="w"> -i<span class="w"> hosts.yaml
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<blockquote>
-<p><strong>Command Analysis</strong>:
-* <code>all</code> / <code>webservers</code>: The target group from the inventory.
-* <code>-m ping</code>: The <strong>Module</strong> to run. 'ping' in Ansible checks SSH connectivity and Python availability, not ICMP.
-* <code>-a</code>: Arguments passed to the module.</p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Command Analysis</strong>:<br />
+        • <code>all</code> / <code>webservers</code>: The target group from the inventory.<br />
+        • <code>-m ping</code>: The <strong>Module</strong> to run. 'ping' in Ansible checks SSH connectivity and Python availability, not ICMP.<br />
+        • <code>-a</code>: Arguments passed to the module.
+    </div>
+</div>
 <h3 id="63-playbooks-the-core">6.3 Playbooks (The Core)</h3>
 <p>While Ad-Hoc commands are useful, the real power lies in <strong>Playbooks</strong>. These are YAML files that describe a complex set of tasks—a "play."</p>
 <p><strong>Example Playbook (<code>site.yaml</code>):</strong></p>

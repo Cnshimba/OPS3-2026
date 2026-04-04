@@ -460,15 +460,22 @@
 <span class="text-lg font-medium text-gray-500 dark:text-gray-400 mt-1">Student Notes
 </span></div>
 </div>
-<p><strong>Course</strong>: Computer Systems Engineering
-<strong>Module</strong>: Operating Systems 3 (Virtualisation &amp; Cloud Technologies)
-<strong>Topic</strong>: <a class="glossary-term" href="../glossary.html#Cluster">Cluster<span class="glossary-tooltip">Group of servers working together</span></a> and <a class="glossary-term" href="../glossary.html#High-Availability">High Availability<span class="glossary-tooltip">System design for minimal downtime (99.9%+ uptime)</span></a>
-<strong>Estimated Reading Time</strong>: 30 Minutes</p>
-<blockquote>
-<p>[!TIP]
-<strong>How to succeed in this week</strong>:
-Clustering is a complex topic where "split-brain" and "<a class="glossary-term" href="../glossary.html#Quorum">quorum<span class="glossary-tooltip">Minimum nodes needed for cluster to function</span></a> to function " are more than just buzzwords—they determine if your data survives a failure. We strongly recommend you strictly follow the lab exercises to build a 3-node <a class="glossary-term" href="../glossary.html#Cluster">cluster<span class="glossary-tooltip">Group of servers working together</span></a>. Seeing a node fail and recover automatically in your lab will make these abstract concepts concrete.</p>
-</blockquote>
+<div class="flex items-start p-4 mb-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Course</strong>: Computer Systems Engineering<br />
+        <strong>Module</strong>: Operating Systems 3 (Virtualisation & Cloud Technologies)<br />
+        <strong>Topic</strong>: <a class="glossary-term" href="../glossary.html#Cluster">Cluster</a> and <a class="glossary-term" href="../glossary.html#High-Availability">High Availability</a><br />
+        <strong>Estimated Reading Time</strong>: 30 Minutes
+    </div>
+</div>
+<div class="flex items-start p-4 my-6 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9l-.56.839c-.39.589-.56.883-.56 1.127a1 1 0 102 0c0-.244-.17-.538-.56-1.127l-.56-.839z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>How to succeed in this week</strong>:<br />
+        Clustering is a complex topic where "split-brain" and "<a class="glossary-term" href="../glossary.html#Quorum">quorum</a>" are more than just buzzwords—they determine if your data survives a failure. We strongly recommend you strictly follow the lab exercises to build a 3-node <a class="glossary-term" href="../glossary.html#Cluster">cluster</a>. Seeing a node fail and recover automatically in your lab will make these abstract concepts concrete.
+    </div>
+</div>
 <hr/>
 <h2 id="welcome-to-week-6">Welcome to Week 6!</h2>
 <p>Up until now, our journey has focused on singular, standalone "pet" servers. We have treated each <a class="glossary-term" href="../glossary.html#Proxmox">Proxmox<span class="glossary-tooltip">Open-source virtualization platform combining KVM and LXC</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> platform combining <a class="glossary-term" href="../glossary.html#KVM">KVM<span class="glossary-tooltip">Kernel-based Virtual Machine - A Type 1 hypervisor</span></a> <a class="glossary-term" href="../glossary.html#Hypervisor">Hypervisor<span class="glossary-tooltip">Software that creates and manages virtual machines</span></a>" <a class="glossary-term" href="../glossary.html#Type-1-Hypervisor">Type 1 hypervisor<span class="glossary-tooltip">A bare-metal hypervisor that runs directly on hardware</span></a> and <a class="glossary-term" href="../glossary.html#LXC">LXC<span class="glossary-tooltip">Linux Containers - OS-level virtualization</span></a> node as an individual entity: if it fails, the virtual machines hosted on it fail with it, requiring manual intervention to restore service. This model is acceptable for home labs but insufficient for enterprise environments where uptime is critical. In a true Cloud Environment, servers are treated as "cattle"—interchangeable resources where the failure of one unit does not disrupt the overall system.</p>
@@ -503,18 +510,23 @@ pvecm<span class="w"> status
 pvecm<span class="w"> add<span class="w"> <span class="m">192.168.1.10<span class="w"> <span class="c1"># IP of Node 1
 </span></span></span></span></span></span></code></span></pre></div>
 <p><strong>Crucial Requirement</strong>: For a cluster to function correctly, every node must have a unique Hostname and a persistent Static IP address. If an IP address changes after the cluster is formed, Corosync engine for group communication communication will break, causing the node to lose quorum to function and effectively disconnecting it from the datacenter.</p>
-<h3 id="section-1-checkpoint">Section 1 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>pvecm</strong> is the primary command-line tool for managing the cluster lifecycle, wrapping the underlying Corosync engine for group communication engine.</li>
-<li><strong>Cluster Requirements</strong> are strict: nodes must have unique hostnames, static network configurations, and a reliable low-latency network connection.</li>
-<li><strong>Joining</strong> involves a node authenticating to an existing cluster leader to download shared keys and configuration state.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why does Proxmox platform combining KVM - Type 1 hypervisor and LXC use SSH keys for cluster communication alongside Corosync engine for group communication keys?</li>
-<li>What is the impact on the cluster configuration file <code>/etc/pve/corosync.conf</code> if you change a node's IP address without updating it?</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 1 Checkpoint</strong>
+        <p class="mt-2"><strong>Summary</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li><strong>pvecm</strong> is the primary command-line tool for managing the cluster lifecycle, wrapping the underlying Corosync engine.</li>
+            <li><strong>Cluster Requirements</strong> are strict: nodes must have unique hostnames, static network configurations, and a reliable low-latency network connection.</li>
+            <li><strong>Joining</strong> involves a node authenticating to an existing cluster leader to download shared keys and configuration state.</li>
+        </ul>
+        <p class="mt-2"><strong>Reflection</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li>Why does Proxmox use SSH keys for cluster communication alongside Corosync keys?</li>
+            <li>What is the impact on the cluster configuration file <code>corosync.conf</code> if you change a node's IP address without updating it?</li>
+        </ul>
+    </div>
+</div>
 <p><strong>Resources</strong>:</p>
 <ul>
 <li><a href="https://pve.proxmox.com/wiki/Cluster_Manager">Proxmox VE Cluster Manager</a></li>
@@ -539,18 +551,23 @@ pvecm<span class="w"> add<span class="w"> <span class="m">192.168.1.10<span clas
 <p>To prevent Split Brain, the Proxmox platform combining KVM - Type 1 hypervisor and LXC Cluster Manager (pvecm) enforces a strictly democratic requirement: operations can only proceed if a strict majority of nodes are present. The formula for this is <code>(Total Votes / 2) + 1</code>.</p>
 <p>In a <strong>2-Node Cluster</strong>, there are 2 total votes. The majority needed is <code>(2/2) + 1 = 2</code>. This implies that if a single node fails, the survivor has only 1 vote. Since 1 is less than 2, Quorum to function is lost. The surviving node essentially "locks down," forcing the filesystem into Read-Only mode to prevent any possibility of corruption.</p>
 <p>In a <strong>3-Node Cluster</strong>, there are 3 total votes. The majority needed is <code>(3/2) + 1 = 2.5</code> (which rounds down to integer 2). If one node fails, the remaining two nodes have 2 votes. Since 2 equals 2, Quorum to function is maintained, and the cluster remains fully operational. This highlights the architectural best practice of always designing clusters with an <strong>ODD</strong> number of nodes (3, 5, 7) to allow for reliable tie-breaking.</p>
-<h3 id="section-2-checkpoint">Section 2 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Quorum to function </strong> enforces the "Rule of Majority" using the formula <code>(Total/2)+1</code> to ensure only one part of a partitioned cluster remains active.</li>
-<li><strong>Split Brain</strong> occurs when disconnected nodes both attempt to become Master, leading to guaranteed data corruption.</li>
-<li><strong>Safety Mechanism</strong>: If Quorum to function is lost, the cluster automatically locks down to Read-Only mode to preserve data integrity.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why is a 2-node cluster considered "dangerous" without an external vote (QDevice)?</li>
-<li>Does a "Majority" mean 51% (more than half) or exactly half?</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 2 Checkpoint</strong>
+        <p class="mt-2"><strong>Summary</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li><strong>Quorum</strong> enforces the "Rule of Majority" using the formula <code>(Total/2)+1</code> to ensure only one part of a partitioned cluster remains active.</li>
+            <li><strong>Split Brain</strong> occurs when disconnected nodes both attempt to become Master, leading to guaranteed data corruption.</li>
+            <li><strong>Safety Mechanism</strong>: If Quorum is lost, the cluster automatically locks down to Read-Only mode to preserve data integrity.</li>
+        </ul>
+        <p class="mt-2"><strong>Reflection</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li>Why is a 2-node cluster considered "dangerous" without an external vote (QDevice)?</li>
+            <li>Does a "Majority" mean 51% (more than half) or exactly half?</li>
+        </ul>
+    </div>
+</div>
 <p><strong>Resources</strong>:</p>
 <ul>
 <li><a href="http://corosync.github.io/corosync/">Corosync Project</a></li>
@@ -574,18 +591,23 @@ pvecm<span class="w"> add<span class="w"> <span class="m">192.168.1.10<span clas
 <p>To solve this, we use <strong>Fencing nodes </strong>, often referred to by the acronym <strong>STONITH</strong> (Shoot The Other Node In The Head). Upon detecting a failure, the cluster issues a command to a physical hardware device (like an IPMI controller or a Smart PDU) to physically cut power to the faulty node. This guarantees the node is dead. Only after this confirmation does the cluster restart the VMs on healthy nodes.</p>
 <p><img alt="Fencing / STONITH Process" src="images/fencing_stonith_process.png"/>
 <em>Figure 5: The Fencing nodes Process - How the cluster physically isolates a failed node before recovering its workloads</em></p>
-<h3 id="section-3-checkpoint">Section 3 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>High Availability (HA - System design for minimal downtime )</strong> automates the recovery of services by restarting VMs on healthy nodes after a hardware failure.</li>
-<li><strong>CRM and LRM</strong> act as the "Manager" and "Worker" services, respectively, to orchestrate the monitoring and recovery process.</li>
-<li><strong>Fencing nodes (STONITH)</strong> is the essential safety mechanism that physically powers off a non-responsive node to prevent Split Brain before recovery begins.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why is Fencing nodes (STONITH) safer than just assuming a silent node is down?</li>
-<li>Can you have High Availability without Shared Storage? (Consider the implications of ZFS Replication).</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 3 Checkpoint</strong>
+        <p class="mt-2"><strong>Summary</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li><strong>High Availability (HA)</strong> automates the recovery of services by restarting VMs on healthy nodes after a hardware failure.</li>
+            <li><strong>CRM and LRM</strong> act as the "Manager" and "Worker" services, respectively, to orchestrate the monitoring and recovery process.</li>
+            <li><strong>Fencing (STONITH)</strong> is the essential safety mechanism that physically powers off a non-responsive node to prevent Split Brain before recovery begins.</li>
+        </ul>
+        <p class="mt-2"><strong>Reflection</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li>Why is Fencing (STONITH) safer than just assuming a silent node is down?</li>
+            <li>Can you have High Availability without Shared Storage? (Consider the implications of ZFS Replication).</li>
+        </ul>
+    </div>
+</div>
 <p><strong>Resources</strong>:</p>
 <ul>
 <li><a href="https://pve.proxmox.com/wiki/High_Availability_Cluster#pve_ha_manager_simulator">Proxmox HA Simulator</a></li>
@@ -609,18 +631,23 @@ pvecm<span class="w"> add<span class="w"> <span class="m">192.168.1.10<span clas
 <div class="codehilite"><pre><span><code>pvecm<span class="w"> expected<span class="w"> <span class="m">1
 </span></span></span></code></span></pre></div>
 <p><strong>Warning</strong>: This command tells the survivor, "Pretend we only expected 1 vote." This allows it to become quorate alone. You must <strong>only</strong> do this if you are absolutely certain the other node is dead. If the other node comes back online while this is active, you will cause a Split Brain scenario.</p>
-<h3 id="section-4-checkpoint">Section 4 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong><code>pvecm status</code></strong> is the primary diagnostic tool for assessing voting health and determining if the cluster is Quorate.</li>
-<li><strong>Corosync engine for group communication Latency</strong> is the most common cause of instability; high latency triggers false failure detection.</li>
-<li><strong>Forcing Quorum to function (<code>expected 1</code>)</strong> is a destructive emergency measure to recover a surviving node in a broken cluster.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why is latency (Ping time) so critical for Corosync engine for group communication compared to bandwidth?</li>
-<li>What does "Quorate: No" actually mean for your ability to start, stop, or migrate VMs?</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 4 Checkpoint</strong>
+        <p class="mt-2"><strong>Summary</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li><strong><code>pvecm status</code></strong> is the primary diagnostic tool for assessing voting health and determining if the cluster is Quorate.</li>
+            <li><strong>Corosync Latency</strong> is the most common cause of instability; high latency triggers false failure detection.</li>
+            <li><strong>Forcing Quorum (<code>expected 1</code>)</strong> is a destructive emergency measure to recover a surviving node in a broken cluster.</li>
+        </ul>
+        <p class="mt-2"><strong>Reflection</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li>Why is latency (Ping time) so critical for Corosync compared to bandwidth?</li>
+            <li>What does "Quorate: No" actually mean for your ability to start, stop, or migrate VMs?</li>
+        </ul>
+    </div>
+</div>
 <p><strong>Resources</strong>:</p>
 <ul>
 <li><a href="https://clusterlabs.org/">Clusterlabs Troubleshooting</a></li>
@@ -638,18 +665,23 @@ pvecm<span class="w"> add<span class="w"> <span class="m">192.168.1.10<span clas
 <span class="c1"># --with-local-disks: Move the storage (disk image) too using storage migration
 qm<span class="w"> migrate<span class="w"> <span class="m">100<span class="w"> pve2<span class="w"> --online<span class="w"> --with-local-disks
 </span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-5-checkpoint">Section 5 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Live Migration - between hosts without downtime </strong> moves active RAM state between nodes, allowing hardware maintenance without service interruption.</li>
-<li><strong>--online</strong> ensures the VM - remains responsive during the transfer; without it, the VM - would hibernate and resume (offline migration).</li>
-<li><strong>--with-local-disks</strong> enables migrations even without shared storage by copying the disk image alongside the RAM, though this takes significantly longer.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>What happens to the VM - if the network cable is unplugged <em>during</em> the RAM copy phase of a migration?</li>
-<li>Why must the CPU Type often be set to <code>kvm64</code> or <code>host</code> model carefully in heterogeneous clusters?</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 5 Checkpoint</strong>
+        <p class="mt-2"><strong>Summary</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li><strong>Live Migration</strong> moves active RAM state between nodes, allowing hardware maintenance without service interruption.</li>
+            <li><strong>--online</strong> ensures the VM remains responsive during the transfer; without it, the VM would hibernate and resume (offline migration).</li>
+            <li><strong>--with-local-disks</strong> enables migrations even without shared storage by copying the disk image alongside the RAM, though this takes significantly longer.</li>
+        </ul>
+        <p class="mt-2"><strong>Reflection</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li>What happens to the VM if the network cable is unplugged <em>during</em> the RAM copy phase of a migration?</li>
+            <li>Why must the CPU Type often be set to <code>kvm64</code> or <code>host</code> model carefully in heterogeneous clusters?</li>
+        </ul>
+    </div>
+</div>
 <p><strong>Resources</strong>:</p>
 <ul>
 <li><a href="https://www.qemu.org/docs/master/system/migration.html">QEMU Migration Documentation</a></li>
@@ -686,18 +718,23 @@ Proxmox platform combining KVM - Type 1 hypervisor and LXC VE is unique because 
 </li>
 <li><strong>LVM-Shared</strong>: Alternatively, Proxmox platform combining KVM - Type 1 hypervisor and LXC often uses <strong>LVM</strong> on top of iSCSI in "Shared Mode" to manage raw disk volumes for VMs without a full filesystem layer.</li>
 </ul>
-<h3 id="section-6-checkpoint">Section 6 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Ceph</strong> (HCI): Distributed, self-healing storage on compute nodes (3+ nodes req).</li>
-<li><strong>SAN/NAS</strong>: External storage arrays. Block (iSCSI/FC) vs File (NFS).</li>
-<li><strong>Cluster FS</strong>: GFS2/OCFS2 needed for simultaneous shared writes.</li>
-</ul>
-<p><strong>Reflection</strong>:</p>
-<ul>
-<li>Why is a 10GbE network mandatory for Ceph?</li>
-<li>What happens if two servers write to a standard ext4 non-clustered disk at the same time?</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 6 Checkpoint</strong>
+        <p class="mt-2"><strong>Summary</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li><strong>Ceph</strong> (HCI): Distributed, self-healing storage on compute nodes (3+ nodes req).</li>
+            <li><strong>SAN/NAS</strong>: External storage arrays. Block (iSCSI/FC) vs File (NFS).</li>
+            <li><strong>Cluster FS</strong>: GFS2/OCFS2 needed for simultaneous shared writes.</li>
+        </ul>
+        <p class="mt-2"><strong>Reflection</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li>Why is a 10GbE network mandatory for Ceph?</li>
+            <li>What happens if two servers write to a standard ext4 non-clustered disk at the same time?</li>
+        </ul>
+    </div>
+</div>
 <p><strong>Resources</strong>:</p>
 <ul>
 <li><a href="https://docs.ceph.com/en/latest/start/intro/">Ceph Intro</a></li>
@@ -721,12 +758,17 @@ Proxmox platform combining KVM - Type 1 hypervisor and LXC VE is unique because 
 <li><strong>Suspend Mode</strong>: Brief pause. Good for consistency but disrupts services.</li>
 <li><strong>Stop Mode</strong>: Full power off. 100% consistent, maximum downtime.</li>
 </ol>
-<h3 id="section-7-checkpoint">Section 7 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><strong>Backup</strong>: Independent Archive, essential for DR.</li>
-<li><strong>Modes</strong>: Snapshot - (Live), Suspend (Frozen), Stop (Consistent).</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 7 Checkpoint</strong>
+        <p class="mt-2"><strong>Summary</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li><strong>Backup</strong>: Independent Archive, essential for DR.</li>
+            <li><strong>Modes</strong>: Snapshot (Live), Suspend (Frozen), Stop (Consistent).</li>
+        </ul>
+    </div>
+</div>
 <hr/>
 <h2 id="8-managing-storage-via-cli-pvesm">8. Managing Storage via CLI (<code>pvesm</code>)</h2>
 <p>Advanced troubleshooting often requires the **Proxmox platform combining KVM - Type 1 hypervisor and LXC VE Storage Manager`.</p>
@@ -739,12 +781,17 @@ pvesm<span class="w"> status
 <span class="c1"># 3. Allocating a volume manually
 pvesm<span class="w"> alloc<span class="w"> local-lvm<span class="w"> <span class="m">100<span class="w"> vm-100-disk-1<span class="w"> 20G
 </span></span></span></span></span></span></span></span></span></span></span></code></span></pre></div>
-<h3 id="section-8-checkpoint">Section 8 Checkpoint</h3>
-<p><strong>Summary</strong>:</p>
-<ul>
-<li><code>pvesm</code> helps when the GUI is unavailable.</li>
-<li><code>storage.cfg</code> is the cluster-wide storage definition file.</li>
-</ul>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#c9984a]/10 dark:bg-[#c9984a]/20 border-[#c9984a] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#c9984a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base">
+        <strong>Section 8 Checkpoint</strong>
+        <p class="mt-2"><strong>Summary</strong>:</p>
+        <ul class="list-disc ml-6 mt-1">
+            <li><code>pvesm</code> helps when the GUI is unavailable.</li>
+            <li><code>storage.cfg</code> is the cluster-wide storage definition file.</li>
+        </ul>
+    </div>
+</div>
 <hr/>
 <h2 id="9-additional-resources">9. Additional Resources</h2>
 <ul>
@@ -761,13 +808,14 @@ pvesm<span class="w"> alloc<span class="w"> local-lvm<span class="w"> <span clas
 </a></li>
 </ul>
 
-<div class="mt-12 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
-<h3 class="text-2xl font-bold text-[var(--text-headings)] mb-4">Test Your Knowledge</h3>
-<p class="text-[var(--text-body)] mb-6">Ready to check your understanding of this week's material? Take the interactive quiz now!</p>
-<a class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md no-underline" href="Week_6_Quiz.html" id="start-quiz-btn">
- Start Quiz
- 
-</a></div>
+<div class="mt-12 p-8 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 text-center shadow-sm">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Test Your Knowledge</h3>
+    <p class="text-slate-600 dark:text-slate-400 mb-6 max-w-2xl mx-auto">Ready to check your understanding of Proxmox clustering and high availability? Take the interactive quiz to validate your knowledge.</p>
+    <a href="Week_6_Quiz.html" class="inline-flex items-center px-8 py-3 bg-[#002F6E] hover:bg-[#001f4d] text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg no-underline" id="start-quiz-btn">
+        <span>Start Week 6 Quiz</span>
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+    </a>
+</div>
 <div class="chapter-navigation flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
 <a class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors no-underline" href="../Week 5 - Containers and Resource Management/Week_5_Student_Notes.html">
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>

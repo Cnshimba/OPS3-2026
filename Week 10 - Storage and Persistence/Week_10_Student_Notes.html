@@ -530,9 +530,12 @@
 <p>Ceph distinguishes itself through its self-healing capabilities and advanced snapshotting mechanism. When data is written to a Ceph-backed volume, it is split into 4MB objects and scattered deterministically across the cluster. If a physical drive fails, the cluster automatically detects the missing objects and replicates them from surviving redundant copies, effectively healing the system without human intervention. Furthermore, because Ceph manages data as discrete objects, it can create instantaneous snapshots using a Copy-on-Write mechanism. This allows administrators to generate thousands of recovery points without incurring the performance penalties associated with traditional storage arrays.</p>
 <p><strong>Implementation Note</strong>: In production, Ceph is the preferred backend because it decouples storage from compute hardware entirely, allowing indefinite scaling.</p>
 <h3 id="233-configuring-cinder-with-ceph">2.3.3 Configuring Cinder platform block storage service with Ceph</h3>
-<blockquote>
-<p><strong>Note</strong>: This assumes a Ceph cluster is already running. To learn how to build one from scratch, see the <a href="Week_10_Guide_Ceph_Cluster_Setup.html">Optional Ceph Setup Guide.</a></p>
-</blockquote>
+<div class="flex items-start p-4 my-4 rounded-lg border-l-4 shadow-sm bg-[#002F6E]/10 dark:bg-[#002F6E]/20 border-[#002F6E] text-slate-700 dark:text-slate-300">
+    <svg class="w-6 h-6 mr-3 flex-shrink-0 text-[#002F6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 text-sm md:text-base leading-relaxed">
+        <strong>Note</strong>: This assumes a Ceph cluster is already running. To learn how to build one from scratch, see the <a href="Week_10_Guide_Ceph_Cluster_Setup.html">Optional Ceph Setup Guide.</a>
+    </div>
+</div>
 <p>To configure OpenStack platform Cinder platform block storage service to use a Ceph cluster as its backend, the administrator must edit the <code>cinder.conf</code> file on the Controller node. The process involves three key steps: installing the client libraries, authenticating, and defining the driver.</p>
 <p><strong>1. Install Ceph Client:</strong>
 The Cinder platform block storage service service requires the python libraries to communicate with the Ceph public network.</p>
